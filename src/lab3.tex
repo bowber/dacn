@@ -26,7 +26,7 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
 \begin{tikzpicture}[node distance=1.8cm]
     % Nodes
     \node (sp) {$Y_{SP}$};
-    \node[sumcircle, right=1cm of sp] (sum) {};
+    \node[sum, right=1cm of sp] (sum) {};
     \node[block, right=1.2cm of sum, minimum width=5em] (controller) {ON-OFF};
     \node[block, right=1.5cm of controller] (process) {Quá trình};
     \node[right=1.5cm of process] (output) {$Y$};
@@ -45,9 +45,9 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     \draw[line] (fb) |- (sensor);
     \draw[arrow] (sensor) -| (sum);
     
-    % Sum signs
-    \node[font=\tiny] at ($(sum.north west)+(0.15,-0.15)$) {$+$};
-    \node[font=\tiny] at ($(sum.south west)+(0.15,0.15)$) {$-$};
+    % Sum signs - positioned in quadrants between cross lines
+    \node[font=\tiny] at ($(sum.north west)+(0.12,-0.12)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.12,0.12)$) {$-$};
     
     % ON-OFF characteristic
     \node[right=3cm of output] (char) {};
@@ -90,7 +90,7 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     \node[block, right=1.5cm of input, yshift=-1.2cm] (D) {$K_D \frac{d}{dt}$};
     
     % Sum
-    \node[sumcircle, right=1.5cm of I] (sum) {};
+    \node[sum, right=1.5cm of I] (sum) {};
     
     % Output
     \node[right=1cm of sum] (output) {$u(t)$};
@@ -110,10 +110,10 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     % Output arrow
     \draw[arrow] (sum) -- (output);
     
-    % Sum signs
-    \node[font=\tiny] at ($(sum.north)+(0,-0.2)$) {$+$};
-    \node[font=\tiny] at ($(sum.west)+(0.2,0)$) {$+$};
-    \node[font=\tiny] at ($(sum.south)+(0,0.2)$) {$+$};
+    % Sum signs - positioned in quadrants between cross lines
+    \node[font=\tiny] at ($(sum.north west)+(0.12,-0.12)$) {$+$};
+    \node[font=\tiny] at ($(sum.north east)+(-0.12,-0.12)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.12,0.12)$) {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối bộ điều khiển PID}
 \label{fig:pid_block}

@@ -165,11 +165,16 @@
         minimum height=2.5em, minimum width=3em,
         text centered, font=\small
     },
-    sumcircle/.style={
+    % Summing junction with cross inside
+    sum/.style={
         circle, draw, thick,
         minimum size=1.5em,
         inner sep=0pt,
-        font=\scriptsize
+        path picture={
+            \draw[thick] 
+                (path picture bounding box.north) -- (path picture bounding box.south)
+                (path picture bounding box.west) -- (path picture bounding box.east);
+        }
     },
     % Arrow style
     arrow/.style={
