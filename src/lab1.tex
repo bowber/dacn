@@ -1,0 +1,186 @@
+% ============================================================
+% Lab 1: Khảo sát các sách lược điều khiển
+% ============================================================
+
+\setcounter{section}{1}
+\section*{BÀI THÍ NGHIỆM 1: KHẢO SÁT CÁC SÁCH LƯỢC VÀ CHẤT LƯỢNG ĐIỀU KHIỂN}
+\addcontentsline{toc}{section}{Bài thí nghiệm 1: Khảo sát các sách lược và chất lượng điều khiển}
+
+% ------------------------------------------------------------
+\subsection{Tóm tắt}
+% ------------------------------------------------------------
+
+Bài thí nghiệm này nhằm khảo sát và so sánh các sách lược điều khiển cơ bản trong hệ thống điều khiển tự động mức chất lỏng. Thông qua việc thực hiện các phương thức điều khiển phản hồi, truyền thẳng và kết hợp, sinh viên có thể đánh giá ưu nhược điểm của từng sách lược điều khiển. Kết quả thu được cho thấy sách lược điều khiển kết hợp cho chất lượng điều khiển tốt nhất, kết hợp được ưu điểm của cả hai phương thức điều khiển phản hồi và truyền thẳng.
+
+% ------------------------------------------------------------
+\subsection{Cơ sở lý thuyết}
+% ------------------------------------------------------------
+
+\subsubsection{Các nguyên lý điều khiển}
+
+Nguyên lý điều khiển thể hiện nguyên tắc về mặt cấu trúc trong việc sử dụng thông tin về các biến quá trình để đưa ra tác động điều khiển. Các nguyên lý điều khiển cơ bản bao gồm:
+
+\begin{itemize}
+    \item \textbf{Điều khiển theo tác động thiết lập:} Bộ điều khiển đưa ra tác động dựa trên giá trị đặt.
+    \item \textbf{Điều khiển theo tác động của nhiễu:} Bộ điều khiển đưa ra tác động dựa trên thông tin về biến nhiễu.
+    \item \textbf{Điều khiển theo tác động phản hồi:} Bộ điều khiển đưa ra tác động dựa trên thông tin phản hồi từ biến được điều khiển.
+\end{itemize}
+
+\subsubsection{Sách lược điều khiển phản hồi (Feedback Control)}
+
+Sách lược điều khiển phản hồi dựa trên nguyên tắc liên tục đo giá trị biến được điều khiển và phản hồi thông tin về bộ điều khiển. Bộ điều khiển so sánh giá trị đo được với giá trị đặt, tính toán sai lệch và đưa ra tác động điều khiển nhằm đạt được giá trị mong muốn.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Độ chính xác cao do tác động điều khiển được hình thành dựa trên sai lệch.
+    \item Triệt tiêu được ảnh hưởng của nhiễu không biết trước hoặc không đo được.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item Tác động chậm do phải phát hiện sai lệch trước khi khắc phục.
+    \item Đối với quá trình có động học chậm, thời gian đáp ứng dài.
+\end{itemize}
+
+\subsubsection{Sách lược điều khiển truyền thẳng (Feedforward Control)}
+
+Sách lược điều khiển truyền thẳng là sách lược mà bộ điều khiển tiếp nhận tín hiệu của những nhiễu đo được, nhằm ngăn chặn kịp thời ảnh hưởng của biến nhiễu đối với quá trình.
+
+\textbf{Ưu điểm:}
+\begin{itemize}
+    \item Tác động nhanh do loại bỏ ảnh hưởng của nhiễu trước khi nó kịp ảnh hưởng xấu tới quá trình.
+\end{itemize}
+
+\textbf{Nhược điểm:}
+\begin{itemize}
+    \item Độ chính xác không cao do cần biết rõ thông tin về quá trình.
+    \item Không triệt tiêu được nhiễu không đo được hoặc không biết trước.
+\end{itemize}
+
+\subsubsection{Sách lược điều khiển kết hợp (FF/FB)}
+
+Trong thực tế, thường kết hợp cả hai sách lược điều khiển phản hồi và truyền thẳng để tận dụng ưu điểm của cả hai: phản hồi cho độ chính xác cao, truyền thẳng cho phản ứng nhanh.
+
+% ------------------------------------------------------------
+\subsection{Mô tả thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+Hệ thống thiết bị thí nghiệm điều khiển mức chất lỏng bao gồm:
+
+\begin{itemize}
+    \item \textbf{Bể chứa:} Bể chứa nước với thể tích xác định.
+    \item \textbf{Cảm biến mức:} Đo mức chất lỏng trong bể và chuyển đổi thành tín hiệu điện.
+    \item \textbf{Bơm:} Cung cấp lưu lượng nước vào bể.
+    \item \textbf{Van điều khiển:} Điều chỉnh lưu lượng nước ra khỏi bể.
+    \item \textbf{Bộ điều khiển:} Nhận tín hiệu từ cảm biến, tính toán và đưa ra tác động điều khiển.
+    \item \textbf{Giao diện điều khiển:} Hiển thị thông số và cho phép cài đặt các thông số điều khiển.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Quy trình thực hiện}
+% ------------------------------------------------------------
+
+\subsubsection{Chuẩn bị thí nghiệm}
+\begin{enumerate}
+    \item Kiểm tra nguồn điện và các kết nối của hệ thống.
+    \item Kiểm tra mức nước trong bể chứa nguồn.
+    \item Khởi động phần mềm điều khiển trên máy tính.
+    \item Cài đặt giá trị mức chất lỏng mong muốn (setpoint).
+\end{enumerate}
+
+\subsubsection{Thí nghiệm 1: Khảo sát phương thức điều khiển phản hồi}
+\begin{enumerate}
+    \item Chọn chế độ điều khiển phản hồi trên giao diện.
+    \item Cài đặt giá trị đặt mức chất lỏng.
+    \item Ghi nhận đáp ứng của hệ thống khi không có nhiễu.
+    \item Đưa nhiễu bậc thang vào hệ thống, ghi nhận đáp ứng.
+    \item Đánh giá chất lượng điều khiển: thời gian xác lập, độ quá điều chỉnh, sai lệch xác lập.
+\end{enumerate}
+
+\subsubsection{Thí nghiệm 2: Khảo sát phương thức điều khiển truyền thẳng}
+\begin{enumerate}
+    \item Chọn chế độ điều khiển truyền thẳng trên giao diện.
+    \item Thực hiện các bước tương tự Thí nghiệm 1.
+    \item So sánh kết quả với điều khiển phản hồi.
+\end{enumerate}
+
+\subsubsection{Thí nghiệm 3: Khảo sát phương thức điều khiển kết hợp}
+\begin{enumerate}
+    \item Chọn chế độ điều khiển kết hợp FF/FB trên giao diện.
+    \item Thực hiện các bước tương tự Thí nghiệm 1.
+    \item So sánh kết quả với hai phương thức điều khiển trước đó.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Kết quả và bàn luận}
+% ------------------------------------------------------------
+
+\subsubsection{Kết quả thí nghiệm}
+
+\begin{table}[H]
+\centering
+\caption{So sánh chất lượng điều khiển các sách lược}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Chỉ tiêu} & \textbf{Phản hồi} & \textbf{Truyền thẳng} & \textbf{Kết hợp} \\
+\hline
+Thời gian xác lập (s) & & & \\
+\hline
+Độ quá điều chỉnh (\%) & & & \\
+\hline
+Sai lệch xác lập & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Bàn luận}
+
+Từ kết quả thí nghiệm, có thể nhận thấy:
+\begin{itemize}
+    \item Điều khiển phản hồi cho độ chính xác cao nhưng đáp ứng chậm.
+    \item Điều khiển truyền thẳng đáp ứng nhanh nhưng có sai lệch xác lập.
+    \item Điều khiển kết hợp tận dụng được ưu điểm của cả hai phương thức.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Kết luận và khuyến nghị}
+% ------------------------------------------------------------
+
+Qua bài thí nghiệm, sinh viên đã:
+\begin{itemize}
+    \item Hiểu được cấu trúc và nguyên lý hoạt động của hệ thống điều khiển mức chất lỏng.
+    \item Khảo sát và so sánh được các sách lược điều khiển phản hồi, truyền thẳng và kết hợp.
+    \item Đánh giá được chất lượng điều khiển thông qua các chỉ tiêu: thời gian xác lập, độ quá điều chỉnh, sai lệch xác lập.
+\end{itemize}
+
+Khuyến nghị: Trong thực tế nên sử dụng sách lược điều khiển kết hợp để đạt được chất lượng điều khiển tốt nhất.
+
+% ------------------------------------------------------------
+\subsection{Trả lời câu hỏi kiểm tra}
+% ------------------------------------------------------------
+
+\textbf{Câu 1: Vẽ sơ đồ khối tổng quát về các biến quá trình?}
+
+Sơ đồ khối tổng quát bao gồm: Giá trị đặt $Y_{SP}$ $\rightarrow$ Bộ điều khiển $\rightarrow$ Tác động điều khiển $u$ $\rightarrow$ Quá trình $\rightarrow$ Biến cần điều khiển $y$, với nhiễu $z$ tác động vào quá trình.
+
+\textbf{Câu 2: So sánh ưu nhược điểm của điều khiển phản hồi và truyền thẳng?}
+
+\begin{itemize}
+    \item Điều khiển phản hồi: Ưu điểm là độ chính xác cao, triệt tiêu được nhiễu không đo được. Nhược điểm là đáp ứng chậm.
+    \item Điều khiển truyền thẳng: Ưu điểm là đáp ứng nhanh. Nhược điểm là độ chính xác không cao, không triệt tiêu được nhiễu không đo được.
+\end{itemize}
+
+\textbf{Câu 3: Tại sao nên sử dụng điều khiển kết hợp?}
+
+Điều khiển kết hợp tận dụng được ưu điểm của cả hai phương thức: phản hồi cho độ chính xác cao và truyền thẳng cho phản ứng nhanh với nhiễu.
+
+% ------------------------------------------------------------
+\subsection{Tài liệu tham khảo}
+% ------------------------------------------------------------
+
+\begin{enumerate}
+    \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
+    \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+\end{enumerate}
+
+\newpage

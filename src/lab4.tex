@@ -1,16 +1,16 @@
 % ============================================================
-% Lab 4: Thiết kế hệ thống điều chỉnh các đại lượng cơ bản
+% Lab 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID
 % ============================================================
 
 \setcounter{section}{4}
-\section*{BÀI THÍ NGHIỆM 4: THIẾT KẾ HỆ THỐNG ĐIỀU CHỈNH CÁC ĐẠI LƯỢNG CƠ BẢN}
-\addcontentsline{toc}{section}{Bài thí nghiệm 4: Thiết kế hệ thống điều chỉnh các đại lượng cơ bản}
+\section*{BÀI THÍ NGHIỆM 4: KHẢO SÁT ẢNH HƯỞNG CÁC THÔNG SỐ BỘ ĐIỀU KHIỂN PID}
+\addcontentsline{toc}{section}{Bài thí nghiệm 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
 
 % ------------------------------------------------------------
 \subsection{Tóm tắt}
 % ------------------------------------------------------------
 
-Bài thí nghiệm này tập trung vào việc thiết kế hệ thống điều chỉnh các đại lượng cơ bản trong điều khiển quá trình công nghiệp, đặc biệt là việc khảo sát ảnh hưởng của các thông số bộ điều khiển PID.
+Bài thí nghiệm này nhằm khảo sát ảnh hưởng của các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID đến chất lượng điều khiển. Thông qua việc thay đổi từng thông số một cách độc lập và ghi nhận đáp ứng của hệ thống, sinh viên hiểu rõ hơn về vai trò của từng thành phần trong bộ điều khiển PID. Ngoài ra, bài thí nghiệm còn giới thiệu phương pháp Ziegler-Nichols để thiết kế bộ điều khiển PID dựa trên đáp ứng quá độ của hệ hở.
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
@@ -18,99 +18,284 @@ Bài thí nghiệm này tập trung vào việc thiết kế hệ thống điề
 
 \subsubsection{Ảnh hưởng các thông số bộ điều khiển}
 
-Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh hưởng đặc trưng đến chất lượng điều khiển của hệ thống:
+Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh hưởng đặc trưng đến chất lượng điều khiển của hệ thống. Bảng sau tóm tắt ảnh hưởng của việc tăng từng thông số:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|}
+\caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Thay đổi} & \textbf{Tác động tích cực} & \textbf{Tác động tiêu cực} \\
+\textbf{Tăng} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
 \hline
-$K_P$ tăng & Tăng tốc độ đáp ứng, giảm sai lệch tĩnh & Có thể gây mất ổn định \\
+$K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
 \hline
-$K_I$ tăng & Triệt tiêu sai lệch tĩnh & Tăng dao động, integral windup \\
+$K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 \hline
-$K_D$ tăng & Giảm overshoot, phản ứng nhanh & Nhạy với nhiễu \\
+$K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \hline
 \end{tabular}
 \end{table}
 
-\subsubsection{Thiết kế bộ điều khiển}
+\subsubsection{Thiết kế bộ điều khiển theo Ziegler-Nichols 1 (ZN1)}
 
-Các phương pháp thiết kế bộ điều khiển PID phổ biến bao gồm:
+Phương pháp Ziegler-Nichols 1 dựa trên đáp ứng quá độ của hệ hở đối với tín hiệu bước. Từ đáp ứng, xác định các thông số:
 
 \begin{itemize}
-    \item \textbf{Phương pháp Ziegler-Nichols:} dựa trên đáp ứng bước hoặc điểm tới hạn
-    \item \textbf{Phương pháp Cohen-Coon:} dựa trên mô hình FOPDT
+    \item $K$: Độ lợi tĩnh của quá trình
+    \item $L$: Thời gian trễ (delay time)
+    \item $T$: Hằng số thời gian (time constant)
 \end{itemize}
+
+Các thông số bộ điều khiển PID được tính theo công thức:
+
+\begin{table}[H]
+\centering
+\caption{Công thức tính thông số PID theo Ziegler-Nichols 1}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Bộ điều khiển} & $K_P$ & $T_I$ & $T_D$ \\
+\hline
+P & $\frac{T}{KL}$ & -- & -- \\
+\hline
+PI & $\frac{0.9T}{KL}$ & $\frac{L}{0.3}$ & -- \\
+\hline
+PID & $\frac{1.2T}{KL}$ & $2L$ & $0.5L$ \\
+\hline
+\end{tabular}
+\end{table}
 
 % ------------------------------------------------------------
 \subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
-Sử dụng hệ thống điều khiển mức chất lỏng với đầy đủ thiết bị đo lường và điều khiển.
+Với bài thí nghiệm này, sinh viên thực hiện thí nghiệm tối thiểu trên 01 trong số 05 hệ thống thiết bị điều khiển các đại lượng công nghệ cơ bản trong phòng thí nghiệm:
+
+\begin{enumerate}
+    \item Hệ thống điều chỉnh tự động mức chất lỏng
+    \item Hệ thống điều chỉnh tự động nhiệt độ
+    \item Hệ thống điều chỉnh tự động lưu lượng
+    \item Hệ thống điều chỉnh tự động áp suất
+    \item Hệ thống điều chỉnh tự động nồng độ
+\end{enumerate}
+
+Trên giao diện điều khiển, sinh viên sử dụng các chức năng:
+\begin{itemize}
+    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực
+    \item Giá trị cài đặt của đại lượng cần điều khiển
+    \item Chế độ Tune để khảo sát các thông số bộ điều khiển PID
+    \item Ô nhập các thông số bộ điều khiển PID ($K_P$, $K_I$, $K_D$)
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
-\begin{itemize}
-    \item Thiết lập hệ thống điều khiển mức chất lỏng
-    \item Thay đổi các thông số $K_P$, $K_I$, $K_D$ một cách độc lập
-    \item Ghi nhận đáp ứng của hệ thống
-    \item Phân tích ảnh hưởng của từng thông số
-\end{itemize}
+\subsubsection{Chuẩn bị thí nghiệm}
+\begin{enumerate}
+    \item Khởi động hệ thống thiết bị và phần mềm điều khiển.
+    \item Kiểm tra các kết nối và trạng thái hoạt động của thiết bị.
+    \item Nhập giá trị biến cần điều khiển mong muốn $y_{sp}$.
+    \item Chọn chế độ Tune trên giao diện điều khiển.
+\end{enumerate}
+
+\subsubsection{Thí nghiệm 1: Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
+
+\textbf{a) Khảo sát ảnh hưởng của tham số $K_P$:}
+\begin{enumerate}
+    \item Giữ $K_I$ và $K_D$ cố định.
+    \item Thay đổi $K_P$ theo các giá trị: 1, 2, 5, 20.
+    \item Ghi nhận thời gian xác lập, sai lệch xác lập, độ quá điều chỉnh.
+\end{enumerate}
+
+\textbf{b) Khảo sát ảnh hưởng của tham số $K_I$:}
+\begin{enumerate}
+    \item Giữ $K_P$ và $K_D$ cố định.
+    \item Thay đổi $K_I$ theo các giá trị: 0.5, 1, 1.5, 2.
+    \item Ghi nhận các chỉ tiêu chất lượng.
+\end{enumerate}
+
+\textbf{c) Khảo sát ảnh hưởng của tham số $K_D$:}
+\begin{enumerate}
+    \item Giữ $K_P$ và $K_I$ cố định.
+    \item Thay đổi $K_D$ theo các giá trị: 0.5, 1, 2, 5.
+    \item Ghi nhận các chỉ tiêu chất lượng.
+\end{enumerate}
+
+\subsubsection{Thí nghiệm 2: Thiết kế bộ điều khiển PID theo Ziegler-Nichols 1}
+
+\begin{enumerate}
+    \item Đưa hệ thống về chế độ điều khiển tay (Manual).
+    \item Đặt tín hiệu bước vào hệ thống và ghi nhận đáp ứng quá độ.
+    \item Xác định các thông số $K$, $L$, $T$ từ đáp ứng.
+    \item Tính toán thông số PID theo công thức ZN1.
+    \item Cài đặt và đánh giá chất lượng điều khiển.
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Kết quả và bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Thí nghiệm 1: Khảo sát sự ảnh hưởng các thông số bộ điều khiển PID}
+\subsubsection{Kết quả thí nghiệm 1: Khảo sát ảnh hưởng thông số PID}
+
+\textbf{a) Khảo sát ảnh hưởng của $K_P$:}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|}
+\caption{Kết quả khảo sát ảnh hưởng của $K_P$}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Giá trị $K_P$} & \textbf{Quan sát} \\
+$K_P$ & 1 & 2 & 5 & 20 \\
 \hline
-$K_P = 1$ & Đáp ứng chậm, sai lệch tĩnh lớn \\
+Thời gian xác lập (s) & & & & \\
 \hline
-$K_P = 5$ & Đáp ứng tốt, sai lệch tĩnh nhỏ \\
+Sai lệch xác lập & & & & \\
 \hline
-$K_P = 10$ & Xuất hiện dao động \\
+Độ quá điều chỉnh (\%) & & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{b) Khảo sát ảnh hưởng của $K_I$:}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả khảo sát ảnh hưởng của $K_I$}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$K_I$ & 0.5 & 1 & 1.5 & 2 \\
+\hline
+Thời gian xác lập (s) & & & & \\
+\hline
+Sai lệch xác lập & & & & \\
+\hline
+Độ quá điều chỉnh (\%) & & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{c) Khảo sát ảnh hưởng của $K_D$:}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả khảo sát ảnh hưởng của $K_D$}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$K_D$ & 0.5 & 1 & 2 & 5 \\
+\hline
+Thời gian xác lập (s) & & & & \\
+\hline
+Sai lệch xác lập & & & & \\
+\hline
+Độ quá điều chỉnh (\%) & & & & \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{d) Bộ thông số tối ưu:}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả với bộ thông số tối ưu}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+$K_P$ = , $K_I$ = , $K_D$ = & \\
+\hline
+Thời gian xác lập (s) & \\
+\hline
+Sai lệch xác lập & \\
+\hline
+Độ quá điều chỉnh (\%) & \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Kết quả thí nghiệm 2: Thiết kế theo Ziegler-Nichols 1}
+
+Từ đáp ứng quá độ của hệ hở, xác định được:
+\begin{itemize}
+    \item Độ lợi tĩnh $K$ = 
+    \item Thời gian trễ $L$ = 
+    \item Hằng số thời gian $T$ = 
+\end{itemize}
+
+Thông số PID tính theo ZN1:
+\begin{itemize}
+    \item $K_P$ = $\frac{1.2T}{KL}$ = 
+    \item $T_I$ = $2L$ = 
+    \item $T_D$ = $0.5L$ = 
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả với bộ thông số ZN1}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} \\
+\hline
+$K_P$ = , $K_I$ = , $K_D$ = & \\
+\hline
+Thời gian xác lập (s) & \\
+\hline
+Sai lệch xác lập & \\
+\hline
+Độ quá điều chỉnh (\%) & \\
 \hline
 \end{tabular}
 \end{table}
 
 \subsubsection{Bàn luận}
 
-Việc chỉnh định bộ điều khiển PID cần cân bằng giữa các yếu tố: tốc độ đáp ứng, độ ổn định, sai lệch tĩnh và độ quá điều chỉnh. Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
-
-% ------------------------------------------------------------
-\subsection{Kết luận và kiến nghị}
-% ------------------------------------------------------------
-
 \begin{itemize}
-    \item Việc chỉnh định bộ điều khiển PID cần cân bằng giữa các yếu tố: tốc độ đáp ứng, độ ổn định, sai lệch tĩnh và độ quá điều chỉnh.
-    \item Phương pháp Ziegler-Nichols và Cohen-Coon là các phương pháp thực nghiệm hiệu quả để xác định các thông số PID ban đầu.
-    \item Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
+    \item Khi tăng $K_P$: Hệ thống đáp ứng nhanh hơn nhưng có thể xuất hiện dao động nếu $K_P$ quá lớn.
+    \item Khi tăng $K_I$: Sai lệch tĩnh được triệt tiêu nhưng có thể gây dao động và hiện tượng integral windup.
+    \item Khi tăng $K_D$: Độ quá điều chỉnh giảm nhưng hệ thống nhạy hơn với nhiễu.
+    \item Phương pháp ZN1 cho kết quả ban đầu hợp lý, tuy nhiên cần tinh chỉnh thêm trong thực tế.
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Trả lời câu hỏi}
+\subsection{Kết luận và khuyến nghị}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Ảnh hưởng của việc tăng $K_P$ đến đáp ứng hệ thống?}
+\textbf{Kết luận:}
+\begin{itemize}
+    \item Đã khảo sát được ảnh hưởng của từng thông số $K_P$, $K_I$, $K_D$ đến chất lượng điều khiển.
+    \item Xác định được quy luật điều khiển và chỉnh định các thông số PID cho phù hợp.
+    \item Phương pháp Ziegler-Nichols 1 là phương pháp thực nghiệm hiệu quả để xác định các thông số PID ban đầu.
+\end{itemize}
 
-Tăng $K_P$ làm tăng tốc độ đáp ứng và giảm sai lệch tĩnh, nhưng có thể gây mất ổn định và tăng độ quá điều chỉnh nếu $K_P$ quá lớn.
+\textbf{Khuyến nghị:}
+\begin{itemize}
+    \item Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
+    \item Nên kết hợp với các phương pháp khác như Cohen-Coon hoặc auto-tuning để có kết quả tốt hơn.
+\end{itemize}
 
-\textbf{Câu 2: Vai trò của thành phần tích phân trong bộ điều khiển PID?}
+% ------------------------------------------------------------
+\subsection{Trả lời câu hỏi kiểm tra}
+% ------------------------------------------------------------
 
-Thành phần tích phân (I) có vai trò triệt tiêu sai lệch tĩnh bằng cách tích lũy sai lệch theo thời gian. Tuy nhiên, nếu $K_I$ quá lớn có thể gây ra hiện tượng integral windup và làm tăng dao động.
+\textbf{Câu 1: Vẽ sơ đồ khối tổng quát về các biến quá trình, sơ đồ khối và lưu đồ điều khiển?}
 
-\textbf{Câu 3: Khi nào nên sử dụng thành phần vi phân?}
+Sơ đồ khối tổng quát bao gồm: Giá trị đặt $Y_{SP}$ $\rightarrow$ Bộ điều khiển PID $\rightarrow$ Thiết bị chấp hành $\rightarrow$ Quá trình $\rightarrow$ Cảm biến $\rightarrow$ Phản hồi về bộ điều khiển. Nhiễu tác động vào quá trình.
 
-Thành phần vi phân (D) nên sử dụng khi cần giảm độ quá điều chỉnh và tăng tốc độ đáp ứng. Tuy nhiên, cần thận trọng với hệ thống có nhiều nhiễu vì D nhạy với sự thay đổi đột ngột.
+\textbf{Câu 2: Mô tả các thành phần của hệ thống điều khiển trong bài thí nghiệm này?}
+
+\begin{itemize}
+    \item Bộ điều khiển: PLC/DCS với thuật toán PID
+    \item Thiết bị đo: Cảm biến mức/nhiệt độ/lưu lượng/áp suất
+    \item Thiết bị chấp hành: Van điều khiển, bơm
+    \item Giao diện: HMI hiển thị và cài đặt thông số
+\end{itemize}
+
+\textbf{Câu 3: Nhận xét ảnh hưởng các thông số bộ điều khiển đến chất lượng điều khiển?}
+
+\begin{itemize}
+    \item $K_P$ ảnh hưởng chủ yếu đến tốc độ đáp ứng và sai lệch tĩnh.
+    \item $K_I$ quyết định khả năng triệt tiêu sai lệch tĩnh.
+    \item $K_D$ giúp giảm độ quá điều chỉnh và tăng tốc độ đáp ứng.
+    \item Cần cân bằng giữa các thông số để đạt chất lượng điều khiển tối ưu.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
@@ -119,4 +304,5 @@ Thành phần vi phân (D) nên sử dụng khi cần giảm độ quá điều 
 \begin{enumerate}
     \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
     \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+    \item Ziegler, J.G. and Nichols, N.B., "Optimum Settings for Automatic Controllers", Trans. ASME, 64, 759-768, 1942.
 \end{enumerate}

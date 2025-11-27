@@ -6,21 +6,51 @@
 \section*{BÀI THÍ NGHIỆM 2: THIẾT BỊ ĐIỀU KHIỂN VÀ LẬP TRÌNH VI ĐIỀU KHIỂN}
 \addcontentsline{toc}{section}{Bài thí nghiệm 2: Thiết bị điều khiển và lập trình vi điều khiển}
 
-\textit{Tóm tắt: Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình (khuấy, chưng cất, điều khiển mực chất lỏng, nhiệt độ nhập liệu), chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.}
-
 % ------------------------------------------------------------
-\subsection{Mục đích}
+\subsection{Tóm tắt}
 % ------------------------------------------------------------
 
+Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình (khuấy, chưng cất, điều khiển mực chất lỏng, nhiệt độ nhập liệu), chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.
+
+% ------------------------------------------------------------
+\subsection{Cơ sở lý thuyết}
+% ------------------------------------------------------------
+
+\subsubsection{Bộ vi điều khiển}
+
+Bộ vi điều khiển (Microcontroller) là một vi mạch tích hợp bao gồm bộ xử lý trung tâm (CPU), bộ nhớ, và các thiết bị ngoại vi I/O trong một chip duy nhất. Vi điều khiển được thiết kế để thực hiện các tác vụ điều khiển cụ thể trong các hệ thống nhúng.
+
+Các thành phần chính của vi điều khiển:
 \begin{itemize}
-    \item Có kiến thức về chức năng của bộ vi điều khiển.
-    \item Có khả năng lập trình các thuật toán điều khiển cho bộ điều khiển.
-    \item Xác định sơ đồ kết nối giữa các thành phần trong hệ thống điều khiển.
-    \item Thiết kế hệ thống điều khiển tự động để điều chỉnh quá trình khởi động và dừng trong quá trình chưng cất.
+    \item \textbf{CPU:} Thực hiện các lệnh và tính toán.
+    \item \textbf{Bộ nhớ:} Lưu trữ chương trình (Flash) và dữ liệu (RAM).
+    \item \textbf{I/O:} Giao tiếp với các thiết bị bên ngoài thông qua các chân số (Digital) và tương tự (Analog).
+    \item \textbf{Timer/Counter:} Đếm thời gian và sự kiện.
+    \item \textbf{Giao tiếp:} UART, SPI, I2C để truyền nhận dữ liệu.
+\end{itemize}
+
+\subsubsection{Điều khiển ON-OFF}
+
+Điều khiển ON-OFF là phương pháp điều khiển đơn giản nhất, trong đó tín hiệu điều khiển chỉ có hai trạng thái: bật (ON) hoặc tắt (OFF). Bộ điều khiển so sánh giá trị đo được với giá trị đặt và quyết định trạng thái của thiết bị chấp hành.
+
+\subsubsection{Điều khiển PID}
+
+Bộ điều khiển PID (Proportional-Integral-Derivative) là bộ điều khiển phổ biến nhất trong công nghiệp. Tín hiệu điều khiển được tính theo công thức:
+
+\begin{equation}
+u(t) = K_p \cdot e(t) + K_i \cdot \int_0^t e(\tau) d\tau + K_d \cdot \frac{de(t)}{dt}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $K_p$: Hệ số tỷ lệ (Proportional)
+    \item $K_i$: Hệ số tích phân (Integral)
+    \item $K_d$: Hệ số vi phân (Derivative)
+    \item $e(t)$: Sai lệch giữa giá trị đặt và giá trị đo được
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Thiết bị thí nghiệm}
+\subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
 Trong lĩnh vực công nghiệp hoá chất và dầu khí, hệ thống điều khiển đóng vai trò quan trọng trong việc điều chỉnh, giám sát và tự động hóa các quy trình sản xuất. Các chức năng của hệ thống điều khiển bao gồm điều chỉnh, điều khiển trình tự, điều khiển rời rạc và giám sát vận hành.
@@ -53,14 +83,20 @@ Intergrated Development Environment (IDE) là môi trường phát triển tích
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Thực hiện thí nghiệm}
+\subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
+
+\subsubsection{Chuẩn bị thí nghiệm}
+\begin{enumerate}
+    \item Khởi động phần mềm Arduino IDE hoặc Tinkercad.
+    \item Kết nối bo mạch Arduino với máy tính qua cáp USB.
+    \item Kiểm tra kết nối và chọn đúng cổng COM.
+    \item Chuẩn bị các linh kiện: động cơ, LED, cảm biến, điện trở.
+\end{enumerate}
 
 \subsubsection{Thí nghiệm 1: Thực hiện mô phỏng động cơ khuấy}
 
-\textbf{Yêu cầu:}
-
-Thông qua 1 công tắc điều khiển khi nhấn nút bật (ON) máy khuấy thì hoạt động theo chu trình ON.
+\textbf{Yêu cầu:} Thông qua 1 công tắc điều khiển khi nhấn nút bật (ON) máy khuấy thì hoạt động theo chu trình ON.
 
 \textbf{Thiết kế chương trình:}
 \begin{itemize}
@@ -71,10 +107,6 @@ Thông qua 1 công tắc điều khiển khi nhấn nút bật (ON) máy khuấy
     \item Lệnh \texttt{delay()} để giữ nguyên trạng thái hoạt động trong khoảng thời gian mong muốn.
 \end{itemize}
 
-\textbf{Kết quả và bàn luận:}
-
-Với các bước thực hiện thiết kế chương trình trên, cùng với đoạn code hoàn chỉnh và chạy thực tế trên mô hình tại phòng thí nghiệm. Ta thấy đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển của chúng ta với các chu trình ON, OFF định sẵn.
-
 \subsubsection{Thí nghiệm 2: Thực hiện mô phỏng điều khiển động cơ khuấy}
 
 \textbf{Thiết kế chương trình:}
@@ -84,10 +116,6 @@ Với các bước thực hiện thiết kế chương trình trên, cùng với
     \item Tín hiệu chân ra analog (PWM) thiết lập bằng 125 (khoảng 50\%) trong 60 giây.
     \item Tăng giá trị chân PWM từ 125 lên 250 và giảm xuống 0 theo bước nhảy như đề bài.
 \end{itemize}
-
-\textbf{Kết quả và bàn luận:}
-
-Đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển. Bật động cơ khuấy ở mức công suất 50\% trong vòng 60 giây, tăng dần công suất lên 100\% theo 5 cấp độ - mỗi cấp độ hoạt động 30 giây.
 
 \subsubsection{Thí nghiệm 3: Mô phỏng vận hành điều khiển hệ thống chưng cất}
 
@@ -101,6 +129,7 @@ Sử dụng công tắc ON/OFF viết chương trình điều khiển tự độ
 
 \begin{table}[H]
 \centering
+\caption{Chu trình khởi động hệ thống chưng cất}
 \begin{tabular}{|l|l|c|}
 \hline
 \textbf{Các bước thực hiện} & \textbf{Sự kiện} & \textbf{Thời gian chờ (giây)} \\
@@ -120,20 +149,33 @@ B6 – Tháo sản phẩm đáy & Mở Van V3, Bật bơm 3 & -- \\
 \end{tabular}
 \end{table}
 
-\subsubsection{Thí nghiệm 4: Lập trình điều chỉnh tự động nhiệt độ nhập liệu vào tháp chưng cất sử dụng bộ điều khiển ON-OFF}
+\subsubsection{Thí nghiệm 4: Lập trình điều chỉnh tự động nhiệt độ nhập liệu sử dụng bộ điều khiển ON-OFF}
 
 Sử dụng cảm biến nhiệt độ TMP, giá trị nhiệt độ được cảm biến chuyển thành tín hiệu điện áp tương ứng. Cứ 10mV tương ứng với 1°C, khoảng đo của cảm biến từ -40°C đến 125°C.
 
 Công thức tính nhiệt độ: $T = \frac{voltage - 400}{10}$
 
-\subsubsection{Thí nghiệm 5: Lập trình điều chỉnh tự động mức chất lỏng đáy tháp chưng cất sử dụng bộ điều khiển PID}
+\subsubsection{Thí nghiệm 5: Lập trình điều chỉnh tự động mức chất lỏng đáy tháp sử dụng bộ điều khiển PID}
 
 Sử dụng cảm biến siêu âm HC-SR04 đo mức chất lỏng. Sử dụng sóng siêu âm phát từ chân Trig và nhận tín hiệu sóng phản xạ tại chân Echo.
 
 Công thức: $distance = \frac{time}{2} \times 0.0349$ cm
 
 % ------------------------------------------------------------
-\subsection{Kết luận và kiến nghị}
+\subsection{Kết quả và bàn luận}
+% ------------------------------------------------------------
+
+\subsubsection{Kết quả thí nghiệm 1}
+Với các bước thực hiện thiết kế chương trình trên, cùng với đoạn code hoàn chỉnh và chạy thực tế trên mô hình tại phòng thí nghiệm. Ta thấy đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển của chúng ta với các chu trình ON, OFF định sẵn.
+
+\subsubsection{Kết quả thí nghiệm 2}
+Đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển. Bật động cơ khuấy ở mức công suất 50\% trong vòng 60 giây, tăng dần công suất lên 100\% theo 5 cấp độ - mỗi cấp độ hoạt động 30 giây.
+
+\subsubsection{Bàn luận}
+Qua các thí nghiệm, có thể thấy rằng vi điều khiển Arduino là công cụ hiệu quả để triển khai các thuật toán điều khiển cơ bản. Việc sử dụng các lệnh đơn giản như \texttt{digitalWrite()}, \texttt{analogWrite()} cho phép điều khiển linh hoạt các thiết bị chấp hành.
+
+% ------------------------------------------------------------
+\subsection{Kết luận và khuyến nghị}
 % ------------------------------------------------------------
 
 Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra được nhiều nội dung ý nghĩa:
@@ -145,6 +187,27 @@ Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra 
     \item Thiết kế hệ thống điều khiển tự động để khởi động, dừng cho quá trình.
 \end{itemize}
 
+\textbf{Khuyến nghị:} Cần nghiên cứu thêm về các thuật toán điều khiển nâng cao như điều khiển mờ, điều khiển thích nghi để cải thiện chất lượng điều khiển.
+
+% ------------------------------------------------------------
+\subsection{Trả lời câu hỏi kiểm tra}
+% ------------------------------------------------------------
+
+\textbf{Câu 1: Mô tả cấu trúc và chức năng của bộ vi điều khiển Arduino?}
+
+Arduino là bo mạch vi điều khiển bao gồm: CPU (xử lý lệnh), bộ nhớ Flash (lưu chương trình), RAM (lưu dữ liệu), các chân I/O số và analog, giao tiếp Serial/SPI/I2C, và các timer/counter.
+
+\textbf{Câu 2: So sánh điều khiển ON-OFF và điều khiển PID?}
+
+\begin{itemize}
+    \item Điều khiển ON-OFF: Đơn giản, chỉ có 2 trạng thái, có dao động quanh điểm đặt.
+    \item Điều khiển PID: Phức tạp hơn, điều khiển liên tục, cho đáp ứng mượt mà và chính xác hơn.
+\end{itemize}
+
+\textbf{Câu 3: Giải thích công thức tính khoảng cách của cảm biến siêu âm?}
+
+Sóng siêu âm di chuyển từ cảm biến đến vật cản và phản xạ lại. Thời gian đo được là thời gian đi và về, nên chia 2 để lấy khoảng cách một chiều. Nhân với 0.0349 cm/µs (tốc độ âm thanh trong không khí) để ra khoảng cách.
+
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
 % ------------------------------------------------------------
@@ -152,6 +215,7 @@ Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra 
 \begin{enumerate}
     \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
     \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+    \item Arduino Official Documentation, https://www.arduino.cc/reference/en/
 \end{enumerate}
 
 \newpage

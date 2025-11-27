@@ -7,91 +7,122 @@
 \addcontentsline{toc}{section}{Bài thí nghiệm 3: Khảo sát các bộ điều khiển ON-OFF và PID}
 
 % ------------------------------------------------------------
-\subsection{Mục đích thí nghiệm}
+\subsection{Tóm tắt}
 % ------------------------------------------------------------
 
-Dựa trên các Hệ thống điều khiển các đại lượng cơ bản trong phòng thí nghiệm:
-
-\begin{itemize}
-    \item Tìm hiểu các quy luật điều khiển ON-OFF và PID
-    \item Đánh giá chất lượng điều khiển khi sử dụng bộ điều khiển ON-OFF
-    \item Đánh giá chất lượng điều khiển khi sử dụng bộ điều khiển P, PI, PID
-\end{itemize}
+Bài thí nghiệm này nhằm khảo sát và so sánh các bộ điều khiển ON-OFF và PID trên hệ thống điều khiển các đại lượng cơ bản trong phòng thí nghiệm. Thông qua việc thực hiện các thí nghiệm với các bộ điều khiển khác nhau, sinh viên có thể đánh giá chất lượng điều khiển dựa trên các chỉ tiêu như thời gian xác lập, độ quá điều chỉnh và sai lệch tĩnh. Kết quả cho thấy bộ điều khiển PID cho chất lượng điều khiển tốt nhất với thời gian xác lập ngắn và sai lệch tĩnh nhỏ.
 
 % ------------------------------------------------------------
-\subsection{Cơ sở lí thuyết}
+\subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
 \subsubsection{Bộ điều khiển ON-OFF}
 
 Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra ở hai chế độ ($u_{max}$ và $u_{min}$) hoặc hai trạng thái (bật và tắt) tùy thuộc vào sai lệch điều khiển $e$ mà nó nhận được.
 
-Loại điều khiển này không thực sự giữ biến được điều khiển chính xác tại điểm đặt, mà biến được điều khiển luôn có một khoảng cách so với điểm đặt.
+Phương trình mô tả:
+\begin{equation}
+u = \begin{cases}
+u_{max} & \text{nếu } e > 0 \\
+u_{min} & \text{nếu } e < 0
+\end{cases}
+\end{equation}
+
+Loại điều khiển này không thực sự giữ biến được điều khiển chính xác tại điểm đặt, mà biến được điều khiển luôn dao động quanh điểm đặt với một biên độ nhất định.
 
 \subsubsection{Bộ điều khiển liên tục PID}
 
 Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều khiển dựa trên các tác động thành phần bao gồm P, I và D:
 
 \begin{itemize}
-    \item \textbf{Thành phần P:} tác động tỉ lệ với độ lớn sai lệch điều khiển $e(t)$
-    \item \textbf{Thành phần I:} tác động tỉ lệ với tích phân sai lệch điều khiển $\int e(t)dt$
-    \item \textbf{Thành phần D:} tác động tỉ lệ với vi phân sai lệch điều khiển $\frac{de(t)}{dt}$
+    \item \textbf{Thành phần P (Proportional):} tác động tỉ lệ với độ lớn sai lệch điều khiển $e(t)$
+    \item \textbf{Thành phần I (Integral):} tác động tỉ lệ với tích phân sai lệch điều khiển $\int e(t)dt$
+    \item \textbf{Thành phần D (Derivative):} tác động tỉ lệ với vi phân sai lệch điều khiển $\frac{de(t)}{dt}$
 \end{itemize}
 
 Công thức tổng quát của bộ điều khiển PID:
 \begin{equation}
-u(t) = K_P \cdot e(t) + K_I \int e(t)dt + K_D \frac{de(t)}{dt}
+u(t) = K_P \cdot e(t) + K_I \int_0^t e(\tau)d\tau + K_D \frac{de(t)}{dt}
 \end{equation}
 
-\textbf{Ảnh hưởng của các thành phần P, I, D:}
+\subsubsection{Ảnh hưởng của các thành phần P, I, D}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|l|l|}
+\caption{Ảnh hưởng của các thành phần P, I, D đến chất lượng điều khiển}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Thành phần} & \textbf{Ưu điểm} & \textbf{Nhược điểm} \\
+\textbf{Thành phần} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
 \hline
-P & Tăng tốc độ đáp ứng, giảm sai lệch tĩnh & Có thể gây mất ổn định \\
+Tăng $K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
 \hline
-I & Triệt tiêu sai lệch tĩnh & Tăng độ quá điều chỉnh, có thể gây dao động \\
+Tăng $K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 \hline
-D & Giảm độ quá điều chỉnh, tăng tốc độ đáp ứng & Nhạy với nhiễu \\
+Tăng $K_D$ & Ít thay đổi & Giảm & Không ảnh hưởng & Tốt hơn \\
 \hline
 \end{tabular}
 \end{table}
+
+\subsubsection{Các chỉ tiêu chất lượng điều khiển}
+
+\begin{itemize}
+    \item \textbf{Thời gian xác lập ($t_s$):} Thời gian để đáp ứng đạt đến và duy trì trong phạm vi ±5\% của giá trị xác lập.
+    \item \textbf{Độ quá điều chỉnh ($\sigma$\%):} Mức vượt quá giá trị xác lập so với giá trị xác lập, tính bằng phần trăm.
+    \item \textbf{Sai lệch tĩnh ($e_{ss}$):} Sai lệch giữa giá trị đặt và giá trị thực khi hệ thống đạt trạng thái xác lập.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
-Hệ thống điều khiển mức chất lỏng trong phòng thí nghiệm bao gồm: bình chứa, bơm, van điều khiển, cảm biến mức, và bộ điều khiển PLC/DCS.
+Hệ thống điều khiển mức chất lỏng trong phòng thí nghiệm bao gồm:
+
+\begin{itemize}
+    \item \textbf{Bình chứa:} Bể chứa nước với thể tích xác định, có thang đo mức.
+    \item \textbf{Bơm:} Bơm nước có khả năng điều chỉnh lưu lượng.
+    \item \textbf{Van điều khiển:} Van điều khiển lưu lượng đầu ra.
+    \item \textbf{Cảm biến mức:} Cảm biến đo mức chất lỏng, chuyển đổi thành tín hiệu điện.
+    \item \textbf{Bộ điều khiển:} PLC/DCS với các thuật toán điều khiển ON-OFF, P, PI, PID.
+    \item \textbf{Giao diện điều khiển:} Màn hình HMI hiển thị thông số và cho phép cài đặt.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
+\subsubsection{Chuẩn bị thí nghiệm}
+\begin{enumerate}
+    \item Kiểm tra nguồn điện và các kết nối của hệ thống.
+    \item Kiểm tra mức nước trong bể chứa nguồn.
+    \item Khởi động phần mềm điều khiển trên máy tính.
+    \item Đặt giá trị mức chất lỏng mong muốn $y_{sp}$ = 9 cm.
+\end{enumerate}
+
 \subsubsection{Thí nghiệm 1: Khảo sát bộ điều khiển ON/OFF}
 
-\begin{itemize}
+\begin{enumerate}
     \item Nhập giá trị biến cần điều khiển mong muốn $y_{sp}$
     \item Chọn bộ điều khiển ON/OFF trên giao diện điều khiển
     \item Thực hiện khảo sát bằng cách nhấn vào nút Auto
-    \item Ghi nhận chỉ tiêu chất lượng vào bảng
-\end{itemize}
+    \item Quan sát đáp ứng của hệ thống trên đồ thị
+    \item Ghi nhận chỉ tiêu chất lượng: thời gian xác lập, chu kì dao động, biên độ dao động
+\end{enumerate}
 
 \subsubsection{Thí nghiệm 2: Khảo sát các bộ điều khiển P, PI và PID}
 
-\begin{itemize}
-    \item Chọn lần lượt bộ điều khiển P, PI và PID
+\begin{enumerate}
+    \item Chọn lần lượt bộ điều khiển P, PI và PID trên giao diện
+    \item Sử dụng các thông số mặc định của bộ điều khiển
+    \item Quan sát đáp ứng của hệ thống
     \item Ghi nhận chỉ tiêu chất lượng cho từng bộ điều khiển
     \item So sánh kết quả giữa các bộ điều khiển
-\end{itemize}
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Kết quả và bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Thí nghiệm 1}
+\subsubsection{Kết quả thí nghiệm 1: Bộ điều khiển ON-OFF}
 
 \begin{table}[H]
 \centering
@@ -102,40 +133,79 @@ Hệ thống điều khiển mức chất lỏng trong phòng thí nghiệm bao 
 \hline
 Thời gian xác lập & 32s \\
 \hline
-Chu kì & 50s \\
+Chu kì dao động & 50s \\
 \hline
 Độ quá điều chỉnh & 11.1\% \\
 \hline
+Biên độ dao động & 8.4 - 10 cm \\
+\hline
 \end{tabular}
 \end{table}
 
-Bộ điều khiển ON/OFF cho giá trị cuối của mức chất lỏng không xác định mà dao động quanh giá trị xác lập với biên độ dao động từ xấp xỉ 8.4 - 10cm so với giá trị cài đặt 9cm.
+\textbf{Nhận xét:} Bộ điều khiển ON/OFF cho giá trị cuối của mức chất lỏng không ổn định mà dao động quanh giá trị đặt với biên độ dao động từ xấp xỉ 8.4 - 10 cm so với giá trị cài đặt 9 cm. Điều này phù hợp với lý thuyết về điều khiển ON-OFF.
 
-\subsubsection{Thí nghiệm 2}
+\subsubsection{Kết quả thí nghiệm 2: Bộ điều khiển P, PI, PID}
 
 \begin{table}[H]
 \centering
-\caption{So sánh các bộ điều khiển}
-\begin{tabular}{|c|c|c|c|}
+\caption{So sánh các bộ điều khiển P, PI và PID}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Bộ điều khiển} & \textbf{Thời gian xác lập} & \textbf{Chu kì} & \textbf{Độ quá điều chỉnh} \\
+\textbf{Bộ điều khiển} & \textbf{Thời gian xác lập} & \textbf{Chu kì} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} \\
 \hline
-P & 128s & 16s & 9.9\% \\
+P & 128s & 16s & 9.9\% & Có \\
 \hline
-PI & 262s & 60s & 7.9\% \\
+PI & 262s & 60s & 7.9\% & Không \\
 \hline
-PID & 84s & 24s & 9.1\% \\
+PID & 84s & 24s & 9.1\% & Không \\
 \hline
 \end{tabular}
 \end{table}
 
-Bộ điều khiển PID cho giá trị cuối của mức chất lỏng bằng đúng giá trị xác lập với thời gian xác lập ngắn nhất (84s) và sai lệch tĩnh gần như đạt đến ổn định.
+\subsubsection{Bàn luận}
+
+\begin{itemize}
+    \item \textbf{Bộ điều khiển P:} Có thời gian xác lập trung bình (128s), nhưng tồn tại sai lệch tĩnh do thiếu thành phần tích phân.
+    \item \textbf{Bộ điều khiển PI:} Triệt tiêu được sai lệch tĩnh nhờ thành phần tích phân, nhưng thời gian xác lập dài nhất (262s).
+    \item \textbf{Bộ điều khiển PID:} Cho kết quả tốt nhất với thời gian xác lập ngắn nhất (84s), không có sai lệch tĩnh, và độ quá điều chỉnh hợp lý (9.1\%).
+\end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Kết luận và kiến nghị}
+\subsection{Kết luận và khuyến nghị}
 % ------------------------------------------------------------
 
-Trong các phương thức điều khiển đã sử dụng, phương thức phản hồi với bộ điều khiển PID được coi là mang lại chất lượng điều khiển cao nhất. Phương thức này tự động điều chỉnh đầu ra của hệ thống dựa trên phản hồi từ giá trị đo, sử dụng ba thành phần tỷ lệ, tích phân và vi phân để tối ưu hóa hiệu suất điều khiển.
+\textbf{Kết luận:}
+\begin{itemize}
+    \item Bộ điều khiển ON-OFF đơn giản nhưng gây dao động liên tục quanh điểm đặt.
+    \item Bộ điều khiển P phản ứng nhanh nhưng có sai lệch tĩnh.
+    \item Bộ điều khiển PI triệt tiêu được sai lệch tĩnh nhưng đáp ứng chậm.
+    \item Bộ điều khiển PID cho chất lượng điều khiển tốt nhất với thời gian xác lập ngắn và không có sai lệch tĩnh.
+\end{itemize}
+
+\textbf{Khuyến nghị:} Trong thực tế, nên sử dụng bộ điều khiển PID cho các ứng dụng yêu cầu chất lượng điều khiển cao. Việc chỉnh định thông số PID cần được thực hiện cẩn thận để đạt được đáp ứng tối ưu.
+
+% ------------------------------------------------------------
+\subsection{Trả lời câu hỏi kiểm tra}
+% ------------------------------------------------------------
+
+\textbf{Câu 1: So sánh ưu nhược điểm của bộ điều khiển ON-OFF và PID?}
+
+\begin{itemize}
+    \item ON-OFF: Ưu điểm là đơn giản, dễ triển khai. Nhược điểm là gây dao động liên tục, không phù hợp với quá trình yêu cầu độ chính xác cao.
+    \item PID: Ưu điểm là cho đáp ứng mượt mà, triệt tiêu sai lệch tĩnh, có thể tối ưu hóa đáp ứng. Nhược điểm là phức tạp hơn, cần chỉnh định thông số.
+\end{itemize}
+
+\textbf{Câu 2: Giải thích vai trò của từng thành phần P, I, D?}
+
+\begin{itemize}
+    \item P: Tạo tác động tỉ lệ với sai lệch, giúp phản ứng nhanh nhưng không triệt tiêu được sai lệch tĩnh.
+    \item I: Tích phân sai lệch theo thời gian, triệt tiêu sai lệch tĩnh nhưng có thể gây dao động.
+    \item D: Vi phân sai lệch, dự đoán xu hướng và giảm độ quá điều chỉnh.
+\end{itemize}
+
+\textbf{Câu 3: Tại sao bộ điều khiển ON-OFF gây dao động?}
+
+Do bộ điều khiển chỉ có hai trạng thái (bật/tắt), khi biến điều khiển vượt qua điểm đặt, bộ điều khiển chuyển trạng thái nhưng do quán tính của quá trình, biến điều khiển tiếp tục thay đổi trước khi đảo chiều, gây ra dao động liên tục.
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
@@ -144,6 +214,7 @@ Trong các phương thức điều khiển đã sử dụng, phương thức ph�
 \begin{enumerate}
     \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
     \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+    \item Åström, K.J. and Hägglund, T., PID Controllers: Theory, Design, and Tuning, ISA, 1995.
 \end{enumerate}
 
 \newpage
