@@ -1,0 +1,121 @@
+% ============================================================
+% Lab 4: Thiết kế hệ thống điều chỉnh các đại lượng cơ bản
+% ============================================================
+
+\section*{BÀI THÍ NGHIỆM 4: THIẾT KẾ HỆ THỐNG ĐIỀU CHỈNH CÁC ĐẠI LƯỢNG CƠ BẢN}
+\addcontentsline{toc}{section}{Bài thí nghiệm 4: Thiết kế hệ thống điều chỉnh các đại lượng cơ bản}
+
+% ------------------------------------------------------------
+\subsection{Tóm tắt}
+% ------------------------------------------------------------
+
+Bài thí nghiệm này tập trung vào việc thiết kế hệ thống điều chỉnh các đại lượng cơ bản trong điều khiển quá trình công nghiệp, đặc biệt là việc khảo sát ảnh hưởng của các thông số bộ điều khiển PID.
+
+% ------------------------------------------------------------
+\subsection{Cơ sở lý thuyết}
+% ------------------------------------------------------------
+
+\subsubsection{Ảnh hưởng các thông số bộ điều khiển}
+
+Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh hưởng đặc trưng đến chất lượng điều khiển của hệ thống:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Thay đổi} & \textbf{Tác động tích cực} & \textbf{Tác động tiêu cực} \\
+\hline
+$K_P$ tăng & Tăng tốc độ đáp ứng, giảm sai lệch tĩnh & Có thể gây mất ổn định \\
+\hline
+$K_I$ tăng & Triệt tiêu sai lệch tĩnh & Tăng dao động, integral windup \\
+\hline
+$K_D$ tăng & Giảm overshoot, phản ứng nhanh & Nhạy với nhiễu \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Thiết kế bộ điều khiển}
+
+Các phương pháp thiết kế bộ điều khiển PID phổ biến bao gồm:
+
+\begin{itemize}
+    \item \textbf{Phương pháp Ziegler-Nichols:} dựa trên đáp ứng bước hoặc điểm tới hạn
+    \item \textbf{Phương pháp Cohen-Coon:} dựa trên mô hình FOPDT
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Mô tả thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+Sử dụng hệ thống điều khiển mức chất lỏng với đầy đủ thiết bị đo lường và điều khiển.
+
+% ------------------------------------------------------------
+\subsection{Quy trình thực hiện}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Thiết lập hệ thống điều khiển mức chất lỏng
+    \item Thay đổi các thông số $K_P$, $K_I$, $K_D$ một cách độc lập
+    \item Ghi nhận đáp ứng của hệ thống
+    \item Phân tích ảnh hưởng của từng thông số
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Kết quả và bàn luận}
+% ------------------------------------------------------------
+
+\subsubsection{Thí nghiệm 1: Khảo sát sự ảnh hưởng các thông số bộ điều khiển PID}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Giá trị $K_P$} & \textbf{Quan sát} \\
+\hline
+$K_P = 1$ & Đáp ứng chậm, sai lệch tĩnh lớn \\
+\hline
+$K_P = 5$ & Đáp ứng tốt, sai lệch tĩnh nhỏ \\
+\hline
+$K_P = 10$ & Xuất hiện dao động \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Bàn luận}
+
+Việc chỉnh định bộ điều khiển PID cần cân bằng giữa các yếu tố: tốc độ đáp ứng, độ ổn định, sai lệch tĩnh và độ quá điều chỉnh. Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
+
+% ------------------------------------------------------------
+\subsection{Kết luận và kiến nghị}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Việc chỉnh định bộ điều khiển PID cần cân bằng giữa các yếu tố: tốc độ đáp ứng, độ ổn định, sai lệch tĩnh và độ quá điều chỉnh.
+    \item Phương pháp Ziegler-Nichols và Cohen-Coon là các phương pháp thực nghiệm hiệu quả để xác định các thông số PID ban đầu.
+    \item Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Trả lời câu hỏi}
+% ------------------------------------------------------------
+
+\textbf{Câu 1: Ảnh hưởng của việc tăng $K_P$ đến đáp ứng hệ thống?}
+
+Tăng $K_P$ làm tăng tốc độ đáp ứng và giảm sai lệch tĩnh, nhưng có thể gây mất ổn định và tăng độ quá điều chỉnh nếu $K_P$ quá lớn.
+
+\textbf{Câu 2: Vai trò của thành phần tích phân trong bộ điều khiển PID?}
+
+Thành phần tích phân (I) có vai trò triệt tiêu sai lệch tĩnh bằng cách tích lũy sai lệch theo thời gian. Tuy nhiên, nếu $K_I$ quá lớn có thể gây ra hiện tượng integral windup và làm tăng dao động.
+
+\textbf{Câu 3: Khi nào nên sử dụng thành phần vi phân?}
+
+Thành phần vi phân (D) nên sử dụng khi cần giảm độ quá điều chỉnh và tăng tốc độ đáp ứng. Tuy nhiên, cần thận trọng với hệ thống có nhiều nhiễu vì D nhạy với sự thay đổi đột ngột.
+
+% ------------------------------------------------------------
+\subsection{Tài liệu tham khảo}
+% ------------------------------------------------------------
+
+\begin{enumerate}
+    \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
+    \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+\end{enumerate}

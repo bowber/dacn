@@ -1,0 +1,156 @@
+% ============================================================
+% Lab 2: Thiết bị điều khiển và lập trình vi điều khiển
+% ============================================================
+
+\section*{BÀI THÍ NGHIỆM 2: THIẾT BỊ ĐIỀU KHIỂN VÀ LẬP TRÌNH VI ĐIỀU KHIỂN}
+\addcontentsline{toc}{section}{Bài thí nghiệm 2: Thiết bị điều khiển và lập trình vi điều khiển}
+
+\textit{Tóm tắt: Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình (khuấy, chưng cất, điều khiển mực chất lỏng, nhiệt độ nhập liệu), chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.}
+
+% ------------------------------------------------------------
+\subsection{Mục đích}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Có kiến thức về chức năng của bộ vi điều khiển.
+    \item Có khả năng lập trình các thuật toán điều khiển cho bộ điều khiển.
+    \item Xác định sơ đồ kết nối giữa các thành phần trong hệ thống điều khiển.
+    \item Thiết kế hệ thống điều khiển tự động để điều chỉnh quá trình khởi động và dừng trong quá trình chưng cất.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+Trong lĩnh vực công nghiệp hoá chất và dầu khí, hệ thống điều khiển đóng vai trò quan trọng trong việc điều chỉnh, giám sát và tự động hóa các quy trình sản xuất. Các chức năng của hệ thống điều khiển bao gồm điều chỉnh, điều khiển trình tự, điều khiển rời rạc và giám sát vận hành.
+
+Trong bài thí nghiệm này, chúng ta sử dụng bộ điều khiển Arduino, một bo mạch vi điều khiển chuẩn hóa, được sử dụng rộng rãi và được hỗ trợ bởi cộng đồng người dùng ở Việt Nam và toàn cầu.
+
+Phần mềm Arduino IDE cùng với công cụ mô phỏng trực tuyến www.tinkercad.com đóng vai trò quan trọng trong việc lập trình và mô phỏng các thuật toán điều khiển.
+
+\subsubsection{Bo mạch Arduino}
+
+Các mạch Arduino của hãng Arduino có nhiều phiên bản khác nhau như Mega, Uno, Micro, Nano v.v. Mặc dù có những điểm khác biệt về kích thước và tính năng, nhưng cấu trúc chung của chúng vẫn tương tự nhau. Dưới đây là mô tả về mạch Nano:
+
+\begin{itemize}
+    \item \textbf{Khối Nguồn (POWER):} Mạch Arduino có thể được cấp nguồn từ bên ngoài với điện áp trong khoảng từ 5V đến 9V.
+    \item \textbf{Khối Chức Năng Nhận và Xuất Tín Hiệu (INPUT và OUTPUT):} Mạch có các chân tín hiệu (PIN) để nhận và xuất tín hiệu.
+    \item \textbf{Khối Chức Năng Truyền Dữ Liệu (Serial):} Mạch hỗ trợ giao tiếp dữ liệu thông qua giao tiếp Serial.
+\end{itemize}
+
+\subsubsection{Arduino IDE}
+
+Intergrated Development Environment (IDE) là môi trường phát triển tích hợp được sử dụng để lập trình cho các bo mạch Arduino. IDE này có thể được tải về miễn phí từ trang web: www.arduino.cc và cài đặt trên máy tính.
+
+\textbf{Các lệnh cơ bản:}
+\begin{itemize}
+    \item \texttt{pinMode(pin, mode)}: Thiết lập chế độ của một chân (OUTPUT hoặc INPUT).
+    \item \texttt{digitalWrite(pin, value)}: Xuất tín hiệu điện từ một chân (HIGH hoặc LOW).
+    \item \texttt{digitalRead(pin)}: Đọc giá trị điện áp từ một chân (HIGH hoặc LOW).
+    \item \texttt{analogRead(pin)}: Đọc giá trị analog từ một chân Analog (giá trị từ 0 đến 1023).
+    \item \texttt{analogWrite(pin, value)}: Xuất tín hiệu analog (phát xung PWM) từ một chân.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Thực hiện thí nghiệm}
+% ------------------------------------------------------------
+
+\subsubsection{Thí nghiệm 1: Thực hiện mô phỏng động cơ khuấy}
+
+\textbf{Yêu cầu:}
+
+Thông qua 1 công tắc điều khiển khi nhấn nút bật (ON) máy khuấy thì hoạt động theo chu trình ON.
+
+\textbf{Thiết kế chương trình:}
+\begin{itemize}
+    \item Lắp động cơ khuấy vào chân D13
+    \item Công tắc vào chân D2 sử dụng điện trở kéo về GND
+    \item Sử dụng \texttt{pinMode OUTPUT} để thiết lập chân số 13 là chân nhận tín hiệu đầu ra.
+    \item Tín hiệu chân ra digital có 2 giá trị HIGH hoặc LOW sử dụng lệnh \texttt{digitalWrite()}.
+    \item Lệnh \texttt{delay()} để giữ nguyên trạng thái hoạt động trong khoảng thời gian mong muốn.
+\end{itemize}
+
+\textbf{Kết quả và bàn luận:}
+
+Với các bước thực hiện thiết kế chương trình trên, cùng với đoạn code hoàn chỉnh và chạy thực tế trên mô hình tại phòng thí nghiệm. Ta thấy đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển của chúng ta với các chu trình ON, OFF định sẵn.
+
+\subsubsection{Thí nghiệm 2: Thực hiện mô phỏng điều khiển động cơ khuấy}
+
+\textbf{Thiết kế chương trình:}
+\begin{itemize}
+    \item Lắp động cơ khuấy từ chân D13 sang chân \textasciitilde D11 là chân PWM
+    \item Sử dụng \texttt{pinMode OUTPUT} để thiết lập chân số 6 là chân nhận tín hiệu đầu ra.
+    \item Tín hiệu chân ra analog (PWM) thiết lập bằng 125 (khoảng 50\%) trong 60 giây.
+    \item Tăng giá trị chân PWM từ 125 lên 250 và giảm xuống 0 theo bước nhảy như đề bài.
+\end{itemize}
+
+\textbf{Kết quả và bàn luận:}
+
+Đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển. Bật động cơ khuấy ở mức công suất 50\% trong vòng 60 giây, tăng dần công suất lên 100\% theo 5 cấp độ - mỗi cấp độ hoạt động 30 giây.
+
+\subsubsection{Thí nghiệm 3: Mô phỏng vận hành điều khiển hệ thống chưng cất}
+
+Sử dụng công tắc ON/OFF viết chương trình điều khiển tự động 3 chu trình cho hệ thống chưng cất:
+\begin{itemize}
+    \item Bật nút ON hệ thống khởi động theo quy trình định sẵn, sau đó hệ chuyển sang trạng thái làm việc.
+    \item Bật nút OFF hệ thống chuyển trạng thái dừng theo quy trình.
+\end{itemize}
+
+\textbf{Chu trình khởi động ON:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|c|}
+\hline
+\textbf{Các bước thực hiện} & \textbf{Sự kiện} & \textbf{Thời gian chờ (giây)} \\
+\hline
+B1 – Khởi động & Nhấn nút ON & -- \\
+\hline
+B2 – Nhận dung dịch vào nồi đun & Bật bơm 1, Mở van 0 & 30 \\
+\hline
+B3 – Gia nhiệt nồi đun & Tắt van 0, Mở điện trở R0, Mở van V2 & 60 \\
+\hline
+B4 – Khởi động dòng nhập liệu & Mở van V1, Bật điện trở R1 & 10 \\
+\hline
+B5 – Khởi động dòng hoàn lưu & Bật bơm 2, Bật điện trở R1 & 10 \\
+\hline
+B6 – Tháo sản phẩm đáy & Mở Van V3, Bật bơm 3 & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Thí nghiệm 4: Lập trình điều chỉnh tự động nhiệt độ nhập liệu vào tháp chưng cất sử dụng bộ điều khiển ON-OFF}
+
+Sử dụng cảm biến nhiệt độ TMP, giá trị nhiệt độ được cảm biến chuyển thành tín hiệu điện áp tương ứng. Cứ 10mV tương ứng với 1°C, khoảng đo của cảm biến từ -40°C đến 125°C.
+
+Công thức tính nhiệt độ: $T = \frac{voltage - 400}{10}$
+
+\subsubsection{Thí nghiệm 5: Lập trình điều chỉnh tự động mức chất lỏng đáy tháp chưng cất sử dụng bộ điều khiển PID}
+
+Sử dụng cảm biến siêu âm HC-SR04 đo mức chất lỏng. Sử dụng sóng siêu âm phát từ chân Trig và nhận tín hiệu sóng phản xạ tại chân Echo.
+
+Công thức: $distance = \frac{time}{2} \times 0.0349$ cm
+
+% ------------------------------------------------------------
+\subsection{Kết luận và kiến nghị}
+% ------------------------------------------------------------
+
+Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra được nhiều nội dung ý nghĩa:
+
+\begin{itemize}
+    \item \textbf{Hiểu được chức năng bộ vi điều khiển:} Thí nghiệm giúp người tham gia hiểu rõ về chức năng và vai trò của bộ vi điều khiển trong hệ thống điều khiển tự động.
+    \item Biết lập trình các thuật toán điều khiển cho bộ điều khiển.
+    \item Thiết lập sơ đồ kết nối các thành phần của hệ thống điều khiển.
+    \item Thiết kế hệ thống điều khiển tự động để khởi động, dừng cho quá trình.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Tài liệu tham khảo}
+% ------------------------------------------------------------
+
+\begin{enumerate}
+    \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
+    \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
+\end{enumerate}
+
+\newpage
