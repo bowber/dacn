@@ -1,51 +1,112 @@
 % ============================================================
 % Cover Page - Vietnamese University Lab Report
+% Matching BTL_CSDK.pdf sample design
 % ============================================================
 
+% Define colors
+\definecolor{bkblue}{RGB}{0, 82, 147}
+
 \begin{titlepage}
+    \newgeometry{left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm}
+    
+    % Outer border frame with corner decorations
+    \begin{tikzpicture}[remember picture, overlay]
+        % Double border
+        \draw[bkblue, thick] 
+            ([shift={(0.8cm,-0.8cm)}]current page.north west) 
+            rectangle 
+            ([shift={(-0.8cm,0.8cm)}]current page.south east);
+        \draw[bkblue, thick] 
+            ([shift={(1cm,-1cm)}]current page.north west) 
+            rectangle 
+            ([shift={(-1cm,1cm)}]current page.south east);
+        
+        % Corner marks - top left
+        \fill[bkblue] ([shift={(0.75cm,-0.75cm)}]current page.north west) rectangle ++(0.3cm,-0.3cm);
+        % Corner marks - top right
+        \fill[bkblue] ([shift={(-1.05cm,-0.75cm)}]current page.north east) rectangle ++(0.3cm,-0.3cm);
+        % Corner marks - bottom left
+        \fill[bkblue] ([shift={(0.75cm,1.05cm)}]current page.south west) rectangle ++(0.3cm,-0.3cm);
+        % Corner marks - bottom right
+        \fill[bkblue] ([shift={(-1.05cm,1.05cm)}]current page.south east) rectangle ++(0.3cm,-0.3cm);
+    \end{tikzpicture}
+    
     \centering
     
-    % University header
-    {\fontsize{13}{15}\selectfont
-    ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH\\[0.2cm]
-    \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
-    KHOA KỸ THUẬT HÓA HỌC\\[0.1cm]
+    \vspace*{0.5cm}
+    
+    % University header - Blue text
+    {\fontsize{14}{16}\selectfont\color{bkblue}\bfseries
+    ĐẠI HỌC BÁCH KHOA THÀNH PHỐ HỒ CHÍ MINH\\[0.3cm]
+    }
+    {\fontsize{13}{15}\selectfont\color{bkblue}\bfseries
+    KHOA KỸ THUẬT HÓA HỌC\\[0.2cm]
     BỘ MÔN QUÁ TRÌNH – THIẾT BỊ\\[0.3cm]
     }
     
-    % Horizontal line
-    \rule{\textwidth}{0.5pt}\\[1.5cm]
+    % Decorative wavy line
+    {\color{bkblue}\fontsize{12}{14}\selectfont
+    ---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---
+    }
     
-    % Report type
-    {\fontsize{16}{18}\selectfont\bfseries
+    \vspace{0.8cm}
+    
+    % Logo
+    \includegraphics[height=3.5cm]{../assets/bk_logo.png}
+    
+    \vspace{0.8cm}
+    
+    % Report type - Blue
+    {\fontsize{16}{18}\selectfont\bfseries\color{bkblue}
     BÁO CÁO\\[0.5cm]
     }
     
-    % Course name
-    {\fontsize{18}{20}\selectfont\bfseries
+    % Course name - Blue
+    {\fontsize{16}{18}\selectfont\bfseries\color{bkblue}
     THÍ NGHIỆM CƠ SỞ ĐIỀU KHIỂN QUÁ TRÌNH\\[0.3cm]
     }
     
     % Course code
-    {\fontsize{13}{15}\selectfont
-    MSMH: CH3342\\[2cm]
+    {\fontsize{13}{15}\selectfont\bfseries
+    MSMH 3342\\[0.3cm]
     }
     
-    % Student info table
-    \begin{tabular}{ll}
-        \textbf{Nhóm sinh viên thực hiện:} & \\[0.3cm]
-        Nguyễn Phúc Vinh & 2115299 \\[0.2cm]
-        Trần Minh Thiện & 2112358 \\[0.2cm]
-        Lê Tứ Hiếu & 2113351 \\[1cm]
-        \textbf{Giảng viên hướng dẫn:} & TS. Bùi Ngọc Pha \\[0.5cm]
-        \textbf{Lớp:} & L01 \\
+    % Blue horizontal rule
+    {\color{bkblue}\rule{0.85\textwidth}{1.5pt}}
+    
+    \vspace{0.8cm}
+    
+    % Main title
+    {\fontsize{22}{26}\selectfont\bfseries
+    BÁO CÁO THÍ NGHIỆM\\[0.3cm]
+    }
+    
+    % Blue horizontal rule
+    {\color{bkblue}\rule{0.85\textwidth}{1.5pt}}
+    
+    \vspace{1.2cm}
+    
+    % Student info - right aligned
+    \hfill
+    \begin{tabular}{@{}r@{\hspace{0.5cm}}l@{}}
+        \textbf{Sinh viên:} & Nguyễn Thanh Hương - 2211400 \\[0.2cm]
+                            & Nguyễn Thị Thuý Vy - 2214042 \\[0.2cm]
+                            & Nguyễn Ngọc Minh Tường - 2213888 \\[0.2cm]
+                            & Lê Thanh Nguyên - 2312351 \\[0.2cm]
+                            & Nguyễn Phúc Bảo Lâm - 2111630 \\[0.6cm]
+        \textbf{GVHD:}      & TS. Bùi Ngọc Pha \\[0.3cm]
+        \textbf{Lớp:}       & L01 \\
     \end{tabular}
+    \hspace{2cm}
     
     \vfill
     
-    % Date and location
-    {\fontsize{13}{15}\selectfont
-    Thành phố Hồ Chí Minh, tháng 5 năm 2024
+    % Date and location - italic
+    {\fontsize{13}{15}\selectfont\itshape
+    Thành phố Hồ Chí Minh, ngày 27 tháng 11 năm 2025
     }
     
+    \vspace{1cm}
+    
+    \restoregeometry
 \end{titlepage}
