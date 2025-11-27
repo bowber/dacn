@@ -308,9 +308,9 @@ Sai lệch xác lập & \\
     \draw[line] (fb) |- (sensor);
     \draw[arrow] (sensor) -| (sum);
     
-    % Sum signs - positioned in gaps between × lines (N, S, E, W)
-    \node[font=\tiny] at ($(sum.west)+(0.18,0)$) {$+$};
-    \node[font=\tiny] at ($(sum.south)+(0,0.18)$) {$-$};
+    % Sum signs - positioned outside circle, next to arrow lines
+    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
+    \node[font=\scriptsize] at ($(sum.south)+(0,-0.3)$) [right] {$-$};
 \end{tikzpicture}
 \caption{Sơ đồ khối hệ thống điều khiển PID}
 \label{fig:pid_system}
