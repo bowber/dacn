@@ -165,15 +165,15 @@
         minimum height=2.5em, minimum width=3em,
         text centered, font=\small
     },
-    % Summing junction with cross inside
+    % Summing junction with × (rotated cross) inside
     sum/.style={
         circle, draw, thick,
         minimum size=1.5em,
         inner sep=0pt,
         path picture={
             \draw[thick] 
-                (path picture bounding box.north) -- (path picture bounding box.south)
-                (path picture bounding box.west) -- (path picture bounding box.east);
+                (path picture bounding box.north west) -- (path picture bounding box.south east)
+                (path picture bounding box.south west) -- (path picture bounding box.north east);
         }
     },
     % Arrow style
