@@ -45,8 +45,8 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     \draw[line] (fb) |- (sensor);
     \draw[arrow] (sensor) -| (sum);
     
-    % Sum signs - positioned outside circle, next to arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
+    % Sum signs - positioned outside circle, below arrow lines
+    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
     
     % ON-OFF characteristic
@@ -110,9 +110,9 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     % Output arrow
     \draw[arrow] (sum) -- (output);
     
-    % Sum signs - positioned outside circle, next to arrow lines
+    % Sum signs - positioned outside circle, below arrow lines
     \node[font=\scriptsize] at ($(P.east)!0.5!(sum.west)+(0,0.6)$) {$+$};
-    \node[font=\scriptsize] at ($(I.east)!0.5!(sum.west)$) [above] {$+$};
+    \node[font=\scriptsize] at ($(I.east)!0.5!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(D.east)!0.5!(sum.west)+(0,-0.6)$) {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối bộ điều khiển PID}

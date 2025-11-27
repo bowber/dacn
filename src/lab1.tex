@@ -141,11 +141,11 @@ Sách lược điều khiển phản hồi dựa trên nguyên tắc liên tục
     \draw[line] (fb) |- (gm);
     \draw[arrow] (gm) -| (sum);
     
-    % Sum signs - positioned outside circle, next to arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
+    % Sum signs - positioned outside circle, below arrow lines
+    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
-    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum2.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum2.north)$) [right] {$+$};
+    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum2.west)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum2.north)$) [left] {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối sách lược điều khiển phản hồi}
 \label{fig:feedback_control}
@@ -214,11 +214,11 @@ Sách lược điều khiển truyền thẳng là sách lược mà bộ điề
     \draw[arrow] (gm) -- (gff);
     \draw[arrow] (gff) -- (sum);
     
-    % Sum signs - positioned outside circle, next to arrow lines
-    \node[font=\scriptsize] at ($(gff.south)!0.5!(sum.north)$) [right] {$+$};
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum2.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum2.north)$) [right] {$+$};
+    % Sum signs - positioned outside circle, below arrow lines
+    \node[font=\scriptsize] at ($(gff.south)!0.5!(sum.north)$) [left] {$+$};
+    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum2.west)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum2.north)$) [left] {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối sách lược điều khiển truyền thẳng}
 \label{fig:feedforward_control}
@@ -292,13 +292,13 @@ Trong thực tế, thường kết hợp cả hai sách lược điều khiển 
     \draw[line] (fb) |- (gmy);
     \draw[arrow] (gmy) -| (sum1);
     
-    % Sum signs - positioned outside circle, next to arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum1.west)$) [above] {$+$};
+    % Sum signs - positioned outside circle, below arrow lines
+    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum1.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum1.south)+(0,-0.5)$) [left] {$-$};
-    \node[font=\scriptsize] at ($(gff.south)!0.5!(sum2.north)$) [right] {$+$};
-    \node[font=\scriptsize] at ($(gc.east)!0.3!(sum2.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum3.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum3.north)$) [right] {$+$};
+    \node[font=\scriptsize] at ($(gff.south)!0.5!(sum2.north)$) [left] {$+$};
+    \node[font=\scriptsize] at ($(gc.east)!0.3!(sum2.west)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(gv.east)!0.3!(sum3.west)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(gd.south)!0.5!(sum3.north)$) [left] {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối sách lược điều khiển kết hợp truyền thẳng và phản hồi (FF/FB)}
 \label{fig:combined_control}
@@ -451,8 +451,8 @@ Các biến quá trình bao gồm:
     \draw[line] (fb) |- (sensor);
     \draw[arrow] (sensor) -| (sum);
     
-    % Sum signs - positioned outside circle, next to arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.3!(sum.west)$) [above] {$+$};
+    % Sum signs - positioned outside circle, below arrow lines
+    \node[font=\scriptsize] at ($(sp.east)!0.3!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
 \end{tikzpicture}
 \caption{Sơ đồ khối tổng quát về các biến quá trình}
