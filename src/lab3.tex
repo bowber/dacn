@@ -20,6 +20,49 @@ Bài thí nghiệm này nhằm khảo sát và so sánh các bộ điều khiể
 
 Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra ở hai chế độ ($u_{max}$ và $u_{min}$) hoặc hai trạng thái (bật và tắt) tùy thuộc vào sai lệch điều khiển $e$ mà nó nhận được.
 
+% Sơ đồ khối điều khiển ON-OFF
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=1cm of sp] (sum) {};
+    \node[block, right=1.2cm of sum, minimum width=5em] (controller) {ON-OFF};
+    \node[block, right=1.5cm of controller] (process) {Quá trình};
+    \node[right=1.5cm of process] (output) {$Y$};
+    
+    % Sensor
+    \node[block, below=1cm of process] (sensor) {Cảm biến};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (controller);
+    \draw[arrow] (controller) -- node[labelnode, above] {$u$} (process);
+    \draw[arrow] (process) -- (output);
+    
+    % Feedback
+    \coordinate (fb) at ($(process.east)!0.6!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| (sum);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.north west)+(0.15,-0.15)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.15,0.15)$) {$-$};
+    
+    % ON-OFF characteristic
+    \node[right=3cm of output] (char) {};
+    \begin{scope}[shift={(9,0)}]
+        \draw[->] (-0.5,0) -- (1.5,0) node[right] {$e$};
+        \draw[->] (0,-0.8) -- (0,1.2) node[above] {$u$};
+        \draw[thick] (-0.3,-0.5) -- (0,-0.5) -- (0,0.7) -- (1,0.7);
+        \node[font=\tiny] at (1.2,0.7) {$u_{max}$};
+        \node[font=\tiny] at (0.5,-0.5) {$u_{min}$};
+    \end{scope}
+\end{tikzpicture}
+\caption{Sơ đồ khối và đặc tính bộ điều khiển ON-OFF}
+\label{fig:onoff_control}
+\end{figure}
+
 Phương trình mô tả:
 \begin{equation}
 u = \begin{cases}
@@ -33,6 +76,48 @@ Loại điều khiển này không thực sự giữ biến được điều khi
 \subsubsection{Bộ điều khiển liên tục PID}
 
 Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều khiển dựa trên các tác động thành phần bao gồm P, I và D:
+
+% Sơ đồ khối bộ điều khiển PID
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+    % Input
+    \node (input) {$e(t)$};
+    
+    % P, I, D blocks
+    \node[block, right=1.5cm of input, yshift=1.2cm] (P) {$K_P$};
+    \node[block, right=1.5cm of input] (I) {$K_I \int$};
+    \node[block, right=1.5cm of input, yshift=-1.2cm] (D) {$K_D \frac{d}{dt}$};
+    
+    % Sum
+    \node[sumcircle, right=1.5cm of I] (sum) {};
+    
+    % Output
+    \node[right=1cm of sum] (output) {$u(t)$};
+    
+    % Arrows from input
+    \coordinate (split) at ($(input.east)+(0.5,0)$);
+    \draw[line] (input) -- (split);
+    \draw[arrow] (split) |- (P);
+    \draw[arrow] (split) -- (I);
+    \draw[arrow] (split) |- (D);
+    
+    % Arrows to sum
+    \draw[arrow] (P) -| (sum);
+    \draw[arrow] (I) -- (sum);
+    \draw[arrow] (D) -| (sum);
+    
+    % Output arrow
+    \draw[arrow] (sum) -- (output);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum.west)+(0.2,0)$) {$+$};
+    \node[font=\tiny] at ($(sum.south)+(0,0.2)$) {$+$};
+\end{tikzpicture}
+\caption{Sơ đồ khối bộ điều khiển PID}
+\label{fig:pid_block}
+\end{figure}
 
 \begin{itemize}
     \item \textbf{Thành phần P (Proportional):} tác động tỉ lệ với độ lớn sai lệch điều khiển $e(t)$

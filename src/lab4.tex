@@ -277,7 +277,54 @@ Sai lệch xác lập & \\
 
 \textbf{Câu 1: Vẽ sơ đồ khối tổng quát về các biến quá trình, sơ đồ khối và lưu đồ điều khiển?}
 
-Sơ đồ khối tổng quát bao gồm: Giá trị đặt $Y_{SP}$ $\rightarrow$ Bộ điều khiển PID $\rightarrow$ Thiết bị chấp hành $\rightarrow$ Quá trình $\rightarrow$ Cảm biến $\rightarrow$ Phản hồi về bộ điều khiển. Nhiễu tác động vào quá trình.
+% Sơ đồ khối hệ thống điều khiển PID
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=0.8cm of sp] (sum) {};
+    \node[block, right=1cm of sum, minimum width=4em] (pid) {PID};
+    \node[block, right=1.2cm of pid, minimum width=4em] (actuator) {Van/Bơm};
+    \node[block, right=1.2cm of actuator, minimum width=4em] (process) {Quá trình};
+    \node[right=1.2cm of process] (output) {$Y$};
+    
+    % Disturbance
+    \node[above=0.8cm of process] (dist) {Nhiễu $Z$};
+    
+    % Sensor
+    \node[block, below=1cm of actuator, minimum width=4em] (sensor) {Cảm biến};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (pid);
+    \draw[arrow] (pid) -- node[labelnode, above] {$p$} (actuator);
+    \draw[arrow] (actuator) -- node[labelnode, above] {$m$} (process);
+    \draw[arrow] (process) -- (output);
+    \draw[arrow] (dist) -- (process);
+    
+    % Feedback
+    \coordinate (fb) at ($(process.east)!0.6!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| (sum);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.north west)+(0.15,-0.15)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.15,0.15)$) {$-$};
+\end{tikzpicture}
+\caption{Sơ đồ khối hệ thống điều khiển PID}
+\label{fig:pid_system}
+\end{figure}
+
+\textbf{Trong đó:}
+\begin{itemize}
+    \item $Y_{SP}$ - Giá trị đặt (Setpoint)
+    \item $e$ - Sai lệch điều khiển ($e = Y_{SP} - Y$)
+    \item $p$ - Tín hiệu điều khiển từ bộ PID
+    \item $m$ - Biến điều khiển (Manipulated Variable)
+    \item $Y$ - Biến được điều khiển (Controlled Variable)
+    \item $Z$ - Biến nhiễu (Disturbance)
+\end{itemize}
 
 \textbf{Câu 2: Mô tả các thành phần của hệ thống điều khiển trong bài thí nghiệm này?}
 

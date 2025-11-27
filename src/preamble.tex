@@ -152,6 +152,40 @@
 \usepackage{amssymb}
 
 % ============================================================
+% TIKZ - Block Diagrams
+% ============================================================
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, decorations.markings}
+
+% TikZ styles for control system block diagrams
+\tikzset{
+    % Block styles
+    block/.style={
+        rectangle, draw, thick,
+        minimum height=2.5em, minimum width=3em,
+        text centered, font=\small
+    },
+    sumcircle/.style={
+        circle, draw, thick,
+        minimum size=1.5em,
+        inner sep=0pt,
+        font=\scriptsize
+    },
+    % Arrow style
+    arrow/.style={
+        -Stealth, thick
+    },
+    % Line style
+    line/.style={
+        thick
+    },
+    % Label style
+    labelnode/.style={
+        font=\small, midway
+    }
+}
+
+% ============================================================
 % CUSTOM COMMANDS
 % ============================================================
 % Bold paragraph header

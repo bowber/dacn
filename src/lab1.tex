@@ -26,9 +26,140 @@ Nguyên lý điều khiển thể hiện nguyên tắc về mặt cấu trúc tr
     \item \textbf{Điều khiển theo tác động phản hồi:} Bộ điều khiển đưa ra tác động dựa trên thông tin phản hồi từ biến được điều khiển.
 \end{itemize}
 
+% Sơ đồ khối điều khiển theo tác động thiết lập
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Nodes
+    \node (input) {$Y_{SP}$};
+    \node[block, right=1.5cm of input] (controller) {BĐK};
+    \node[block, right=2cm of controller] (process) {QUÁ TRÌNH};
+    \node[right=1.5cm of process] (output) {$y$};
+    
+    % Disturbance
+    \node[above=1cm of process] (dist) {$z$};
+    
+    % Arrows
+    \draw[arrow] (input) -- node[labelnode, above] {Giá trị đặt} (controller);
+    \draw[arrow] (controller) -- node[labelnode, above] {$u$} (process);
+    \draw[arrow] (process) -- node[labelnode, above] {} (output);
+    \draw[arrow] (dist) -- (process);
+\end{tikzpicture}
+\caption{Cấu trúc điều khiển theo tác động thiết lập}
+\label{fig:setpoint_control}
+\end{figure}
+
+% Sơ đồ khối điều khiển theo tác động của nhiễu
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Nodes
+    \node (input) {$Y_{SP}$};
+    \node[block, right=1.5cm of input] (controller) {BĐK};
+    \node[block, right=2cm of controller] (process) {QUÁ TRÌNH};
+    \node[right=1.5cm of process] (output) {$y$};
+    
+    % Disturbance
+    \node[above=1cm of process] (dist) {$z$};
+    
+    % Arrows
+    \draw[arrow] (input) -- node[labelnode, above] {Giá trị đặt} (controller);
+    \draw[arrow] (controller) -- node[labelnode, above] {$u$} (process);
+    \draw[arrow] (process) -- node[labelnode, above] {} (output);
+    \draw[arrow] (dist) -- (process);
+    % Disturbance to controller
+    \draw[arrow] (dist) -| (controller);
+\end{tikzpicture}
+\caption{Cấu trúc điều khiển theo tác động của nhiễu}
+\label{fig:disturbance_control}
+\end{figure}
+
+% Sơ đồ khối điều khiển theo tác động phản hồi
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Nodes
+    \node (input) {$Y_{SP}$};
+    \node[block, right=1.5cm of input] (controller) {BĐK};
+    \node[block, right=2cm of controller] (process) {QUÁ TRÌNH};
+    \node[right=1.5cm of process] (output) {$y$};
+    
+    % Disturbance
+    \node[above=1cm of process] (dist) {$z$};
+    
+    % Arrows
+    \draw[arrow] (input) -- node[labelnode, above] {Giá trị đặt} (controller);
+    \draw[arrow] (controller) -- node[labelnode, above] {$u$} (process);
+    \draw[arrow] (process) -- node[labelnode, above] {} (output);
+    \draw[arrow] (dist) -- (process);
+    
+    % Feedback loop
+    \coordinate (feedback) at ($(process.east)!0.5!(output.west)$);
+    \draw[line] (feedback) -- ++(0,-1.5) -| (controller);
+    \draw[arrow] ($(controller.west)+(0,-0.3)$) -- ++(-0.5,0);
+\end{tikzpicture}
+\caption{Cấu trúc điều khiển theo tác động phản hồi từ biến cần điều khiển}
+\label{fig:feedback_principle}
+\end{figure}
+
 \subsubsection{Sách lược điều khiển phản hồi (Feedback Control)}
 
 Sách lược điều khiển phản hồi dựa trên nguyên tắc liên tục đo giá trị biến được điều khiển và phản hồi thông tin về bộ điều khiển. Bộ điều khiển so sánh giá trị đo được với giá trị đặt, tính toán sai lệch và đưa ra tác động điều khiển nhằm đạt được giá trị mong muốn.
+
+% Sơ đồ khối điều khiển phản hồi
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=1cm of sp] (sum) {};
+    \node[block, right=1.2cm of sum] (gc) {$G_C$};
+    \node[block, right=1.2cm of gc] (gv) {$G_V$};
+    \node[sumcircle, right=1.2cm of gv] (sum2) {};
+    \node[block, right=1.2cm of sum2] (gp) {$G_P$};
+    \node[right=1.5cm of gp] (output) {$Y$};
+    
+    % Disturbance
+    \node[block, above=0.8cm of sum2] (gd) {$G_D$};
+    \node[above=0.6cm of gd] (dist) {$Z$};
+    
+    % Sensor
+    \node[block, below=1cm of gp] (gm) {$G_M$};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (gc);
+    \draw[arrow] (gc) -- node[labelnode, above] {$p$} (gv);
+    \draw[arrow] (gv) -- node[labelnode, above] {$m$} (sum2);
+    \draw[arrow] (sum2) -- (gp);
+    \draw[arrow] (gp) -- (output);
+    \draw[arrow] (dist) -- (gd);
+    \draw[arrow] (gd) -- (sum2);
+    
+    % Feedback
+    \coordinate (fb) at ($(gp.east)!0.6!(output.west)$);
+    \draw[line] (fb) |- (gm);
+    \draw[arrow] (gm) -| (sum);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.north west)+(0.15,-0.15)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.15,0.15)$) {$-$};
+    \node[font=\tiny] at ($(sum2.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum2.west)+(0.2,0)$) {$+$};
+\end{tikzpicture}
+\caption{Sơ đồ khối sách lược điều khiển phản hồi}
+\label{fig:feedback_control}
+\end{figure}
+
+\textbf{Trong đó:}
+\begin{itemize}
+    \item $G_C$ - Hàm truyền bộ điều khiển
+    \item $G_V$ - Hàm truyền van điều khiển
+    \item $G_P$ - Hàm truyền quá trình
+    \item $G_D$ - Hàm truyền nhiễu
+    \item $G_M$ - Hàm truyền cảm biến đo
+    \item $Y_{SP}$ - Giá trị đặt, $Y$ - Biến được điều khiển, $Z$ - Nhiễu
+\end{itemize}
 
 \textbf{Ưu điểm:}
 \begin{itemize}
@@ -46,6 +177,59 @@ Sách lược điều khiển phản hồi dựa trên nguyên tắc liên tục
 
 Sách lược điều khiển truyền thẳng là sách lược mà bộ điều khiển tiếp nhận tín hiệu của những nhiễu đo được, nhằm ngăn chặn kịp thời ảnh hưởng của biến nhiễu đối với quá trình.
 
+% Sơ đồ khối điều khiển truyền thẳng
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=1.5cm of sp] (sum) {};
+    \node[block, right=1.2cm of sum] (gv) {$G_V$};
+    \node[sumcircle, right=1.2cm of gv] (sum2) {};
+    \node[block, right=1.2cm of sum2] (gp) {$G_P$};
+    \node[right=1.5cm of gp] (output) {$Y$};
+    
+    % Feedforward controller
+    \node[block, above=1.2cm of sum] (gff) {$G_{FF}$};
+    
+    % Disturbance
+    \node[block, above=0.8cm of sum2] (gd) {$G_D$};
+    \node[above=0.6cm of gd] (dist) {$Z$};
+    
+    % Sensor for disturbance
+    \node[block, left=0.8cm of gff] (gm) {$G_M$};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sum) -- (gv);
+    \draw[arrow] (gv) -- node[labelnode, above] {$m$} (sum2);
+    \draw[arrow] (sum2) -- (gp);
+    \draw[arrow] (gp) -- (output);
+    \draw[arrow] (dist) -- (gd);
+    \draw[arrow] (gd) -- (sum2);
+    
+    % Feedforward path
+    \coordinate (zpoint) at ($(dist.south)!0.3!(gd.north)$);
+    \draw[line] (zpoint) -| (gm);
+    \draw[arrow] (gm) -- (gff);
+    \draw[arrow] (gff) -- (sum);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.south)+(0,0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum2.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum2.west)+(0.2,0)$) {$+$};
+\end{tikzpicture}
+\caption{Sơ đồ khối sách lược điều khiển truyền thẳng}
+\label{fig:feedforward_control}
+\end{figure}
+
+\textbf{Trong đó:}
+\begin{itemize}
+    \item $G_{FF}$ - Hàm truyền bộ điều khiển truyền thẳng
+    \item $G_M$ - Hàm truyền cảm biến đo nhiễu
+\end{itemize}
+
 \textbf{Ưu điểm:}
 \begin{itemize}
     \item Tác động nhanh do loại bỏ ảnh hưởng của nhiễu trước khi nó kịp ảnh hưởng xấu tới quá trình.
@@ -60,6 +244,75 @@ Sách lược điều khiển truyền thẳng là sách lược mà bộ điề
 \subsubsection{Sách lược điều khiển kết hợp (FF/FB)}
 
 Trong thực tế, thường kết hợp cả hai sách lược điều khiển phản hồi và truyền thẳng để tận dụng ưu điểm của cả hai: phản hồi cho độ chính xác cao, truyền thẳng cho phản ứng nhanh.
+
+% Sơ đồ khối điều khiển kết hợp FF/FB
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=1cm of sp] (sum1) {};
+    \node[block, right=1cm of sum1] (gc) {$G_C$};
+    \node[sumcircle, right=1cm of gc] (sum2) {};
+    \node[block, right=1cm of sum2] (gv) {$G_V$};
+    \node[sumcircle, right=1cm of gv] (sum3) {};
+    \node[block, right=1cm of sum3] (gp) {$G_P$};
+    \node[right=1.5cm of gp] (output) {$Y$};
+    
+    % Feedforward controller
+    \node[block, above=1cm of sum2] (gff) {$G_{FF}$};
+    
+    % Disturbance
+    \node[block, above=0.8cm of sum3] (gd) {$G_D$};
+    \node[above=0.5cm of gd] (dist) {$Z$};
+    
+    % Sensors
+    \node[block, left=0.6cm of gff] (gmz) {$G_{MZ}$};
+    \node[block, below=1.2cm of gp] (gmy) {$G_{MY}$};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum1);
+    \draw[arrow] (sum1) -- node[labelnode, above] {$e$} (gc);
+    \draw[arrow] (gc) -- (sum2);
+    \draw[arrow] (sum2) -- (gv);
+    \draw[arrow] (gv) -- node[labelnode, above] {$m$} (sum3);
+    \draw[arrow] (sum3) -- (gp);
+    \draw[arrow] (gp) -- (output);
+    \draw[arrow] (dist) -- (gd);
+    \draw[arrow] (gd) -- (sum3);
+    
+    % Feedforward path
+    \coordinate (zpoint) at ($(dist.south)!0.3!(gd.north)$);
+    \draw[line] (zpoint) -| (gmz);
+    \draw[arrow] (gmz) -- (gff);
+    \draw[arrow] (gff) -- (sum2);
+    
+    % Feedback path
+    \coordinate (fb) at ($(gp.east)!0.6!(output.west)$);
+    \draw[line] (fb) |- (gmy);
+    \draw[arrow] (gmy) -| (sum1);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum1.north west)+(0.15,-0.15)$) {$+$};
+    \node[font=\tiny] at ($(sum1.south west)+(0.15,0.15)$) {$-$};
+    \node[font=\tiny] at ($(sum2.south)+(0,0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum2.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum3.north)+(0,-0.2)$) {$+$};
+    \node[font=\tiny] at ($(sum3.west)+(0.2,0)$) {$+$};
+\end{tikzpicture}
+\caption{Sơ đồ khối sách lược điều khiển kết hợp truyền thẳng và phản hồi (FF/FB)}
+\label{fig:combined_control}
+\end{figure}
+
+\textbf{Trong đó:}
+\begin{itemize}
+    \item $G_C$ - Hàm truyền bộ điều khiển phản hồi
+    \item $G_{FF}$ - Hàm truyền bộ điều khiển truyền thẳng
+    \item $G_{MZ}$ - Hàm truyền cảm biến đo nhiễu
+    \item $G_{MY}$ - Hàm truyền cảm biến đo biến được điều khiển
+\end{itemize}
+
+Sách lược điều khiển kết hợp tận dụng được ưu điểm của cả hai phương thức: vòng truyền thẳng phản ứng nhanh với nhiễu, trong khi vòng phản hồi đảm bảo độ chính xác và triệt tiêu sai lệch.
 
 % ------------------------------------------------------------
 \subsection{Mô tả thiết bị thí nghiệm}
@@ -159,20 +412,83 @@ Khuyến nghị: Trong thực tế nên sử dụng sách lược điều khiể
 \subsection{Trả lời câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Vẽ sơ đồ khối tổng quát về các biến quá trình?}
+\textbf{Câu 1: Các "Biến quá trình" là gì? Hãy biểu diễn Sơ đồ khối tổng quát về các biến quá trình?}
 
-Sơ đồ khối tổng quát bao gồm: Giá trị đặt $Y_{SP}$ $\rightarrow$ Bộ điều khiển $\rightarrow$ Tác động điều khiển $u$ $\rightarrow$ Quá trình $\rightarrow$ Biến cần điều khiển $y$, với nhiễu $z$ tác động vào quá trình.
-
-\textbf{Câu 2: So sánh ưu nhược điểm của điều khiển phản hồi và truyền thẳng?}
-
+Các biến quá trình bao gồm:
 \begin{itemize}
-    \item Điều khiển phản hồi: Ưu điểm là độ chính xác cao, triệt tiêu được nhiễu không đo được. Nhược điểm là đáp ứng chậm.
-    \item Điều khiển truyền thẳng: Ưu điểm là đáp ứng nhanh. Nhược điểm là độ chính xác không cao, không triệt tiêu được nhiễu không đo được.
+    \item \textbf{Biến được điều khiển (Controlled Variable - CV):} Biến đầu ra cần duy trì ở giá trị mong muốn (ví dụ: mức chất lỏng, nhiệt độ).
+    \item \textbf{Biến điều khiển (Manipulated Variable - MV):} Biến có thể điều chỉnh để tác động lên quá trình (ví dụ: lưu lượng bơm).
+    \item \textbf{Biến nhiễu (Disturbance Variable - DV):} Biến tác động không mong muốn lên quá trình (ví dụ: thay đổi lưu lượng đầu ra).
+    \item \textbf{Giá trị đặt (Setpoint - SP):} Giá trị mong muốn của biến được điều khiển.
 \end{itemize}
 
-\textbf{Câu 3: Tại sao nên sử dụng điều khiển kết hợp?}
+% Sơ đồ khối tổng quát các biến quá trình
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Nodes
+    \node (sp) {$Y_{SP}$};
+    \node[sumcircle, right=1.2cm of sp] (sum) {};
+    \node[block, right=1.5cm of sum, minimum width=4em] (controller) {Bộ điều khiển};
+    \node[block, right=2cm of controller, minimum width=4em] (process) {Quá trình};
+    \node[right=1.5cm of process] (output) {$y$};
+    
+    % Disturbance
+    \node[above=1cm of process] (dist) {Nhiễu $z$};
+    
+    % Sensor
+    \node[block, below=1.2cm of process, minimum width=4em] (sensor) {Cảm biến};
+    
+    % Arrows with labels
+    \draw[arrow] (sp) -- node[labelnode, above] {Giá trị đặt} (sum);
+    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (controller);
+    \draw[arrow] (controller) -- node[labelnode, above] {$u$ (MV)} (process);
+    \draw[arrow] (process) -- node[labelnode, above] {(CV)} (output);
+    \draw[arrow] (dist) -- node[labelnode, right] {(DV)} (process);
+    
+    % Feedback loop
+    \coordinate (fb) at ($(process.east)!0.6!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| (sum);
+    
+    % Sum signs
+    \node[font=\tiny] at ($(sum.north west)+(0.15,-0.15)$) {$+$};
+    \node[font=\tiny] at ($(sum.south west)+(0.15,0.15)$) {$-$};
+\end{tikzpicture}
+\caption{Sơ đồ khối tổng quát về các biến quá trình}
+\label{fig:process_variables}
+\end{figure}
 
-Điều khiển kết hợp tận dụng được ưu điểm của cả hai phương thức: phản hồi cho độ chính xác cao và truyền thẳng cho phản ứng nhanh với nhiễu.
+\textbf{Câu 2: Sách lược điều khiển là gì? Hãy kể tên các Sách lược điều khiển cơ sở?}
+
+Sách lược điều khiển là phương pháp tổ chức, sử dụng thông tin về các biến quá trình để đưa ra tác động điều khiển phù hợp. Các sách lược điều khiển cơ sở bao gồm:
+\begin{enumerate}
+    \item Sách lược điều khiển phản hồi (Feedback Control)
+    \item Sách lược điều khiển truyền thẳng (Feedforward Control)
+    \item Sách lược điều khiển kết hợp (FF/FB)
+    \item Sách lược điều khiển tỷ lệ (Ratio Control)
+    \item Sách lược điều khiển tầng (Cascade Control)
+\end{enumerate}
+
+\textbf{Câu 3: Vẽ sơ đồ khối cho từng sách lược điều khiển trong bài thí nghiệm?}
+
+Các sơ đồ khối đã được trình bày trong phần Cơ sở lý thuyết:
+\begin{itemize}
+    \item Sơ đồ điều khiển phản hồi: Hình \ref{fig:feedback_control}
+    \item Sơ đồ điều khiển truyền thẳng: Hình \ref{fig:feedforward_control}
+    \item Sơ đồ điều khiển kết hợp: Hình \ref{fig:combined_control}
+\end{itemize}
+
+\textbf{Câu 4: Mô tả các thành phần của hệ thống điều khiển trong bài thí nghiệm?}
+
+Hệ thống điều khiển mức chất lỏng bao gồm các thành phần:
+\begin{itemize}
+    \item \textbf{Bộ điều khiển:} Nhận tín hiệu từ cảm biến, so sánh với giá trị đặt, tính toán và đưa ra tín hiệu điều khiển.
+    \item \textbf{Cảm biến mức:} Đo mức chất lỏng trong bể và chuyển đổi thành tín hiệu điện.
+    \item \textbf{Cơ cấu chấp hành (Bơm):} Nhận tín hiệu từ bộ điều khiển và thay đổi lưu lượng nước cấp vào bể.
+    \item \textbf{Đối tượng điều khiển (Bể chứa):} Quá trình cần điều khiển mức chất lỏng.
+    \item \textbf{Van xả:} Tạo nhiễu cho hệ thống bằng cách thay đổi lưu lượng nước ra.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
