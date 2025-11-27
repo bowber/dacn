@@ -1,0 +1,36 @@
+name: Build PDF and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build PDF
+        run: |
+          mkdir -p output
+          docker build -t btl-csdk-latex .
+          docker run --rm -v ${{ github.workspace }}:/workspace btl-csdk-latex
+
+      - name: Verify PDF exists
+        run: |
+          if [ ! -f output/main.pdf ]; then
+            echo "Error: PDF was not generated"
+            exit 1
+          fi
+          ls -la output/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: output/main.pdf
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
