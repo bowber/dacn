@@ -22,18 +22,22 @@ jobs:
           docker build -t btl-csdk-latex .
           docker run --rm -v ${{ github.workspace }}:/workspace btl-csdk-latex
 
-      - name: Verify PDF exists
+      - name: Rename PDF with version
         run: |
           if [ ! -f output/main.pdf ]; then
             echo "Error: PDF was not generated"
             exit 1
           fi
+          TAG=${GITHUB_REF#refs/tags/}
+          REPO=${GITHUB_REPOSITORY#*/}
+          BRANCH=${{ github.event.repository.default_branch }}
+          mv output/main.pdf "output/${REPO}-${BRANCH}-${TAG}.pdf"
           ls -la output/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: output/main.pdf
+          files: output/*.pdf
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
