@@ -284,16 +284,16 @@ Sai lệch xác lập & \\
     % Nodes
     \node (sp) {$Y_{SP}$};
     \node[sum, right=0.8cm of sp] (sum) {};
-    \node[block, right=1cm of sum, minimum width=4em] (pid) {PID};
-    \node[block, right=1.2cm of pid, minimum width=4em] (actuator) {Van/Bơm};
-    \node[block, right=1.2cm of actuator, minimum width=4em] (process) {Quá trình};
+    \node[block, right=1.3cm of sum, minimum width=4em] (pid) {PID};
+    \node[block, right=1.5cm of pid, minimum width=4em] (actuator) {Van/Bơm};
+    \node[block, right=1.5cm of actuator, minimum width=4em] (process) {Quá trình};
     \node[right=1.2cm of process] (output) {$Y$};
     
     % Disturbance
     \node[above=0.8cm of process] (dist) {Nhiễu $Z$};
     
     % Sensor
-    \node[block, below=1cm of actuator, minimum width=4em] (sensor) {Cảm biến};
+    \node[block, below=1.3cm of actuator, minimum width=4em] (sensor) {Cảm biến};
     
     % Arrows
     \draw[arrow] (sp) -- (sum);
@@ -310,7 +310,7 @@ Sai lệch xác lập & \\
     
     % Sum signs - positioned outside circle, next to arrow lines
     \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(sum.south)+(0,-0.3)$) [right] {$-$};
+    \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
 \end{tikzpicture}
 \caption{Sơ đồ khối hệ thống điều khiển PID}
 \label{fig:pid_system}

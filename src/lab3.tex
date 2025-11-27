@@ -27,12 +27,12 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     % Nodes
     \node (sp) {$Y_{SP}$};
     \node[sum, right=1cm of sp] (sum) {};
-    \node[block, right=1.2cm of sum, minimum width=5em] (controller) {ON-OFF};
+    \node[block, right=1.5cm of sum, minimum width=5em] (controller) {ON-OFF};
     \node[block, right=1.5cm of controller] (process) {Quá trình};
     \node[right=1.5cm of process] (output) {$Y$};
     
     % Sensor
-    \node[block, below=1cm of process] (sensor) {Cảm biến};
+    \node[block, below=1.2cm of process] (sensor) {Cảm biến};
     
     % Arrows
     \draw[arrow] (sp) -- (sum);
@@ -47,7 +47,7 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     
     % Sum signs - positioned outside circle, next to arrow lines
     \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [above] {$+$};
-    \node[font=\scriptsize] at ($(sum.south)+(0,-0.3)$) [right] {$-$};
+    \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
     
     % ON-OFF characteristic
     \node[right=3cm of output] (char) {};
