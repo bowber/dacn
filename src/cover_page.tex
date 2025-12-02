@@ -9,26 +9,33 @@
 \begin{titlepage}
     \newgeometry{left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm}
     
-    % Outer border frame with corner decorations
+    % Outer border frame with corner decorations (matching example.pdf style)
     \begin{tikzpicture}[remember picture, overlay]
-        % Double border
-        \draw[bkblue, thick] 
-            ([shift={(0.8cm,-0.8cm)}]current page.north west) 
+        % Inner border
+        \draw[bkblue, line width=0.8pt] 
+            ([shift={(1.2cm,-1.2cm)}]current page.north west) 
             rectangle 
-            ([shift={(-0.8cm,0.8cm)}]current page.south east);
-        \draw[bkblue, thick] 
-            ([shift={(1cm,-1cm)}]current page.north west) 
+            ([shift={(-1.2cm,1.2cm)}]current page.south east);
+        % Outer border
+        \draw[bkblue, line width=0.8pt] 
+            ([shift={(0.9cm,-0.9cm)}]current page.north west) 
             rectangle 
-            ([shift={(-1cm,1cm)}]current page.south east);
+            ([shift={(-0.9cm,0.9cm)}]current page.south east);
         
-        % Corner marks - top left
-        \fill[bkblue] ([shift={(0.75cm,-0.75cm)}]current page.north west) rectangle ++(0.3cm,-0.3cm);
-        % Corner marks - top right
-        \fill[bkblue] ([shift={(-1.05cm,-0.75cm)}]current page.north east) rectangle ++(0.3cm,-0.3cm);
-        % Corner marks - bottom left
-        \fill[bkblue] ([shift={(0.75cm,1.05cm)}]current page.south west) rectangle ++(0.3cm,-0.3cm);
-        % Corner marks - bottom right
-        \fill[bkblue] ([shift={(-1.05cm,1.05cm)}]current page.south east) rectangle ++(0.3cm,-0.3cm);
+        % Corner squares - positioned at outer corners
+        \pgfmathsetmacro{\cornersize}{0.15}
+        % Top left
+        \fill[bkblue] ([shift={(0.9cm-\cornersize cm,-0.9cm+\cornersize cm)}]current page.north west) 
+            rectangle ++(\cornersize cm,-\cornersize cm);
+        % Top right
+        \fill[bkblue] ([shift={(-0.9cm,-0.9cm+\cornersize cm)}]current page.north east) 
+            rectangle ++(\cornersize cm,-\cornersize cm);
+        % Bottom left
+        \fill[bkblue] ([shift={(0.9cm-\cornersize cm,0.9cm)}]current page.south west) 
+            rectangle ++(\cornersize cm,-\cornersize cm);
+        % Bottom right
+        \fill[bkblue] ([shift={(-0.9cm,0.9cm)}]current page.south east) 
+            rectangle ++(\cornersize cm,-\cornersize cm);
     \end{tikzpicture}
     
     \centering
