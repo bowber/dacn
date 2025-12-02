@@ -9,38 +9,9 @@
 \begin{titlepage}
     \newgeometry{left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm}
     
-    % Outer border frame with corner decorations (matching example.pdf style)
-    \begin{tikzpicture}[remember picture, overlay]
-        % Inner border
-        \draw[bkblue, line width=0.8pt] 
-            ([shift={(1.2cm,-1.2cm)}]current page.north west) 
-            rectangle 
-            ([shift={(-1.2cm,1.2cm)}]current page.south east);
-        % Outer border
-        \draw[bkblue, line width=0.8pt] 
-            ([shift={(0.9cm,-0.9cm)}]current page.north west) 
-            rectangle 
-            ([shift={(-0.9cm,0.9cm)}]current page.south east);
-        
-        % Corner squares - positioned at outer corners
-        \pgfmathsetmacro{\cornersize}{0.15}
-        % Top left
-        \fill[bkblue] ([shift={(0.9cm-\cornersize cm,-0.9cm+\cornersize cm)}]current page.north west) 
-            rectangle ++(\cornersize cm,-\cornersize cm);
-        % Top right
-        \fill[bkblue] ([shift={(-0.9cm,-0.9cm+\cornersize cm)}]current page.north east) 
-            rectangle ++(\cornersize cm,-\cornersize cm);
-        % Bottom left
-        \fill[bkblue] ([shift={(0.9cm-\cornersize cm,0.9cm)}]current page.south west) 
-            rectangle ++(\cornersize cm,-\cornersize cm);
-        % Bottom right
-        \fill[bkblue] ([shift={(-0.9cm,0.9cm)}]current page.south east) 
-            rectangle ++(\cornersize cm,-\cornersize cm);
-    \end{tikzpicture}
-    
     \centering
     
-    \vspace*{0.5cm}
+    \vspace*{1.5cm}
     
     % University header - Blue text
     {\fontsize{14}{16}\selectfont\color{bkblue}\bfseries
@@ -51,9 +22,9 @@
     BỘ MÔN QUÁ TRÌNH – THIẾT BỊ\\[0.3cm]
     }
     
-    % Decorative wavy line
-    {\color{bkblue}\fontsize{12}{14}\selectfont
-    ---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---$\sim$---
+    % Decorative wavy line (Vietnamese style)
+    {\color{bkblue}\fontspec{Noto Sans Arabic}\fontsize{12}{14}\selectfont
+    ؄؄؄؄؄؄؄؄؄
     }
     
     \vspace{0.8cm}
