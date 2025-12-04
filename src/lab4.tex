@@ -11,13 +11,11 @@
 \subsection{Tóm tắt}
 % ------------------------------------------------------------
 
-Bài thí nghiệm này nhằm khảo sát ảnh hưởng của các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID đến chất lượng điều khiển. Thông qua việc thay đổi từng thông số một cách độc lập và ghi nhận đáp ứng của hệ thống, sinh viên hiểu rõ hơn về vai trò của từng thành phần trong bộ điều khiển PID. Ngoài ra, bài thí nghiệm còn giới thiệu phương pháp Ziegler-Nichols để thiết kế bộ điều khiển PID dựa trên đáp ứng quá độ của hệ hở.
+Bài thí nghiệm này nhằm khảo sát ảnh hưởng của các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID đến chất lượng điều khiển. Thông qua việc thay đổi từng thông số và ghi nhận đáp ứng của hệ thống, sinh viên hiểu rõ hơn về vai trò của từng thành phần trong bộ điều khiển PID.
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
-
-\subsubsection{Ảnh hưởng các thông số bộ điều khiển}
 
 Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh hưởng đặc trưng đến chất lượng điều khiển của hệ thống. Bảng sau tóm tắt ảnh hưởng của việc tăng từng thông số:
 
@@ -35,34 +33,6 @@ $K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \hline
 \end{tabular}
 \caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
-\end{table}
-
-\subsubsection{Thiết kế bộ điều khiển theo Ziegler-Nichols 1 (ZN1)}
-
-Phương pháp Ziegler-Nichols 1 dựa trên đáp ứng quá độ của hệ hở đối với tín hiệu bước. Từ đáp ứng, xác định các thông số:
-
-\begin{itemize}
-    \item $K$: Độ lợi tĩnh của quá trình
-    \item $L$: Thời gian trễ (delay time)
-    \item $T$: Hằng số thời gian (time constant)
-\end{itemize}
-
-Các thông số bộ điều khiển PID được tính theo công thức:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Bộ điều khiển} & $K_P$ & $T_I$ & $T_D$ \\
-\hline
-P & $\frac{T}{KL}$ & -- & -- \\
-\hline
-PI & $\frac{0.9T}{KL}$ & $\frac{L}{0.3}$ & -- \\
-\hline
-PID & $\frac{1.2T}{KL}$ & $2L$ & $0.5L$ \\
-\hline
-\end{tabular}
-\caption{Công thức tính thông số PID theo Ziegler-Nichols 1}
 \end{table}
 
 % ------------------------------------------------------------
@@ -92,7 +62,7 @@ Trên giao diện Halalab, sinh viên chọn bộ điều khiển PID và nhập
     \item Chọn bộ điều khiển PID trên giao diện điều khiển.
 \end{enumerate}
 
-\subsubsection{Thí nghiệm 1: Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
+\subsubsection{Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
 
 \textbf{a) Khảo sát ảnh hưởng của tham số $K_P$:}
 \begin{enumerate}
@@ -115,21 +85,11 @@ Trên giao diện Halalab, sinh viên chọn bộ điều khiển PID và nhập
     \item Ghi nhận các chỉ tiêu chất lượng.
 \end{enumerate}
 
-\subsubsection{Thí nghiệm 2: Thiết kế bộ điều khiển PID theo Ziegler-Nichols 1}
-
-\begin{enumerate}
-    \item Đưa hệ thống về chế độ điều khiển tay (Manual).
-    \item Đặt tín hiệu bước vào hệ thống và ghi nhận đáp ứng quá độ.
-    \item Xác định các thông số $K$, $L$, $T$ từ đáp ứng.
-    \item Tính toán thông số PID theo công thức ZN1.
-    \item Cài đặt và đánh giá chất lượng điều khiển.
-\end{enumerate}
-
 % ------------------------------------------------------------
 \subsection{Kết quả và bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Kết quả thí nghiệm 1: Khảo sát ảnh hưởng thông số PID}
+\subsubsection{Kết quả khảo sát ảnh hưởng thông số PID}
 
 \textbf{a) Khảo sát ảnh hưởng của $K_P$:}
 
@@ -205,47 +165,12 @@ Sai lệch xác lập & \\
 \caption{Kết quả với bộ thông số tối ưu}
 \end{table}
 
-\subsubsection{Kết quả thí nghiệm 2: Thiết kế theo Ziegler-Nichols 1}
-
-Từ đáp ứng quá độ của hệ hở, xác định được:
-\begin{itemize}
-    \item Độ lợi tĩnh $K$ = 
-    \item Thời gian trễ $L$ = 
-    \item Hằng số thời gian $T$ = 
-\end{itemize}
-
-Thông số PID tính theo ZN1:
-\begin{itemize}
-    \item $K_P$ = $\frac{1.2T}{KL}$ = 
-    \item $T_I$ = $2L$ = 
-    \item $T_D$ = $0.5L$ = 
-\end{itemize}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|}
-\hline
-\textbf{Thông số} & \textbf{Giá trị} \\
-\hline
-$K_P$ = , $K_I$ = , $K_D$ = & \\
-\hline
-Thời gian xác lập (s) & \\
-\hline
-Sai lệch xác lập & \\
-\hline
-Độ quá điều chỉnh (\%) & \\
-\hline
-\end{tabular}
-\caption{Kết quả với bộ thông số ZN1}
-\end{table}
-
 \subsubsection{Bàn luận}
 
 \begin{itemize}
     \item Khi tăng $K_P$: Hệ thống đáp ứng nhanh hơn nhưng có thể xuất hiện dao động nếu $K_P$ quá lớn.
-    \item Khi tăng $K_I$: Sai lệch tĩnh được triệt tiêu nhưng có thể gây dao động và hiện tượng integral windup.
+    \item Khi tăng $K_I$: Sai lệch tĩnh được triệt tiêu nhưng có thể gây dao động.
     \item Khi tăng $K_D$: Độ quá điều chỉnh giảm nhưng hệ thống nhạy hơn với nhiễu.
-    \item Phương pháp ZN1 cho kết quả ban đầu hợp lý, tuy nhiên cần tinh chỉnh thêm trong thực tế.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -255,14 +180,13 @@ Sai lệch xác lập & \\
 \textbf{Kết luận:}
 \begin{itemize}
     \item Đã khảo sát được ảnh hưởng của từng thông số $K_P$, $K_I$, $K_D$ đến chất lượng điều khiển.
-    \item Xác định được quy luật điều khiển và chỉnh định các thông số PID cho phù hợp.
-    \item Phương pháp Ziegler-Nichols 1 là phương pháp thực nghiệm hiệu quả để xác định các thông số PID ban đầu.
+    \item Xác định được quy luật ảnh hưởng của các thông số và cách chỉnh định bộ điều khiển PID cho phù hợp.
 \end{itemize}
 
 \textbf{Khuyến nghị:}
 \begin{itemize}
-    \item Trong thực tế, cần tinh chỉnh thêm dựa trên yêu cầu cụ thể của quá trình.
-    \item Nên kết hợp với các phương pháp khác như Cohen-Coon hoặc auto-tuning để có kết quả tốt hơn.
+    \item Trong thực tế, cần tinh chỉnh các thông số dựa trên yêu cầu cụ thể của quá trình.
+    \item Cần cân bằng giữa các chỉ tiêu chất lượng: thời gian đáp ứng, độ quá điều chỉnh và sai lệch tĩnh.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -345,5 +269,4 @@ Sai lệch xác lập & \\
 \begin{enumerate}
     \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
     \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
-    \item Ziegler, J.G. and Nichols, N.B., "Optimum Settings for Automatic Controllers", Trans. ASME, 64, 759-768, 1942.
 \end{enumerate}
