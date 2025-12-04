@@ -113,12 +113,87 @@ B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
 
 \subsubsection{Thiết kế chương trình}
 
-\begin{itemize}
-    \item Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở.
-    \item Công tắc nối vào chân D2 sử dụng điện trở kéo về GND.
-    \item Sử dụng \texttt{digitalWrite()} để bật/tắt các thiết bị theo trình tự.
-    \item Sử dụng \texttt{delay()} để tạo thời gian chờ giữa các bước.
-\end{itemize}
+Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở. Công tắc nối vào chân D2 sử dụng điện trở kéo về GND.
+
+\textbf{Sơ đồ kết nối chân Arduino:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l||c|l|}
+\hline
+\textbf{Chân} & \textbf{Thiết bị} & \textbf{Chân} & \textbf{Thiết bị} \\
+\hline
+D2 & Công tắc (INPUT) & D8 & Van V0 \\
+\hline
+D3 & Bơm 3 & D9 & Điện trở R2 \\
+\hline
+D4 & Bơm 2 & D10 & Điện trở R1 \\
+\hline
+D5 & Bơm 1 & D11 & Điện trở R0 \\
+\hline
+D6 & Van V2 & & \\
+\hline
+D7 & Van V1 & & \\
+\hline
+\end{tabular}
+\caption{Sơ đồ kết nối chân Arduino}
+\end{table}
+
+\textbf{Đoạn code chương trình:}
+
+\begin{lstlisting}
+int congtac = 2;
+int pump3 = 3, pump2 = 4, pump1 = 5;
+int van2 = 6, van1 = 7, van0 = 8;
+int re2 = 9, re1 = 10, re0 = 11;
+int i = 0;
+
+void chutrinhON() {
+  // B2: Nap dung dich vao noi dun (30s)
+  digitalWrite(pump1, 1); digitalWrite(van0, 1); delay(30000);
+  // B3: Gia nhiet noi dun (60s)
+  digitalWrite(van0, 0); digitalWrite(re0, 1); digitalWrite(van2, 1); delay(60000);
+  // B4: Khoi dong dong nhap lieu (10s)
+  digitalWrite(van1, 1); digitalWrite(re1, 1); delay(10000);
+  // B5: Khoi dong dong hoan luu (10s)
+  digitalWrite(pump2, 1); digitalWrite(re2, 1); delay(10000);
+  // B6: Thao san pham day
+  digitalWrite(pump3, 1);
+}
+
+void chutrinhOFF() {
+  // B2: Tat tat ca nguon nhiet (60s)
+  digitalWrite(re0, 0); digitalWrite(re1, 0); digitalWrite(re2, 0); delay(60000);
+  // B3: Ngung dong nhap lieu va hoi luu (60s)
+  digitalWrite(pump1, 0); digitalWrite(pump2, 0); digitalWrite(pump3, 0);
+  digitalWrite(van1, 0);
+  delay(60000);
+  // B4: Ngung dong nuoc lanh
+  digitalWrite(van2, 0);
+}
+
+void setup() {
+  pinMode(congtac, INPUT);
+  pinMode(pump3, OUTPUT); pinMode(pump2, OUTPUT); pinMode(pump1, OUTPUT);
+  pinMode(van2, OUTPUT); pinMode(van1, OUTPUT); pinMode(van0, OUTPUT);
+  pinMode(re2, OUTPUT); pinMode(re1, OUTPUT); pinMode(re0, OUTPUT);
+}
+
+void loop() {
+  if (digitalRead(congtac) == 1) {
+    if (i == 0) {
+      chutrinhON();
+      i = i + 1;
+    }
+  }
+  if (digitalRead(congtac) == 0) {
+    if (i == 1) {
+      chutrinhOFF();
+      i = i - 1;
+    }
+  }
+}
+\end{lstlisting}
 
 % ------------------------------------------------------------
 \subsection{Kết quả và bàn luận}
