@@ -19,4 +19,6 @@ LaTeX academic lab report using XeLaTeX with Vietnamese language support.
 - **Labels**: Use snake_case with descriptive prefixes (e.g., `fig:feedback_control`)
 - **Language**: Vietnamese text throughout; use `babel-vietnamese` package features
 - **TikZ diagrams**: Use predefined styles in preamble.tex (`block`, `sum`, `arrow`, `line`)
-- **Modular structure**: Keep each lab in separate file (lab1.tex, lab2.tex, etc.)
+- **Modular structure**: Keep each lab in separate file (lab2.tex, lab3.tex, etc.)
+- **Adding/removing labs**: Update `\input{}` in main.tex; ToC auto-generates from sections
+- **Table captions**: Place `\caption{}` AFTER `\end{tabular}` (below the table)

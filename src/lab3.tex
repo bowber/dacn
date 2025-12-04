@@ -135,7 +135,6 @@ u(t) = K_P \cdot e(t) + K_I \int_0^t e(\tau)d\tau + K_D \frac{de(t)}{dt}
 
 \begin{table}[H]
 \centering
-\caption{Ảnh hưởng của các thành phần P, I, D đến chất lượng điều khiển}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \textbf{Thành phần} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
@@ -147,6 +146,7 @@ Tăng $K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 Tăng $K_D$ & Ít thay đổi & Giảm & Không ảnh hưởng & Tốt hơn \\
 \hline
 \end{tabular}
+\caption{Ảnh hưởng của các thành phần P, I, D đến chất lượng điều khiển}
 \end{table}
 
 \subsubsection{Các chỉ tiêu chất lượng điều khiển}
@@ -212,7 +212,6 @@ Hệ thống điều khiển mức chất lỏng trong phòng thí nghiệm bao 
 
 \begin{table}[H]
 \centering
-\caption{Kết quả bộ điều khiển ON-OFF}
 \begin{tabular}{|l|c|}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
@@ -226,6 +225,7 @@ Chu kì dao động & 50s \\
 Biên độ dao động & 8.4 - 10 cm \\
 \hline
 \end{tabular}
+\caption{Kết quả bộ điều khiển ON-OFF}
 \end{table}
 
 \textbf{Nhận xét:} Bộ điều khiển ON/OFF cho giá trị cuối của mức chất lỏng không ổn định mà dao động quanh giá trị đặt với biên độ dao động từ xấp xỉ 8.4 - 10 cm so với giá trị cài đặt 9 cm. Điều này phù hợp với lý thuyết về điều khiển ON-OFF.
@@ -234,7 +234,6 @@ Biên độ dao động & 8.4 - 10 cm \\
 
 \begin{table}[H]
 \centering
-\caption{So sánh các bộ điều khiển P, PI và PID}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \textbf{Bộ điều khiển} & \textbf{Thời gian xác lập} & \textbf{Chu kì} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} \\
@@ -246,6 +245,7 @@ PI & 262s & 60s & 7.9\% & Không \\
 PID & 84s & 24s & 9.1\% & Không \\
 \hline
 \end{tabular}
+\caption{So sánh các bộ điều khiển P, PI và PID}
 \end{table}
 
 \subsubsection{Bàn luận}

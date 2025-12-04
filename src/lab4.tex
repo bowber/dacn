@@ -23,7 +23,6 @@ Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh h�
 
 \begin{table}[H]
 \centering
-\caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \textbf{Tăng} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
@@ -35,6 +34,7 @@ $K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 $K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \hline
 \end{tabular}
+\caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
 \end{table}
 
 \subsubsection{Thiết kế bộ điều khiển theo Ziegler-Nichols 1 (ZN1)}
@@ -51,7 +51,6 @@ Các thông số bộ điều khiển PID được tính theo công thức:
 
 \begin{table}[H]
 \centering
-\caption{Công thức tính thông số PID theo Ziegler-Nichols 1}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Bộ điều khiển} & $K_P$ & $T_I$ & $T_D$ \\
@@ -63,6 +62,7 @@ PI & $\frac{0.9T}{KL}$ & $\frac{L}{0.3}$ & -- \\
 PID & $\frac{1.2T}{KL}$ & $2L$ & $0.5L$ \\
 \hline
 \end{tabular}
+\caption{Công thức tính thông số PID theo Ziegler-Nichols 1}
 \end{table}
 
 % ------------------------------------------------------------
@@ -142,7 +142,6 @@ Trên giao diện điều khiển, sinh viên sử dụng các chức năng:
 
 \begin{table}[H]
 \centering
-\caption{Kết quả khảo sát ảnh hưởng của $K_P$}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 $K_P$ & 1 & 2 & 5 & 20 \\
@@ -154,13 +153,13 @@ Sai lệch xác lập & & & & \\
 Độ quá điều chỉnh (\%) & & & & \\
 \hline
 \end{tabular}
+\caption{Kết quả khảo sát ảnh hưởng của $K_P$}
 \end{table}
 
 \textbf{b) Khảo sát ảnh hưởng của $K_I$:}
 
 \begin{table}[H]
 \centering
-\caption{Kết quả khảo sát ảnh hưởng của $K_I$}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 $K_I$ & 0.5 & 1 & 1.5 & 2 \\
@@ -172,13 +171,13 @@ Sai lệch xác lập & & & & \\
 Độ quá điều chỉnh (\%) & & & & \\
 \hline
 \end{tabular}
+\caption{Kết quả khảo sát ảnh hưởng của $K_I$}
 \end{table}
 
 \textbf{c) Khảo sát ảnh hưởng của $K_D$:}
 
 \begin{table}[H]
 \centering
-\caption{Kết quả khảo sát ảnh hưởng của $K_D$}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 $K_D$ & 0.5 & 1 & 2 & 5 \\
@@ -190,13 +189,13 @@ Sai lệch xác lập & & & & \\
 Độ quá điều chỉnh (\%) & & & & \\
 \hline
 \end{tabular}
+\caption{Kết quả khảo sát ảnh hưởng của $K_D$}
 \end{table}
 
 \textbf{d) Bộ thông số tối ưu:}
 
 \begin{table}[H]
 \centering
-\caption{Kết quả với bộ thông số tối ưu}
 \begin{tabular}{|l|c|}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
@@ -210,6 +209,7 @@ Sai lệch xác lập & \\
 Độ quá điều chỉnh (\%) & \\
 \hline
 \end{tabular}
+\caption{Kết quả với bộ thông số tối ưu}
 \end{table}
 
 \subsubsection{Kết quả thí nghiệm 2: Thiết kế theo Ziegler-Nichols 1}
@@ -230,7 +230,6 @@ Thông số PID tính theo ZN1:
 
 \begin{table}[H]
 \centering
-\caption{Kết quả với bộ thông số ZN1}
 \begin{tabular}{|l|c|}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
@@ -244,6 +243,7 @@ Sai lệch xác lập & \\
 Độ quá điều chỉnh (\%) & \\
 \hline
 \end{tabular}
+\caption{Kết quả với bộ thông số ZN1}
 \end{table}
 
 \subsubsection{Bàn luận}
