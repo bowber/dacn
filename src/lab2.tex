@@ -11,7 +11,7 @@
 \subsection{Tóm tắt}
 % ------------------------------------------------------------
 
-Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình (khuấy, chưng cất, điều khiển mực chất lỏng, nhiệt độ nhập liệu), chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.
+Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình chưng cất, chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
@@ -30,25 +30,9 @@ Các thành phần chính của vi điều khiển:
     \item \textbf{Giao tiếp:} UART, SPI, I2C để truyền nhận dữ liệu.
 \end{itemize}
 
-\subsubsection{Điều khiển ON-OFF}
+\subsubsection{Điều khiển trình tự (Sequence Control)}
 
-Điều khiển ON-OFF là phương pháp điều khiển đơn giản nhất, trong đó tín hiệu điều khiển chỉ có hai trạng thái: bật (ON) hoặc tắt (OFF). Bộ điều khiển so sánh giá trị đo được với giá trị đặt và quyết định trạng thái của thiết bị chấp hành.
-
-\subsubsection{Điều khiển PID}
-
-Bộ điều khiển PID (Proportional-Integral-Derivative) là bộ điều khiển phổ biến nhất trong công nghiệp. Tín hiệu điều khiển được tính theo công thức:
-
-\begin{equation}
-u(t) = K_p \cdot e(t) + K_i \cdot \int_0^t e(\tau) d\tau + K_d \cdot \frac{de(t)}{dt}
-\end{equation}
-
-Trong đó:
-\begin{itemize}
-    \item $K_p$: Hệ số tỷ lệ (Proportional)
-    \item $K_i$: Hệ số tích phân (Integral)
-    \item $K_d$: Hệ số vi phân (Derivative)
-    \item $e(t)$: Sai lệch giữa giá trị đặt và giá trị đo được
-\end{itemize}
+Điều khiển trình tự là phương pháp điều khiển trong đó các bước thực hiện được tiến hành theo một thứ tự định sẵn. Mỗi bước chỉ được thực hiện khi bước trước đó hoàn thành. Phương pháp này thường được sử dụng trong các quy trình khởi động và dừng hệ thống công nghiệp.
 
 % ------------------------------------------------------------
 \subsection{Mô tả thiết bị thí nghiệm}
@@ -79,8 +63,7 @@ Intergrated Development Environment (IDE) là môi trường phát triển tích
     \item \texttt{pinMode(pin, mode)}: Thiết lập chế độ của một chân (OUTPUT hoặc INPUT).
     \item \texttt{digitalWrite(pin, value)}: Xuất tín hiệu điện từ một chân (HIGH hoặc LOW).
     \item \texttt{digitalRead(pin)}: Đọc giá trị điện áp từ một chân (HIGH hoặc LOW).
-    \item \texttt{analogRead(pin)}: Đọc giá trị analog từ một chân Analog (giá trị từ 0 đến 1023).
-    \item \texttt{analogWrite(pin, value)}: Xuất tín hiệu analog (phát xung PWM) từ một chân.
+    \item \texttt{delay(ms)}: Tạm dừng chương trình trong khoảng thời gian xác định (mili giây).
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -92,33 +75,21 @@ Intergrated Development Environment (IDE) là môi trường phát triển tích
     \item Khởi động phần mềm Arduino IDE hoặc Tinkercad.
     \item Kết nối bo mạch Arduino với máy tính qua cáp USB.
     \item Kiểm tra kết nối và chọn đúng cổng COM.
-    \item Chuẩn bị các linh kiện: động cơ, LED, cảm biến, điện trở.
+    \item Chuẩn bị các linh kiện: LED, điện trở, công tắc.
 \end{enumerate}
 
-\subsubsection{Thí nghiệm 1: Thực hiện mô phỏng động cơ khuấy}
-
-\textbf{Yêu cầu:} Thông qua 1 công tắc điều khiển khi nhấn nút bật (ON) máy khuấy thì hoạt động theo chu trình ON.
-
-\textbf{Thiết kế chương trình:}
-\begin{itemize}
-    \item Lắp động cơ khuấy vào chân D13
-    \item Công tắc vào chân D2 sử dụng điện trở kéo về GND
-    \item Sử dụng \texttt{pinMode OUTPUT} để thiết lập chân số 13 là chân nhận tín hiệu đầu ra.
-    \item Tín hiệu chân ra digital có 2 giá trị HIGH hoặc LOW sử dụng lệnh \texttt{digitalWrite()}.
-    \item Lệnh \texttt{delay()} để giữ nguyên trạng thái hoạt động trong khoảng thời gian mong muốn.
-\end{itemize}
-
-\subsubsection{Thí nghiệm 2: Thực hiện mô phỏng điều khiển động cơ khuấy}
-
-\textbf{Thiết kế chương trình:}
-\begin{itemize}
-    \item Lắp động cơ khuấy từ chân D13 sang chân \textasciitilde D11 là chân PWM
-    \item Sử dụng \texttt{pinMode OUTPUT} để thiết lập chân số 6 là chân nhận tín hiệu đầu ra.
-    \item Tín hiệu chân ra analog (PWM) thiết lập bằng 125 (khoảng 50\%) trong 60 giây.
-    \item Tăng giá trị chân PWM từ 125 lên 250 và giảm xuống 0 theo bước nhảy như đề bài.
-\end{itemize}
-
 \subsubsection{Thí nghiệm 3: Mô phỏng vận hành điều khiển hệ thống chưng cất}
+
+Hệ thống chưng cất trong bài thí nghiệm này được thể hiện trên Hình \ref{fig:distillation_system}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{../assets/distillation_system.png}
+\caption{Sơ đồ hệ thống chưng cất}
+\label{fig:distillation_system}
+\end{figure}
+
+Điều khiển hệ thống chưng cất bao gồm tự động chu trình khởi động (ON). Tiếp theo sau đó là giai đoạn duy trì trạng thái làm việc ổn định – gọi là chu trình ổn định (SS) – được thực hiện bởi các hệ thống điều chỉnh tự động. Cuối cùng là chu trình tự động dừng (OFF) hệ thống thiết bị chưng cất.
 
 Sử dụng công tắc ON/OFF viết chương trình điều khiển tự động 3 chu trình cho hệ thống chưng cất:
 \begin{itemize}
@@ -150,45 +121,47 @@ B6 – Tháo sản phẩm đáy & Mở Van V3, Bật bơm 3 & -- \\
 \caption{Chu trình khởi động hệ thống chưng cất}
 \end{table}
 
-\subsubsection{Thí nghiệm 4: Lập trình điều chỉnh tự động nhiệt độ nhập liệu sử dụng bộ điều khiển ON-OFF}
-
-Sử dụng cảm biến nhiệt độ TMP, giá trị nhiệt độ được cảm biến chuyển thành tín hiệu điện áp tương ứng. Cứ 10mV tương ứng với 1°C, khoảng đo của cảm biến từ -40°C đến 125°C.
-
-Công thức tính nhiệt độ: $T = \frac{voltage - 400}{10}$
-
-\subsubsection{Thí nghiệm 5: Lập trình điều chỉnh tự động mức chất lỏng đáy tháp sử dụng bộ điều khiển PID}
-
-Sử dụng cảm biến siêu âm HC-SR04 đo mức chất lỏng. Sử dụng sóng siêu âm phát từ chân Trig và nhận tín hiệu sóng phản xạ tại chân Echo.
-
-Công thức: $distance = \frac{time}{2} \times 0.0349$ cm
+\textbf{Thiết kế chương trình:}
+\begin{itemize}
+    \item Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở.
+    \item Công tắc nối vào chân D2 sử dụng điện trở kéo về GND.
+    \item Sử dụng \texttt{digitalWrite()} để bật/tắt các thiết bị theo trình tự.
+    \item Sử dụng \texttt{delay()} để tạo thời gian chờ giữa các bước.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết quả và bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Kết quả thí nghiệm 1}
+\subsubsection{Kết quả thí nghiệm}
+
 Với các bước thực hiện thiết kế chương trình trên, cùng với đoạn code hoàn chỉnh và chạy thực tế trên mô hình tại phòng thí nghiệm. Ta thấy đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển của chúng ta với các chu trình ON, OFF định sẵn.
 
-\subsubsection{Kết quả thí nghiệm 2}
-Đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển. Bật động cơ khuấy ở mức công suất 50\% trong vòng 60 giây, tăng dần công suất lên 100\% theo 5 cấp độ - mỗi cấp độ hoạt động 30 giây.
+Hệ thống hoạt động đúng theo trình tự:
+\begin{enumerate}
+    \item Khi nhấn nút ON, hệ thống bắt đầu chu trình khởi động.
+    \item Các thiết bị được bật/tắt theo đúng thứ tự và thời gian quy định.
+    \item Khi nhấn nút OFF, hệ thống dừng theo quy trình an toàn.
+\end{enumerate}
 
 \subsubsection{Bàn luận}
-Qua các thí nghiệm, có thể thấy rằng vi điều khiển Arduino là công cụ hiệu quả để triển khai các thuật toán điều khiển cơ bản. Việc sử dụng các lệnh đơn giản như \texttt{digitalWrite()}, \texttt{analogWrite()} cho phép điều khiển linh hoạt các thiết bị chấp hành.
+
+Qua thí nghiệm, có thể thấy rằng vi điều khiển Arduino là công cụ hiệu quả để triển khai các thuật toán điều khiển trình tự. Việc sử dụng các lệnh đơn giản như \texttt{digitalWrite()}, \texttt{delay()} cho phép điều khiển linh hoạt các thiết bị chấp hành theo trình tự định sẵn.
 
 % ------------------------------------------------------------
 \subsection{Kết luận và khuyến nghị}
 % ------------------------------------------------------------
 
-Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra được nhiều nội dung ý nghĩa:
+Qua quá trình tìm hiểu và thực hiện thí nghiệm, nhóm rút ra được nhiều nội dung ý nghĩa:
 
 \begin{itemize}
     \item \textbf{Hiểu được chức năng bộ vi điều khiển:} Thí nghiệm giúp người tham gia hiểu rõ về chức năng và vai trò của bộ vi điều khiển trong hệ thống điều khiển tự động.
-    \item Biết lập trình các thuật toán điều khiển cho bộ điều khiển.
+    \item Biết lập trình các thuật toán điều khiển trình tự cho bộ điều khiển.
     \item Thiết lập sơ đồ kết nối các thành phần của hệ thống điều khiển.
-    \item Thiết kế hệ thống điều khiển tự động để khởi động, dừng cho quá trình.
+    \item Thiết kế hệ thống điều khiển tự động để khởi động, dừng cho quá trình chưng cất.
 \end{itemize}
 
-\textbf{Khuyến nghị:} Cần nghiên cứu thêm về các thuật toán điều khiển nâng cao như điều khiển mờ, điều khiển thích nghi để cải thiện chất lượng điều khiển.
+\textbf{Khuyến nghị:} Cần nghiên cứu thêm về các phương pháp điều khiển nâng cao và xử lý các tình huống lỗi trong quá trình vận hành để cải thiện độ tin cậy của hệ thống.
 
 % ------------------------------------------------------------
 \subsection{Trả lời câu hỏi kiểm tra}
@@ -198,16 +171,13 @@ Qua quá trình tìm hiểu và thực hiện các thí nghiệm, nhóm rút ra 
 
 Arduino là bo mạch vi điều khiển bao gồm: CPU (xử lý lệnh), bộ nhớ Flash (lưu chương trình), RAM (lưu dữ liệu), các chân I/O số và analog, giao tiếp Serial/SPI/I2C, và các timer/counter.
 
-\textbf{Câu 2: So sánh điều khiển ON-OFF và điều khiển PID?}
+\textbf{Câu 2: Điều khiển trình tự là gì? Ứng dụng trong công nghiệp?}
 
-\begin{itemize}
-    \item Điều khiển ON-OFF: Đơn giản, chỉ có 2 trạng thái, có dao động quanh điểm đặt.
-    \item Điều khiển PID: Phức tạp hơn, điều khiển liên tục, cho đáp ứng mượt mà và chính xác hơn.
-\end{itemize}
+Điều khiển trình tự là phương pháp điều khiển trong đó các bước được thực hiện theo thứ tự định sẵn. Ứng dụng phổ biến trong công nghiệp bao gồm: khởi động/dừng hệ thống, quy trình sản xuất theo mẻ, điều khiển dây chuyền lắp ráp.
 
-\textbf{Câu 3: Giải thích công thức tính khoảng cách của cảm biến siêu âm?}
+\textbf{Câu 3: Giải thích quy trình khởi động hệ thống chưng cất?}
 
-Sóng siêu âm di chuyển từ cảm biến đến vật cản và phản xạ lại. Thời gian đo được là thời gian đi và về, nên chia 2 để lấy khoảng cách một chiều. Nhân với 0.0349 cm/µs (tốc độ âm thanh trong không khí) để ra khoảng cách.
+Quy trình khởi động hệ thống chưng cất bao gồm các bước tuần tự: nạp nguyên liệu vào nồi đun, gia nhiệt nồi đun, khởi động dòng nhập liệu, khởi động dòng hoàn lưu, và cuối cùng là tháo sản phẩm đáy. Mỗi bước có thời gian chờ xác định để đảm bảo hệ thống hoạt động ổn định.
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
