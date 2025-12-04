@@ -11,6 +11,7 @@
 - Versioned via git tags (e.g., `v1.0.11`)
 - Use semantic versioning: `vMAJOR.MINOR.PATCH`
 - Only create new version tags when explicitly requested by the user
+- Commit changes after completing each task/feature
 
 ## Project Structure
 LaTeX academic lab report using XeLaTeX with Vietnamese language support.
