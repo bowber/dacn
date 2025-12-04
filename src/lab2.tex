@@ -121,6 +121,30 @@ B6 – Tháo sản phẩm đáy & Mở Van V3, Bật bơm 3 & -- \\
 \caption{Chu trình khởi động hệ thống chưng cất}
 \end{table}
 
+\textbf{Trạng thái làm việc SS:}
+
+Tất cả các thiết bị ở trạng thái làm việc (ON), riêng van V0 đóng. Hệ thống duy trì trạng thái này cho đến khi nhận lệnh dừng.
+
+\textbf{Chu trình dừng OFF:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|c|}
+\hline
+\textbf{Các bước thực hiện} & \textbf{Sự kiện} & \textbf{Thời gian chờ (giây)} \\
+\hline
+B1 – Dừng & Nhấn nút OFF & -- \\
+\hline
+B2 – Tắt tất cả nguồn nhiệt cấp cho tháp & Tắt điện trở R0, R1 và R2 & 60 \\
+\hline
+B3 – Ngưng dòng nhập liệu và hồi lưu & Tắt các bơm 1, 2, 3; Đóng các van V1, V2, V3 & 60 \\
+\hline
+B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
+\hline
+\end{tabular}
+\caption{Chu trình dừng hệ thống chưng cất}
+\end{table}
+
 \textbf{Thiết kế chương trình:}
 \begin{itemize}
     \item Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở.
