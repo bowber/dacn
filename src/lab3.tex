@@ -50,17 +50,22 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
 \end{tikzpicture}
-\hspace{1.5cm}
+\caption{Sơ đồ khối bộ điều khiển ON-OFF}
+\label{fig:onoff_block}
+\end{figure}
+
+\begin{figure}[H]
+\centering
 \begin{tikzpicture}
     % ON-OFF characteristic
-    \draw[->] (-1,0) -- (1.5,0) node[right] {$e$};
-    \draw[->] (0,-1) -- (0,1.5) node[above] {$u$};
-    \draw[thick] (-0.8,-0.6) -- (0,-0.6) -- (0,0.8) -- (1.2,0.8);
-    \node[font=\small] at (1.5,0.8) {$u_{max}$};
-    \node[font=\small] at (1.5,-0.6) {$u_{min}$};
+    \draw[->] (-1.5,0) -- (2,0) node[right] {$e$};
+    \draw[->] (0,-1.5) -- (0,2) node[above] {$u$};
+    \draw[thick] (-1.2,-0.8) -- (0,-0.8) -- (0,1) -- (1.5,1);
+    \node[font=\small] at (2,1) {$u_{max}$};
+    \node[font=\small] at (2,-0.8) {$u_{min}$};
 \end{tikzpicture}
-\caption{Sơ đồ khối và đặc tính bộ điều khiển ON-OFF}
-\label{fig:onoff_control}
+\caption{Đặc tính bộ điều khiển ON-OFF}
+\label{fig:onoff_characteristic}
 \end{figure}
 
 Phương trình mô tả:
@@ -110,10 +115,10 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     % Output arrow
     \draw[arrow] (sum) -- (output);
     
-    % Sum signs - positioned outside circle, below arrow lines
-    \node[font=\scriptsize] at ($(P.east)!0.5!(sum.west)+(0,0.6)$) {$+$};
-    \node[font=\scriptsize] at ($(I.east)!0.5!(sum.west)$) [below] {$+$};
-    \node[font=\scriptsize] at ($(D.east)!0.5!(sum.west)+(0,-0.6)$) {$+$};
+    % Sum signs - positioned below arrow lines
+    \node[font=\scriptsize] at ($(sum.north)+(0,0.15)$) [right] {$+$};
+    \node[font=\scriptsize] at ($(sum.west)+(-0.15,0)$) [below] {$+$};
+    \node[font=\scriptsize] at ($(sum.south)+(0,-0.15)$) [right] {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối bộ điều khiển PID}
 \label{fig:pid_block}
@@ -160,15 +165,14 @@ Tăng $K_D$ & Ít thay đổi & Giảm & Không ảnh hưởng & Tốt hơn \\
 \subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
-Hệ thống điều khiển mức chất lỏng trong phòng thí nghiệm bao gồm:
+Cấu tạo mỗi hệ thống điều chỉnh bao gồm quá trình kỹ thuật và máy tính cài đặt phần mềm điều khiển và giao diện giám sát Halalab. Giao diện giám sát điều khiển bao gồm các phần sau:
 
 \begin{itemize}
-    \item \textbf{Bình chứa:} Bể chứa nước với thể tích xác định, có thang đo mức.
-    \item \textbf{Bơm:} Bơm nước có khả năng điều chỉnh lưu lượng.
-    \item \textbf{Van điều khiển:} Van điều khiển lưu lượng đầu ra.
-    \item \textbf{Cảm biến mức:} Cảm biến đo mức chất lỏng, chuyển đổi thành tín hiệu điện.
-    \item \textbf{Bộ điều khiển:} PLC/DCS với các thuật toán điều khiển ON-OFF, P, PI, PID.
-    \item \textbf{Giao diện điều khiển:} Màn hình HMI hiển thị thông số và cho phép cài đặt.
+    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực.
+    \item Đồ thị hiển thị các thông số trạng thái hệ thống.
+    \item Giá trị cài đặt của đại lượng cần điều khiển.
+    \item Khảo sát các bộ điều khiển tự động.
+    \item Lựa chọn bộ điều khiển ON-OFF hoặc PID để khảo sát.
 \end{itemize}
 
 % ------------------------------------------------------------
