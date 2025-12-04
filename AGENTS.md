@@ -18,7 +18,7 @@ LaTeX academic lab report using XeLaTeX with Vietnamese language support.
 - `src/` - LaTeX source files (main.tex is entry point, includes other .tex files)
 - `assets/` - Images and logos
 - `data/` - Experimental data (.csv, .TRD files)
-- `docs/` - Reference PDFs and documents (large files, don't read as whole - extract specific pages to tmp/ as needed)
+- `docs/` - Reference PDFs and documents (large files, check file size before reading - extract specific pages to tmp/ if needed)
 - `tmp/` - Temporary files (git-ignored, use for extracted images, intermediate files, etc.)
 
 ## Code Style Guidelines
