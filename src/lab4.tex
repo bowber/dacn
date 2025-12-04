@@ -69,22 +69,14 @@ PID & $\frac{1.2T}{KL}$ & $2L$ & $0.5L$ \\
 \subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
-Với bài thí nghiệm này, sinh viên thực hiện thí nghiệm tối thiểu trên 01 trong số 05 hệ thống thiết bị điều khiển các đại lượng công nghệ cơ bản trong phòng thí nghiệm:
+Bài thí nghiệm này sử dụng cùng hệ thống thiết bị như Bài thí nghiệm 3: hệ thống điều khiển mức chất lỏng với máy tính cài đặt phần mềm điều khiển và giao diện giám sát Halalab.
 
-\begin{enumerate}
-    \item Hệ thống điều chỉnh tự động mức chất lỏng
-    \item Hệ thống điều chỉnh tự động nhiệt độ
-    \item Hệ thống điều chỉnh tự động lưu lượng
-    \item Hệ thống điều chỉnh tự động áp suất
-    \item Hệ thống điều chỉnh tự động nồng độ
-\end{enumerate}
-
-Trên giao diện điều khiển, sinh viên sử dụng các chức năng:
+Trên giao diện Halalab, sinh viên sử dụng chế độ Tune để khảo sát ảnh hưởng của các thông số bộ điều khiển PID:
 \begin{itemize}
-    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực
-    \item Giá trị cài đặt của đại lượng cần điều khiển
-    \item Chế độ Tune để khảo sát các thông số bộ điều khiển PID
-    \item Ô nhập các thông số bộ điều khiển PID ($K_P$, $K_I$, $K_D$)
+    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực.
+    \item Giá trị cài đặt của đại lượng cần điều khiển ($y_{sp}$).
+    \item Ô nhập các thông số bộ điều khiển PID ($K_P$, $K_I$, $K_D$).
+    \item Nút Auto để bắt đầu khảo sát với bộ thông số đã nhập.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -330,10 +322,10 @@ Sai lệch xác lập & \\
 \textbf{Câu 2: Mô tả các thành phần của hệ thống điều khiển trong bài thí nghiệm này?}
 
 \begin{itemize}
-    \item Bộ điều khiển: PLC/DCS với thuật toán PID
-    \item Thiết bị đo: Cảm biến mức/nhiệt độ/lưu lượng/áp suất
-    \item Thiết bị chấp hành: Van điều khiển, bơm
-    \item Giao diện: HMI hiển thị và cài đặt thông số
+    \item Bộ điều khiển: Phần mềm Halalab với thuật toán PID
+    \item Thiết bị đo: Cảm biến mức chất lỏng
+    \item Thiết bị chấp hành: Bơm
+    \item Giao diện: Phần mềm Halalab hiển thị đồ thị và cho phép cài đặt thông số $K_P$, $K_I$, $K_D$
 \end{itemize}
 
 \textbf{Câu 3: Nhận xét ảnh hưởng các thông số bộ điều khiển đến chất lượng điều khiển?}
