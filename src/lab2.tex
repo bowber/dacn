@@ -11,74 +11,21 @@
 \subsection{Tóm tắt}
 % ------------------------------------------------------------
 
-Thí nghiệm này nhằm giúp chúng ta hiểu sâu hơn về chức năng của bộ vi điều khiển và cách lập trình các thuật toán điều khiển. Bằng cách thiết lập sơ đồ kết nối các thành phần trong hệ thống điều khiển và thiết kế hệ thống tự động để điều khiển quá trình chưng cất, chúng ta có thể áp dụng kiến thức của mình vào các ứng dụng thực tế. Mục tiêu cuối cùng là xây dựng một hệ thống tự động hoạt động hiệu quả, từ đó giúp tăng cường kiến thức và kỹ năng trong lĩnh vực điều khiển quá trình này.
+Bài thí nghiệm này tập trung vào việc mô phỏng vận hành điều khiển hệ thống chưng cất sử dụng vi điều khiển Arduino. Mục tiêu là thiết kế hệ thống điều khiển tự động để thực hiện 3 chu trình: khởi động (ON), làm việc ổn định (SS), và dừng (OFF) cho quá trình chưng cất. Thông qua thí nghiệm, chúng ta hiểu rõ hơn về điều khiển trình tự và cách áp dụng vào các hệ thống công nghiệp thực tế.
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
-\subsubsection{Bộ vi điều khiển}
-
-Bộ vi điều khiển (Microcontroller) là một vi mạch tích hợp bao gồm bộ xử lý trung tâm (CPU), bộ nhớ, và các thiết bị ngoại vi I/O trong một chip duy nhất. Vi điều khiển được thiết kế để thực hiện các tác vụ điều khiển cụ thể trong các hệ thống nhúng.
-
-Các thành phần chính của vi điều khiển:
-\begin{itemize}
-    \item \textbf{CPU:} Thực hiện các lệnh và tính toán.
-    \item \textbf{Bộ nhớ:} Lưu trữ chương trình (Flash) và dữ liệu (RAM).
-    \item \textbf{I/O:} Giao tiếp với các thiết bị bên ngoài thông qua các chân số (Digital) và tương tự (Analog).
-    \item \textbf{Timer/Counter:} Đếm thời gian và sự kiện.
-    \item \textbf{Giao tiếp:} UART, SPI, I2C để truyền nhận dữ liệu.
-\end{itemize}
-
 \subsubsection{Điều khiển trình tự (Sequence Control)}
 
 Điều khiển trình tự là phương pháp điều khiển trong đó các bước thực hiện được tiến hành theo một thứ tự định sẵn. Mỗi bước chỉ được thực hiện khi bước trước đó hoàn thành. Phương pháp này thường được sử dụng trong các quy trình khởi động và dừng hệ thống công nghiệp.
 
+Trong hệ thống chưng cất, điều khiển trình tự đảm bảo các thiết bị (bơm, van, điện trở gia nhiệt) được bật/tắt theo đúng thứ tự và thời gian quy định, đảm bảo an toàn và hiệu quả vận hành.
+
 % ------------------------------------------------------------
 \subsection{Mô tả thiết bị thí nghiệm}
 % ------------------------------------------------------------
-
-Trong lĩnh vực công nghiệp hoá chất và dầu khí, hệ thống điều khiển đóng vai trò quan trọng trong việc điều chỉnh, giám sát và tự động hóa các quy trình sản xuất. Các chức năng của hệ thống điều khiển bao gồm điều chỉnh, điều khiển trình tự, điều khiển rời rạc và giám sát vận hành.
-
-Trong bài thí nghiệm này, chúng ta sử dụng bộ điều khiển Arduino, một bo mạch vi điều khiển chuẩn hóa, được sử dụng rộng rãi và được hỗ trợ bởi cộng đồng người dùng ở Việt Nam và toàn cầu.
-
-Phần mềm Arduino IDE cùng với công cụ mô phỏng trực tuyến www.tinkercad.com đóng vai trò quan trọng trong việc lập trình và mô phỏng các thuật toán điều khiển.
-
-\subsubsection{Bo mạch Arduino}
-
-Các mạch Arduino của hãng Arduino có nhiều phiên bản khác nhau như Mega, Uno, Micro, Nano v.v. Mặc dù có những điểm khác biệt về kích thước và tính năng, nhưng cấu trúc chung của chúng vẫn tương tự nhau. Dưới đây là mô tả về mạch Nano:
-
-\begin{itemize}
-    \item \textbf{Khối Nguồn (POWER):} Mạch Arduino có thể được cấp nguồn từ bên ngoài với điện áp trong khoảng từ 5V đến 9V.
-    \item \textbf{Khối Chức Năng Nhận và Xuất Tín Hiệu (INPUT và OUTPUT):} Mạch có các chân tín hiệu (PIN) để nhận và xuất tín hiệu.
-    \item \textbf{Khối Chức Năng Truyền Dữ Liệu (Serial):} Mạch hỗ trợ giao tiếp dữ liệu thông qua giao tiếp Serial.
-\end{itemize}
-
-\subsubsection{Arduino IDE}
-
-Intergrated Development Environment (IDE) là môi trường phát triển tích hợp được sử dụng để lập trình cho các bo mạch Arduino. IDE này có thể được tải về miễn phí từ trang web: www.arduino.cc và cài đặt trên máy tính.
-
-\textbf{Các lệnh cơ bản:}
-\begin{itemize}
-    \item \texttt{pinMode(pin, mode)}: Thiết lập chế độ của một chân (OUTPUT hoặc INPUT).
-    \item \texttt{digitalWrite(pin, value)}: Xuất tín hiệu điện từ một chân (HIGH hoặc LOW).
-    \item \texttt{digitalRead(pin)}: Đọc giá trị điện áp từ một chân (HIGH hoặc LOW).
-    \item \texttt{delay(ms)}: Tạm dừng chương trình trong khoảng thời gian xác định (mili giây).
-\end{itemize}
-
-% ------------------------------------------------------------
-\subsection{Quy trình thực hiện}
-% ------------------------------------------------------------
-
-\subsubsection{Chuẩn bị thí nghiệm}
-\begin{enumerate}
-    \item Khởi động phần mềm Arduino IDE hoặc Tinkercad.
-    \item Kết nối bo mạch Arduino với máy tính qua cáp USB.
-    \item Kiểm tra kết nối và chọn đúng cổng COM.
-    \item Chuẩn bị các linh kiện: LED, điện trở, công tắc.
-\end{enumerate}
-
-\subsubsection{Thí nghiệm 3: Mô phỏng vận hành điều khiển hệ thống chưng cất}
 
 Hệ thống chưng cất trong bài thí nghiệm này được thể hiện trên Hình \ref{fig:distillation_system}.
 
@@ -89,15 +36,34 @@ Hệ thống chưng cất trong bài thí nghiệm này được thể hiện tr
 \label{fig:distillation_system}
 \end{figure}
 
-Điều khiển hệ thống chưng cất bao gồm tự động chu trình khởi động (ON). Tiếp theo sau đó là giai đoạn duy trì trạng thái làm việc ổn định – gọi là chu trình ổn định (SS) – được thực hiện bởi các hệ thống điều chỉnh tự động. Cuối cùng là chu trình tự động dừng (OFF) hệ thống thiết bị chưng cất.
-
-Sử dụng công tắc ON/OFF viết chương trình điều khiển tự động 3 chu trình cho hệ thống chưng cất:
+Các thành phần chính của hệ thống bao gồm:
 \begin{itemize}
-    \item Bật nút ON hệ thống khởi động theo quy trình định sẵn, sau đó hệ chuyển sang trạng thái làm việc.
-    \item Bật nút OFF hệ thống chuyển trạng thái dừng theo quy trình.
+    \item \textbf{Bơm 1, 2, 3:} Cung cấp và vận chuyển dung dịch trong hệ thống.
+    \item \textbf{Van V0, V1, V2, V3, V4:} Điều khiển dòng chảy của các dòng vật chất.
+    \item \textbf{Điện trở R0, R1, R2:} Cung cấp nhiệt cho quá trình chưng cất.
+    \item \textbf{Thiết bị ngưng tụ:} Làm mát và ngưng tụ hơi sản phẩm.
 \end{itemize}
 
-\textbf{Chu trình khởi động ON:}
+Bộ điều khiển Arduino được sử dụng để lập trình điều khiển trình tự, với các LED mô phỏng trạng thái của bơm, van và điện trở. Phần mềm Arduino IDE và công cụ mô phỏng Tinkercad hỗ trợ việc lập trình và kiểm tra thuật toán.
+
+% ------------------------------------------------------------
+\subsection{Quy trình thực hiện}
+% ------------------------------------------------------------
+
+Điều khiển hệ thống chưng cất bao gồm 3 chu trình:
+\begin{itemize}
+    \item \textbf{Chu trình khởi động (ON):} Tự động khởi động hệ thống theo quy trình định sẵn.
+    \item \textbf{Chu trình làm việc (SS):} Duy trì trạng thái làm việc ổn định.
+    \item \textbf{Chu trình dừng (OFF):} Tự động dừng hệ thống an toàn.
+\end{itemize}
+
+Sử dụng công tắc ON/OFF viết chương trình điều khiển tự động:
+\begin{itemize}
+    \item Bật nút ON: hệ thống khởi động theo quy trình, sau đó chuyển sang trạng thái làm việc.
+    \item Bật nút OFF: hệ thống chuyển sang trạng thái dừng theo quy trình.
+\end{itemize}
+
+\subsubsection{Chu trình khởi động ON}
 
 \begin{table}[H]
 \centering
@@ -107,25 +73,25 @@ Sử dụng công tắc ON/OFF viết chương trình điều khiển tự độ
 \hline
 B1 – Khởi động & Nhấn nút ON & -- \\
 \hline
-B2 – Nhận dung dịch vào nồi đun & Bật bơm 1, Mở van 0 & 30 \\
+B2 – Nhận dung dịch vào nồi đun & Bật bơm 1, Mở van V0 & 30 \\
 \hline
-B3 – Gia nhiệt nồi đun & Tắt van 0, Mở điện trở R0, Mở van V2 & 60 \\
+B3 – Gia nhiệt nồi đun & Tắt van V0, Bật điện trở R0, Mở van V4 & 60 \\
 \hline
 B4 – Khởi động dòng nhập liệu & Mở van V1, Bật điện trở R1 & 10 \\
 \hline
-B5 – Khởi động dòng hoàn lưu & Bật bơm 2, Bật điện trở R1 & 10 \\
+B5 – Khởi động dòng hoàn lưu & Mở van V2, Bật bơm 2 & 10 \\
 \hline
-B6 – Tháo sản phẩm đáy & Mở Van V3, Bật bơm 3 & -- \\
+B6 – Tháo sản phẩm đáy & Mở van V3, Bật bơm 3 & -- \\
 \hline
 \end{tabular}
 \caption{Chu trình khởi động hệ thống chưng cất}
 \end{table}
 
-\textbf{Trạng thái làm việc SS:}
+\subsubsection{Trạng thái làm việc SS}
 
 Tất cả các thiết bị ở trạng thái làm việc (ON), riêng van V0 đóng. Hệ thống duy trì trạng thái này cho đến khi nhận lệnh dừng.
 
-\textbf{Chu trình dừng OFF:}
+\subsubsection{Chu trình dừng OFF}
 
 \begin{table}[H]
 \centering
@@ -135,9 +101,9 @@ Tất cả các thiết bị ở trạng thái làm việc (ON), riêng van V0 �
 \hline
 B1 – Dừng & Nhấn nút OFF & -- \\
 \hline
-B2 – Tắt tất cả nguồn nhiệt cấp cho tháp & Tắt điện trở R0, R1 và R2 & 60 \\
+B2 – Tắt tất cả nguồn nhiệt & Tắt điện trở R0, R1 và R2 & 60 \\
 \hline
-B3 – Ngưng dòng nhập liệu và hồi lưu & Tắt các bơm 1, 2, 3; Đóng các van V1, V2, V3 & 60 \\
+B3 – Ngưng dòng nhập liệu và hồi lưu & Tắt bơm 1, 2, 3; Đóng van V1, V2, V3 & 60 \\
 \hline
 B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
 \hline
@@ -145,7 +111,8 @@ B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
 \caption{Chu trình dừng hệ thống chưng cất}
 \end{table}
 
-\textbf{Thiết kế chương trình:}
+\subsubsection{Thiết kế chương trình}
+
 \begin{itemize}
     \item Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở.
     \item Công tắc nối vào chân D2 sử dụng điện trở kéo về GND.
@@ -159,49 +126,52 @@ B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
 
 \subsubsection{Kết quả thí nghiệm}
 
-Với các bước thực hiện thiết kế chương trình trên, cùng với đoạn code hoàn chỉnh và chạy thực tế trên mô hình tại phòng thí nghiệm. Ta thấy đoạn code đưa ra kết quả hiệu quả và có kết quả chính xác đáp ứng theo ý đồ điều khiển của chúng ta với các chu trình ON, OFF định sẵn.
+Chương trình điều khiển đã được thiết kế và chạy thực tế trên mô hình tại phòng thí nghiệm. Kết quả cho thấy hệ thống hoạt động đúng theo trình tự:
 
-Hệ thống hoạt động đúng theo trình tự:
 \begin{enumerate}
-    \item Khi nhấn nút ON, hệ thống bắt đầu chu trình khởi động.
-    \item Các thiết bị được bật/tắt theo đúng thứ tự và thời gian quy định.
-    \item Khi nhấn nút OFF, hệ thống dừng theo quy trình an toàn.
+    \item Khi nhấn nút ON, hệ thống bắt đầu chu trình khởi động với các bước tuần tự từ B1 đến B6.
+    \item Sau khi hoàn thành chu trình ON, hệ thống chuyển sang trạng thái làm việc SS và duy trì ổn định.
+    \item Khi nhấn nút OFF, hệ thống thực hiện chu trình dừng an toàn với các bước từ B1 đến B4.
 \end{enumerate}
 
 \subsubsection{Bàn luận}
 
-Qua thí nghiệm, có thể thấy rằng vi điều khiển Arduino là công cụ hiệu quả để triển khai các thuật toán điều khiển trình tự. Việc sử dụng các lệnh đơn giản như \texttt{digitalWrite()}, \texttt{delay()} cho phép điều khiển linh hoạt các thiết bị chấp hành theo trình tự định sẵn.
+Qua thí nghiệm, có thể thấy rằng điều khiển trình tự là phương pháp hiệu quả để vận hành các hệ thống công nghiệp phức tạp như hệ thống chưng cất. Việc tuân thủ đúng trình tự và thời gian chờ giữa các bước đảm bảo:
+\begin{itemize}
+    \item An toàn cho thiết bị và người vận hành.
+    \item Hiệu quả của quá trình chưng cất.
+    \item Dễ dàng giám sát và phát hiện sự cố.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết luận và khuyến nghị}
 % ------------------------------------------------------------
 
-Qua quá trình tìm hiểu và thực hiện thí nghiệm, nhóm rút ra được nhiều nội dung ý nghĩa:
+Qua quá trình thực hiện thí nghiệm, nhóm rút ra được các nội dung sau:
 
 \begin{itemize}
-    \item \textbf{Hiểu được chức năng bộ vi điều khiển:} Thí nghiệm giúp người tham gia hiểu rõ về chức năng và vai trò của bộ vi điều khiển trong hệ thống điều khiển tự động.
-    \item Biết lập trình các thuật toán điều khiển trình tự cho bộ điều khiển.
-    \item Thiết lập sơ đồ kết nối các thành phần của hệ thống điều khiển.
-    \item Thiết kế hệ thống điều khiển tự động để khởi động, dừng cho quá trình chưng cất.
+    \item Hiểu được nguyên lý điều khiển trình tự và ứng dụng trong vận hành hệ thống chưng cất.
+    \item Biết thiết kế chu trình khởi động (ON), làm việc (SS), và dừng (OFF) cho hệ thống công nghiệp.
+    \item Nắm vững cách sử dụng vi điều khiển Arduino để triển khai thuật toán điều khiển trình tự.
 \end{itemize}
 
-\textbf{Khuyến nghị:} Cần nghiên cứu thêm về các phương pháp điều khiển nâng cao và xử lý các tình huống lỗi trong quá trình vận hành để cải thiện độ tin cậy của hệ thống.
+\textbf{Khuyến nghị:} Cần nghiên cứu thêm về xử lý các tình huống lỗi và interlock (khóa liên động) để cải thiện độ an toàn và tin cậy của hệ thống.
 
 % ------------------------------------------------------------
 \subsection{Trả lời câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Mô tả cấu trúc và chức năng của bộ vi điều khiển Arduino?}
+\textbf{Câu 1: Điều khiển trình tự là gì? Ứng dụng trong công nghiệp?}
 
-Arduino là bo mạch vi điều khiển bao gồm: CPU (xử lý lệnh), bộ nhớ Flash (lưu chương trình), RAM (lưu dữ liệu), các chân I/O số và analog, giao tiếp Serial/SPI/I2C, và các timer/counter.
+Điều khiển trình tự là phương pháp điều khiển trong đó các bước được thực hiện theo thứ tự định sẵn, mỗi bước chỉ thực hiện khi bước trước hoàn thành. Ứng dụng phổ biến: khởi động/dừng hệ thống, quy trình sản xuất theo mẻ, điều khiển dây chuyền lắp ráp.
 
-\textbf{Câu 2: Điều khiển trình tự là gì? Ứng dụng trong công nghiệp?}
+\textbf{Câu 2: Giải thích quy trình khởi động hệ thống chưng cất?}
 
-Điều khiển trình tự là phương pháp điều khiển trong đó các bước được thực hiện theo thứ tự định sẵn. Ứng dụng phổ biến trong công nghiệp bao gồm: khởi động/dừng hệ thống, quy trình sản xuất theo mẻ, điều khiển dây chuyền lắp ráp.
+Quy trình khởi động gồm các bước tuần tự: (1) Nạp nguyên liệu vào nồi đun qua bơm 1 và van V0, (2) Gia nhiệt nồi đun bằng điện trở R0 và cấp nước làm mát qua van V4, (3) Khởi động dòng nhập liệu qua van V1, (4) Khởi động dòng hoàn lưu qua van V2 và bơm 2, (5) Tháo sản phẩm đáy qua van V3 và bơm 3.
 
-\textbf{Câu 3: Giải thích quy trình khởi động hệ thống chưng cất?}
+\textbf{Câu 3: Tại sao cần có thời gian chờ giữa các bước trong chu trình?}
 
-Quy trình khởi động hệ thống chưng cất bao gồm các bước tuần tự: nạp nguyên liệu vào nồi đun, gia nhiệt nồi đun, khởi động dòng nhập liệu, khởi động dòng hoàn lưu, và cuối cùng là tháo sản phẩm đáy. Mỗi bước có thời gian chờ xác định để đảm bảo hệ thống hoạt động ổn định.
+Thời gian chờ đảm bảo: (1) Thiết bị có đủ thời gian ổn định trước khi bước tiếp theo thực hiện, (2) Tránh quá tải cho hệ thống điện, (3) Đảm bảo các điều kiện công nghệ được đáp ứng (ví dụ: nồi đun đủ nóng trước khi nhập liệu).
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
@@ -210,7 +180,6 @@ Quy trình khởi động hệ thống chưng cất bao gồm các bước tuầ
 \begin{enumerate}
     \item Điều khiển Quá trình Công nghệ Hóa học - Cơ sở điều khiển Quá trình – Quyển 1.
     \item Điều khiển Quá trình Công nghệ Hóa học – Hướng dẫn thí nghiệm, Thực hành cơ sở Điều khiển – Quyển 2.
-    \item Arduino Official Documentation, https://www.arduino.cc/reference/en/
 \end{enumerate}
 
 \newpage
