@@ -7,6 +7,10 @@
 - `make distclean` - Remove all generated files including PDFs
 - `make shell` - Open interactive shell in Docker container for debugging
 
+## Versioning
+- Versioned via git tags (e.g., `v1.0.11`)
+- Use semantic versioning: `vMAJOR.MINOR.PATCH`
+
 ## Project Structure
 LaTeX academic lab report using XeLaTeX with Vietnamese language support.
 - `src/` - LaTeX source files (main.tex is entry point, includes other .tex files)
