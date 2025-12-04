@@ -1,6 +1,6 @@
-# Báo cáo Thí nghiệm Cơ sở Điều khiển Quá trình
+# Báo cáo Thí nghiệm Thiết bị Đo lường và Điều khiển
 
-Báo cáo thí nghiệm môn học "Cơ sở điều khiển quá trình" (MSMH 3342) - Khoa Kỹ thuật Hóa học, Trường Đại học Bách Khoa, ĐHQG-HCM.
+Báo cáo thí nghiệm môn học "Thiết bị Đo lường và Điều khiển" (CH4132) - Khoa Kỹ thuật Hóa học, Trường Đại học Bách Khoa, ĐHQG-HCM.
 
 ## Build
 
@@ -19,45 +19,56 @@ src/
 ├── main.tex       # Entry point
 ├── preamble.tex   # LaTeX preamble và styles
 ├── cover_page.tex # Trang bìa
-├── lab2.tex       # Bài TN 2: Thiết bị điều khiển và lập trình vi điều khiển
-├── lab3.tex       # Bài TN 3: Khảo sát bộ điều khiển ON-OFF và PID
-└── lab4.tex       # Bài TN 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID
+├── lab1.tex       # Bài TN 1: Khảo sát cảm biến nhiệt độ
+├── lab2.tex       # Bài TN 2: Điều khiển ON/OFF
+├── lab3.tex       # Bài TN 3: Điều khiển PID
+└── lab4.tex       # Bài TN 4: Factory I/O
 
-data/              # Dữ liệu thí nghiệm (.csv, .TRD)
+data/              # Dữ liệu thí nghiệm
 assets/            # Hình ảnh, logo
-docs/              # Tài liệu tham khảo (PDF)
+docs/              # Tài liệu tham khảo
 output/            # PDF output
 ```
 
+## Thiết bị và phần mềm
+
+- **PLC:** Siemens S7-1200
+- **Phần mềm lập trình:** TIA Portal V16
+- **Mô phỏng:** Factory I/O
+
 ## Nội dung các bài thí nghiệm
 
-### Bài thí nghiệm 2: Thiết bị điều khiển và lập trình vi điều khiển
+### Bài thí nghiệm 1: Khảo sát cảm biến nhiệt độ
 
-Mô phỏng vận hành điều khiển hệ thống chưng cất sử dụng Arduino.
+Khảo sát đặc tính và hiệu chuẩn cảm biến nhiệt độ.
 
-- Điều khiển trình tự (Sequence Control)
-- 3 chu trình: Khởi động (ON), Làm việc ổn định (SS), Dừng (OFF)
-- Lập trình Arduino điều khiển bơm, van, điện trở
+- Cảm biến nhiệt điện trở (RTD, Pt100)
+- Cặp nhiệt điện (Thermocouple)
+- Đường cong hiệu chuẩn
 
-### Bài thí nghiệm 3: Khảo sát bộ điều khiển ON-OFF và PID
+### Bài thí nghiệm 2: Điều khiển ON/OFF
 
-Khảo sát và so sánh các bộ điều khiển trên hệ thống điều khiển mức chất lỏng với phần mềm Halalab.
+Thiết kế và khảo sát hệ thống điều khiển nhiệt độ ON/OFF sử dụng PLC S7-1200.
 
-- Bộ điều khiển ON-OFF
-- Bộ điều khiển P, PI, PID
-- Đánh giá chỉ tiêu chất lượng: thời gian xác lập, độ quá điều chỉnh, sai lệch tĩnh
+- Lập trình PLC với TIA Portal
+- Điều khiển bang-bang
+- Phân tích dao động và hysteresis
 
-### Bài thí nghiệm 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID
+### Bài thí nghiệm 3: Điều khiển PID
 
-Khảo sát ảnh hưởng của các thông số $K_P$, $K_I$, $K_D$ đến chất lượng điều khiển.
+Thiết kế và chỉnh định bộ điều khiển PID cho hệ thống điều khiển nhiệt độ.
 
-- Thay đổi từng thông số và ghi nhận đáp ứng
-- Xác định bộ thông số tối ưu
+- Cấu hình khối PID trong TIA Portal
+- Chỉnh định thông số Kp, Ki, Kd
+- Đánh giá chất lượng điều khiển
 
-## Tài liệu tham khảo
+### Bài thí nghiệm 4: Factory I/O
 
-1. B. N. Pha, *Điều khiển Quá trình Công nghệ Hoá học -- Cơ sở Điều khiển Quá trình*, Quyển 1. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
-2. B. N. Pha và P. H. H. P. Lợi, *Điều khiển Quá trình Công nghệ Hoá học -- Hướng dẫn Thí nghiệm – Thực hành Cơ sở Điều khiển Quá trình*, Quyển 2. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
+Mô phỏng và điều khiển hệ thống công nghiệp với Factory I/O.
+
+- Kết nối PLC S7-1200 với Factory I/O
+- Lập trình điều khiển quy trình tự động
+- Giám sát và vận hành hệ thống ảo
 
 ## Versioning
 

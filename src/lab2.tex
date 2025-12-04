@@ -1,264 +1,175 @@
 % ============================================================
-% Lab 2: Thiết bị điều khiển và lập trình vi điều khiển
+% Lab 2: Điều khiển ON/OFF
 % ============================================================
 
 \setcounter{section}{2}
 \setcounter{subsection}{0}
-\section*{BÀI THÍ NGHIỆM 2: THIẾT BỊ ĐIỀU KHIỂN VÀ LẬP TRÌNH VI ĐIỀU KHIỂN}
-\addcontentsline{toc}{section}{Bài thí nghiệm 2: Thiết bị điều khiển và lập trình vi điều khiển}
+\section*{BÀI THÍ NGHIỆM 2: ĐIỀU KHIỂN ON/OFF}
+\addcontentsline{toc}{section}{Bài thí nghiệm 2: Điều khiển ON/OFF}
 
 % ------------------------------------------------------------
-\subsection{Tóm tắt}
+\subsection{Mục tiêu}
 % ------------------------------------------------------------
 
-Bài thí nghiệm này tập trung vào việc mô phỏng vận hành điều khiển hệ thống chưng cất sử dụng vi điều khiển Arduino. Mục tiêu là thiết kế hệ thống điều khiển tự động để thực hiện 3 chu trình: khởi động (ON), làm việc ổn định (SS), và dừng (OFF) cho quá trình chưng cất. Thông qua thí nghiệm, chúng ta hiểu rõ hơn về điều khiển trình tự và cách áp dụng vào các hệ thống công nghiệp thực tế.
+\begin{itemize}
+    \item Hiểu nguyên lý hoạt động của bộ điều khiển ON/OFF.
+    \item Thiết kế và lập trình hệ thống điều khiển nhiệt độ ON/OFF trên PLC S7-1200.
+    \item Khảo sát đặc tính dao động và ảnh hưởng của hysteresis.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
-\subsubsection{Điều khiển trình tự (Sequence Control)}
+\subsubsection{Bộ điều khiển ON/OFF}
 
-Điều khiển trình tự là phương pháp điều khiển trong đó các bước thực hiện được tiến hành theo một thứ tự định sẵn. Mỗi bước chỉ được thực hiện khi bước trước đó hoàn thành. Phương pháp này thường được sử dụng trong các quy trình khởi động và dừng hệ thống công nghiệp.
-
-Trong hệ thống chưng cất, điều khiển trình tự đảm bảo các thiết bị (bơm, van, điện trở gia nhiệt) được bật/tắt theo đúng thứ tự và thời gian quy định, đảm bảo an toàn và hiệu quả vận hành.
-
-% ------------------------------------------------------------
-\subsection{Mô tả thiết bị thí nghiệm}
-% ------------------------------------------------------------
-
-Hệ thống chưng cất trong bài thí nghiệm này được thể hiện trên Hình \ref{fig:distillation_system}.
+Bộ điều khiển ON/OFF (còn gọi là điều khiển bang-bang) là loại điều khiển đơn giản nhất, trong đó tín hiệu điều khiển chỉ có hai trạng thái: bật (ON) hoặc tắt (OFF).
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{../assets/distillation_system.png}
-\caption{Sơ đồ hệ thống chưng cất}
-\label{fig:distillation_system}
+\begin{tikzpicture}
+    % ON-OFF characteristic with hysteresis
+    \draw[->] (-2,0) -- (3,0) node[right] {$e$};
+    \draw[->] (0,-1.5) -- (0,2) node[above] {$u$};
+    
+    % Hysteresis loop
+    \draw[thick, blue, ->] (-1.5,-1) -- (-0.5,-1) -- (-0.5,1) -- (1.5,1);
+    \draw[thick, red, ->] (1.5,1) -- (0.5,1) -- (0.5,-1) -- (-1.5,-1);
+    
+    % Labels
+    \node[font=\small] at (2.5,1) {$u_{max}$};
+    \node[font=\small] at (2.5,-1) {$u_{min}$};
+    \node[font=\small] at (-0.5,-1.5) {$-h$};
+    \node[font=\small] at (0.5,-1.5) {$+h$};
+\end{tikzpicture}
+\caption{Đặc tính bộ điều khiển ON/OFF với hysteresis}
+\label{fig:onoff_hysteresis}
 \end{figure}
 
-Các thành phần chính của hệ thống bao gồm:
+Phương trình mô tả:
+\begin{equation}
+u = \begin{cases}
+u_{max} & \text{nếu } e > +h \\
+u_{min} & \text{nếu } e < -h \\
+\text{giữ nguyên} & \text{nếu } -h \leq e \leq +h
+\end{cases}
+\end{equation}
+
+Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ngắt của thiết bị chấp hành.
+
+\subsubsection{Đặc điểm của điều khiển ON/OFF}
+
 \begin{itemize}
-    \item \textbf{Bơm 1, 2, 3:} Cung cấp và vận chuyển dung dịch trong hệ thống.
-    \item \textbf{Van V0, V1, V2, V3, V4:} Điều khiển dòng chảy của các dòng vật chất.
-    \item \textbf{Điện trở R0, R1, R2:} Cung cấp nhiệt cho quá trình chưng cất.
-    \item \textbf{Thiết bị ngưng tụ:} Làm mát và ngưng tụ hơi sản phẩm.
+    \item \textbf{Ưu điểm:} Đơn giản, dễ triển khai, chi phí thấp.
+    \item \textbf{Nhược điểm:} Biến điều khiển dao động quanh setpoint, không đạt được điều khiển chính xác.
+    \item \textbf{Ứng dụng:} Điều khiển nhiệt độ lò nung, bình nước nóng, máy điều hòa...
 \end{itemize}
 
-Bộ điều khiển Arduino được sử dụng để lập trình điều khiển trình tự, với các LED mô phỏng trạng thái của bơm, van và điện trở. Phần mềm Arduino IDE và công cụ mô phỏng Tinkercad hỗ trợ việc lập trình và kiểm tra thuật toán.
+% ------------------------------------------------------------
+\subsection{Thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item PLC Siemens S7-1200 CPU 1214C
+    \item Module analog input/output
+    \item Cảm biến nhiệt độ Pt100
+    \item Bộ gia nhiệt (Heater)
+    \item Phần mềm TIA Portal V16
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
-Điều khiển hệ thống chưng cất bao gồm 3 chu trình:
-\begin{itemize}
-    \item \textbf{Chu trình khởi động (ON):} Tự động khởi động hệ thống theo quy trình định sẵn.
-    \item \textbf{Chu trình làm việc (SS):} Duy trì trạng thái làm việc ổn định.
-    \item \textbf{Chu trình dừng (OFF):} Tự động dừng hệ thống an toàn.
-\end{itemize}
-
-Sử dụng công tắc ON/OFF viết chương trình điều khiển tự động:
-\begin{itemize}
-    \item Bật nút ON: hệ thống khởi động theo quy trình, sau đó chuyển sang trạng thái làm việc.
-    \item Bật nút OFF: hệ thống chuyển sang trạng thái dừng theo quy trình.
-\end{itemize}
-
-\subsubsection{Chu trình khởi động ON}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|c|}
-\hline
-\textbf{Các bước thực hiện} & \textbf{Sự kiện} & \textbf{Thời gian chờ (giây)} \\
-\hline
-B1 – Khởi động & Nhấn nút ON & -- \\
-\hline
-B2 – Nhận dung dịch vào nồi đun & Bật bơm 1, Mở van V0 & 30 \\
-\hline
-B3 – Gia nhiệt nồi đun & Tắt van V0, Bật điện trở R0, Mở van V4 & 60 \\
-\hline
-B4 – Khởi động dòng nhập liệu & Mở van V1, Bật điện trở R1 & 10 \\
-\hline
-B5 – Khởi động dòng hoàn lưu & Mở van V2, Bật bơm 2 & 10 \\
-\hline
-B6 – Tháo sản phẩm đáy & Mở van V3, Bật bơm 3 & -- \\
-\hline
-\end{tabular}
-\caption{Chu trình khởi động hệ thống chưng cất}
-\end{table}
-
-\subsubsection{Trạng thái làm việc SS}
-
-Tất cả các thiết bị ở trạng thái làm việc (ON), riêng van V0 đóng. Hệ thống duy trì trạng thái này cho đến khi nhận lệnh dừng.
-
-\subsubsection{Chu trình dừng OFF}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|c|}
-\hline
-\textbf{Các bước thực hiện} & \textbf{Sự kiện} & \textbf{Thời gian chờ (giây)} \\
-\hline
-B1 – Dừng & Nhấn nút OFF & -- \\
-\hline
-B2 – Tắt tất cả nguồn nhiệt & Tắt điện trở R0, R1 và R2 & 60 \\
-\hline
-B3 – Ngưng dòng nhập liệu và hồi lưu & Tắt bơm 1, 2, 3; Đóng van V1, V2, V3 & 60 \\
-\hline
-B4 – Ngưng dòng nước lạnh & Đóng van V4 & -- \\
-\hline
-\end{tabular}
-\caption{Chu trình dừng hệ thống chưng cất}
-\end{table}
-
-\subsubsection{Thiết kế chương trình}
-
-Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện trở. Công tắc nối vào chân D2 sử dụng điện trở kéo về GND.
-
-\textbf{Sơ đồ kết nối chân Arduino:}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|l||c|l|}
-\hline
-\textbf{Chân} & \textbf{Thiết bị} & \textbf{Chân} & \textbf{Thiết bị} \\
-\hline
-D2 & Công tắc (INPUT) & D9 & Điện trở R2 \\
-\hline
-D3 & Bơm 3 & D10 & Điện trở R1 \\
-\hline
-D4 & Bơm 2 & D11 & Điện trở R0 \\
-\hline
-D5 & Bơm 1 & D12 & Van V3 \\
-\hline
-D6 & Van V2 & D13 & Van V4 \\
-\hline
-D7 & Van V1 & & \\
-\hline
-D8 & Van V0 & & \\
-\hline
-\end{tabular}
-\caption{Sơ đồ kết nối chân Arduino}
-\end{table}
-
-\textbf{Đoạn code chương trình:}
-
-\begin{lstlisting}
-int congtac = 2;
-int pump3 = 3, pump2 = 4, pump1 = 5;
-int van2 = 6, van1 = 7, van0 = 8;
-int re2 = 9, re1 = 10, re0 = 11;
-int van3 = 12, van4 = 13;
-int i = 0;
-
-void chutrinhON() {
-  // B2: Nap dung dich vao noi dun (30s)
-  digitalWrite(pump1, 1); digitalWrite(van0, 1); delay(30000);
-  // B3: Gia nhiet noi dun, cap nuoc lam mat (60s)
-  digitalWrite(van0, 0); digitalWrite(re0, 1); digitalWrite(van4, 1); delay(60000);
-  // B4: Khoi dong dong nhap lieu (10s)
-  digitalWrite(van1, 1); digitalWrite(re1, 1); delay(10000);
-  // B5: Khoi dong dong hoan luu (10s)
-  digitalWrite(van2, 1); digitalWrite(pump2, 1); delay(10000);
-  // B6: Thao san pham day
-  digitalWrite(van3, 1); digitalWrite(pump3, 1);
-}
-
-void chutrinhOFF() {
-  // B2: Tat tat ca nguon nhiet (60s)
-  digitalWrite(re0, 0); digitalWrite(re1, 0); digitalWrite(re2, 0); delay(60000);
-  // B3: Ngung dong nhap lieu va hoi luu (60s)
-  digitalWrite(pump1, 0); digitalWrite(pump2, 0); digitalWrite(pump3, 0);
-  digitalWrite(van1, 0); digitalWrite(van2, 0); digitalWrite(van3, 0);
-  delay(60000);
-  // B4: Ngung dong nuoc lanh
-  digitalWrite(van4, 0);
-}
-
-void setup() {
-  pinMode(congtac, INPUT);
-  pinMode(pump1, OUTPUT); pinMode(pump2, OUTPUT); pinMode(pump3, OUTPUT);
-  pinMode(van0, OUTPUT); pinMode(van1, OUTPUT); pinMode(van2, OUTPUT);
-  pinMode(van3, OUTPUT); pinMode(van4, OUTPUT);
-  pinMode(re0, OUTPUT); pinMode(re1, OUTPUT); pinMode(re2, OUTPUT);
-}
-
-void loop() {
-  if (digitalRead(congtac) == 1) {
-    if (i == 0) {
-      chutrinhON();
-      i = i + 1;
-    }
-  }
-  if (digitalRead(congtac) == 0) {
-    if (i == 1) {
-      chutrinhOFF();
-      i = i - 1;
-    }
-  }
-}
-\end{lstlisting}
-
-% ------------------------------------------------------------
-\subsection{Kết quả và bàn luận}
-% ------------------------------------------------------------
-
-\subsubsection{Kết quả thí nghiệm}
-
-Chương trình điều khiển đã được thiết kế và chạy thực tế trên mô hình tại phòng thí nghiệm. Kết quả cho thấy hệ thống hoạt động đúng theo trình tự:
-
+\subsubsection{Cấu hình phần cứng}
 \begin{enumerate}
-    \item Khi nhấn nút ON, hệ thống bắt đầu chu trình khởi động với các bước tuần tự từ B1 đến B6.
-    \item Sau khi hoàn thành chu trình ON, hệ thống chuyển sang trạng thái làm việc SS và duy trì ổn định.
-    \item Khi nhấn nút OFF, hệ thống thực hiện chu trình dừng an toàn với các bước từ B1 đến B4.
+    \item Tạo project mới trong TIA Portal V16.
+    \item Thêm PLC S7-1200 và cấu hình module analog.
+    \item Kết nối cảm biến Pt100 với analog input.
+    \item Kết nối bộ gia nhiệt với digital output.
 \end{enumerate}
 
-\subsubsection{Bàn luận}
+\subsubsection{Lập trình điều khiển ON/OFF}
+\begin{enumerate}
+    \item Đọc giá trị nhiệt độ từ cảm biến.
+    \item So sánh với setpoint và tính sai lệch $e = SP - PV$.
+    \item Áp dụng logic ON/OFF với hysteresis:
+    \begin{itemize}
+        \item Nếu $PV < SP - h$: Bật heater (ON)
+        \item Nếu $PV > SP + h$: Tắt heater (OFF)
+    \end{itemize}
+    \item Quan sát đáp ứng của hệ thống.
+\end{enumerate}
 
-Qua thí nghiệm, có thể thấy rằng điều khiển trình tự là phương pháp hiệu quả để vận hành các hệ thống công nghiệp phức tạp như hệ thống chưng cất. Việc tuân thủ đúng trình tự và thời gian chờ giữa các bước đảm bảo:
+\subsubsection{Khảo sát ảnh hưởng của hysteresis}
+\begin{enumerate}
+    \item Thay đổi giá trị hysteresis: $h$ = 1°C, 2°C, 5°C.
+    \item Ghi nhận biên độ dao động và tần số đóng ngắt.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Kết quả thí nghiệm}
+% ------------------------------------------------------------
+
+\subsubsection{Đáp ứng hệ thống}
+
+% TODO: Thêm đồ thị đáp ứng
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Hysteresis (°C)} & \textbf{Biên độ dao động (°C)} & \textbf{Chu kỳ dao động (s)} & \textbf{Tần số đóng ngắt} \\
+\hline
+1 & & & \\
+\hline
+2 & & & \\
+\hline
+5 & & & \\
+\hline
+\end{tabular}
+\caption{Kết quả khảo sát ảnh hưởng của hysteresis}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Bàn luận}
+% ------------------------------------------------------------
+
 \begin{itemize}
-    \item An toàn cho thiết bị và người vận hành.
-    \item Hiệu quả của quá trình chưng cất.
-    \item Dễ dàng giám sát và phát hiện sự cố.
+    \item Nhận xét về đặc tính dao động của điều khiển ON/OFF.
+    \item Phân tích ảnh hưởng của hysteresis đến chất lượng điều khiển.
+    \item So sánh ưu nhược điểm với điều khiển liên tục (PID).
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Kết luận và khuyến nghị}
+\subsection{Kết luận}
 % ------------------------------------------------------------
 
-Qua quá trình thực hiện thí nghiệm, nhóm rút ra được các nội dung sau:
-
-\begin{itemize}
-    \item Hiểu được nguyên lý điều khiển trình tự và ứng dụng trong vận hành hệ thống chưng cất.
-    \item Biết thiết kế chu trình khởi động (ON), làm việc (SS), và dừng (OFF) cho hệ thống công nghiệp.
-    \item Nắm vững cách sử dụng vi điều khiển Arduino để triển khai thuật toán điều khiển trình tự.
-\end{itemize}
-
-\textbf{Khuyến nghị:} Cần nghiên cứu thêm về xử lý các tình huống lỗi và interlock (khóa liên động) để cải thiện độ an toàn và tin cậy của hệ thống.
+% TODO: Điền kết luận sau khi thực hiện thí nghiệm
 
 % ------------------------------------------------------------
-\subsection{Trả lời câu hỏi kiểm tra}
+\subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Điều khiển trình tự là gì? Ứng dụng trong công nghiệp?}
+\textbf{Câu 1: Tại sao cần hysteresis trong điều khiển ON/OFF?}
 
-Điều khiển trình tự là phương pháp điều khiển trong đó các bước được thực hiện theo thứ tự định sẵn, mỗi bước chỉ thực hiện khi bước trước hoàn thành. Ứng dụng phổ biến: khởi động/dừng hệ thống, quy trình sản xuất theo mẻ, điều khiển dây chuyền lắp ráp.
+% TODO: Trả lời
 
-\textbf{Câu 2: Giải thích quy trình khởi động hệ thống chưng cất?}
+\textbf{Câu 2: Ưu nhược điểm của điều khiển ON/OFF so với PID?}
 
-Quy trình khởi động gồm các bước tuần tự: (1) Nạp nguyên liệu vào nồi đun qua bơm 1 và van V0, (2) Gia nhiệt nồi đun bằng điện trở R0 và cấp nước làm mát qua van V4, (3) Khởi động dòng nhập liệu qua van V1, (4) Khởi động dòng hoàn lưu qua van V2 và bơm 2, (5) Tháo sản phẩm đáy qua van V3 và bơm 3.
+% TODO: Trả lời
 
-\textbf{Câu 3: Tại sao cần có thời gian chờ giữa các bước trong chu trình?}
+\textbf{Câu 3: Ứng dụng thực tế của điều khiển ON/OFF?}
 
-Thời gian chờ đảm bảo: (1) Thiết bị có đủ thời gian ổn định trước khi bước tiếp theo thực hiện, (2) Tránh quá tải cho hệ thống điện, (3) Đảm bảo các điều kiện công nghệ được đáp ứng (ví dụ: nồi đun đủ nóng trước khi nhập liệu).
+% TODO: Trả lời
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
 % ------------------------------------------------------------
 
 \begin{enumerate}[label={[\arabic*]}]
-    \item B. N. Pha, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Cơ sở Điều khiển Quá trình}, Quyển 1. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
-    \item B. N. Pha và P. H. H. P. Lợi, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Hướng dẫn Thí nghiệm – Thực hành Cơ sở Điều khiển Quá trình}, Quyển 2. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
+    \item B. N. Pha, \textit{Thiết bị Đo lường và Điều khiển}. Trường Đại học Bách khoa, ĐHQG-HCM.
+    \item Siemens, \textit{S7-1200 Programmable Controller System Manual}. Siemens AG, 2020.
 \end{enumerate}
 
 \newpage

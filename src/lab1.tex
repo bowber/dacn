@@ -1,0 +1,193 @@
+% ============================================================
+% Lab 1: Khảo sát cảm biến nhiệt độ
+% ============================================================
+
+\setcounter{section}{1}
+\setcounter{subsection}{0}
+\section*{BÀI THÍ NGHIỆM 1: KHẢO SÁT CẢM BIẾN NHIỆT ĐỘ}
+\addcontentsline{toc}{section}{Bài thí nghiệm 1: Khảo sát cảm biến nhiệt độ}
+
+% ------------------------------------------------------------
+\subsection{Mục tiêu}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Hiểu nguyên lý hoạt động của các loại cảm biến nhiệt độ công nghiệp.
+    \item Khảo sát đặc tính của cảm biến nhiệt điện trở (RTD) và cặp nhiệt điện (Thermocouple).
+    \item Thực hiện hiệu chuẩn cảm biến và xây dựng đường cong hiệu chuẩn.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Cơ sở lý thuyết}
+% ------------------------------------------------------------
+
+\subsubsection{Cảm biến nhiệt điện trở (RTD)}
+
+RTD (Resistance Temperature Detector) là cảm biến đo nhiệt độ dựa trên nguyên lý thay đổi điện trở của kim loại theo nhiệt độ. Loại phổ biến nhất là Pt100, sử dụng dây platinum với điện trở 100$\Omega$ tại 0°C.
+
+Phương trình quan hệ điện trở - nhiệt độ:
+\begin{equation}
+R_T = R_0 (1 + \alpha T)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $R_T$: Điện trở tại nhiệt độ T ($\Omega$)
+    \item $R_0$: Điện trở tại 0°C ($\Omega$)
+    \item $\alpha$: Hệ số nhiệt điện trở (°C$^{-1}$)
+    \item $T$: Nhiệt độ (°C)
+\end{itemize}
+
+\subsubsection{Cặp nhiệt điện (Thermocouple)}
+
+Thermocouple hoạt động dựa trên hiệu ứng Seebeck: khi hai kim loại khác nhau được nối với nhau và có chênh lệch nhiệt độ giữa hai đầu, sẽ sinh ra một suất điện động (EMF).
+
+\begin{equation}
+E = S_{AB} \cdot (T_1 - T_2)
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $E$: Suất điện động (mV)
+    \item $S_{AB}$: Hệ số Seebeck của cặp kim loại A-B ($\mu$V/°C)
+    \item $T_1, T_2$: Nhiệt độ tại hai đầu nối (°C)
+\end{itemize}
+
+Các loại thermocouple phổ biến:
+\begin{itemize}
+    \item Type K (Chromel-Alumel): -200°C đến 1260°C
+    \item Type J (Iron-Constantan): -40°C đến 760°C
+    \item Type T (Copper-Constantan): -200°C đến 350°C
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item PLC Siemens S7-1200 với module analog input
+    \item Cảm biến Pt100 (RTD)
+    \item Cặp nhiệt điện Type K
+    \item Bộ gia nhiệt điều khiển được
+    \item Nhiệt kế chuẩn
+    \item Phần mềm TIA Portal V16
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Quy trình thực hiện}
+% ------------------------------------------------------------
+
+\subsubsection{Chuẩn bị}
+\begin{enumerate}
+    \item Kết nối cảm biến với PLC S7-1200.
+    \item Cấu hình module analog input trong TIA Portal.
+    \item Kiểm tra kết nối và tín hiệu đầu vào.
+\end{enumerate}
+
+\subsubsection{Khảo sát cảm biến Pt100}
+\begin{enumerate}
+    \item Đặt nhiệt độ chuẩn tại các điểm: 30°C, 40°C, 50°C, 60°C, 70°C, 80°C.
+    \item Ghi nhận giá trị điện trở hoặc tín hiệu analog tương ứng.
+    \item Xây dựng đường cong hiệu chuẩn.
+\end{enumerate}
+
+\subsubsection{Khảo sát cặp nhiệt điện Type K}
+\begin{enumerate}
+    \item Thực hiện tương tự với các điểm nhiệt độ chuẩn.
+    \item Ghi nhận giá trị EMF hoặc tín hiệu analog.
+    \item So sánh với bảng chuẩn của thermocouple Type K.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Kết quả thí nghiệm}
+% ------------------------------------------------------------
+
+\subsubsection{Kết quả khảo sát Pt100}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Nhiệt độ chuẩn (°C)} & \textbf{Điện trở ($\Omega$)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
+\hline
+30 & & & \\
+\hline
+40 & & & \\
+\hline
+50 & & & \\
+\hline
+60 & & & \\
+\hline
+70 & & & \\
+\hline
+80 & & & \\
+\hline
+\end{tabular}
+\caption{Kết quả khảo sát cảm biến Pt100}
+\end{table}
+
+\subsubsection{Kết quả khảo sát Thermocouple Type K}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Nhiệt độ chuẩn (°C)} & \textbf{EMF (mV)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
+\hline
+30 & & & \\
+\hline
+40 & & & \\
+\hline
+50 & & & \\
+\hline
+60 & & & \\
+\hline
+70 & & & \\
+\hline
+80 & & & \\
+\hline
+\end{tabular}
+\caption{Kết quả khảo sát cặp nhiệt điện Type K}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Bàn luận}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Nhận xét về độ chính xác của từng loại cảm biến.
+    \item So sánh ưu nhược điểm giữa RTD và Thermocouple.
+    \item Phân tích nguồn sai số trong phép đo.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Kết luận}
+% ------------------------------------------------------------
+
+% TODO: Điền kết luận sau khi thực hiện thí nghiệm
+
+% ------------------------------------------------------------
+\subsection{Câu hỏi kiểm tra}
+% ------------------------------------------------------------
+
+\textbf{Câu 1: So sánh ưu nhược điểm của RTD và Thermocouple?}
+
+% TODO: Trả lời
+
+\textbf{Câu 2: Tại sao cần hiệu chuẩn cảm biến?}
+
+% TODO: Trả lời
+
+\textbf{Câu 3: Giải thích nguyên lý hoạt động của Pt100?}
+
+% TODO: Trả lời
+
+% ------------------------------------------------------------
+\subsection{Tài liệu tham khảo}
+% ------------------------------------------------------------
+
+\begin{enumerate}[label={[\arabic*]}]
+    \item B. N. Pha, \textit{Thiết bị Đo lường và Điều khiển}. Trường Đại học Bách khoa, ĐHQG-HCM.
+\end{enumerate}
+
+\newpage

@@ -1,88 +1,30 @@
 % ============================================================
-% Lab 3: Khảo sát các bộ điều khiển ON-OFF và PID
+% Lab 3: Điều khiển PID
 % ============================================================
 
 \setcounter{section}{3}
 \setcounter{subsection}{0}
-\section*{BÀI THÍ NGHIỆM 3: KHẢO SÁT CÁC BỘ ĐIỀU KHIỂN ON-OFF VÀ PID}
-\addcontentsline{toc}{section}{Bài thí nghiệm 3: Khảo sát các bộ điều khiển ON-OFF và PID}
+\section*{BÀI THÍ NGHIỆM 3: ĐIỀU KHIỂN PID}
+\addcontentsline{toc}{section}{Bài thí nghiệm 3: Điều khiển PID}
 
 % ------------------------------------------------------------
-\subsection{Tóm tắt}
+\subsection{Mục tiêu}
 % ------------------------------------------------------------
 
-Bài thí nghiệm này nhằm khảo sát và so sánh các bộ điều khiển ON-OFF và PID trên hệ thống điều khiển các đại lượng cơ bản trong phòng thí nghiệm. Thông qua việc thực hiện các thí nghiệm với các bộ điều khiển khác nhau, sinh viên có thể đánh giá chất lượng điều khiển dựa trên các chỉ tiêu như thời gian xác lập, độ quá điều chỉnh và sai lệch tĩnh. Kết quả cho thấy bộ điều khiển PID cho chất lượng điều khiển tốt nhất với thời gian xác lập ngắn và sai lệch tĩnh nhỏ.
+\begin{itemize}
+    \item Hiểu nguyên lý hoạt động của bộ điều khiển PID.
+    \item Cấu hình và sử dụng khối PID trong TIA Portal.
+    \item Chỉnh định thông số PID và đánh giá chất lượng điều khiển.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
-\subsubsection{Bộ điều khiển ON-OFF}
+\subsubsection{Bộ điều khiển PID}
 
-Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra ở hai chế độ ($u_{max}$ và $u_{min}$) hoặc hai trạng thái (bật và tắt) tùy thuộc vào sai lệch điều khiển $e$ mà nó nhận được.
+Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều khiển dựa trên ba thành phần: tỉ lệ (P), tích phân (I) và vi phân (D).
 
-% Sơ đồ khối điều khiển ON-OFF
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[node distance=1.8cm]
-    % Nodes
-    \node (sp) {$Y_{SP}$};
-    \node[sum, right=1cm of sp] (sum) {};
-    \node[block, right=1.5cm of sum, minimum width=5em] (controller) {ON-OFF};
-    \node[block, right=1.5cm of controller] (process) {Quá trình};
-    \node[right=1.5cm of process] (output) {$Y$};
-    
-    % Sensor
-    \node[block, below=1.2cm of process] (sensor) {Cảm biến};
-    
-    % Arrows
-    \draw[arrow] (sp) -- (sum);
-    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (controller);
-    \draw[arrow] (controller) -- node[labelnode, above] {$u$} (process);
-    \draw[arrow] (process) -- (output);
-    
-    % Feedback
-    \coordinate (fb) at ($(process.east)!0.6!(output.west)$);
-    \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| (sum);
-    
-    % Sum signs - positioned outside circle, below arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
-    \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
-\end{tikzpicture}
-\caption{Sơ đồ khối bộ điều khiển ON-OFF}
-\label{fig:onoff_block}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-    % ON-OFF characteristic
-    \draw[->] (-1.5,0) -- (2,0) node[right] {$e$};
-    \draw[->] (0,-1.5) -- (0,2) node[above] {$u$};
-    \draw[thick] (-1.2,-0.8) -- (0,-0.8) -- (0,1) -- (1.5,1);
-    \node[font=\small] at (2,1) {$u_{max}$};
-    \node[font=\small] at (2,-0.8) {$u_{min}$};
-\end{tikzpicture}
-\caption{Đặc tính bộ điều khiển ON-OFF}
-\label{fig:onoff_characteristic}
-\end{figure}
-
-Phương trình mô tả:
-\begin{equation}
-u = \begin{cases}
-u_{max} & \text{nếu } e > 0 \\
-u_{min} & \text{nếu } e < 0
-\end{cases}
-\end{equation}
-
-Loại điều khiển này không thực sự giữ biến được điều khiển chính xác tại điểm đặt, mà biến được điều khiển luôn dao động quanh điểm đặt với một biên độ nhất định.
-
-\subsubsection{Bộ điều khiển liên tục PID}
-
-Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều khiển dựa trên các tác động thành phần bao gồm P, I và D:
-
-% Sơ đồ khối bộ điều khiển PID
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=1.5cm]
@@ -115,321 +57,212 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     % Output arrow
     \draw[arrow] (sum) -- (output);
     
-    % Sum signs - positioned below arrow lines
+    % Sum signs
     \node[font=\scriptsize] at ($(sum.north)+(0,0.15)$) [right] {$+$};
     \node[font=\scriptsize] at ($(sum.west)+(-0.15,0)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.15)$) [right] {$+$};
 \end{tikzpicture}
 \caption{Sơ đồ khối bộ điều khiển PID}
-\label{fig:pid_block}
+\label{fig:pid_block_lab3}
 \end{figure}
 
-\begin{itemize}
-    \item \textbf{Thành phần P (Proportional):} tác động tỉ lệ với độ lớn sai lệch điều khiển $e(t)$
-    \item \textbf{Thành phần I (Integral):} tác động tỉ lệ với tích phân sai lệch điều khiển $\int e(t)dt$
-    \item \textbf{Thành phần D (Derivative):} tác động tỉ lệ với vi phân sai lệch điều khiển $\frac{de(t)}{dt}$
-\end{itemize}
-
-Công thức tổng quát của bộ điều khiển PID:
+Công thức tổng quát:
 \begin{equation}
 u(t) = K_P \cdot e(t) + K_I \int_0^t e(\tau)d\tau + K_D \frac{de(t)}{dt}
 \end{equation}
 
-\subsubsection{Ảnh hưởng của các thành phần P, I, D}
+\subsubsection{Ảnh hưởng của các thông số}
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Thành phần} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
+\textbf{Tăng} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
 \hline
-Tăng $K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
+$K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
 \hline
-Tăng $K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
+$K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 \hline
-Tăng $K_D$ & Ít thay đổi & Giảm & Không ảnh hưởng & Tốt hơn \\
+$K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \hline
 \end{tabular}
-\caption{Ảnh hưởng của các thành phần P, I, D đến chất lượng điều khiển}
+\caption{Ảnh hưởng của các thông số PID}
 \end{table}
 
-\subsubsection{Các chỉ tiêu chất lượng điều khiển}
+\subsubsection{Khối PID\_Compact trong TIA Portal}
 
+TIA Portal cung cấp khối \texttt{PID\_Compact} để thực hiện điều khiển PID. Các tham số chính:
 \begin{itemize}
-    \item \textbf{Thời gian xác lập ($t_s$):} Thời gian để đáp ứng đạt đến và duy trì trong phạm vi ±5\% của giá trị xác lập.
-    \item \textbf{Độ quá điều chỉnh ($\sigma$\%):} Mức vượt quá giá trị xác lập so với giá trị xác lập, tính bằng phần trăm.
-    \item \textbf{Sai lệch tĩnh ($e_{ss}$):} Sai lệch giữa giá trị đặt và giá trị thực khi hệ thống đạt trạng thái xác lập.
+    \item \texttt{Setpoint}: Giá trị đặt
+    \item \texttt{Input}: Giá trị phản hồi (PV)
+    \item \texttt{Output}: Tín hiệu điều khiển
+    \item \texttt{Gain} ($K_P$): Hệ số khuếch đại
+    \item \texttt{Ti}: Thời gian tích phân
+    \item \texttt{Td}: Thời gian vi phân
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Mô tả thiết bị thí nghiệm}
+\subsection{Thiết bị thí nghiệm}
 % ------------------------------------------------------------
 
-Cấu tạo mỗi hệ thống điều chỉnh bao gồm quá trình kỹ thuật và máy tính cài đặt phần mềm điều khiển và giao diện giám sát Halalab. Giao diện giám sát điều khiển bao gồm các phần sau:
-
 \begin{itemize}
-    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực.
-    \item Đồ thị hiển thị các thông số trạng thái hệ thống.
-    \item Giá trị cài đặt của đại lượng cần điều khiển.
-    \item Khảo sát các bộ điều khiển tự động.
-    \item Lựa chọn bộ điều khiển ON-OFF hoặc PID để khảo sát.
+    \item PLC Siemens S7-1200 CPU 1214C
+    \item Module analog input/output
+    \item Cảm biến nhiệt độ Pt100
+    \item Bộ gia nhiệt (Heater)
+    \item Phần mềm TIA Portal V16
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
-\subsubsection{Chuẩn bị thí nghiệm}
+\subsubsection{Cấu hình khối PID\_Compact}
 \begin{enumerate}
-    \item Kiểm tra nguồn điện và các kết nối của hệ thống.
-    \item Kiểm tra mức nước trong bể chứa nguồn.
-    \item Khởi động phần mềm điều khiển trên máy tính.
-    \item Đặt giá trị mức chất lỏng mong muốn $y_{sp}$ = 9 cm.
+    \item Thêm khối \texttt{PID\_Compact} vào chương trình.
+    \item Cấu hình các tham số đầu vào/ra.
+    \item Thiết lập giới hạn Output (0-100\%).
+    \item Kết nối Setpoint và Input với biến tương ứng.
 \end{enumerate}
 
-\subsubsection{Thí nghiệm 1: Khảo sát bộ điều khiển ON/OFF}
+\subsubsection{Chỉnh định thông số PID}
 
+\textbf{Phương pháp 1: Auto-tuning}
 \begin{enumerate}
-    \item Nhập giá trị biến cần điều khiển mong muốn $y_{sp}$
-    \item Chọn bộ điều khiển ON/OFF trên giao diện điều khiển
-    \item Thực hiện khảo sát bằng cách nhấn vào nút Auto
-    \item Quan sát đáp ứng của hệ thống trên đồ thị
-    \item Ghi nhận chỉ tiêu chất lượng: thời gian xác lập, chu kì dao động, biên độ dao động
+    \item Sử dụng chức năng Auto-tune của PID\_Compact.
+    \item Hệ thống tự động xác định $K_P$, $T_i$, $T_d$ tối ưu.
 \end{enumerate}
 
-\subsubsection{Thí nghiệm 2: Khảo sát các bộ điều khiển P, PI và PID}
-
+\textbf{Phương pháp 2: Chỉnh định thủ công}
 \begin{enumerate}
-    \item Chọn lần lượt bộ điều khiển P, PI và PID trên giao diện
-    \item Sử dụng các thông số mặc định của bộ điều khiển
-    \item Quan sát đáp ứng của hệ thống
-    \item Ghi nhận chỉ tiêu chất lượng cho từng bộ điều khiển
-    \item So sánh kết quả giữa các bộ điều khiển
+    \item Bắt đầu với $K_I = 0$, $K_D = 0$.
+    \item Tăng $K_P$ cho đến khi hệ thống bắt đầu dao động.
+    \item Thêm $K_I$ để triệt tiêu sai lệch tĩnh.
+    \item Thêm $K_D$ để giảm độ quá điều chỉnh.
+\end{enumerate}
+
+\subsubsection{Khảo sát ảnh hưởng của thông số}
+\begin{enumerate}
+    \item Thay đổi $K_P$ và quan sát đáp ứng.
+    \item Thay đổi $K_I$ và quan sát đáp ứng.
+    \item Thay đổi $K_D$ và quan sát đáp ứng.
+    \item Ghi nhận các chỉ tiêu chất lượng.
 \end{enumerate}
 
 % ------------------------------------------------------------
-\subsection{Kết quả và bàn luận}
+\subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
 
-\subsubsection{Kết quả thí nghiệm 1: Bộ điều khiển ON-OFF}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=14cm,
-    height=6cm,
-    xlabel={Thời gian (giây)},
-    ylabel={Giá trị},
-    grid=both,
-    grid style={gray!30},
-    ymin=-50,
-    ymax=550,
-    xmin=0,
-    xmax=466,
-    legend pos=south east,
-    legend style={font=\small},
-]
-% Setpoint line
-\addplot[red, dashed, thick] coordinates {(0,450) (466,450)};
-\addlegendentry{SP = 450}
-
-% Process variable - Exp 1 (ON-OFF)
-\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
-    restrict x to domain=0:466] {../data/3-4.csv};
-\addlegendentry{PV (ON-OFF)}
-\end{axis}
-\end{tikzpicture}
-\caption{Đáp ứng bộ điều khiển ON-OFF}
-\label{fig:exp_onoff}
-\end{figure}
+\subsubsection{Kết quả chỉnh định PID}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Giá trị} \\
+\textbf{Bộ thông số} & \textbf{$K_P$} & \textbf{$T_i$ (s)} & \textbf{$T_d$ (s)} \\
 \hline
-Thời gian xác lập & 104s \\
+Auto-tune & & & \\
 \hline
-Chu kì dao động & 60s \\
-\hline
-Độ quá điều chỉnh & 12.9\% \\
-\hline
-Biên độ dao động & 386 - 508 \\
+Thủ công & & & \\
 \hline
 \end{tabular}
-\caption{Kết quả bộ điều khiển ON-OFF}
+\caption{Kết quả chỉnh định thông số PID}
 \end{table}
 
-\textbf{Nhận xét:} Bộ điều khiển ON/OFF cho giá trị cuối của biến điều khiển không ổn định mà dao động quanh giá trị đặt SP = 450 với biên độ dao động từ 386 đến 508. Điều này phù hợp với lý thuyết về điều khiển ON-OFF.
-
-\subsubsection{Kết quả thí nghiệm 2: Bộ điều khiển P, PI, PID}
-
-% P Controller - Exp 3
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=14cm,
-    height=6cm,
-    xlabel={Thời gian (giây)},
-    ylabel={Giá trị},
-    grid=both,
-    grid style={gray!30},
-    ymin=-50,
-    ymax=550,
-    xmin=607,
-    xmax=1200,
-    legend pos=south east,
-    legend style={font=\small},
-]
-% Setpoint line
-\addplot[red, dashed, thick] coordinates {(607,450) (1200,450)};
-\addlegendentry{SP = 450}
-
-% Process variable - Exp 3 (P)
-\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
-    restrict x to domain=607:1200] {../data/3-4.csv};
-\addlegendentry{PV (P)}
-\end{axis}
-\end{tikzpicture}
-\caption{Đáp ứng bộ điều khiển P}
-\label{fig:exp_p}
-\end{figure}
-
-% PI Controller - Exp 4
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=14cm,
-    height=6cm,
-    xlabel={Thời gian (giây)},
-    ylabel={Giá trị},
-    grid=both,
-    grid style={gray!30},
-    ymin=-150,
-    ymax=550,
-    xmin=1200,
-    xmax=1920,
-    legend pos=south east,
-    legend style={font=\small},
-]
-% Setpoint line
-\addplot[red, dashed, thick] coordinates {(1200,450) (1920,450)};
-\addlegendentry{SP = 450}
-
-% Process variable - Exp 4 (PI)
-\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
-    restrict x to domain=1200:1920] {../data/3-4.csv};
-\addlegendentry{PV (PI)}
-\end{axis}
-\end{tikzpicture}
-\caption{Đáp ứng bộ điều khiển PI}
-\label{fig:exp_pi}
-\end{figure}
-
-% PID Controller - Exp 5
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=14cm,
-    height=6cm,
-    xlabel={Thời gian (giây)},
-    ylabel={Giá trị},
-    grid=both,
-    grid style={gray!30},
-    ymin=-50,
-    ymax=550,
-    xmin=1920,
-    xmax=2300,
-    legend pos=south east,
-    legend style={font=\small},
-]
-% Setpoint line
-\addplot[red, dashed, thick] coordinates {(1920,450) (2300,450)};
-\addlegendentry{SP = 450}
-
-% Process variable - Exp 5 (PID)
-\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
-    restrict x to domain=1920:2300] {../data/3-4.csv};
-\addlegendentry{PV (PID)}
-\end{axis}
-\end{tikzpicture}
-\caption{Đáp ứng bộ điều khiển PID}
-\label{fig:exp_pid}
-\end{figure}
+\subsubsection{Kết quả khảo sát ảnh hưởng $K_P$}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{Bộ điều khiển} & \textbf{Thời gian xác lập} & \textbf{Chu kì} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} \\
+\textbf{$K_P$} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
 \hline
-P & 100s & -- & 0\% & Có ($e_{ss} \approx 19$) \\
+& & & \\
 \hline
-PI & 203s & -- & 3.6\% & Nhỏ ($e_{ss} \approx -4$) \\
+& & & \\
 \hline
-PID & 111s & -- & 0.2\% & Nhỏ ($e_{ss} \approx 3$) \\
+& & & \\
 \hline
 \end{tabular}
-\caption{So sánh các bộ điều khiển P, PI và PID}
+\caption{Ảnh hưởng của $K_P$}
 \end{table}
 
-\subsubsection{Bàn luận}
+\subsubsection{Kết quả khảo sát ảnh hưởng $K_I$}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{$T_i$ (s)} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
+\hline
+& & & \\
+\hline
+& & & \\
+\hline
+& & & \\
+\hline
+\end{tabular}
+\caption{Ảnh hưởng của $T_i$}
+\end{table}
+
+\subsubsection{Kết quả khảo sát ảnh hưởng $K_D$}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{$T_d$ (s)} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
+\hline
+& & & \\
+\hline
+& & & \\
+\hline
+& & & \\
+\hline
+\end{tabular}
+\caption{Ảnh hưởng của $T_d$}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Bàn luận}
+% ------------------------------------------------------------
 
 \begin{itemize}
-    \item \textbf{Bộ điều khiển P:} Có thời gian xác lập nhanh nhất (100s), nhưng tồn tại sai lệch tĩnh ($e_{ss} \approx 19$) do thiếu thành phần tích phân.
-    \item \textbf{Bộ điều khiển PI:} Triệt tiêu được sai lệch tĩnh nhờ thành phần tích phân, nhưng thời gian xác lập dài nhất (203s) và có độ quá điều chỉnh 3.6\%.
-    \item \textbf{Bộ điều khiển PID:} Cho kết quả cân bằng với thời gian xác lập ngắn (111s), độ quá điều chỉnh rất nhỏ (0.2\%), và sai lệch tĩnh gần như triệt tiêu ($e_{ss} \approx 3$).
+    \item Nhận xét về kết quả Auto-tune so với chỉnh định thủ công.
+    \item Phân tích ảnh hưởng của từng thông số đến chất lượng điều khiển.
+    \item So sánh với kết quả điều khiển ON/OFF (Bài TN 2).
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Kết luận và khuyến nghị}
+\subsection{Kết luận}
 % ------------------------------------------------------------
 
-\textbf{Kết luận:}
-\begin{itemize}
-    \item Bộ điều khiển ON-OFF đơn giản nhưng gây dao động liên tục quanh điểm đặt.
-    \item Bộ điều khiển P phản ứng nhanh nhưng có sai lệch tĩnh.
-    \item Bộ điều khiển PI triệt tiêu được sai lệch tĩnh nhưng đáp ứng chậm.
-    \item Bộ điều khiển PID cho chất lượng điều khiển tốt nhất với thời gian xác lập ngắn và sai lệch tĩnh nhỏ.
-\end{itemize}
-
-\textbf{Khuyến nghị:} Trong thực tế, nên sử dụng bộ điều khiển PID cho các ứng dụng yêu cầu chất lượng điều khiển cao. Việc chỉnh định thông số PID cần được thực hiện cẩn thận để đạt được đáp ứng tối ưu.
+% TODO: Điền kết luận sau khi thực hiện thí nghiệm
 
 % ------------------------------------------------------------
-\subsection{Trả lời câu hỏi kiểm tra}
+\subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: So sánh ưu nhược điểm của bộ điều khiển ON-OFF và PID?}
+\textbf{Câu 1: Trình bày các bước chỉnh định PID theo phương pháp Ziegler-Nichols?}
 
-\begin{itemize}
-    \item ON-OFF: Ưu điểm là đơn giản, dễ triển khai. Nhược điểm là gây dao động liên tục, không phù hợp với quá trình yêu cầu độ chính xác cao.
-    \item PID: Ưu điểm là cho đáp ứng mượt mà, triệt tiêu sai lệch tĩnh, có thể tối ưu hóa đáp ứng. Nhược điểm là phức tạp hơn, cần chỉnh định thông số.
-\end{itemize}
+% TODO: Trả lời
 
-\textbf{Câu 2: Giải thích vai trò của từng thành phần P, I, D?}
+\textbf{Câu 2: Giải thích ý nghĩa của thời gian tích phân $T_i$ và thời gian vi phân $T_d$?}
 
-\begin{itemize}
-    \item P: Tạo tác động tỉ lệ với sai lệch, giúp phản ứng nhanh nhưng không triệt tiêu được sai lệch tĩnh.
-    \item I: Tích phân sai lệch theo thời gian, triệt tiêu sai lệch tĩnh nhưng có thể gây dao động.
-    \item D: Vi phân sai lệch, dự đoán xu hướng và giảm độ quá điều chỉnh.
-\end{itemize}
+% TODO: Trả lời
 
-\textbf{Câu 3: Tại sao bộ điều khiển ON-OFF gây dao động?}
+\textbf{Câu 3: Khi nào nên sử dụng bộ điều khiển P, PI, hay PID?}
 
-Do bộ điều khiển chỉ có hai trạng thái (bật/tắt), khi biến điều khiển vượt qua điểm đặt, bộ điều khiển chuyển trạng thái nhưng do quán tính của quá trình, biến điều khiển tiếp tục thay đổi trước khi đảo chiều, gây ra dao động liên tục.
+% TODO: Trả lời
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
 % ------------------------------------------------------------
 
 \begin{enumerate}[label={[\arabic*]}]
-    \item B. N. Pha, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Cơ sở Điều khiển Quá trình}, Quyển 1. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
-    \item B. N. Pha và P. H. H. P. Lợi, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Hướng dẫn Thí nghiệm – Thực hành Cơ sở Điều khiển Quá trình}, Quyển 2. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
+    \item B. N. Pha, \textit{Thiết bị Đo lường và Điều khiển}. Trường Đại học Bách khoa, ĐHQG-HCM.
+    \item Siemens, \textit{S7-1200 Programmable Controller System Manual}. Siemens AG, 2020.
+    \item Siemens, \textit{PID Control with SIMATIC S7-1200}. Siemens AG, 2019.
 \end{enumerate}
 
 \newpage

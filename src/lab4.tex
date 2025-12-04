@@ -1,272 +1,172 @@
 % ============================================================
-% Lab 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID
+% Lab 4: Factory I/O
 % ============================================================
 
 \setcounter{section}{4}
 \setcounter{subsection}{0}
-\section*{BÀI THÍ NGHIỆM 4: KHẢO SÁT ẢNH HƯỞNG CÁC THÔNG SỐ BỘ ĐIỀU KHIỂN PID}
-\addcontentsline{toc}{section}{Bài thí nghiệm 4: Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
+\section*{BÀI THÍ NGHIỆM 4: FACTORY I/O}
+\addcontentsline{toc}{section}{Bài thí nghiệm 4: Factory I/O}
 
 % ------------------------------------------------------------
-\subsection{Tóm tắt}
+\subsection{Mục tiêu}
 % ------------------------------------------------------------
 
-Bài thí nghiệm này nhằm khảo sát ảnh hưởng của các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID đến chất lượng điều khiển. Thông qua việc thay đổi từng thông số và ghi nhận đáp ứng của hệ thống, sinh viên hiểu rõ hơn về vai trò của từng thành phần trong bộ điều khiển PID.
+\begin{itemize}
+    \item Làm quen với phần mềm mô phỏng Factory I/O.
+    \item Kết nối PLC S7-1200 với Factory I/O qua giao thức S7.
+    \item Lập trình điều khiển và giám sát hệ thống sản xuất ảo.
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
-Các thông số $K_P$, $K_I$, $K_D$ của bộ điều khiển PID có ảnh hưởng đặc trưng đến chất lượng điều khiển của hệ thống. Bảng sau tóm tắt ảnh hưởng của việc tăng từng thông số:
+\subsubsection{Giới thiệu Factory I/O}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-\textbf{Tăng} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
-\hline
-$K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
-\hline
-$K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
-\hline
-$K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
-\hline
-\end{tabular}
-\caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
-\end{table}
-
-% ------------------------------------------------------------
-\subsection{Mô tả thiết bị thí nghiệm}
-% ------------------------------------------------------------
-
-Bài thí nghiệm này sử dụng cùng hệ thống thiết bị như Bài thí nghiệm 3: hệ thống điều khiển mức chất lỏng với máy tính cài đặt phần mềm điều khiển và giao diện giám sát Halalab.
-
-Trên giao diện Halalab, sinh viên chọn bộ điều khiển PID và nhập các thông số $K_P$, $K_I$, $K_D$ để khảo sát ảnh hưởng của chúng đến chất lượng điều khiển:
+Factory I/O là phần mềm mô phỏng 3D các hệ thống tự động hóa công nghiệp. Phần mềm cho phép:
 \begin{itemize}
-    \item Đồ thị hiển thị giá trị đại lượng cần điều khiển theo thời gian thực.
-    \item Giá trị cài đặt của đại lượng cần điều khiển ($y_{sp}$).
-    \item Lựa chọn bộ điều khiển PID.
-    \item Ô nhập các thông số bộ điều khiển PID ($K_P$, $K_I$, $K_D$).
-    \item Nút Auto để bắt đầu khảo sát với bộ thông số đã nhập.
+    \item Xây dựng các kịch bản sản xuất ảo với các thiết bị công nghiệp.
+    \item Kết nối với PLC thực hoặc mô phỏng để điều khiển.
+    \item Kiểm tra và gỡ lỗi chương trình điều khiển trong môi trường an toàn.
+\end{itemize}
+
+\subsubsection{Các thành phần trong Factory I/O}
+
+\begin{itemize}
+    \item \textbf{Sensors (Cảm biến):} Proximity sensor, photoelectric sensor, vision sensor...
+    \item \textbf{Actuators (Cơ cấu chấp hành):} Conveyor, pusher, robot arm, elevator...
+    \item \textbf{Indicators:} Stack light, digital display, alarm...
+    \item \textbf{Stations:} Pick \& place, sorting, palletizing...
+\end{itemize}
+
+\subsubsection{Kết nối với PLC S7-1200}
+
+Factory I/O hỗ trợ kết nối với PLC Siemens qua giao thức S7 (TCP/IP). Các bước kết nối:
+\begin{enumerate}
+    \item Cấu hình địa chỉ IP của PLC trong TIA Portal.
+    \item Thiết lập Driver trong Factory I/O là ``Siemens S7-1200/1500''.
+    \item Map các biến I/O giữa PLC và Factory I/O.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Thiết bị thí nghiệm}
+% ------------------------------------------------------------
+
+\begin{itemize}
+    \item Máy tính cài đặt Factory I/O (phiên bản Education hoặc Ultimate)
+    \item PLC Siemens S7-1200 CPU 1214C
+    \item Cáp Ethernet kết nối PLC với máy tính
+    \item Phần mềm TIA Portal V16
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
-\subsubsection{Chuẩn bị thí nghiệm}
+\subsubsection{Cấu hình kết nối}
+
 \begin{enumerate}
-    \item Khởi động hệ thống thiết bị và phần mềm điều khiển.
-    \item Kiểm tra các kết nối và trạng thái hoạt động của thiết bị.
-    \item Nhập giá trị biến cần điều khiển mong muốn $y_{sp}$.
-    \item Chọn bộ điều khiển PID trên giao diện điều khiển.
+    \item Trong TIA Portal, cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1).
+    \item Mở Factory I/O, vào \texttt{File > Driver Configuration}.
+    \item Chọn Driver: \texttt{Siemens S7-1200/1500}.
+    \item Nhập địa chỉ IP của PLC và cấu hình vùng nhớ I/O.
+    \item Kiểm tra kết nối bằng nút \texttt{Connect}.
 \end{enumerate}
 
-\subsubsection{Khảo sát ảnh hưởng các thông số bộ điều khiển PID}
+\subsubsection{Xây dựng kịch bản mô phỏng}
 
-\textbf{a) Khảo sát ảnh hưởng của tham số $K_P$:}
 \begin{enumerate}
-    \item Giữ $K_I$ và $K_D$ cố định.
-    \item Thay đổi $K_P$ theo các giá trị: 1, 2, 5, 20.
-    \item Ghi nhận thời gian xác lập, sai lệch xác lập, độ quá điều chỉnh.
+    \item Chọn một scene có sẵn hoặc tạo scene mới.
+    \item Thêm các thiết bị: băng tải, cảm biến, pusher...
+    \item Cấu hình các tag I/O cho từng thiết bị.
+    \item Map các tag với địa chỉ PLC tương ứng.
 \end{enumerate}
 
-\textbf{b) Khảo sát ảnh hưởng của tham số $K_I$:}
+\subsubsection{Lập trình PLC}
+
 \begin{enumerate}
-    \item Giữ $K_P$ và $K_D$ cố định.
-    \item Thay đổi $K_I$ theo các giá trị: 0.5, 1, 1.5, 2.
-    \item Ghi nhận các chỉ tiêu chất lượng.
+    \item Tạo chương trình điều khiển trong TIA Portal.
+    \item Sử dụng các khối logic: AND, OR, Timer, Counter...
+    \item Download chương trình xuống PLC.
+    \item Chạy mô phỏng và quan sát hoạt động của hệ thống.
 \end{enumerate}
 
-\textbf{c) Khảo sát ảnh hưởng của tham số $K_D$:}
-\begin{enumerate}
-    \item Giữ $K_P$ và $K_I$ cố định.
-    \item Thay đổi $K_D$ theo các giá trị: 0.5, 1, 2, 5.
-    \item Ghi nhận các chỉ tiêu chất lượng.
-\end{enumerate}
+\subsubsection{Kịch bản thí nghiệm}
+
+% TODO: Mô tả kịch bản cụ thể (sorting, pick & place, conveyor control...)
 
 % ------------------------------------------------------------
-\subsection{Kết quả và bàn luận}
+\subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
 
-\subsubsection{Kết quả khảo sát ảnh hưởng thông số PID}
-
-\textbf{a) Khảo sát ảnh hưởng của $K_P$:}
+\subsubsection{Cấu hình hệ thống}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|l|l|l|}
 \hline
-$K_P$ & 1 & 2 & 5 & 20 \\
+\textbf{Thiết bị} & \textbf{Tag Factory I/O} & \textbf{Địa chỉ PLC} \\
 \hline
-Thời gian xác lập (s) & & & & \\
+Conveyor 1 & & \\
 \hline
-Sai lệch xác lập & & & & \\
+Sensor 1 & & \\
 \hline
-Độ quá điều chỉnh (\%) & & & & \\
+Pusher 1 & & \\
 \hline
-\end{tabular}
-\caption{Kết quả khảo sát ảnh hưởng của $K_P$}
-\end{table}
-
-\textbf{b) Khảo sát ảnh hưởng của $K_I$:}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-$K_I$ & 0.5 & 1 & 1.5 & 2 \\
-\hline
-Thời gian xác lập (s) & & & & \\
-\hline
-Sai lệch xác lập & & & & \\
-\hline
-Độ quá điều chỉnh (\%) & & & & \\
+Stack Light & & \\
 \hline
 \end{tabular}
-\caption{Kết quả khảo sát ảnh hưởng của $K_I$}
+\caption{Bảng cấu hình I/O}
 \end{table}
 
-\textbf{c) Khảo sát ảnh hưởng của $K_D$:}
+\subsubsection{Chương trình điều khiển}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-$K_D$ & 0.5 & 1 & 2 & 5 \\
-\hline
-Thời gian xác lập (s) & & & & \\
-\hline
-Sai lệch xác lập & & & & \\
-\hline
-Độ quá điều chỉnh (\%) & & & & \\
-\hline
-\end{tabular}
-\caption{Kết quả khảo sát ảnh hưởng của $K_D$}
-\end{table}
+% TODO: Chèn hình chụp chương trình Ladder hoặc mô tả logic điều khiển
 
-\textbf{d) Bộ thông số tối ưu:}
+\subsubsection{Kết quả vận hành}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|}
-\hline
-\textbf{Thông số} & \textbf{Giá trị} \\
-\hline
-$K_P$ = , $K_I$ = , $K_D$ = & \\
-\hline
-Thời gian xác lập (s) & \\
-\hline
-Sai lệch xác lập & \\
-\hline
-Độ quá điều chỉnh (\%) & \\
-\hline
-\end{tabular}
-\caption{Kết quả với bộ thông số tối ưu}
-\end{table}
+% TODO: Mô tả kết quả quan sát được khi chạy mô phỏng
 
-\subsubsection{Bàn luận}
+% ------------------------------------------------------------
+\subsection{Bàn luận}
+% ------------------------------------------------------------
 
 \begin{itemize}
-    \item Khi tăng $K_P$: Hệ thống đáp ứng nhanh hơn nhưng có thể xuất hiện dao động nếu $K_P$ quá lớn.
-    \item Khi tăng $K_I$: Sai lệch tĩnh được triệt tiêu nhưng có thể gây dao động.
-    \item Khi tăng $K_D$: Độ quá điều chỉnh giảm nhưng hệ thống nhạy hơn với nhiễu.
+    \item Đánh giá ưu điểm của việc sử dụng mô phỏng Factory I/O trong học tập.
+    \item So sánh với thực hành trên thiết bị thực.
+    \item Nhận xét về khả năng áp dụng vào các hệ thống công nghiệp thực tế.
 \end{itemize}
 
 % ------------------------------------------------------------
-\subsection{Kết luận và khuyến nghị}
+\subsection{Kết luận}
 % ------------------------------------------------------------
 
-\textbf{Kết luận:}
-\begin{itemize}
-    \item Đã khảo sát được ảnh hưởng của từng thông số $K_P$, $K_I$, $K_D$ đến chất lượng điều khiển.
-    \item Xác định được quy luật ảnh hưởng của các thông số và cách chỉnh định bộ điều khiển PID cho phù hợp.
-\end{itemize}
-
-\textbf{Khuyến nghị:}
-\begin{itemize}
-    \item Trong thực tế, cần tinh chỉnh các thông số dựa trên yêu cầu cụ thể của quá trình.
-    \item Cần cân bằng giữa các chỉ tiêu chất lượng: thời gian đáp ứng, độ quá điều chỉnh và sai lệch tĩnh.
-\end{itemize}
+% TODO: Điền kết luận sau khi thực hiện thí nghiệm
 
 % ------------------------------------------------------------
-\subsection{Trả lời câu hỏi kiểm tra}
+\subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Vẽ sơ đồ khối tổng quát về các biến quá trình, sơ đồ khối và lưu đồ điều khiển?}
+\textbf{Câu 1: Factory I/O là gì? Ứng dụng trong đào tạo tự động hóa?}
 
-% Sơ đồ khối hệ thống điều khiển PID
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[node distance=1.5cm]
-    % Nodes
-    \node (sp) {$Y_{SP}$};
-    \node[sum, right=0.8cm of sp] (sum) {};
-    \node[block, right=1.3cm of sum, minimum width=4em] (pid) {PID};
-    \node[block, right=1.5cm of pid, minimum width=4em] (actuator) {Van/Bơm};
-    \node[block, right=1.5cm of actuator, minimum width=4em] (process) {Quá trình};
-    \node[right=1.2cm of process] (output) {$Y$};
-    
-    % Disturbance
-    \node[above=0.8cm of process] (dist) {Nhiễu $Z$};
-    
-    % Sensor
-    \node[block, below=1.3cm of actuator, minimum width=4em] (sensor) {Cảm biến};
-    
-    % Arrows
-    \draw[arrow] (sp) -- (sum);
-    \draw[arrow] (sum) -- node[labelnode, above] {$e$} (pid);
-    \draw[arrow] (pid) -- node[labelnode, above] {$p$} (actuator);
-    \draw[arrow] (actuator) -- node[labelnode, above] {$m$} (process);
-    \draw[arrow] (process) -- (output);
-    \draw[arrow] (dist) -- (process);
-    
-    % Feedback
-    \coordinate (fb) at ($(process.east)!0.6!(output.west)$);
-    \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| (sum);
-    
-    % Sum signs - positioned outside circle, below arrow lines
-    \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
-    \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
-\end{tikzpicture}
-\caption{Sơ đồ khối hệ thống điều khiển PID}
-\label{fig:pid_system}
-\end{figure}
+% TODO: Trả lời
 
-\textbf{Trong đó:}
-\begin{itemize}
-    \item $Y_{SP}$ - Giá trị đặt (Setpoint)
-    \item $e$ - Sai lệch điều khiển ($e = Y_{SP} - Y$)
-    \item $p$ - Tín hiệu điều khiển từ bộ PID
-    \item $m$ - Biến điều khiển (Manipulated Variable)
-    \item $Y$ - Biến được điều khiển (Controlled Variable)
-    \item $Z$ - Biến nhiễu (Disturbance)
-\end{itemize}
+\textbf{Câu 2: Mô tả các bước kết nối PLC S7-1200 với Factory I/O?}
 
-\textbf{Câu 2: Mô tả các thành phần của hệ thống điều khiển trong bài thí nghiệm này?}
+% TODO: Trả lời
 
-\begin{itemize}
-    \item Bộ điều khiển: Phần mềm Halalab với thuật toán PID
-    \item Thiết bị đo: Cảm biến mức chất lỏng
-    \item Thiết bị chấp hành: Bơm
-    \item Giao diện: Phần mềm Halalab hiển thị đồ thị và cho phép cài đặt thông số $K_P$, $K_I$, $K_D$
-\end{itemize}
+\textbf{Câu 3: So sánh ưu nhược điểm của mô phỏng so với thực hành trên thiết bị thực?}
 
-\textbf{Câu 3: Nhận xét ảnh hưởng các thông số bộ điều khiển đến chất lượng điều khiển?}
-
-\begin{itemize}
-    \item $K_P$ ảnh hưởng chủ yếu đến tốc độ đáp ứng và sai lệch tĩnh.
-    \item $K_I$ quyết định khả năng triệt tiêu sai lệch tĩnh.
-    \item $K_D$ giúp giảm độ quá điều chỉnh và tăng tốc độ đáp ứng.
-    \item Cần cân bằng giữa các thông số để đạt chất lượng điều khiển tối ưu.
-\end{itemize}
+% TODO: Trả lời
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
 % ------------------------------------------------------------
 
 \begin{enumerate}[label={[\arabic*]}]
-    \item B. N. Pha, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Cơ sở Điều khiển Quá trình}, Quyển 1. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
-    \item B. N. Pha và P. H. H. P. Lợi, \textit{Điều khiển Quá trình Công nghệ Hoá học -- Hướng dẫn Thí nghiệm – Thực hành Cơ sở Điều khiển Quá trình}, Quyển 2. Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
+    \item B. N. Pha, \textit{Thiết bị Đo lường và Điều khiển}. Trường Đại học Bách khoa, ĐHQG-HCM.
+    \item Real Games, \textit{Factory I/O Manual}. https://factoryio.com/docs/
+    \item Siemens, \textit{S7-1200 Programmable Controller System Manual}. Siemens AG, 2020.
 \end{enumerate}
+
+\newpage
