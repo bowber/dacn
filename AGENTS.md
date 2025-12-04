@@ -16,6 +16,7 @@ LaTeX academic lab report using XeLaTeX with Vietnamese language support.
 - `src/` - LaTeX source files (main.tex is entry point, includes other .tex files)
 - `assets/` - Images and logos
 - `data/` - Experimental data (.csv, .TRD files)
+- `tmp/` - Temporary files (git-ignored, use for extracted images, intermediate files, etc.)
 
 ## Code Style Guidelines
 - **Section headers**: Use `% ============================================================` comment blocks

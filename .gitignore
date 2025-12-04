@@ -1,6 +1,9 @@
 # Output files
 output/
 
+# Temporary files
+tmp/
+
 # LaTeX auxiliary files
 *.aux
 *.log
