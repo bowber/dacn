@@ -49,16 +49,15 @@ Bộ điều khiển ON-OFF là bộ điều khiển chỉ cho tín hiệu ra �
     % Sum signs - positioned outside circle, below arrow lines
     \node[font=\scriptsize] at ($(sp.east)!0.5!(sum.west)$) [below] {$+$};
     \node[font=\scriptsize] at ($(sum.south)+(0,-0.5)$) [left] {$-$};
-    
+\end{tikzpicture}
+\hspace{1.5cm}
+\begin{tikzpicture}
     % ON-OFF characteristic
-    \node[right=3cm of output] (char) {};
-    \begin{scope}[shift={(9,0)}]
-        \draw[->] (-0.5,0) -- (1.5,0) node[right] {$e$};
-        \draw[->] (0,-0.8) -- (0,1.2) node[above] {$u$};
-        \draw[thick] (-0.3,-0.5) -- (0,-0.5) -- (0,0.7) -- (1,0.7);
-        \node[font=\tiny] at (1.2,0.7) {$u_{max}$};
-        \node[font=\tiny] at (0.5,-0.5) {$u_{min}$};
-    \end{scope}
+    \draw[->] (-1,0) -- (1.5,0) node[right] {$e$};
+    \draw[->] (0,-1) -- (0,1.5) node[above] {$u$};
+    \draw[thick] (-0.8,-0.6) -- (0,-0.6) -- (0,0.8) -- (1.2,0.8);
+    \node[font=\small] at (1.5,0.8) {$u_{max}$};
+    \node[font=\small] at (1.5,-0.6) {$u_{min}$};
 \end{tikzpicture}
 \caption{Sơ đồ khối và đặc tính bộ điều khiển ON-OFF}
 \label{fig:onoff_control}
