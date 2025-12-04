@@ -123,17 +123,19 @@ Sử dụng các LED để mô phỏng trạng thái của bơm, van và điện
 \hline
 \textbf{Chân} & \textbf{Thiết bị} & \textbf{Chân} & \textbf{Thiết bị} \\
 \hline
-D2 & Công tắc (INPUT) & D8 & Van V0 \\
+D2 & Công tắc (INPUT) & D9 & Điện trở R2 \\
 \hline
-D3 & Bơm 3 & D9 & Van V3 \\
+D3 & Bơm 3 & D10 & Điện trở R1 \\
 \hline
-D4 & Bơm 2 & D10 & Van V4 \\
+D4 & Bơm 2 & D11 & Điện trở R0 \\
 \hline
-D5 & Bơm 1 & D11 & Điện trở R0 \\
+D5 & Bơm 1 & D12 & Van V3 \\
 \hline
-D6 & Van V2 & D12 & Điện trở R1 \\
+D6 & Van V2 & D13 & Van V4 \\
 \hline
-D7 & Van V1 & D13 & Điện trở R2 \\
+D7 & Van V1 & & \\
+\hline
+D8 & Van V0 & & \\
 \hline
 \end{tabular}
 \caption{Sơ đồ kết nối chân Arduino}
@@ -144,8 +146,9 @@ D7 & Van V1 & D13 & Điện trở R2 \\
 \begin{lstlisting}
 int congtac = 2;
 int pump3 = 3, pump2 = 4, pump1 = 5;
-int van2 = 6, van1 = 7, van0 = 8, van3 = 9, van4 = 10;
-int re0 = 11, re1 = 12, re2 = 13;
+int van2 = 6, van1 = 7, van0 = 8;
+int re2 = 9, re1 = 10, re0 = 11;
+int van3 = 12, van4 = 13;
 int i = 0;
 
 void chutrinhON() {
