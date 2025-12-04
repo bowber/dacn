@@ -213,27 +213,154 @@ Cấu tạo mỗi hệ thống điều chỉnh bao gồm quá trình kỹ thuậ
 
 \subsubsection{Kết quả thí nghiệm 1: Bộ điều khiển ON-OFF}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=14cm,
+    height=6cm,
+    xlabel={Thời gian (giây)},
+    ylabel={Giá trị},
+    grid=both,
+    grid style={gray!30},
+    ymin=-50,
+    ymax=550,
+    xmin=0,
+    xmax=466,
+    legend pos=south east,
+    legend style={font=\small},
+]
+% Setpoint line
+\addplot[red, dashed, thick] coordinates {(0,450) (466,450)};
+\addlegendentry{SP = 450}
+
+% Process variable - Exp 1 (ON-OFF)
+\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
+    restrict x to domain=0:466] {../data/3-4.csv};
+\addlegendentry{PV (ON-OFF)}
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng bộ điều khiển ON-OFF}
+\label{fig:exp_onoff}
+\end{figure}
+
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|c|}
 \hline
 \textbf{Thông số} & \textbf{Giá trị} \\
 \hline
-Thời gian xác lập & 32s \\
+Thời gian xác lập & 104s \\
 \hline
-Chu kì dao động & 50s \\
+Chu kì dao động & 60s \\
 \hline
-Độ quá điều chỉnh & 11.1\% \\
+Độ quá điều chỉnh & 12.9\% \\
 \hline
-Biên độ dao động & 8.4 - 10 cm \\
+Biên độ dao động & 386 - 508 \\
 \hline
 \end{tabular}
 \caption{Kết quả bộ điều khiển ON-OFF}
 \end{table}
 
-\textbf{Nhận xét:} Bộ điều khiển ON/OFF cho giá trị cuối của mức chất lỏng không ổn định mà dao động quanh giá trị đặt với biên độ dao động từ xấp xỉ 8.4 - 10 cm so với giá trị cài đặt 9 cm. Điều này phù hợp với lý thuyết về điều khiển ON-OFF.
+\textbf{Nhận xét:} Bộ điều khiển ON/OFF cho giá trị cuối của biến điều khiển không ổn định mà dao động quanh giá trị đặt SP = 450 với biên độ dao động từ 386 đến 508. Điều này phù hợp với lý thuyết về điều khiển ON-OFF.
 
 \subsubsection{Kết quả thí nghiệm 2: Bộ điều khiển P, PI, PID}
+
+% P Controller - Exp 3
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=14cm,
+    height=6cm,
+    xlabel={Thời gian (giây)},
+    ylabel={Giá trị},
+    grid=both,
+    grid style={gray!30},
+    ymin=-50,
+    ymax=550,
+    xmin=607,
+    xmax=1200,
+    legend pos=south east,
+    legend style={font=\small},
+]
+% Setpoint line
+\addplot[red, dashed, thick] coordinates {(607,450) (1200,450)};
+\addlegendentry{SP = 450}
+
+% Process variable - Exp 3 (P)
+\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
+    restrict x to domain=607:1200] {../data/3-4.csv};
+\addlegendentry{PV (P)}
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng bộ điều khiển P}
+\label{fig:exp_p}
+\end{figure}
+
+% PI Controller - Exp 4
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=14cm,
+    height=6cm,
+    xlabel={Thời gian (giây)},
+    ylabel={Giá trị},
+    grid=both,
+    grid style={gray!30},
+    ymin=-150,
+    ymax=550,
+    xmin=1200,
+    xmax=1920,
+    legend pos=south east,
+    legend style={font=\small},
+]
+% Setpoint line
+\addplot[red, dashed, thick] coordinates {(1200,450) (1920,450)};
+\addlegendentry{SP = 450}
+
+% Process variable - Exp 4 (PI)
+\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
+    restrict x to domain=1200:1920] {../data/3-4.csv};
+\addlegendentry{PV (PI)}
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng bộ điều khiển PI}
+\label{fig:exp_pi}
+\end{figure}
+
+% PID Controller - Exp 5
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=14cm,
+    height=6cm,
+    xlabel={Thời gian (giây)},
+    ylabel={Giá trị},
+    grid=both,
+    grid style={gray!30},
+    ymin=-50,
+    ymax=550,
+    xmin=1920,
+    xmax=2300,
+    legend pos=south east,
+    legend style={font=\small},
+]
+% Setpoint line
+\addplot[red, dashed, thick] coordinates {(1920,450) (2300,450)};
+\addlegendentry{SP = 450}
+
+% Process variable - Exp 5 (PID)
+\addplot[blue, thick, each nth point=3] table[x=time, y=pv, col sep=comma, 
+    restrict x to domain=1920:2300] {../data/3-4.csv};
+\addlegendentry{PV (PID)}
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng bộ điều khiển PID}
+\label{fig:exp_pid}
+\end{figure}
 
 \begin{table}[H]
 \centering
@@ -241,11 +368,11 @@ Biên độ dao động & 8.4 - 10 cm \\
 \hline
 \textbf{Bộ điều khiển} & \textbf{Thời gian xác lập} & \textbf{Chu kì} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} \\
 \hline
-P & 128s & 16s & 9.9\% & Có \\
+P & 117s & -- & 0\% & Có ($e_{ss} \approx 19$) \\
 \hline
-PI & 262s & 60s & 7.9\% & Không \\
+PI & 272s & -- & 3.6\% & Không \\
 \hline
-PID & 84s & 24s & 9.1\% & Không \\
+PID & 158s & -- & 0.2\% & Không ($e_{ss} \approx 3$) \\
 \hline
 \end{tabular}
 \caption{So sánh các bộ điều khiển P, PI và PID}
@@ -254,9 +381,9 @@ PID & 84s & 24s & 9.1\% & Không \\
 \subsubsection{Bàn luận}
 
 \begin{itemize}
-    \item \textbf{Bộ điều khiển P:} Có thời gian xác lập trung bình (128s), nhưng tồn tại sai lệch tĩnh do thiếu thành phần tích phân.
-    \item \textbf{Bộ điều khiển PI:} Triệt tiêu được sai lệch tĩnh nhờ thành phần tích phân, nhưng thời gian xác lập dài nhất (262s).
-    \item \textbf{Bộ điều khiển PID:} Cho kết quả tốt nhất với thời gian xác lập ngắn nhất (84s), không có sai lệch tĩnh, và độ quá điều chỉnh hợp lý (9.1\%).
+    \item \textbf{Bộ điều khiển P:} Có thời gian xác lập nhanh nhất (117s), nhưng tồn tại sai lệch tĩnh ($e_{ss} \approx 19$) do thiếu thành phần tích phân.
+    \item \textbf{Bộ điều khiển PI:} Triệt tiêu được sai lệch tĩnh nhờ thành phần tích phân, nhưng thời gian xác lập dài nhất (272s) và có độ quá điều chỉnh 3.6\%.
+    \item \textbf{Bộ điều khiển PID:} Cho kết quả cân bằng với thời gian xác lập trung bình (158s), độ quá điều chỉnh rất nhỏ (0.2\%), và sai lệch tĩnh gần như triệt tiêu ($e_{ss} \approx 3$).
 \end{itemize}
 
 % ------------------------------------------------------------
