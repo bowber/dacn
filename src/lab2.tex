@@ -111,9 +111,68 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
 \subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
 
-\subsubsection{Đáp ứng hệ thống}
+\subsubsection{Đáp ứng hệ thống điều khiển ON/OFF}
 
-% TODO: Thêm đồ thị đáp ứng
+Thí nghiệm điều khiển ON/OFF với các thông số:
+\begin{itemize}
+    \item Setpoint (SV) = $40^\circ$C
+    \item Hysteresis (deadband) = $\pm 1^\circ$C (heater ON khi PV $< 39^\circ$C, OFF khi PV $> 41^\circ$C)
+    \item Nhiệt độ ban đầu: $\approx 29^\circ$C
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.95\textwidth,
+    height=8cm,
+    xlabel={Thời gian (s)},
+    ylabel={Nhiệt độ ($^\circ$C)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    xmin=0, xmax=800,
+    ymin=25, ymax=50,
+    legend pos=north east,
+]
+% PV line
+\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../tmp/TN2_processed.csv};
+\addlegendentry{PV (Nhiệt độ đo được)}
+
+% SV line
+\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../tmp/TN2_processed.csv};
+\addlegendentry{SV = $40^\circ$C}
+
+% Deadband boundaries
+\addplot[orange, dotted, thick, domain=0:800] {41};
+\addlegendentry{Ngưỡng OFF ($41^\circ$C)}
+\addplot[green!60!black, dotted, thick, domain=0:800] {39};
+\addlegendentry{Ngưỡng ON ($39^\circ$C)}
+
+% Annotations
+\draw[gray, dashed] (axis cs:131,25) -- (axis cs:131,50);
+\node[font=\tiny] at (axis cs:131,27) {Heater OFF};
+
+\draw[gray, dashed] (axis cs:176,25) -- (axis cs:176,50);
+\node[font=\tiny] at (axis cs:176,47) {Peak};
+
+\draw[gray, dashed] (axis cs:276,25) -- (axis cs:276,50);
+\node[font=\tiny] at (axis cs:276,27) {Heater ON};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng điều khiển ON/OFF với SV = $40^\circ$C, deadband = $\pm 1^\circ$C}
+\label{fig:onoff_response_tn2}
+\end{figure}
+
+\subsubsection{Phân tích đáp ứng}
+
+\begin{itemize}
+    \item \textbf{Giai đoạn gia nhiệt (0-131s):} Heater ON liên tục, nhiệt độ tăng từ $29^\circ$C đến $41^\circ$C với tốc độ $\approx 5.5^\circ$C/phút
+    \item \textbf{Quá điều chỉnh (131-176s):} Heater OFF nhưng nhiệt độ tiếp tục tăng do quán tính nhiệt, đạt đỉnh $45.5^\circ$C (vượt SV $5.5^\circ$C)
+    \item \textbf{Giai đoạn làm mát (176-793s):} Hệ thống nguội tự nhiên, tốc độ $\approx 1.6^\circ$C/phút
+    \item \textbf{Kích hoạt lại (tại $\approx$276s):} PV giảm xuống dưới $39^\circ$C, heater bật lại
+\end{itemize}
 
 \begin{table}[H]
 \centering
@@ -121,31 +180,90 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
 \hline
 \textbf{Hysteresis (°C)} & \textbf{Biên độ dao động (°C)} & \textbf{Chu kỳ dao động (s)} & \textbf{Tần số đóng ngắt} \\
 \hline
-1 & & & \\
+1 & $\approx 6.5$ (peak-to-peak $\approx 13$) & $\approx 250$ & $\approx 0.24$/phút \\
 \hline
-2 & & & \\
+2 & -- (chưa khảo sát) & -- & -- \\
 \hline
-5 & & & \\
+5 & -- (chưa khảo sát) & -- & -- \\
 \hline
 \end{tabular}
 \caption{Kết quả khảo sát ảnh hưởng của hysteresis}
 \end{table}
 
+\textbf{Các thông số quan trọng từ thí nghiệm:}
+\begin{itemize}
+    \item Chu kỳ dao động (Ultimate Period): $T_u \approx 250$s
+    \item Biên độ dao động: $\approx 6.5^\circ$C (so với SV)
+    \item Độ quá điều chỉnh: $\approx 14\%$ ($(45.5-40)/40 \times 100$)
+    \item Thời gian đạt SV lần đầu: $\approx 126$s
+\end{itemize}
+
 % ------------------------------------------------------------
 \subsection{Bàn luận}
 % ------------------------------------------------------------
 
+\subsubsection{Đặc tính dao động của điều khiển ON/OFF}
+
+Từ kết quả thí nghiệm (Hình \ref{fig:onoff_response_tn2}), nhận thấy:
 \begin{itemize}
-    \item Nhận xét về đặc tính dao động của điều khiển ON/OFF.
-    \item Phân tích ảnh hưởng của hysteresis đến chất lượng điều khiển.
-    \item So sánh ưu nhược điểm với điều khiển liên tục (PID).
+    \item Hệ thống không thể duy trì nhiệt độ chính xác tại setpoint mà luôn dao động quanh nó
+    \item Biên độ dao động ($\approx 6.5^\circ$C) lớn hơn nhiều so với deadband ($\pm 1^\circ$C) do quán tính nhiệt của hệ thống
+    \item Độ quá điều chỉnh $\approx 14\%$ là do heater không tắt ngay khi đạt SV mà phải đợi vượt ngưỡng $41^\circ$C
+\end{itemize}
+
+\subsubsection{Ảnh hưởng của hysteresis đến chất lượng điều khiển}
+
+\begin{itemize}
+    \item \textbf{Hysteresis nhỏ:} Giảm biên độ dao động nhưng tăng tần số đóng ngắt, gây hao mòn thiết bị
+    \item \textbf{Hysteresis lớn:} Giảm tần số đóng ngắt nhưng tăng biên độ dao động, giảm độ chính xác
+    \item \textbf{Giá trị tối ưu:} Cần cân bằng giữa độ chính xác và tuổi thọ thiết bị
+\end{itemize}
+
+\subsubsection{So sánh với điều khiển PID}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{ON/OFF} & \textbf{PID} \\
+\hline
+Độ phức tạp & Thấp & Cao \\
+\hline
+Biên độ dao động & Lớn ($\pm 6-7^\circ$C) & Nhỏ ($< 2^\circ$C) \\
+\hline
+Sai lệch tĩnh & Không (nhưng dao động) & Triệt tiêu được \\
+\hline
+Độ mài mòn cơ cấu & Cao (đóng ngắt liên tục) & Thấp (điều khiển liên tục) \\
+\hline
+Ứng dụng & Yêu cầu đơn giản & Yêu cầu chính xác cao \\
+\hline
+\end{tabular}
+\caption{So sánh điều khiển ON/OFF và PID}
+\end{table}
+
+\subsubsection{Ứng dụng trong nhận dạng hệ thống}
+
+Dữ liệu từ điều khiển ON/OFF có thể dùng để tính thông số PID theo phương pháp relay (Ziegler-Nichols Ultimate Gain):
+\begin{itemize}
+    \item Chu kỳ dao động tới hạn: $T_u = 250$s
+    \item Ultimate gain: $K_u = \frac{4d}{\pi a}$ với $d$ = độ rộng relay (50\%), $a$ = biên độ dao động
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết luận}
 % ------------------------------------------------------------
 
-% TODO: Điền kết luận sau khi thực hiện thí nghiệm
+Qua thí nghiệm điều khiển ON/OFF hệ thống gia nhiệt, rút ra các kết luận:
+
+\begin{enumerate}
+    \item \textbf{Đặc tính cơ bản:} Điều khiển ON/OFF đơn giản, dễ triển khai nhưng không thể duy trì nhiệt độ ổn định do bản chất phi tuyến của bộ điều khiển.
+    
+    \item \textbf{Dao động và quá điều chỉnh:} Với deadband $\pm 1^\circ$C, hệ thống dao động với biên độ $\approx 6.5^\circ$C và chu kỳ $\approx 250$s. Độ quá điều chỉnh $\approx 14\%$ do quán tính nhiệt.
+    
+    \item \textbf{Vai trò của hysteresis:} Deadband giúp giảm tần số đóng ngắt, bảo vệ thiết bị chấp hành, nhưng làm tăng biên độ dao động.
+    
+    \item \textbf{Phạm vi ứng dụng:} Phù hợp cho các hệ thống không yêu cầu độ chính xác cao như bình nước nóng, lò sấy công nghiệp, máy điều hòa dân dụng.
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Câu hỏi kiểm tra}
@@ -153,15 +271,40 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
 
 \textbf{Câu 1: Tại sao cần hysteresis trong điều khiển ON/OFF?}
 
-% TODO: Trả lời
+Hysteresis (vùng trễ) cần thiết vì:
+\begin{itemize}
+    \item \textbf{Tránh dao động tần số cao:} Không có hysteresis, relay sẽ đóng ngắt liên tục khi PV ở gần SP do nhiễu đo lường
+    \item \textbf{Bảo vệ thiết bị:} Giảm số lần đóng ngắt, kéo dài tuổi thọ relay, contactor và heater
+    \item \textbf{Tiết kiệm năng lượng:} Tránh khởi động heater quá thường xuyên, giảm dòng khởi động
+    \item \textbf{Ổn định hệ thống:} Tạo vùng ổn định cho biến điều khiển
+\end{itemize}
 
 \textbf{Câu 2: Ưu nhược điểm của điều khiển ON/OFF so với PID?}
 
-% TODO: Trả lời
+\textbf{Ưu điểm ON/OFF:}
+\begin{itemize}
+    \item Đơn giản, dễ triển khai, không cần chỉnh định thông số
+    \item Chi phí thấp, không cần bộ điều khiển phức tạp
+    \item Phù hợp với các hệ thống có quán tính lớn, yêu cầu độ chính xác không cao
+\end{itemize}
+
+\textbf{Nhược điểm ON/OFF:}
+\begin{itemize}
+    \item Biến điều khiển dao động, không đạt được giá trị chính xác
+    \item Gây mài mòn cơ cấu chấp hành do đóng ngắt liên tục
+    \item Không phù hợp với các quá trình yêu cầu điều khiển chính xác
+\end{itemize}
 
 \textbf{Câu 3: Ứng dụng thực tế của điều khiển ON/OFF?}
 
-% TODO: Trả lời
+\begin{itemize}
+    \item \textbf{Điều hòa không khí:} Bật/tắt máy nén dựa trên nhiệt độ phòng
+    \item \textbf{Bình nước nóng:} Bật/tắt điện trở khi nhiệt độ nước thấp/cao
+    \item \textbf{Tủ lạnh:} Điều khiển máy nén để duy trì nhiệt độ
+    \item \textbf{Lò sấy công nghiệp:} Điều khiển heater với dung sai nhiệt độ cho phép
+    \item \textbf{Bể ổn nhiệt:} Duy trì nhiệt độ trong dải cho phép
+    \item \textbf{Hệ thống bơm nước:} Bật/tắt bơm theo mức nước trong bể
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}

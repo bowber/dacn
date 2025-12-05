@@ -102,6 +102,43 @@ Các loại thermocouple phổ biến:
 \subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
 
+\subsubsection{Đo nhiệt độ môi trường}
+
+Tiến hành đo nhiệt độ môi trường trong 2 phút để kiểm tra độ ổn định của cảm biến Pt100.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=6cm,
+    xlabel={Thời gian (s)},
+    ylabel={Nhiệt độ ($^\circ$C)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    xmin=0, xmax=130,
+    ymin=25.0, ymax=25.5,
+    legend pos=north east,
+]
+\addplot[blue, thick, mark=*, mark size=1pt] table[x=time_s, y=PV, col sep=comma] {../tmp/TN1_processed.csv};
+\addlegendentry{Nhiệt độ đo (Pt100)}
+\addplot[red, dashed, domain=0:130] {25.304};
+\addlegendentry{Giá trị trung bình = $25.30^\circ$C}
+\end{axis}
+\end{tikzpicture}
+\caption{Kết quả đo nhiệt độ môi trường bằng cảm biến Pt100}
+\label{fig:tn1_baseline}
+\end{figure}
+
+\textbf{Kết quả phân tích:}
+\begin{itemize}
+    \item Nhiệt độ trung bình: $25.30^\circ$C
+    \item Độ lệch chuẩn: $< 0.01^\circ$C
+    \item Dải dao động: $25.30 - 25.32^\circ$C
+    \item Kết luận: Cảm biến Pt100 hoạt động ổn định, độ nhiễu rất thấp
+\end{itemize}
+
 \subsubsection{Kết quả khảo sát Pt100}
 
 \begin{table}[H]
@@ -110,21 +147,25 @@ Các loại thermocouple phổ biến:
 \hline
 \textbf{Nhiệt độ chuẩn (°C)} & \textbf{Điện trở ($\Omega$)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
 \hline
-30 & & & \\
+25 (môi trường) & 109.73 & 25.30 & -- \\
 \hline
-40 & & & \\
+30 & 111.67 & -- & -- \\
 \hline
-50 & & & \\
+40 & 115.54 & -- & -- \\
 \hline
-60 & & & \\
+50 & 119.40 & -- & -- \\
 \hline
-70 & & & \\
+60 & 123.24 & -- & -- \\
 \hline
-80 & & & \\
+70 & 127.07 & -- & -- \\
+\hline
+80 & 130.89 & -- & -- \\
 \hline
 \end{tabular}
-\caption{Kết quả khảo sát cảm biến Pt100}
+\caption{Kết quả khảo sát cảm biến Pt100 (điện trở tham khảo theo tiêu chuẩn IEC 60751)}
 \end{table}
+
+\textit{Ghi chú: Điện trở lý thuyết của Pt100 tại nhiệt độ T được tính theo công thức: $R_T = 100 \times (1 + 0.00385 \times T)$}
 
 \subsubsection{Kết quả khảo sát Thermocouple Type K}
 
@@ -134,37 +175,78 @@ Các loại thermocouple phổ biến:
 \hline
 \textbf{Nhiệt độ chuẩn (°C)} & \textbf{EMF (mV)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
 \hline
-30 & & & \\
+25 (môi trường) & 1.00 & -- & -- \\
 \hline
-40 & & & \\
+30 & 1.20 & -- & -- \\
 \hline
-50 & & & \\
+40 & 1.61 & -- & -- \\
 \hline
-60 & & & \\
+50 & 2.02 & -- & -- \\
 \hline
-70 & & & \\
+60 & 2.44 & -- & -- \\
 \hline
-80 & & & \\
+70 & 2.85 & -- & -- \\
+\hline
+80 & 3.27 & -- & -- \\
 \hline
 \end{tabular}
-\caption{Kết quả khảo sát cặp nhiệt điện Type K}
+\caption{Kết quả khảo sát cặp nhiệt điện Type K (EMF tham khảo theo bảng NIST)}
 \end{table}
 
 % ------------------------------------------------------------
 \subsection{Bàn luận}
 % ------------------------------------------------------------
 
+\subsubsection{Độ chính xác của cảm biến Pt100}
+
+Từ kết quả đo nhiệt độ môi trường (Hình \ref{fig:tn1_baseline}):
 \begin{itemize}
-    \item Nhận xét về độ chính xác của từng loại cảm biến.
-    \item So sánh ưu nhược điểm giữa RTD và Thermocouple.
-    \item Phân tích nguồn sai số trong phép đo.
+    \item Cảm biến Pt100 cho độ ổn định rất cao với độ lệch chuẩn $< 0.01^\circ$C
+    \item Tín hiệu đo gần như không có nhiễu, thể hiện chất lượng cảm biến tốt
+    \item Phù hợp cho các ứng dụng yêu cầu độ chính xác cao trong điều khiển nhiệt độ
+\end{itemize}
+
+\subsubsection{So sánh RTD và Thermocouple}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{RTD (Pt100)} & \textbf{Thermocouple} \\
+\hline
+Độ chính xác & Cao ($\pm 0.1^\circ$C) & Trung bình ($\pm 1-2^\circ$C) \\
+\hline
+Dải đo & $-200$ đến $850^\circ$C & $-200$ đến $1800^\circ$C \\
+\hline
+Thời gian đáp ứng & Chậm (vài giây) & Nhanh ($< 1$s) \\
+\hline
+Chi phí & Cao & Thấp \\
+\hline
+Độ tuyến tính & Tốt & Kém (cần bù) \\
+\hline
+\end{tabular}
+\caption{So sánh RTD và Thermocouple}
+\end{table}
+
+\subsubsection{Nguồn sai số trong phép đo}
+
+\begin{itemize}
+    \item \textbf{Sai số hệ thống:} Do hiệu chuẩn, điện trở dây dẫn (đặc biệt với RTD)
+    \item \textbf{Sai số ngẫu nhiên:} Nhiễu điện từ, dao động nguồn cấp
+    \item \textbf{Sai số do môi trường:} Ảnh hưởng của độ ẩm, áp suất
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết luận}
 % ------------------------------------------------------------
 
-% TODO: Điền kết luận sau khi thực hiện thí nghiệm
+Qua thí nghiệm khảo sát cảm biến nhiệt độ, rút ra các kết luận:
+
+\begin{enumerate}
+    \item Cảm biến Pt100 có độ ổn định và chính xác cao, phù hợp cho điều khiển nhiệt độ trong công nghiệp.
+    \item Kết quả đo nhiệt độ môi trường $25.30^\circ$C với độ dao động $< 0.02^\circ$C chứng tỏ hệ thống đo lường hoạt động tốt.
+    \item RTD phù hợp cho các ứng dụng yêu cầu độ chính xác cao trong dải nhiệt độ thấp/trung bình, trong khi Thermocouple phù hợp cho nhiệt độ cao và đáp ứng nhanh.
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Câu hỏi kiểm tra}
@@ -172,15 +254,30 @@ Các loại thermocouple phổ biến:
 
 \textbf{Câu 1: So sánh ưu nhược điểm của RTD và Thermocouple?}
 
-% TODO: Trả lời
+\begin{itemize}
+    \item \textbf{RTD:} Ưu điểm: độ chính xác cao, độ tuyến tính tốt, ổn định lâu dài. Nhược điểm: đắt tiền, đáp ứng chậm, dải đo hẹp hơn, cần nguồn cấp.
+    \item \textbf{Thermocouple:} Ưu điểm: giá rẻ, đáp ứng nhanh, dải đo rộng, không cần nguồn cấp. Nhược điểm: độ chính xác thấp hơn, cần bù nhiệt độ đầu lạnh, độ phi tuyến cao.
+\end{itemize}
 
 \textbf{Câu 2: Tại sao cần hiệu chuẩn cảm biến?}
 
-% TODO: Trả lời
+Hiệu chuẩn cảm biến cần thiết vì:
+\begin{itemize}
+    \item Bù trừ sai số chế tạo và sai số lắp đặt
+    \item Đảm bảo độ chính xác của phép đo theo yêu cầu
+    \item Xác định đường cong hiệu chuẩn để chuyển đổi tín hiệu sang đơn vị đo
+    \item Phát hiện sự suy giảm chất lượng cảm biến theo thời gian
+\end{itemize}
 
 \textbf{Câu 3: Giải thích nguyên lý hoạt động của Pt100?}
 
-% TODO: Trả lời
+Pt100 hoạt động dựa trên nguyên lý thay đổi điện trở của kim loại Platinum theo nhiệt độ:
+\begin{itemize}
+    \item Điện trở của Platinum tăng gần tuyến tính với nhiệt độ
+    \item Tại $0^\circ$C, điện trở là $100\Omega$ (gốc của tên gọi Pt100)
+    \item Hệ số nhiệt điện trở $\alpha = 0.00385\, ^\circ\text{C}^{-1}$ (theo tiêu chuẩn IEC 60751)
+    \item Công thức: $R_T = R_0(1 + \alpha T)$, với $T$ là nhiệt độ tính bằng $^\circ$C
+\end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
