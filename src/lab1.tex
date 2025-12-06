@@ -1,63 +1,53 @@
 % ============================================================
-% Lab 1: Khảo sát cảm biến nhiệt độ
+% Lab 1: Làm quen với TIA Portal và thiết kế HMI
 % ============================================================
 
 \setcounter{section}{1}
 \setcounter{subsection}{0}
-\section*{BÀI THÍ NGHIỆM 1: KHẢO SÁT CẢM BIẾN NHIỆT ĐỘ}
-\addcontentsline{toc}{section}{Bài thí nghiệm 1: Khảo sát cảm biến nhiệt độ}
+\section*{BÀI THÍ NGHIỆM 1: LÀM QUEN VỚI TIA PORTAL VÀ THIẾT KẾ HMI}
+\addcontentsline{toc}{section}{Bài thí nghiệm 1: Làm quen với TIA Portal và thiết kế HMI}
 
 % ------------------------------------------------------------
 \subsection{Mục tiêu}
 % ------------------------------------------------------------
 
 \begin{itemize}
-    \item Hiểu nguyên lý hoạt động của các loại cảm biến nhiệt độ công nghiệp.
-    \item Khảo sát đặc tính của cảm biến nhiệt điện trở (RTD) và cặp nhiệt điện (Thermocouple).
-    \item Thực hiện hiệu chuẩn cảm biến và xây dựng đường cong hiệu chuẩn.
+    \item Làm quen với phần mềm TIA Portal V16 và cách tạo project mới.
+    \item Cấu hình PLC S7-1200 và kết nối với cảm biến nhiệt độ.
+    \item Thiết kế giao diện HMI để hiển thị giá trị nhiệt độ đo được.
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Cơ sở lý thuyết}
 % ------------------------------------------------------------
 
-\subsubsection{Cảm biến nhiệt điện trở (RTD)}
+\subsubsection{Giới thiệu TIA Portal}
 
-RTD (Resistance Temperature Detector) là cảm biến đo nhiệt độ dựa trên nguyên lý thay đổi điện trở của kim loại theo nhiệt độ. Loại phổ biến nhất là Pt100, sử dụng dây platinum với điện trở 100$\Omega$ tại 0°C.
+TIA Portal (Totally Integrated Automation Portal) là nền tảng phần mềm tích hợp của Siemens, cho phép cấu hình, lập trình và giám sát các thiết bị tự động hóa như PLC, HMI, và drive trong một môi trường thống nhất.
 
-Phương trình quan hệ điện trở - nhiệt độ:
-\begin{equation}
-R_T = R_0 (1 + \alpha T)
-\end{equation}
-
-Trong đó:
+Các thành phần chính của TIA Portal:
 \begin{itemize}
-    \item $R_T$: Điện trở tại nhiệt độ T ($\Omega$)
-    \item $R_0$: Điện trở tại 0°C ($\Omega$)
-    \item $\alpha$: Hệ số nhiệt điện trở (°C$^{-1}$)
-    \item $T$: Nhiệt độ (°C)
+    \item \textbf{STEP 7:} Lập trình PLC (LAD, FBD, SCL, STL)
+    \item \textbf{WinCC:} Thiết kế giao diện HMI/SCADA
+    \item \textbf{Startdrive:} Cấu hình biến tần
 \end{itemize}
 
-\subsubsection{Cặp nhiệt điện (Thermocouple)}
+\subsubsection{PLC Siemens S7-1200}
 
-Thermocouple hoạt động dựa trên hiệu ứng Seebeck: khi hai kim loại khác nhau được nối với nhau và có chênh lệch nhiệt độ giữa hai đầu, sẽ sinh ra một suất điện động (EMF).
-
-\begin{equation}
-E = S_{AB} \cdot (T_1 - T_2)
-\end{equation}
-
-Trong đó:
+S7-1200 là dòng PLC compact của Siemens, phù hợp cho các ứng dụng tự động hóa vừa và nhỏ. Đặc điểm:
 \begin{itemize}
-    \item $E$: Suất điện động (mV)
-    \item $S_{AB}$: Hệ số Seebeck của cặp kim loại A-B ($\mu$V/°C)
-    \item $T_1, T_2$: Nhiệt độ tại hai đầu nối (°C)
+    \item CPU tích hợp các cổng I/O số và analog
+    \item Hỗ trợ giao tiếp PROFINET (Ethernet)
+    \item Có thể mở rộng thêm module I/O, truyền thông
 \end{itemize}
 
-Các loại thermocouple phổ biến:
+\subsubsection{Giao diện HMI}
+
+HMI (Human-Machine Interface) là giao diện giữa người vận hành và hệ thống điều khiển. Trong TIA Portal, WinCC cho phép thiết kế các màn hình hiển thị với:
 \begin{itemize}
-    \item Type K (Chromel-Alumel): -200°C đến 1260°C
-    \item Type J (Iron-Constantan): -40°C đến 760°C
-    \item Type T (Copper-Constantan): -200°C đến 350°C
+    \item Hiển thị giá trị biến (số, đồ thị, gauge)
+    \item Nút nhấn, công tắc điều khiển
+    \item Cảnh báo và báo động (alarm)
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -65,37 +55,48 @@ Các loại thermocouple phổ biến:
 % ------------------------------------------------------------
 
 \begin{itemize}
-    \item PLC Siemens S7-1200 với module analog input
-    \item Cảm biến Pt100 (RTD)
-    \item Cặp nhiệt điện Type K
-    \item Bộ gia nhiệt điều khiển được
-    \item Nhiệt kế chuẩn
-    \item Phần mềm TIA Portal V16
+    \item Máy tính cài đặt TIA Portal V16
+    \item PLC Siemens S7-1200 CPU 1214C
+    \item Cảm biến nhiệt độ Pt100
+    \item Cáp Ethernet kết nối PLC với máy tính
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Quy trình thực hiện}
 % ------------------------------------------------------------
 
-\subsubsection{Chuẩn bị}
+\subsubsection{Tạo project mới trong TIA Portal}
 \begin{enumerate}
-    \item Kết nối cảm biến với PLC S7-1200.
-    \item Cấu hình module analog input trong TIA Portal.
-    \item Kiểm tra kết nối và tín hiệu đầu vào.
+    \item Mở TIA Portal V16, chọn \texttt{Create new project}.
+    \item Đặt tên project và chọn đường dẫn lưu trữ.
+    \item Chọn \texttt{Configure a device} để thêm PLC.
 \end{enumerate}
 
-\subsubsection{Khảo sát cảm biến Pt100}
+\subsubsection{Cấu hình PLC S7-1200}
 \begin{enumerate}
-    \item Đặt nhiệt độ chuẩn tại các điểm: 30°C, 40°C, 50°C, 60°C, 70°C, 80°C.
-    \item Ghi nhận giá trị điện trở hoặc tín hiệu analog tương ứng.
-    \item Xây dựng đường cong hiệu chuẩn.
+    \item Thêm PLC S7-1200 CPU 1214C DC/DC/DC vào project.
+    \item Cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1).
+    \item Cấu hình module analog input để đọc tín hiệu từ cảm biến Pt100.
+    \item Tạo tag cho biến nhiệt độ (PV - Process Value).
 \end{enumerate}
 
-\subsubsection{Khảo sát cặp nhiệt điện Type K}
+\subsubsection{Thiết kế giao diện HMI}
 \begin{enumerate}
-    \item Thực hiện tương tự với các điểm nhiệt độ chuẩn.
-    \item Ghi nhận giá trị EMF hoặc tín hiệu analog.
-    \item So sánh với bảng chuẩn của thermocouple Type K.
+    \item Thêm màn hình HMI vào project (có thể dùng PC Station hoặc panel ảo).
+    \item Tạo màn hình hiển thị với các thành phần:
+    \begin{itemize}
+        \item Text hiển thị tiêu đề
+        \item I/O Field hiển thị giá trị nhiệt độ (liên kết với tag PV)
+        \item Đơn vị đo (°C)
+    \end{itemize}
+    \item Cấu hình kết nối HMI với PLC qua PROFINET.
+\end{enumerate}
+
+\subsubsection{Download và kiểm tra}
+\begin{enumerate}
+    \item Compile project để kiểm tra lỗi.
+    \item Download chương trình xuống PLC.
+    \item Chạy Runtime HMI và quan sát giá trị nhiệt độ hiển thị.
 \end{enumerate}
 
 % ------------------------------------------------------------
@@ -107,13 +108,19 @@ Các loại thermocouple phổ biến:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../assets/HMI_TN1.jpg}
-\caption{Giao diện HMI thí nghiệm khảo sát cảm biến nhiệt độ}
+\caption{Giao diện HMI hiển thị giá trị nhiệt độ đo được}
 \label{fig:hmi_tn1}
 \end{figure}
 
-\subsubsection{Đo nhiệt độ môi trường}
+Giao diện HMI được thiết kế với các thành phần:
+\begin{itemize}
+    \item Hiển thị giá trị nhiệt độ hiện tại (PV) từ cảm biến Pt100
+    \item Đơn vị đo: °C
+\end{itemize}
 
-Tiến hành đo nhiệt độ môi trường trong 2 phút để kiểm tra độ ổn định của cảm biến Pt100.
+\subsubsection{Kết quả đo nhiệt độ}
+
+Tiến hành đo nhiệt độ môi trường trong 2 phút để kiểm tra hoạt động của hệ thống.
 
 \begin{figure}[H]
 \centering
@@ -131,161 +138,76 @@ Tiến hành đo nhiệt độ môi trường trong 2 phút để kiểm tra đ�
     legend pos=north east,
 ]
 \addplot[blue, thick, mark=*, mark size=1pt] table[x=time_s, y=PV, col sep=comma] {../data/TN1_processed.csv};
-\addlegendentry{Nhiệt độ đo (Pt100)}
+\addlegendentry{Nhiệt độ đo được}
 \addplot[red, dashed, domain=0:130] {25.304};
 \addlegendentry{Giá trị trung bình = $25.30^\circ$C}
 \end{axis}
 \end{tikzpicture}
-\caption{Kết quả đo nhiệt độ môi trường bằng cảm biến Pt100}
-\label{fig:tn1_baseline}
+\caption{Kết quả đo nhiệt độ môi trường}
+\label{fig:tn1_result}
 \end{figure}
 
-\textbf{Kết quả phân tích:}
+\textbf{Kết quả:}
 \begin{itemize}
     \item Nhiệt độ trung bình: $25.30^\circ$C
-    \item Độ lệch chuẩn: $< 0.01^\circ$C
     \item Dải dao động: $25.30 - 25.32^\circ$C
-    \item Kết luận: Cảm biến Pt100 hoạt động ổn định, độ nhiễu rất thấp
+    \item Hệ thống hoạt động ổn định, giá trị hiển thị chính xác trên HMI
 \end{itemize}
-
-\subsubsection{Kết quả khảo sát Pt100}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Nhiệt độ chuẩn (°C)} & \textbf{Điện trở ($\Omega$)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
-\hline
-25 (môi trường) & 109.73 & 25.30 & -- \\
-\hline
-30 & 111.67 & -- & -- \\
-\hline
-40 & 115.54 & -- & -- \\
-\hline
-50 & 119.40 & -- & -- \\
-\hline
-60 & 123.24 & -- & -- \\
-\hline
-70 & 127.07 & -- & -- \\
-\hline
-80 & 130.89 & -- & -- \\
-\hline
-\end{tabular}
-\caption{Kết quả khảo sát cảm biến Pt100 (điện trở tham khảo theo tiêu chuẩn IEC 60751)}
-\end{table}
-
-\textit{Ghi chú: Điện trở lý thuyết của Pt100 tại nhiệt độ T được tính theo công thức: $R_T = 100 \times (1 + 0.00385 \times T)$}
-
-\subsubsection{Kết quả khảo sát Thermocouple Type K}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Nhiệt độ chuẩn (°C)} & \textbf{EMF (mV)} & \textbf{Giá trị đo (°C)} & \textbf{Sai số (\%)} \\
-\hline
-25 (môi trường) & 1.00 & -- & -- \\
-\hline
-30 & 1.20 & -- & -- \\
-\hline
-40 & 1.61 & -- & -- \\
-\hline
-50 & 2.02 & -- & -- \\
-\hline
-60 & 2.44 & -- & -- \\
-\hline
-70 & 2.85 & -- & -- \\
-\hline
-80 & 3.27 & -- & -- \\
-\hline
-\end{tabular}
-\caption{Kết quả khảo sát cặp nhiệt điện Type K (EMF tham khảo theo bảng NIST)}
-\end{table}
 
 % ------------------------------------------------------------
 \subsection{Bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Độ chính xác của cảm biến Pt100}
-
-Từ kết quả đo nhiệt độ môi trường (Hình \ref{fig:tn1_baseline}):
 \begin{itemize}
-    \item Cảm biến Pt100 cho độ ổn định rất cao với độ lệch chuẩn $< 0.01^\circ$C
-    \item Tín hiệu đo gần như không có nhiễu, thể hiện chất lượng cảm biến tốt
-    \item Phù hợp cho các ứng dụng yêu cầu độ chính xác cao trong điều khiển nhiệt độ
-\end{itemize}
-
-\subsubsection{So sánh RTD và Thermocouple}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Tiêu chí} & \textbf{RTD (Pt100)} & \textbf{Thermocouple} \\
-\hline
-Độ chính xác & Cao ($\pm 0.1^\circ$C) & Trung bình ($\pm 1-2^\circ$C) \\
-\hline
-Dải đo & $-200$ đến $850^\circ$C & $-200$ đến $1800^\circ$C \\
-\hline
-Thời gian đáp ứng & Chậm (vài giây) & Nhanh ($< 1$s) \\
-\hline
-Chi phí & Cao & Thấp \\
-\hline
-Độ tuyến tính & Tốt & Kém (cần bù) \\
-\hline
-\end{tabular}
-\caption{So sánh RTD và Thermocouple}
-\end{table}
-
-\subsubsection{Nguồn sai số trong phép đo}
-
-\begin{itemize}
-    \item \textbf{Sai số hệ thống:} Do hiệu chuẩn, điện trở dây dẫn (đặc biệt với RTD)
-    \item \textbf{Sai số ngẫu nhiên:} Nhiễu điện từ, dao động nguồn cấp
-    \item \textbf{Sai số do môi trường:} Ảnh hưởng của độ ẩm, áp suất
+    \item TIA Portal cung cấp môi trường tích hợp thuận tiện cho việc cấu hình PLC và thiết kế HMI.
+    \item Việc kết nối giữa HMI và PLC qua PROFINET đơn giản, chỉ cần cấu hình địa chỉ IP và liên kết tag.
+    \item Giao diện HMI cho phép giám sát giá trị nhiệt độ theo thời gian thực.
+    \item Dữ liệu đo được có thể ghi lại (logging) để phân tích sau này.
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết luận}
 % ------------------------------------------------------------
 
-Qua thí nghiệm khảo sát cảm biến nhiệt độ, rút ra các kết luận:
+Qua bài thí nghiệm, đã thực hiện được:
 
 \begin{enumerate}
-    \item Cảm biến Pt100 có độ ổn định và chính xác cao, phù hợp cho điều khiển nhiệt độ trong công nghiệp.
-    \item Kết quả đo nhiệt độ môi trường $25.30^\circ$C với độ dao động $< 0.02^\circ$C chứng tỏ hệ thống đo lường hoạt động tốt.
-    \item RTD phù hợp cho các ứng dụng yêu cầu độ chính xác cao trong dải nhiệt độ thấp/trung bình, trong khi Thermocouple phù hợp cho nhiệt độ cao và đáp ứng nhanh.
+    \item Tạo project mới trong TIA Portal V16 và cấu hình PLC S7-1200.
+    \item Thiết kế giao diện HMI để hiển thị giá trị nhiệt độ từ cảm biến.
+    \item Kiểm tra hoạt động của hệ thống với kết quả đo nhiệt độ môi trường ổn định tại $25.30^\circ$C.
 \end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: So sánh ưu nhược điểm của RTD và Thermocouple?}
+\textbf{Câu 1: TIA Portal là gì? Các thành phần chính?}
 
+TIA Portal (Totally Integrated Automation Portal) là nền tảng phần mềm tích hợp của Siemens để cấu hình, lập trình và giám sát các thiết bị tự động hóa. Các thành phần chính:
 \begin{itemize}
-    \item \textbf{RTD:} Ưu điểm: độ chính xác cao, độ tuyến tính tốt, ổn định lâu dài. Nhược điểm: đắt tiền, đáp ứng chậm, dải đo hẹp hơn, cần nguồn cấp.
-    \item \textbf{Thermocouple:} Ưu điểm: giá rẻ, đáp ứng nhanh, dải đo rộng, không cần nguồn cấp. Nhược điểm: độ chính xác thấp hơn, cần bù nhiệt độ đầu lạnh, độ phi tuyến cao.
+    \item STEP 7: Lập trình PLC
+    \item WinCC: Thiết kế HMI/SCADA
+    \item Startdrive: Cấu hình biến tần
 \end{itemize}
 
-\textbf{Câu 2: Tại sao cần hiệu chuẩn cảm biến?}
+\textbf{Câu 2: Các bước cơ bản để tạo giao diện HMI trong TIA Portal?}
 
-Hiệu chuẩn cảm biến cần thiết vì:
+\begin{enumerate}
+    \item Thêm thiết bị HMI vào project
+    \item Tạo kết nối (connection) giữa HMI và PLC
+    \item Thiết kế màn hình với các đối tượng (text, I/O field, button...)
+    \item Liên kết các đối tượng với tag của PLC
+    \item Compile và download xuống thiết bị
+\end{enumerate}
+
+\textbf{Câu 3: PROFINET là gì?}
+
+PROFINET (Process Field Network) là chuẩn Ethernet công nghiệp của Siemens, cho phép:
 \begin{itemize}
-    \item Bù trừ sai số chế tạo và sai số lắp đặt
-    \item Đảm bảo độ chính xác của phép đo theo yêu cầu
-    \item Xác định đường cong hiệu chuẩn để chuyển đổi tín hiệu sang đơn vị đo
-    \item Phát hiện sự suy giảm chất lượng cảm biến theo thời gian
-\end{itemize}
-
-\textbf{Câu 3: Giải thích nguyên lý hoạt động của Pt100?}
-
-Pt100 hoạt động dựa trên nguyên lý thay đổi điện trở của kim loại Platinum theo nhiệt độ:
-\begin{itemize}
-    \item Điện trở của Platinum tăng gần tuyến tính với nhiệt độ
-    \item Tại $0^\circ$C, điện trở là $100\Omega$ (gốc của tên gọi Pt100)
-    \item Hệ số nhiệt điện trở $\alpha = 0.00385\, ^\circ\text{C}^{-1}$ (theo tiêu chuẩn IEC 60751)
-    \item Công thức: $R_T = R_0(1 + \alpha T)$, với $T$ là nhiệt độ tính bằng $^\circ$C
+    \item Truyền thông thời gian thực giữa các thiết bị tự động hóa
+    \item Tốc độ cao (100 Mbps trở lên)
+    \item Tích hợp với mạng IT tiêu chuẩn
+    \item Hỗ trợ các giao thức TCP/IP thông thường
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -294,6 +216,7 @@ Pt100 hoạt động dựa trên nguyên lý thay đổi điện trở của kim
 
 \begin{enumerate}[label={[\arabic*]}]
     \item B. N. Pha, \textit{Thiết bị Đo lường và Điều khiển}. Trường Đại học Bách khoa, ĐHQG-HCM.
+    \item Siemens, \textit{S7-1200 Programmable Controller System Manual}. Siemens AG, 2020.
 \end{enumerate}
 
 \newpage
