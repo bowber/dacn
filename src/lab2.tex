@@ -207,29 +207,7 @@ Về mặt lý thuyết, deadband ảnh hưởng đến chất lượng điều 
     \item \textbf{Giá trị tối ưu:} Cần cân bằng giữa độ chính xác và tuổi thọ thiết bị
 \end{itemize}
 
-\subsubsection{So sánh với điều khiển PID}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Tiêu chí} & \textbf{ON/OFF} & \textbf{PID} \\
-\hline
-Độ phức tạp & Thấp & Cao \\
-\hline
-Biên độ dao động & Lớn ($\pm 6-7^\circ$C) & Nhỏ ($< 2^\circ$C) \\
-\hline
-Sai lệch tĩnh & Không (nhưng dao động) & Triệt tiêu được \\
-\hline
-Độ mài mòn cơ cấu & Cao (đóng ngắt liên tục) & Thấp (điều khiển liên tục) \\
-\hline
-Ứng dụng & Yêu cầu đơn giản & Yêu cầu chính xác cao \\
-\hline
-\end{tabular}
-\caption{So sánh điều khiển ON/OFF và PID}
-\end{table}
-
-\subsubsection{Ứng dụng trong nhận dạng hệ thống}
+\subsubsection{Ứng dụng trong chỉnh định bộ điều khiển PID}
 
 Dữ liệu từ điều khiển ON/OFF có thể dùng để tính thông số PID theo phương pháp relay (Ziegler-Nichols Ultimate Gain):
 \begin{itemize}
