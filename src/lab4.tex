@@ -13,7 +13,7 @@
 
 \begin{itemize}
     \item Làm quen với phần mềm mô phỏng Factory I/O.
-    \item Kết nối PLC S7-1200 với Factory I/O qua giao thức S7.
+    \item Kết nối PLCSIM với Factory I/O qua giao thức S7.
     \item Lập trình điều khiển và giám sát hệ thống sản xuất ảo.
 \end{itemize}
 
@@ -39,13 +39,14 @@ Factory I/O là phần mềm mô phỏng 3D các hệ thống tự động hóa 
     \item \textbf{Stations:} Pick \& place, sorting, palletizing...
 \end{itemize}
 
-\subsubsection{Kết nối với PLC S7-1200}
+\subsubsection{Kết nối với PLCSIM}
 
-Factory I/O hỗ trợ kết nối với PLC Siemens qua giao thức S7 (TCP/IP). Các bước kết nối:
+Factory I/O hỗ trợ kết nối với PLCSIM (PLC mô phỏng) qua giao thức S7 (TCP/IP). Các bước kết nối:
 \begin{enumerate}
-    \item Cấu hình địa chỉ IP của PLC trong TIA Portal.
-    \item Thiết lập Driver trong Factory I/O là ``Siemens S7-1200/1500''.
-    \item Map các biến I/O giữa PLC và Factory I/O.
+    \item Tạo project trong TIA Portal với PLC S7-1200/1500.
+    \item Khởi chạy PLCSIM và load chương trình.
+    \item Thiết lập Driver trong Factory I/O là ``Siemens S7-PLCSIM''.
+    \item Map các biến I/O giữa PLCSIM và Factory I/O.
 \end{enumerate}
 
 % ------------------------------------------------------------
@@ -54,9 +55,7 @@ Factory I/O hỗ trợ kết nối với PLC Siemens qua giao thức S7 (TCP/IP)
 
 \begin{itemize}
     \item Máy tính cài đặt Factory I/O (phiên bản Education hoặc Ultimate)
-    \item PLC Siemens S7-1200 CPU 1213C
-    \item Cáp Ethernet kết nối PLC với máy tính
-    \item Phần mềm TIA Portal V16
+    \item Phần mềm TIA Portal V16 với PLCSIM
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -66,11 +65,11 @@ Factory I/O hỗ trợ kết nối với PLC Siemens qua giao thức S7 (TCP/IP)
 \subsubsection{Cấu hình kết nối}
 
 \begin{enumerate}
-    \item Trong TIA Portal, cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1).
+    \item Trong TIA Portal, tạo project với PLC S7-1200/1500.
+    \item Khởi chạy PLCSIM từ TIA Portal.
     \item Mở Factory I/O, vào \texttt{File > Driver Configuration}.
-    \item Chọn Driver: \texttt{Siemens S7-1200/1500}.
-    \item Nhập địa chỉ IP của PLC và cấu hình vùng nhớ I/O.
-    \item Kiểm tra kết nối bằng nút \texttt{Connect}.
+    \item Chọn Driver: \texttt{Siemens S7-PLCSIM}.
+    \item Cấu hình vùng nhớ I/O và kiểm tra kết nối bằng nút \texttt{Connect}.
 \end{enumerate}
 
 \subsubsection{Xây dựng kịch bản mô phỏng}
@@ -87,7 +86,7 @@ Factory I/O hỗ trợ kết nối với PLC Siemens qua giao thức S7 (TCP/IP)
 \begin{enumerate}
     \item Tạo chương trình điều khiển trong TIA Portal.
     \item Sử dụng các khối logic: AND, OR, Timer, Counter...
-    \item Download chương trình xuống PLC.
+    \item Download chương trình xuống PLCSIM.
     \item Chạy mô phỏng và quan sát hoạt động của hệ thống.
 \end{enumerate}
 
@@ -151,7 +150,7 @@ Stack Light & & \\
 
 % TODO: Trả lời
 
-\textbf{Câu 2: Mô tả các bước kết nối PLC S7-1200 với Factory I/O?}
+\textbf{Câu 2: Mô tả các bước kết nối PLCSIM với Factory I/O?}
 
 % TODO: Trả lời
 
