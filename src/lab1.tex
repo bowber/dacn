@@ -121,7 +121,7 @@ Tiến hành đo nhiệt độ môi trường trong 2 phút để kiểm tra đ�
     ymin=25.0, ymax=25.5,
     legend pos=north east,
 ]
-\addplot[blue, thick, mark=*, mark size=1pt] table[x=time_s, y=PV, col sep=comma] {../tmp/TN1_processed.csv};
+\addplot[blue, thick, mark=*, mark size=1pt] table[x=time_s, y=PV, col sep=comma] {../data/TN1_processed.csv};
 \addlegendentry{Nhiệt độ đo (Pt100)}
 \addplot[red, dashed, domain=0:130] {25.304};
 \addlegendentry{Giá trị trung bình = $25.30^\circ$C}

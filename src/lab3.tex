@@ -33,8 +33,8 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
     
     % P, I, D blocks
     \node[block, right=1.5cm of input, yshift=1.2cm] (P) {$K_P$};
-    \node[block, right=1.5cm of input] (I) {$K_I \int$};
-    \node[block, right=1.5cm of input, yshift=-1.2cm] (D) {$K_D \frac{d}{dt}$};
+    \node[block, right=1.5cm of input] (I) {$\frac{K_P}{T_I} \int$};
+    \node[block, right=1.5cm of input, yshift=-1.2cm] (D) {$K_P \cdot T_D \frac{d}{dt}$};
     
     % Sum
     \node[sum, right=1.5cm of I] (sum) {};
@@ -68,7 +68,7 @@ Bộ điều khiển PID là bộ điều khiển đưa ra tác động điều 
 
 Công thức tổng quát:
 \begin{equation}
-u(t) = K_P \cdot e(t) + K_I \int_0^t e(\tau)d\tau + K_D \frac{de(t)}{dt}
+u(t) = K_P \left( e(t) + \frac{1}{T_I} \int_0^t e(\tau)d\tau + T_D \frac{de(t)}{dt} \right)
 \end{equation}
 
 \subsubsection{Ảnh hưởng của các thông số}
@@ -77,13 +77,13 @@ u(t) = K_P \cdot e(t) + K_I \int_0^t e(\tau)d\tau + K_D \frac{de(t)}{dt}
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Tăng} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
+\textbf{Thay đổi} & \textbf{Thời gian đáp ứng} & \textbf{Độ quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
 \hline
-$K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
+Tăng $K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
 \hline
-$K_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
+Giảm $T_I$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
 \hline
-$K_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
+Tăng $T_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \hline
 \end{tabular}
 \caption{Ảnh hưởng của các thông số PID}
@@ -125,27 +125,36 @@ TIA Portal cung cấp khối \texttt{PID\_Compact} để thực hiện điều k
     \item Kết nối Setpoint và Input với biến tương ứng.
 \end{enumerate}
 
-\subsubsection{Chỉnh định thông số PID}
+\subsubsection{Chỉnh định thông số PID theo phương pháp Ziegler-Nichols (phương pháp 2 - dao động tới hạn)}
 
-\textbf{Phương pháp 1: Auto-tuning}
-\begin{enumerate}
-    \item Sử dụng chức năng Auto-tune của PID\_Compact.
-    \item Hệ thống tự động xác định $K_P$, $T_i$, $T_d$ tối ưu.
-\end{enumerate}
+Sử dụng dữ liệu từ thí nghiệm điều khiển ON/OFF (Bài 2) để tính toán thông số PID theo phương pháp Ziegler-Nichols (relay method):
 
-\textbf{Phương pháp 2: Chỉnh định thủ công}
-\begin{enumerate}
-    \item Bắt đầu với $K_I = 0$, $K_D = 0$.
-    \item Tăng $K_P$ cho đến khi hệ thống bắt đầu dao động.
-    \item Thêm $K_I$ để triệt tiêu sai lệch tĩnh.
-    \item Thêm $K_D$ để giảm độ quá điều chỉnh.
-\end{enumerate}
+\textbf{Bước 1: Xác định các thông số từ thí nghiệm ON/OFF}
+\begin{itemize}
+    \item Chu kỳ dao động tới hạn: $T_u = 250$s (từ Bài thí nghiệm 2)
+    \item Biên độ dao động: $a = 6.5^\circ$C
+    \item Biên độ relay: $d = 50\%$ (relay dao động giữa 0\% và 100\%, biên độ từ tâm = 50\%)
+\end{itemize}
+
+\textbf{Bước 2: Tính Ultimate Gain}
+\begin{equation}
+K_u = \frac{4d}{\pi a} = \frac{4 \times 50}{\pi \times 6.5} \approx 9.8
+\end{equation}
+
+\textbf{Bước 3: Tính thông số PID theo công thức Ziegler-Nichols}
+\begin{align}
+K_P &= 0.6 \times K_u = 0.6 \times 9.8 \approx 5.9 \\
+T_i &= \frac{T_u}{2} = \frac{250}{2} = 125 \text{ s} \\
+T_d &= \frac{T_u}{8} = \frac{250}{8} = 31.25 \approx 31 \text{ s}
+\end{align}
+
+\textbf{Bộ thông số PID được sử dụng:} $K_P = 5.9$, $T_i = 125$s, $T_d = 31$s
 
 \subsubsection{Khảo sát ảnh hưởng của thông số}
 \begin{enumerate}
     \item Thay đổi $K_P$ và quan sát đáp ứng.
-    \item Thay đổi $K_I$ và quan sát đáp ứng.
-    \item Thay đổi $K_D$ và quan sát đáp ứng.
+    \item Thay đổi $T_i$ và quan sát đáp ứng.
+    \item Thay đổi $T_d$ và quan sát đáp ứng.
     \item Ghi nhận các chỉ tiêu chất lượng.
 \end{enumerate}
 
@@ -155,7 +164,7 @@ TIA Portal cung cấp khối \texttt{PID\_Compact} để thực hiện điều k
 
 \subsubsection{Đáp ứng điều khiển PID}
 
-Thí nghiệm điều khiển PID với SV = $40^\circ$C, khảo sát ảnh hưởng của các thông số $K_P$, $T_i$, $T_d$.
+Thí nghiệm điều khiển PID với bộ thông số $K_P = 5.9$, $T_i = 125$s, $T_d = 31$s. Hệ thống được gia nhiệt đến SV = $40^\circ$C, sau đó thực hiện thay đổi bước (step change) lên SV = $50^\circ$C để đánh giá chất lượng điều khiển.
 
 \begin{figure}[H]
 \centering
@@ -169,195 +178,158 @@ Thí nghiệm điều khiển PID với SV = $40^\circ$C, khảo sát ảnh hư�
     grid style={line width=.1pt, draw=gray!30},
     major grid style={line width=.2pt,draw=gray!50},
     xmin=0, xmax=1600,
-    ymin=24, ymax=50,
-    legend pos=north east,
+    ymin=20, ymax=55,
+    legend pos=south east,
 ]
-\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../tmp/TN3_processed.csv};
+\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../data/TN3_processed.csv};
 \addlegendentry{PV (Nhiệt độ đo được)}
-\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../tmp/TN3_processed.csv};
-\addlegendentry{SV = $40^\circ$C}
+\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../data/TN3_processed.csv};
+\addlegendentry{SV (Giá trị đặt)}
 
-% Đánh dấu các điểm thay đổi thông số PID
-\draw[gray, dashed] (axis cs:591,24) -- (axis cs:591,50);
-\draw[gray, dashed] (axis cs:767,24) -- (axis cs:767,50);
-\draw[gray, dashed] (axis cs:1002,24) -- (axis cs:1002,50);
+% Đánh dấu thời điểm thay đổi setpoint
+\draw[gray, dashed] (axis cs:1054,20) -- (axis cs:1054,55);
+\node[font=\small] at (axis cs:1054,22) [right] {Step change};
 
-\node[font=\tiny, rotate=90] at (axis cs:300,47) {kp=0.2, ti=1, td=5};
-\node[font=\tiny, rotate=90] at (axis cs:680,47) {kp=1, ti=1, td=1};
-\node[font=\tiny, rotate=90] at (axis cs:880,47) {kp=0.2, td=0.1};
-\node[font=\tiny, rotate=90] at (axis cs:1300,47) {kp=0.4, ti=0.1};
+% Đánh dấu thông số PID
+\node[font=\small, fill=white] at (axis cs:500,52) {$K_P=5.9$, $T_i=125$s, $T_d=31$s};
 \end{axis}
 \end{tikzpicture}
-\caption{Đáp ứng điều khiển PID với các bộ thông số khác nhau}
+\caption{Đáp ứng điều khiển PID với thay đổi bước setpoint ($40^\circ$C $\rightarrow$ $50^\circ$C)}
 \label{fig:pid_response_tn3}
 \end{figure}
 
 Phân tích đáp ứng:
 \begin{itemize}
-    \item \textbf{Giai đoạn 1 (0-591s):} $K_P=0.2$, $T_i=1$, $T_d=5$ - Hệ thống đáp ứng chậm, vượt quá setpoint rồi dao động
-    \item \textbf{Giai đoạn 2 (596-762s):} $K_P=1$, $T_i=1$, $T_d=1$ - Tăng $K_P$ làm hệ thống đáp ứng mạnh, dao động lớn
-    \item \textbf{Giai đoạn 3 (767-897s):} $K_P=0.2$, $T_i=1$, $T_d=1$ - Giảm $K_P$, hệ thống ổn định hơn
-    \item \textbf{Giai đoạn 4 (sau 1000s):} $K_P=0.4$, $T_i=0.1$ - Điều chỉnh tinh, sai lệch giảm đáng kể
+    \item \textbf{Giai đoạn 1 (0-1049s):} Gia nhiệt từ nhiệt độ môi trường ($22.8^\circ$C) đến SV = $40^\circ$C
+    \begin{itemize}
+        \item Thời gian đạt setpoint: 180s
+        \item Độ quá điều chỉnh: $2.09^\circ$C (12.2\%)
+        \item Thời gian xác lập ($\pm 2\%$): 606s
+        \item Sai lệch tĩnh: $\approx 0^\circ$C
+    \end{itemize}
+    \item \textbf{Giai đoạn 2 (1054-1556s):} Thay đổi bước từ SV = $40^\circ$C lên SV = $50^\circ$C
+    \begin{itemize}
+        \item Thời gian tăng (rise time): 466s
+        \item Độ quá điều chỉnh: $0.37^\circ$C (3.7\%)
+        \item Thời gian xác lập ($\pm 2\%$): 231s
+        \item Sai lệch tĩnh: $0.14^\circ$C
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{Kết quả chỉnh định PID}
 
+Bộ thông số PID được sử dụng trong thí nghiệm:
+
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{Bộ thông số} & \textbf{$K_P$} & \textbf{$T_i$ (s)} & \textbf{$T_d$ (s)} \\
+\textbf{Thông số} & \textbf{Giá trị} & \textbf{Đơn vị} & \textbf{Ghi chú} \\
 \hline
-Bộ 1 (ban đầu) & 0.2 & 1 & 5 \\
+$K_P$ & 5.9 & -- & Hệ số khuếch đại \\
 \hline
-Bộ 2 (tăng $K_P$) & 1 & 1 & 1 \\
+$T_i$ & 125 & s & Thời gian tích phân \\
 \hline
-Bộ 3 (tối ưu) & 0.4 & 0.1 & 0.2 \\
+$T_d$ & 31 & s & Thời gian vi phân \\
 \hline
 \end{tabular}
-\caption{Kết quả chỉnh định thông số PID}
+\caption{Thông số PID sử dụng trong thí nghiệm}
 \end{table}
 
-\subsubsection{Kết quả khảo sát ảnh hưởng $K_P$}
+\subsubsection{Chỉ tiêu chất lượng điều khiển}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|l|c|c|}
 \hline
-\textbf{$K_P$} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
+\textbf{Chỉ tiêu} & \textbf{Giai đoạn 1} & \textbf{Giai đoạn 2} \\
+ & (SV = $40^\circ$C) & (Step: $40 \rightarrow 50^\circ$C) \\
 \hline
-0.2 & $>$ 300 & 0 & $\approx 10^\circ$C \\
+Thời gian đạt setpoint & 180s & 466s \\
 \hline
-0.4 & $\approx$ 200 & 5-10 & $\approx 2^\circ$C \\
+Độ quá điều chỉnh & 12.2\% ($2.09^\circ$C) & 3.7\% ($0.37^\circ$C) \\
 \hline
-1.0 & $\approx$ 100 & 10-15 & $< 1^\circ$C \\
+Thời gian xác lập ($\pm 2\%$) & 606s & 231s \\
+\hline
+Sai lệch tĩnh & $\approx 0^\circ$C & $0.14^\circ$C \\
 \hline
 \end{tabular}
-\caption{Ảnh hưởng của $K_P$}
+\caption{Chỉ tiêu chất lượng điều khiển PID}
 \end{table}
 
-\subsubsection{Kết quả khảo sát ảnh hưởng $K_I$}
+\subsubsection{Đánh giá hiệu suất tổng thể}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|l|c|}
 \hline
-\textbf{$T_i$ (s)} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
+\textbf{Chỉ tiêu} & \textbf{Giá trị} \\
 \hline
-1 & $\approx$ 200 & 5 & $\approx 3^\circ$C \\
+Sai số trung bình tuyệt đối (MAE) & $2.22^\circ$C \\
 \hline
-0.5 & $\approx$ 150 & 8 & $\approx 1^\circ$C \\
+Sai số tối đa & $17.16^\circ$C \\
 \hline
-0.1 & $\approx$ 120 & 10 & $< 0.5^\circ$C \\
-\hline
-\end{tabular}
-\caption{Ảnh hưởng của $T_i$}
-\end{table}
-
-\subsubsection{Kết quả khảo sát ảnh hưởng $K_D$}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{$T_d$ (s)} & \textbf{Thời gian xác lập (s)} & \textbf{Độ quá điều chỉnh (\%)} & \textbf{Sai lệch tĩnh} \\
-\hline
-0.05 & $\approx$ 150 & 12 & $\approx 2^\circ$C \\
-\hline
-0.2 & $\approx$ 130 & 6 & $\approx 1^\circ$C \\
-\hline
-1 & $\approx$ 120 & 3 & $\approx 1^\circ$C \\
+MAE trạng thái xác lập & $0.12^\circ$C \\
 \hline
 \end{tabular}
-\caption{Ảnh hưởng của $T_d$}
+\caption{Đánh giá hiệu suất tổng thể}
 \end{table}
 
 % ------------------------------------------------------------
 \subsection{Bàn luận}
 % ------------------------------------------------------------
 
-\subsubsection{Nhận dạng hệ thống (System Identification)}
+\subsubsection{Phân tích kết quả điều khiển}
 
-Từ đáp ứng bước của hệ thống trong giai đoạn đầu (TN3), xác định được các thông số của mô hình FOPDT (First Order Plus Dead Time):
+Bộ thông số PID ($K_P = 5.9$, $T_i = 125$s, $T_d = 31$s) cho kết quả:
 
 \begin{itemize}
-    \item Thời gian trễ (Dead Time): $L = 90$s
-    \item Hằng số thời gian (Time Constant): $T = 75$s
-    \item Tỷ số $T/L = 0.83$ (hệ thống có trễ đáng kể)
+    \item \textbf{Hệ số khuếch đại $K_P = 5.9$:} Đúng theo công thức Ziegler-Nichols ($0.6 \times K_u$). Độ quá điều chỉnh 12.2\% trong giai đoạn khởi động là chấp nhận được.
+    
+    \item \textbf{Thời gian tích phân $T_i = 125$s:} Đúng theo công thức $T_u/2$, giúp triệt tiêu sai lệch tĩnh hiệu quả (sai lệch tĩnh $\approx 0^\circ$C).
+    
+    \item \textbf{Thời gian vi phân $T_d = 31$s:} Đúng theo công thức $T_u/8$, giúp giảm độ quá điều chỉnh trong giai đoạn step change xuống còn 3.7\%.
 \end{itemize}
 
-\subsubsection{Tính toán thông số PID theo các phương pháp lý thuyết}
-
-Dựa trên các thông số nhận dạng được, áp dụng các phương pháp chỉnh định PID:
+\subsubsection{So sánh với điều khiển ON/OFF (Bài 2)}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|c|c|}
 \hline
-\textbf{Phương pháp} & \textbf{$K_P$} & \textbf{$T_i$ (s)} & \textbf{$T_d$ (s)} \\
+\textbf{Tiêu chí} & \textbf{ON/OFF (Bài 2)} & \textbf{PID (Bài 3)} \\
 \hline
-Ziegler-Nichols (vòng hở) & 1.00 & 180 & 45 \\
+Biên độ dao động & $\pm 6.5^\circ$C & $< 0.5^\circ$C (xác lập) \\
 \hline
-Cohen-Coon & 1.36 & 156 & 27 \\
+Độ quá điều chỉnh & 50\% ($5.5^\circ$C) & 12.2\% ($2.09^\circ$C) \\
 \hline
-CHR (0\% overshoot) & 0.50 & 75 & 45 \\
+Sai lệch tĩnh & Dao động liên tục & $\approx 0^\circ$C \\
 \hline
-CHR (20\% overshoot) & 0.79 & 105 & 42 \\
+Chu kỳ dao động & 250s & Không dao động \\
 \hline
-Lambda Tuning & 0.21 & 75 & 0 \\
-\hline
-IMC & 0.46 & 75 & 28 \\
+Chất lượng điều khiển & Thấp & Cao \\
 \hline
 \end{tabular}
-\caption{Thông số PID theo các phương pháp lý thuyết}
-\label{tab:pid_methods}
+\caption{So sánh điều khiển ON/OFF và PID}
 \end{table}
 
-\textbf{Công thức tính:}
+\textbf{Nhận xét:}
 \begin{itemize}
-    \item \textbf{Ziegler-Nichols:} $K_P = 1.2 \cdot \frac{T}{L}$, $T_i = 2L$, $T_d = 0.5L$
-    \item \textbf{CHR (0\% overshoot):} $K_P = 0.6 \cdot \frac{T}{L}$, $T_i = T$, $T_d = 0.5L$
-    \item \textbf{Lambda:} $K_P = \frac{T}{\lambda + L}$ với $\lambda = \max(T, 3L)$
+    \item Điều khiển PID cải thiện đáng kể chất lượng so với ON/OFF: giảm biên độ dao động từ $\pm 6.5^\circ$C xuống gần như bằng 0 trong trạng thái xác lập
+    \item PID triệt tiêu hoàn toàn sai lệch tĩnh, trong khi ON/OFF luôn dao động quanh setpoint
+    \item Thông số PID tính từ dữ liệu ON/OFF theo Ziegler-Nichols cho kết quả tốt, xác nhận tính hiệu quả của phương pháp
 \end{itemize}
 
-\subsubsection{So sánh kết quả thực nghiệm với lý thuyết}
-
-Phân tích các bộ thông số đã thử nghiệm theo sai số trung bình tuyệt đối (MAE):
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-\textbf{$K_P$} & \textbf{$T_i$} & \textbf{$T_d$} & \textbf{MAE ($^\circ$C)} & \textbf{Max Error} & \textbf{Dao động} \\
-\hline
-0.40 & 0.1 & 0.15 & 1.49 & 2.60 & 2.35 \\
-\hline
-0.40 & 0.1 & 0.20 & 1.86 & 2.97 & 5.66 \\
-\hline
-0.40 & 0.1 & 10.0 & 2.08 & 3.70 & 6.85 \\
-\hline
-0.20 & 1.0 & 0.1 & 2.84 & 4.82 & 5.44 \\
-\hline
-1.00 & 1.0 & 1.0 & 6.82 & 11.61 & 15.18 \\
-\hline
-\end{tabular}
-\caption{Hiệu suất các bộ thông số PID (xếp theo MAE)}
-\label{tab:pid_performance}
-\end{table}
-
-\textbf{Nhận xét quan trọng:}
-\begin{itemize}
-    \item Giá trị $K_P$ thực nghiệm (0.2--1.0) phù hợp với dự đoán lý thuyết
-    \item Giá trị $T_i$ thực nghiệm (0.1--1.0s) nhỏ hơn nhiều so với lý thuyết (75--180s), có thể do TIA Portal sử dụng đơn vị hoặc công thức khác
-    \item Bộ thông số tốt nhất: $K_P = 0.4$, $T_i = 0.1$, $T_d = 0.15$ với MAE = $1.49^\circ$C
-\end{itemize}
-
-\subsubsection{Ảnh hưởng của từng thông số}
+\subsubsection{Đánh giá chất lượng điều khiển}
 
 \begin{itemize}
-    \item \textbf{Tăng $K_P$:} Giảm thời gian đáp ứng, giảm sai lệch tĩnh, nhưng tăng độ quá điều chỉnh và có thể gây mất ổn định (thấy rõ khi $K_P=1.0$)
-    \item \textbf{Giảm $T_i$:} Tăng tác động tích phân, triệt tiêu sai lệch tĩnh nhanh hơn. $T_i=0.1$ cho kết quả tốt nhất
-    \item \textbf{Thay đổi $T_d$:} $T_d$ vừa phải (0.15--0.2) giúp giảm dao động và cải thiện độ ổn định
+    \item \textbf{Độ quá điều chỉnh:} Giai đoạn khởi động có độ quá điều chỉnh 12.2\% (chấp nhận được cho hệ thống nhiệt). Giai đoạn step change có độ quá điều chỉnh thấp hơn (3.7\%), cho thấy bộ điều khiển hoạt động tốt hơn khi hệ thống đã ổn định.
+    
+    \item \textbf{Thời gian xác lập:} 606s cho giai đoạn khởi động và 231s cho step change. Thời gian này phù hợp với đặc tính của hệ thống nhiệt có quán tính lớn.
+    
+    \item \textbf{Sai lệch tĩnh:} Gần như bằng 0 trong cả hai giai đoạn ($<0.15^\circ$C), cho thấy thành phần tích phân hoạt động hiệu quả.
+    
+    \item \textbf{Độ ổn định:} Hệ thống ổn định, không có dao động kéo dài. Đáp ứng mượt mà và không có hiện tượng mất ổn định.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -367,23 +339,37 @@ Phân tích các bộ thông số đã thử nghiệm theo sai số trung bình 
 Qua thí nghiệm điều khiển PID hệ thống gia nhiệt, rút ra các kết luận sau:
 
 \begin{enumerate}
-    \item \textbf{Nhận dạng hệ thống:} Hệ thống gia nhiệt có thời gian trễ $L = 90$s và hằng số thời gian $T = 75$s, thuộc loại hệ thống có trễ đáng kể ($T/L < 1$).
-    
-    \item \textbf{Phương pháp chỉnh định:} Các phương pháp lý thuyết (Ziegler-Nichols, CHR, IMC, Lambda) cho giá trị $K_P$ trong khoảng 0.2--1.4, phù hợp với kết quả thực nghiệm.
-    
-    \item \textbf{Bộ thông số tối ưu từ thực nghiệm:} 
-    \begin{center}
-    $K_P = 0.4$, \quad $T_i = 0.1$s, \quad $T_d = 0.15$s
-    \end{center}
-    Cho sai số trung bình $1.49^\circ$C và dao động $2.35^\circ$C.
-    
-    \item \textbf{Khuyến nghị:}
+    \item \textbf{Phương pháp chỉnh định:} Thông số PID được tính toán theo phương pháp Ziegler-Nichols relay, sử dụng dữ liệu từ thí nghiệm ON/OFF (Bài 2):
     \begin{itemize}
-        \item Với hệ thống có trễ lớn như thế này, nên bắt đầu với thông số bảo thủ (Lambda hoặc IMC)
-        \item $K_P$ nên trong khoảng 0.3--0.5 để cân bằng giữa tốc độ đáp ứng và độ ổn định
-        \item $T_i$ nhỏ (0.1) giúp triệt tiêu sai lệch tĩnh hiệu quả
-        \item $T_d$ vừa phải (0.1--0.2) giúp giảm quá điều chỉnh
+        \item Chu kỳ dao động $T_u = 250$s, biên độ $a = 6.5^\circ$C, biên độ relay $d = 50\%$
+        \item Ultimate gain $K_u = 4d/(\pi a) = 9.8$
+        \item $K_P = 0.6 K_u = 5.9$, $T_i = T_u/2 = 125$s, $T_d = T_u/8 = 31$s
     \end{itemize}
+    
+    \item \textbf{Kết quả điều khiển giai đoạn khởi động (SV = $40^\circ$C):}
+    \begin{itemize}
+        \item Thời gian đạt setpoint: 180s
+        \item Độ quá điều chỉnh: 12.2\% ($2.09^\circ$C)
+        \item Thời gian xác lập: 606s
+        \item Sai lệch tĩnh: $\approx 0^\circ$C
+    \end{itemize}
+    
+    \item \textbf{Kết quả điều khiển khi thay đổi bước ($40 \rightarrow 50^\circ$C):}
+    \begin{itemize}
+        \item Thời gian tăng: 466s
+        \item Độ quá điều chỉnh: 3.7\% ($0.37^\circ$C)
+        \item Thời gian xác lập: 231s
+        \item Sai lệch tĩnh: $0.14^\circ$C
+    \end{itemize}
+    
+    \item \textbf{So sánh với ON/OFF:} Điều khiển PID cải thiện đáng kể so với ON/OFF:
+    \begin{itemize}
+        \item Giảm biên độ dao động từ $\pm 6.5^\circ$C xuống $< 0.5^\circ$C
+        \item Triệt tiêu sai lệch tĩnh (từ dao động liên tục xuống $\approx 0^\circ$C)
+        \item Hệ thống ổn định, không có chu kỳ dao động
+    \end{itemize}
+    
+    \item \textbf{Kết luận:} Phương pháp Ziegler-Nichols relay cho phép tính toán thông số PID hiệu quả từ dữ liệu thí nghiệm ON/OFF, không cần sử dụng Auto-tuning.
 \end{enumerate}
 
 % ------------------------------------------------------------

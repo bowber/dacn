@@ -136,11 +136,11 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
     legend pos=north east,
 ]
 % PV line
-\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../tmp/TN2_processed.csv};
+\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../data/TN2_processed.csv};
 \addlegendentry{PV (Nhiệt độ đo được)}
 
 % SV line
-\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../tmp/TN2_processed.csv};
+\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../data/TN2_processed.csv};
 \addlegendentry{SV = $40^\circ$C}
 
 % Deadband boundaries
@@ -169,7 +169,7 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
 
 \begin{itemize}
     \item \textbf{Giai đoạn gia nhiệt (0-131s):} Heater ON liên tục, nhiệt độ tăng từ $29^\circ$C đến $41^\circ$C với tốc độ $\approx 5.5^\circ$C/phút
-    \item \textbf{Quá điều chỉnh (131-176s):} Heater OFF nhưng nhiệt độ tiếp tục tăng do quán tính nhiệt, đạt đỉnh $45.5^\circ$C (vượt SV $5.5^\circ$C)
+    \item \textbf{Quá điều chỉnh (131-176s):} Heater OFF nhưng nhiệt độ tiếp tục tăng do quán tính nhiệt, đạt đỉnh $45.5^\circ$C (vượt SV $5.5^\circ$C, tương đương 50\% so với biên độ bước $11^\circ$C)
     \item \textbf{Giai đoạn làm mát (176-793s):} Hệ thống nguội tự nhiên, tốc độ $\approx 1.6^\circ$C/phút
     \item \textbf{Kích hoạt lại (tại $\approx$276s):} PV giảm xuống dưới $39^\circ$C, heater bật lại
 \end{itemize}
@@ -194,7 +194,7 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
 \begin{itemize}
     \item Chu kỳ dao động (Ultimate Period): $T_u \approx 250$s
     \item Biên độ dao động: $\approx 6.5^\circ$C (so với SV)
-    \item Độ quá điều chỉnh: $\approx 14\%$ ($(45.5-40)/40 \times 100$)
+    \item Độ quá điều chỉnh: $\approx 50\%$ ($(45.5-40)/(40-29) \times 100$, tính theo biên độ bước)
     \item Thời gian đạt SV lần đầu: $\approx 126$s
 \end{itemize}
 
@@ -208,7 +208,7 @@ Từ kết quả thí nghiệm (Hình \ref{fig:onoff_response_tn2}), nhận th�
 \begin{itemize}
     \item Hệ thống không thể duy trì nhiệt độ chính xác tại setpoint mà luôn dao động quanh nó
     \item Biên độ dao động ($\approx 6.5^\circ$C) lớn hơn nhiều so với deadband ($\pm 1^\circ$C) do quán tính nhiệt của hệ thống
-    \item Độ quá điều chỉnh $\approx 14\%$ là do heater không tắt ngay khi đạt SV mà phải đợi vượt ngưỡng $41^\circ$C
+    \item Độ quá điều chỉnh $\approx 50\%$ (so với biên độ bước $11^\circ$C) là do heater không tắt ngay khi đạt SV mà phải đợi vượt ngưỡng $41^\circ$C, kết hợp với quán tính nhiệt lớn của hệ thống
 \end{itemize}
 
 \subsubsection{Ảnh hưởng của hysteresis đến chất lượng điều khiển}
@@ -258,7 +258,7 @@ Qua thí nghiệm điều khiển ON/OFF hệ thống gia nhiệt, rút ra các 
 \begin{enumerate}
     \item \textbf{Đặc tính cơ bản:} Điều khiển ON/OFF đơn giản, dễ triển khai nhưng không thể duy trì nhiệt độ ổn định do bản chất phi tuyến của bộ điều khiển.
     
-    \item \textbf{Dao động và quá điều chỉnh:} Với deadband $\pm 1^\circ$C, hệ thống dao động với biên độ $\approx 6.5^\circ$C và chu kỳ $\approx 250$s. Độ quá điều chỉnh $\approx 14\%$ do quán tính nhiệt.
+    \item \textbf{Dao động và quá điều chỉnh:} Với deadband $\pm 1^\circ$C, hệ thống dao động với biên độ $\approx 6.5^\circ$C và chu kỳ $\approx 250$s. Độ quá điều chỉnh $\approx 50\%$ (so với biên độ bước) do quán tính nhiệt.
     
     \item \textbf{Vai trò của hysteresis:} Deadband giúp giảm tần số đóng ngắt, bảo vệ thiết bị chấp hành, nhưng làm tăng biên độ dao động.
     
