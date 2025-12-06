@@ -14,7 +14,7 @@
 \begin{itemize}
     \item Hiểu nguyên lý hoạt động của bộ điều khiển ON/OFF.
     \item Thiết kế và lập trình hệ thống điều khiển nhiệt độ ON/OFF trên PLC S7-1200.
-    \item Khảo sát đặc tính dao động và ảnh hưởng của deadband (dải chết).
+    \item Khảo sát đặc tính dao động của hệ thống điều khiển ON/OFF.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -101,12 +101,6 @@ Trong đó $h$ là độ rộng dải chết (deadband), giúp giảm tần số
     \item Quan sát đáp ứng của hệ thống.
 \end{enumerate}
 
-\subsubsection{Khảo sát ảnh hưởng của deadband}
-\begin{enumerate}
-    \item Thay đổi giá trị deadband: $h$ = 1°C, 2°C, 5°C.
-    \item Ghi nhận biên độ dao động và tần số đóng ngắt.
-\end{enumerate}
-
 % ------------------------------------------------------------
 \subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
@@ -183,22 +177,6 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
     \item \textbf{Kích hoạt lại (tại $\approx$276s):} PV giảm xuống dưới $39^\circ$C, heater bật lại
 \end{itemize}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{Deadband (°C)} & \textbf{Biên độ dao động (°C)} & \textbf{Chu kỳ dao động (s)} & \textbf{Tần số đóng ngắt} \\
-\hline
-1 & $\approx 6.5$ (peak-to-peak $\approx 13$) & $\approx 250$ & $\approx 0.24$/phút \\
-\hline
-2 & -- (chưa khảo sát) & -- & -- \\
-\hline
-5 & -- (chưa khảo sát) & -- & -- \\
-\hline
-\end{tabular}
-\caption{Kết quả khảo sát ảnh hưởng của deadband}
-\end{table}
-
 \textbf{Các thông số quan trọng từ thí nghiệm:}
 \begin{itemize}
     \item Chu kỳ dao động (Ultimate Period): $T_u \approx 250$s
@@ -220,8 +198,9 @@ Từ kết quả thí nghiệm (Hình \ref{fig:onoff_response_tn2}), nhận th�
     \item Độ quá điều chỉnh $\approx 50\%$ (so với biên độ bước $11^\circ$C) là do heater không tắt ngay khi đạt SV mà phải đợi vượt ngưỡng $41^\circ$C, kết hợp với quán tính nhiệt lớn của hệ thống
 \end{itemize}
 
-\subsubsection{Ảnh hưởng của deadband đến chất lượng điều khiển}
+\subsubsection{Vai trò của deadband}
 
+Về mặt lý thuyết, deadband ảnh hưởng đến chất lượng điều khiển:
 \begin{itemize}
     \item \textbf{Deadband nhỏ:} Giảm biên độ dao động nhưng tăng tần số đóng ngắt, gây hao mòn thiết bị
     \item \textbf{Deadband lớn:} Giảm tần số đóng ngắt nhưng tăng biên độ dao động, giảm độ chính xác
