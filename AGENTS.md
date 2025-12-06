@@ -19,7 +19,7 @@ LaTeX academic lab report using XeLaTeX with Vietnamese language support.
 - `assets/` - Images and logos
 - `data/` - Experimental data (.csv, .TRD files)
 - `docs/` - Reference PDFs and documents (large files, check file size before reading - extract specific pages to tmp/ if needed)
-- `tmp/` - Temporary files (git-ignored, use for extracted images, intermediate files, etc.)
+- `tmp/` - Temporary files (git-ignored, use for extracted images, intermediate files, etc.). Don't use it for permanent storage.
 
 ## Code Style Guidelines
 - **Section headers**: Use `% ============================================================` comment blocks
