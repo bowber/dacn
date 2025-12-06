@@ -14,7 +14,7 @@
 \begin{itemize}
     \item Hiểu nguyên lý hoạt động của bộ điều khiển ON/OFF.
     \item Thiết kế và lập trình hệ thống điều khiển nhiệt độ ON/OFF trên PLC S7-1200.
-    \item Khảo sát đặc tính dao động và ảnh hưởng của hysteresis.
+    \item Khảo sát đặc tính dao động và ảnh hưởng của deadband (dải chết).
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -28,11 +28,11 @@ Bộ điều khiển ON/OFF (còn gọi là điều khiển bang-bang) là loạ
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-    % ON-OFF characteristic with hysteresis
+    % ON-OFF characteristic with deadband
     \draw[->] (-2,0) -- (3,0) node[right] {$e$};
     \draw[->] (0,-1.5) -- (0,2) node[above] {$u$};
     
-    % Hysteresis loop
+    % Deadband loop
     \draw[thick, blue, ->] (-1.5,-1) -- (-0.5,-1) -- (-0.5,1) -- (1.5,1);
     \draw[thick, red, ->] (1.5,1) -- (0.5,1) -- (0.5,-1) -- (-1.5,-1);
     
@@ -42,8 +42,8 @@ Bộ điều khiển ON/OFF (còn gọi là điều khiển bang-bang) là loạ
     \node[font=\small] at (-0.5,-1.5) {$-h$};
     \node[font=\small] at (0.5,-1.5) {$+h$};
 \end{tikzpicture}
-\caption{Đặc tính bộ điều khiển ON/OFF với hysteresis}
-\label{fig:onoff_hysteresis}
+\caption{Đặc tính bộ điều khiển ON/OFF với deadband (dải chết)}
+\label{fig:onoff_deadband}
 \end{figure}
 
 Phương trình mô tả:
@@ -55,7 +55,7 @@ u_{min} & \text{nếu } e < -h \\
 \end{cases}
 \end{equation}
 
-Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ngắt của thiết bị chấp hành.
+Trong đó $h$ là độ rộng dải chết (deadband), giúp giảm tần số đóng ngắt của thiết bị chấp hành.
 
 \subsubsection{Đặc điểm của điều khiển ON/OFF}
 
@@ -93,7 +93,7 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
 \begin{enumerate}
     \item Đọc giá trị nhiệt độ từ cảm biến.
     \item So sánh với setpoint và tính sai lệch $e = SP - PV$.
-    \item Áp dụng logic ON/OFF với hysteresis:
+    \item Áp dụng logic ON/OFF với deadband:
     \begin{itemize}
         \item Nếu $PV < SP - h$: Bật heater (ON)
         \item Nếu $PV > SP + h$: Tắt heater (OFF)
@@ -101,9 +101,9 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
     \item Quan sát đáp ứng của hệ thống.
 \end{enumerate}
 
-\subsubsection{Khảo sát ảnh hưởng của hysteresis}
+\subsubsection{Khảo sát ảnh hưởng của deadband}
 \begin{enumerate}
-    \item Thay đổi giá trị hysteresis: $h$ = 1°C, 2°C, 5°C.
+    \item Thay đổi giá trị deadband: $h$ = 1°C, 2°C, 5°C.
     \item Ghi nhận biên độ dao động và tần số đóng ngắt.
 \end{enumerate}
 
@@ -116,7 +116,7 @@ Trong đó $h$ là độ trễ (hysteresis), giúp giảm tần số đóng ng�
 Thí nghiệm điều khiển ON/OFF với các thông số:
 \begin{itemize}
     \item Setpoint (SV) = $40^\circ$C
-    \item Hysteresis (deadband) = $\pm 1^\circ$C (heater ON khi PV $< 39^\circ$C, OFF khi PV $> 41^\circ$C)
+    \item Deadband (dải chết) = $\pm 1^\circ$C (heater ON khi PV $< 39^\circ$C, OFF khi PV $> 41^\circ$C)
     \item Nhiệt độ ban đầu: $\approx 29^\circ$C
 \end{itemize}
 
@@ -178,7 +178,7 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
 \centering
 \begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{Hysteresis (°C)} & \textbf{Biên độ dao động (°C)} & \textbf{Chu kỳ dao động (s)} & \textbf{Tần số đóng ngắt} \\
+\textbf{Deadband (°C)} & \textbf{Biên độ dao động (°C)} & \textbf{Chu kỳ dao động (s)} & \textbf{Tần số đóng ngắt} \\
 \hline
 1 & $\approx 6.5$ (peak-to-peak $\approx 13$) & $\approx 250$ & $\approx 0.24$/phút \\
 \hline
@@ -187,7 +187,7 @@ Thí nghiệm điều khiển ON/OFF với các thông số:
 5 & -- (chưa khảo sát) & -- & -- \\
 \hline
 \end{tabular}
-\caption{Kết quả khảo sát ảnh hưởng của hysteresis}
+\caption{Kết quả khảo sát ảnh hưởng của deadband}
 \end{table}
 
 \textbf{Các thông số quan trọng từ thí nghiệm:}
@@ -211,11 +211,11 @@ Từ kết quả thí nghiệm (Hình \ref{fig:onoff_response_tn2}), nhận th�
     \item Độ quá điều chỉnh $\approx 50\%$ (so với biên độ bước $11^\circ$C) là do heater không tắt ngay khi đạt SV mà phải đợi vượt ngưỡng $41^\circ$C, kết hợp với quán tính nhiệt lớn của hệ thống
 \end{itemize}
 
-\subsubsection{Ảnh hưởng của hysteresis đến chất lượng điều khiển}
+\subsubsection{Ảnh hưởng của deadband đến chất lượng điều khiển}
 
 \begin{itemize}
-    \item \textbf{Hysteresis nhỏ:} Giảm biên độ dao động nhưng tăng tần số đóng ngắt, gây hao mòn thiết bị
-    \item \textbf{Hysteresis lớn:} Giảm tần số đóng ngắt nhưng tăng biên độ dao động, giảm độ chính xác
+    \item \textbf{Deadband nhỏ:} Giảm biên độ dao động nhưng tăng tần số đóng ngắt, gây hao mòn thiết bị
+    \item \textbf{Deadband lớn:} Giảm tần số đóng ngắt nhưng tăng biên độ dao động, giảm độ chính xác
     \item \textbf{Giá trị tối ưu:} Cần cân bằng giữa độ chính xác và tuổi thọ thiết bị
 \end{itemize}
 
@@ -260,7 +260,7 @@ Qua thí nghiệm điều khiển ON/OFF hệ thống gia nhiệt, rút ra các 
     
     \item \textbf{Dao động và quá điều chỉnh:} Với deadband $\pm 1^\circ$C, hệ thống dao động với biên độ $\approx 6.5^\circ$C và chu kỳ $\approx 250$s. Độ quá điều chỉnh $\approx 50\%$ (so với biên độ bước) do quán tính nhiệt.
     
-    \item \textbf{Vai trò của hysteresis:} Deadband giúp giảm tần số đóng ngắt, bảo vệ thiết bị chấp hành, nhưng làm tăng biên độ dao động.
+    \item \textbf{Vai trò của deadband:} Dải chết giúp giảm tần số đóng ngắt, bảo vệ thiết bị chấp hành, nhưng làm tăng biên độ dao động.
     
     \item \textbf{Phạm vi ứng dụng:} Phù hợp cho các hệ thống không yêu cầu độ chính xác cao như bình nước nóng, lò sấy công nghiệp, máy điều hòa dân dụng.
 \end{enumerate}
@@ -269,11 +269,11 @@ Qua thí nghiệm điều khiển ON/OFF hệ thống gia nhiệt, rút ra các 
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Tại sao cần hysteresis trong điều khiển ON/OFF?}
+\textbf{Câu 1: Tại sao cần deadband (dải chết) trong điều khiển ON/OFF?}
 
-Hysteresis (vùng trễ) cần thiết vì:
+Deadband (dải chết) cần thiết vì:
 \begin{itemize}
-    \item \textbf{Tránh dao động tần số cao:} Không có hysteresis, relay sẽ đóng ngắt liên tục khi PV ở gần SP do nhiễu đo lường
+    \item \textbf{Tránh dao động tần số cao:} Không có deadband, relay sẽ đóng ngắt liên tục khi PV ở gần SP do nhiễu đo lường
     \item \textbf{Bảo vệ thiết bị:} Giảm số lần đóng ngắt, kéo dài tuổi thọ relay, contactor và heater
     \item \textbf{Tiết kiệm năng lượng:} Tránh khởi động heater quá thường xuyên, giảm dòng khởi động
     \item \textbf{Ổn định hệ thống:} Tạo vùng ổn định cho biến điều khiển
