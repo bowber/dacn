@@ -29,7 +29,6 @@ Các thành phần chính của TIA Portal:
 \begin{itemize}
     \item \textbf{STEP 7:} Lập trình PLC (LAD, FBD, SCL, STL)
     \item \textbf{WinCC:} Thiết kế giao diện HMI/SCADA
-    \item \textbf{Startdrive:} Cấu hình biến tần
 \end{itemize}
 
 \subsubsection{PLC Siemens S7-1200}
@@ -58,7 +57,7 @@ HMI (Human-Machine Interface) là giao diện giữa người vận hành và h�
     \item Máy tính cài đặt TIA Portal V16
     \item PLC Siemens S7-1200 CPU 1214C
     \item Cảm biến nhiệt độ Pt100
-    \item Cáp Ethernet kết nối PLC với máy tính
+    \item Kết nối WiFi giữa PLC và máy tính
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -76,17 +75,17 @@ HMI (Human-Machine Interface) là giao diện giữa người vận hành và h�
 \begin{enumerate}
     \item Thêm PLC S7-1200 CPU 1214C DC/DC/DC vào project.
     \item Cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1).
-    \item Cấu hình module analog input để đọc tín hiệu từ cảm biến Pt100.
     \item Tạo tag cho biến nhiệt độ (PV - Process Value).
 \end{enumerate}
 
 \subsubsection{Thiết kế giao diện HMI}
 \begin{enumerate}
-    \item Thêm màn hình HMI vào project (có thể dùng PC Station hoặc panel ảo).
+    \item Thêm HMI mô phỏng (WinCC RT Advanced) vào project.
     \item Tạo màn hình hiển thị với các thành phần:
     \begin{itemize}
         \item Text hiển thị tiêu đề
         \item I/O Field hiển thị giá trị nhiệt độ (liên kết với tag PV)
+        \item Trend graph để theo dõi biến thiên nhiệt độ theo thời gian
         \item Đơn vị đo (°C)
     \end{itemize}
     \item Cấu hình kết nối HMI với PLC qua PROFINET.
@@ -96,7 +95,7 @@ HMI (Human-Machine Interface) là giao diện giữa người vận hành và h�
 \begin{enumerate}
     \item Compile project để kiểm tra lỗi.
     \item Download chương trình xuống PLC.
-    \item Chạy Runtime HMI và quan sát giá trị nhiệt độ hiển thị.
+    \item Chạy WinCC RT trên máy tính và quan sát giá trị nhiệt độ hiển thị.
 \end{enumerate}
 
 % ------------------------------------------------------------
@@ -115,6 +114,7 @@ HMI (Human-Machine Interface) là giao diện giữa người vận hành và h�
 Giao diện HMI được thiết kế với các thành phần:
 \begin{itemize}
     \item Hiển thị giá trị nhiệt độ hiện tại (PV) từ cảm biến Pt100
+    \item Trend graph theo dõi biến thiên nhiệt độ theo thời gian
     \item Đơn vị đo: °C
 \end{itemize}
 
@@ -187,7 +187,6 @@ TIA Portal (Totally Integrated Automation Portal) là nền tảng phần mềm 
 \begin{itemize}
     \item STEP 7: Lập trình PLC
     \item WinCC: Thiết kế HMI/SCADA
-    \item Startdrive: Cấu hình biến tần
 \end{itemize}
 
 \textbf{Câu 2: Các bước cơ bản để tạo giao diện HMI trong TIA Portal?}
