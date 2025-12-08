@@ -183,32 +183,88 @@ Qua bài thí nghiệm, đã thực hiện được:
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: TIA Portal là gì? Các thành phần chính?}
+\textbf{Câu 1: Cảm biến đang sử dụng trong bài thí nghiệm là cảm biến loại 2 chân, 3 chân hay 4 chân? Vẽ sơ đồ kết nối cảm biến vào CPU.}
 
-TIA Portal (Totally Integrated Automation Portal) là nền tảng phần mềm tích hợp của Siemens để cấu hình, lập trình và giám sát các thiết bị tự động hóa. Các thành phần chính:
+Cảm biến nhiệt độ sử dụng trong bài thí nghiệm có 3 chân, nhưng chỉ sử dụng 2 chân để kết nối với CPU.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Sensor
+    \node[draw, rectangle, minimum width=2cm, minimum height=1.5cm] (sensor) {Cảm biến nhiệt độ};
+    
+    % PLC
+    \node[draw, rectangle, minimum width=3cm, minimum height=2cm, right=3cm of sensor, align=center] (plc) {PLC S7-1200\\CPU 1213C};
+    
+    % Analog input module label
+    \node[font=\small, above=0.3cm of plc] {Analog Input};
+    
+    % Connections
+    \draw[thick] (sensor.east) ++(0,0.3) -- ++(1,0) node[midway, above, font=\small] {AI+} -- ++(0.5,0) |- ([yshift=0.3cm]plc.west);
+    \draw[thick] (sensor.east) ++(0,-0.3) -- ++(1,0) node[midway, below, font=\small] {AI-} -- ++(0.5,0) |- ([yshift=-0.3cm]plc.west);
+    
+    % Third pin (unused)
+    \draw[thick, dashed, gray] (sensor.south) -- ++(0,-0.5) node[below, font=\small] {Chân 3 (không sử dụng)};
+    
+\end{tikzpicture}
+\caption{Sơ đồ kết nối cảm biến nhiệt độ với CPU}
+\label{fig:sensor_connection}
+\end{figure}
+
+\textbf{Câu 2: Viết sơ đồ khối điều khiển cho điều khiển nhiệt độ ở thiết bị sấy đối lưu.}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Setpoint
+    \node (sp) {SP};
+    
+    % Sum
+    \node[sum, right=1cm of sp] (sum) {};
+    
+    % Controller
+    \node[block, right=1.2cm of sum] (controller) {Bộ điều khiển};
+    
+    % Actuator
+    \node[block, right=1.2cm of controller] (actuator) {Heater};
+    
+    % Process
+    \node[block, right=1.2cm of actuator] (process) {Buồng sấy};
+    
+    % Output
+    \node[right=1cm of process] (output) {$T$};
+    
+    % Sensor
+    \node[block, below=1cm of process] (sensor) {Cảm biến nhiệt độ};
+    
+    % Arrows
+    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (actuator);
+    \draw[arrow] (actuator) -- node[above, font=\small] {$Q$} (process);
+    \draw[arrow] (process) -- (output);
+    
+    % Feedback
+    \coordinate (fb) at ($(process.east)!0.5!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| (sum) node[pos=0.9, left, font=\small] {$-$};
+    
+    % Sum signs
+    \node[font=\scriptsize] at ($(sum.north)+(0.15,0)$) {$+$};
+    
+\end{tikzpicture}
+\caption{Sơ đồ khối điều khiển nhiệt độ thiết bị sấy đối lưu}
+\label{fig:temp_control_block}
+\end{figure}
+
+Trong đó:
 \begin{itemize}
-    \item STEP 7: Lập trình PLC
-    \item WinCC: Thiết kế HMI/SCADA
-\end{itemize}
-
-\textbf{Câu 2: Các bước cơ bản để tạo giao diện HMI trong TIA Portal?}
-
-\begin{enumerate}
-    \item Thêm thiết bị HMI vào project
-    \item Tạo kết nối (connection) giữa HMI và PLC
-    \item Thiết kế màn hình với các đối tượng (text, I/O field, button...)
-    \item Liên kết các đối tượng với tag của PLC
-    \item Compile và download xuống thiết bị
-\end{enumerate}
-
-\textbf{Câu 3: PROFINET là gì?}
-
-PROFINET (Process Field Network) là chuẩn Ethernet công nghiệp của Siemens, cho phép:
-\begin{itemize}
-    \item Truyền thông thời gian thực giữa các thiết bị tự động hóa
-    \item Tốc độ cao (100 Mbps trở lên)
-    \item Tích hợp với mạng IT tiêu chuẩn
-    \item Hỗ trợ các giao thức TCP/IP thông thường
+    \item SP: Giá trị đặt nhiệt độ mong muốn
+    \item $e$: Sai lệch ($e = \text{SP} - \text{PV}$)
+    \item $u$: Tín hiệu điều khiển
+    \item $Q$: Công suất nhiệt cấp vào buồng sấy
+    \item $T$: Nhiệt độ thực tế trong buồng sấy
+    \item Cảm biến nhiệt độ: Đo nhiệt độ thực tế và phản hồi về bộ điều khiển
 \end{itemize}
 
 % ------------------------------------------------------------

@@ -235,42 +235,69 @@ Qua thí nghiệm điều khiển ON/OFF hệ thống gia nhiệt, rút ra các 
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Tại sao cần deadband (dải chết) trong điều khiển ON/OFF?}
+\textbf{Câu 1: Anh/chị hãy trình bày ưu và nhược điểm thuật toán điều khiển ON/OFF và PID.}
 
-Deadband (dải chết) cần thiết vì:
-\begin{itemize}
-    \item \textbf{Tránh dao động tần số cao:} Không có deadband, relay sẽ đóng ngắt liên tục khi PV ở gần SP do nhiễu đo lường
-    \item \textbf{Bảo vệ thiết bị:} Giảm số lần đóng ngắt, kéo dài tuổi thọ relay, contactor và heater
-    \item \textbf{Tiết kiệm năng lượng:} Tránh khởi động heater quá thường xuyên, giảm dòng khởi động
-    \item \textbf{Ổn định hệ thống:} Tạo vùng ổn định cho biến điều khiển
-\end{itemize}
+\textbf{Điều khiển ON/OFF:}
 
-\textbf{Câu 2: Ưu nhược điểm của điều khiển ON/OFF so với PID?}
-
-\textbf{Ưu điểm ON/OFF:}
+\textit{Ưu điểm:}
 \begin{itemize}
     \item Đơn giản, dễ triển khai, không cần chỉnh định thông số
     \item Chi phí thấp, không cần bộ điều khiển phức tạp
     \item Phù hợp với các hệ thống có quán tính lớn, yêu cầu độ chính xác không cao
+    \item Dễ bảo trì và sửa chữa
 \end{itemize}
 
-\textbf{Nhược điểm ON/OFF:}
+\textit{Nhược điểm:}
 \begin{itemize}
-    \item Biến điều khiển dao động, không đạt được giá trị chính xác
+    \item Biến điều khiển dao động liên tục, không đạt được giá trị chính xác
     \item Gây mài mòn cơ cấu chấp hành do đóng ngắt liên tục
+    \item Tiêu tốn năng lượng do khởi động thiết bị nhiều lần
     \item Không phù hợp với các quá trình yêu cầu điều khiển chính xác
 \end{itemize}
 
-\textbf{Câu 3: Ứng dụng thực tế của điều khiển ON/OFF?}
+\textbf{Điều khiển PID:}
 
+\textit{Ưu điểm:}
 \begin{itemize}
-    \item \textbf{Điều hòa không khí:} Bật/tắt máy nén dựa trên nhiệt độ phòng
-    \item \textbf{Bình nước nóng:} Bật/tắt điện trở khi nhiệt độ nước thấp/cao
-    \item \textbf{Tủ lạnh:} Điều khiển máy nén để duy trì nhiệt độ
-    \item \textbf{Lò sấy công nghiệp:} Điều khiển heater với dung sai nhiệt độ cho phép
-    \item \textbf{Bể ổn nhiệt:} Duy trì nhiệt độ trong dải cho phép
-    \item \textbf{Hệ thống bơm nước:} Bật/tắt bơm theo mức nước trong bể
+    \item Triệt tiêu sai lệch tĩnh nhờ thành phần tích phân (I)
+    \item Đáp ứng nhanh nhờ thành phần tỉ lệ (P)
+    \item Giảm độ quá điều chỉnh và cải thiện ổn định nhờ thành phần vi phân (D)
+    \item Điều khiển mượt mà, không gây dao động như ON/OFF
+    \item Có thể điều chỉnh thông số để tối ưu cho từng hệ thống cụ thể
 \end{itemize}
+
+\textit{Nhược điểm:}
+\begin{itemize}
+    \item Cần chỉnh định thông số ($K_P$, $T_i$, $T_d$) phù hợp
+    \item Chi phí cao hơn (cần bộ điều khiển có khả năng tính toán)
+    \item Phức tạp hơn trong triển khai và bảo trì
+    \item Thành phần vi phân nhạy cảm với nhiễu đo lường
+    \item Không phù hợp với các hệ thống phi tuyến mạnh
+\end{itemize}
+
+\textbf{So sánh tổng hợp:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{ON/OFF} & \textbf{PID} \\
+\hline
+Độ phức tạp & Thấp & Cao \\
+\hline
+Chi phí & Thấp & Cao hơn \\
+\hline
+Độ chính xác & Thấp (dao động) & Cao \\
+\hline
+Sai lệch tĩnh & Có (dao động) & Triệt tiêu \\
+\hline
+Tuổi thọ thiết bị & Giảm (đóng ngắt nhiều) & Cao hơn \\
+\hline
+Ứng dụng & Hệ thống đơn giản & Hệ thống yêu cầu cao \\
+\hline
+\end{tabular}
+\caption{So sánh điều khiển ON/OFF và PID}
+\end{table}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}

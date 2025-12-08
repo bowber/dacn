@@ -2,6 +2,7 @@
 lab1
 1. Cảm biến đang sử dụng trong bài thí nghiệm là cảm biến loại 2 chân, 3 chân hay
 4 chân? Vẽ sơ đồ kết nối cảm biến vào CPU.
+Note: *(có 3 chân nhưng chỉ sử dụng 2 chân để kết nối với CPU)
 2. Viết sơ đồ khối điều khiển cho điều khiển nhiệt độ ở thiết bị sấy đối lưu.
 
 

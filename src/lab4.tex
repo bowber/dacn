@@ -409,54 +409,88 @@ Qua thí nghiệm điều khiển mức nước với Factory I/O và PLCSIM, r�
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Factory I/O là gì? Ứng dụng trong đào tạo tự động hóa?}
+\textbf{Câu 1: Phương pháp Ziegler-Nichols II là gì? Tại sao trong bài này lại sử dụng phương pháp này để chỉnh định bộ điều khiển? Phương pháp này thích hợp cho những hệ có tính chất như thế nào?}
 
-Factory I/O là phần mềm mô phỏng 3D các hệ thống tự động hóa công nghiệp. Ứng dụng trong đào tạo:
-\begin{itemize}
-    \item Tạo môi trường thực hành an toàn, không rủi ro hư hỏng thiết bị
-    \item Mô phỏng nhiều kịch bản sản xuất: băng tải, phân loại, điều khiển mức, palletizing...
-    \item Kết nối với PLC thực hoặc mô phỏng (PLCSIM) để kiểm tra chương trình
-    \item Tiết kiệm chi phí đầu tư thiết bị thực cho cơ sở đào tạo
-    \item Cho phép sinh viên luyện tập nhiều lần, điều chỉnh thông số dễ dàng
-\end{itemize}
+\textbf{Phương pháp Ziegler-Nichols II (Ultimate Gain Method):}
 
-\textbf{Câu 2: Mô tả các bước kết nối PLCSIM với Factory I/O?}
-
+Phương pháp Ziegler-Nichols II (còn gọi là phương pháp dao động tới hạn) được đề xuất bởi Ziegler và Nichols năm 1942. Các bước thực hiện:
 \begin{enumerate}
-    \item Tạo project trong TIA Portal với PLC S7-1200/1500
-    \item Cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1)
-    \item Khởi chạy PLCSIM và download chương trình
-    \item Mở Factory I/O, vào \texttt{File > Driver Configuration}
-    \item Chọn Driver: \texttt{Siemens S7-PLCSIM}
-    \item Nhập địa chỉ IP của PLCSIM
-    \item Cấu hình vùng nhớ I/O (Input/Output addresses)
-    \item Nhấn \texttt{Connect} để kiểm tra kết nối
-    \item Map các tag trong Factory I/O với địa chỉ PLC tương ứng
+    \item Tắt thành phần I và D, chỉ dùng điều khiển P
+    \item Tăng dần $K_P$ cho đến khi hệ thống bắt đầu dao động với biên độ không đổi
+    \item Ghi nhận $K_u$ (ultimate gain) và $T_u$ (ultimate period - chu kỳ dao động)
+    \item Tính thông số PID: $K_P = 0.6K_u$, $T_i = T_u/2$, $T_d = T_u/8$
 \end{enumerate}
 
-\textbf{Câu 3: So sánh ưu nhược điểm của mô phỏng so với thực hành trên thiết bị thực?}
+\textbf{Tại sao sử dụng phương pháp này trong bài thí nghiệm:}
+\begin{itemize}
+    \item Hệ thống mức nước trong Factory I/O có đáp ứng nhanh, dễ quan sát dao động
+    \item Môi trường mô phỏng an toàn, có thể đưa hệ thống đến biên giới mất ổn định mà không gây hư hỏng
+    \item Phương pháp đơn giản, trực quan, dễ thực hiện trong phòng thí nghiệm
+    \item Cho kết quả ban đầu tốt, có thể tinh chỉnh thêm nếu cần
+\end{itemize}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|p{5cm}|p{5cm}|}
-\hline
-\textbf{Tiêu chí} & \textbf{Mô phỏng} & \textbf{Thiết bị thực} \\
-\hline
-Chi phí & Thấp (chỉ cần phần mềm) & Cao (mua, bảo trì thiết bị) \\
-\hline
-An toàn & Hoàn toàn an toàn & Có rủi ro hư hỏng, tai nạn \\
-\hline
-Độ chính xác & Phụ thuộc mô hình & Phản ánh thực tế \\
-\hline
-Linh hoạt & Dễ thay đổi, reset nhanh & Mất thời gian thiết lập lại \\
-\hline
-Nhiễu & Không có nhiễu thực tế & Có nhiễu môi trường \\
-\hline
-Kỹ năng thực hành & Hạn chế (không thao tác thật) & Rèn luyện kỹ năng thực tế \\
-\hline
-\end{tabular}
-\caption{So sánh mô phỏng và thực hành trên thiết bị thực}
-\end{table}
+\textbf{Phương pháp này thích hợp cho các hệ có tính chất:}
+\begin{itemize}
+    \item Hệ thống có khả năng dao động khi tăng độ khuếch đại (có ít nhất 2 cực)
+    \item Hệ thống ổn định ở độ khuếch đại thấp
+    \item Có thể chịu được việc đưa đến biên giới mất ổn định (an toàn hoặc mô phỏng)
+    \item Hệ thống tuyến tính hoặc gần tuyến tính quanh điểm làm việc
+    \item Hệ thống có thời gian đáp ứng không quá chậm (để quan sát dao động)
+\end{itemize}
+
+\textbf{Lưu ý:} Phương pháp này \textbf{không phù hợp} cho các hệ thống:
+\begin{itemize}
+    \item Không thể đưa đến biên giới mất ổn định (nguy hiểm, đắt tiền)
+    \item Hệ thống bậc 1 (không có dao động tới hạn)
+    \item Hệ thống có trễ lớn (pure delay dominant)
+\end{itemize}
+
+\textbf{Câu 2: Cảm biến đo mức trong bài hoạt động theo nguyên lý nào? Trong khi vận hành, loại cảm biến này sẽ bị nhiễu bởi những yếu tố nào?}
+
+\textbf{Nguyên lý hoạt động của cảm biến đo mức:}
+
+Trong Factory I/O, cảm biến đo mức hoạt động theo nguyên lý \textbf{đo áp suất thủy tĩnh} (hydrostatic pressure):
+\begin{itemize}
+    \item Áp suất tại đáy bể tỉ lệ với chiều cao cột chất lỏng: $P = \rho g h$
+    \item Trong đó: $\rho$ là khối lượng riêng chất lỏng, $g$ là gia tốc trọng trường, $h$ là chiều cao mức
+    \item Cảm biến áp suất chuyển đổi áp suất thành tín hiệu điện (4-20mA hoặc 0-10V)
+    \item PLC đọc tín hiệu analog và quy đổi ra giá trị mức (cm hoặc \%)
+\end{itemize}
+
+\textbf{Các yếu tố gây nhiễu cho cảm biến đo mức:}
+
+\begin{enumerate}
+    \item \textbf{Nhiễu do sóng trên bề mặt chất lỏng:}
+    \begin{itemize}
+        \item Dòng chảy vào/ra tạo sóng, gây dao động tín hiệu đo
+        \item Khắc phục: Dùng ống giảm chấn (stilling well), lọc tín hiệu
+    \end{itemize}
+    
+    \item \textbf{Thay đổi khối lượng riêng chất lỏng:}
+    \begin{itemize}
+        \item Nhiệt độ thay đổi làm $\rho$ thay đổi, ảnh hưởng đến phép đo
+        \item Chất lỏng có bọt khí hoặc tạp chất
+        \item Khắc phục: Bù nhiệt độ, hiệu chuẩn định kỳ
+    \end{itemize}
+    
+    \item \textbf{Nhiễu điện từ:}
+    \begin{itemize}
+        \item Nhiễu từ động cơ, biến tần, thiết bị đóng cắt
+        \item Khắc phục: Dùng cáp chống nhiễu, nối đất đúng cách
+    \end{itemize}
+    
+    \item \textbf{Tắc nghẽn đường ống dẫn áp:}
+    \begin{itemize}
+        \item Cặn bẩn tích tụ trong đường ống nối cảm biến
+        \item Khắc phục: Bảo trì định kỳ, dùng màng cách ly
+    \end{itemize}
+    
+    \item \textbf{Thay đổi áp suất khí quyển:}
+    \begin{itemize}
+        \item Ảnh hưởng đến cảm biến đo áp suất tuyệt đối
+        \item Khắc phục: Dùng cảm biến đo áp suất gauge (có thông khí)
+    \end{itemize}
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}

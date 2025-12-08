@@ -433,37 +433,50 @@ Qua thí nghiệm điều khiển PID hệ thống gia nhiệt, rút ra các k�
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Trình bày các bước chỉnh định PID theo phương pháp Relay (Åström-Hägglund)?}
+\textbf{Câu 1: Anh/chị hãy thử tạo một khối chức năng FB và chạy thử thuật toán PID mà không sử dụng Cyclic interrupt. Thuật toán đó có chạy được không? Anh/chị có rút ra nhận xét gì về nguyên lý của khối Cyclic interrupt trong thuật toán điều khiển PID?}
 
-Phương pháp Relay (Åström-Hägglund, 1984):
+\textbf{Thử nghiệm PID không sử dụng Cyclic interrupt:}
+
+Khi tạo khối FB chứa thuật toán PID và gọi trong OB1 (Main) thay vì Cyclic interrupt OB:
+\begin{itemize}
+    \item Thuật toán PID \textbf{có thể chạy được} nhưng \textbf{kết quả không chính xác}
+    \item Thành phần tích phân (I) và vi phân (D) tính toán sai do chu kỳ lấy mẫu không cố định
+    \item Đáp ứng điều khiển không ổn định, có thể dao động hoặc mất ổn định
+\end{itemize}
+
+\textbf{Nhận xét về vai trò của Cyclic interrupt trong điều khiển PID:}
+
 \begin{enumerate}
-    \item Điều khiển hệ thống bằng relay (ON/OFF) quanh setpoint
-    \item Đo chu kỳ dao động $T_u$ và biên độ dao động $a$ của biến quá trình
-    \item Tính ultimate gain theo công thức: $K_u = \frac{4d}{\pi a}$ (với $d$ là biên độ relay)
-    \item Áp dụng bảng Ziegler-Nichols để tính thông số PID:
+    \item \textbf{Đảm bảo chu kỳ lấy mẫu cố định:}
     \begin{itemize}
-        \item Bộ P: $K_P = 0.5 K_u$
-        \item Bộ PI: $K_P = 0.45 K_u$, $T_i = T_u/1.2$
-        \item Bộ PID: $K_P = 0.6 K_u$, $T_i = T_u/2$, $T_d = T_u/8$
+        \item Cyclic interrupt (OB30-OB38) được gọi với chu kỳ cố định (ví dụ: 100ms)
+        \item Thành phần I cần tích phân theo thời gian: $\int e(t)dt \approx \sum e_k \cdot T_s$
+        \item Thành phần D cần vi phân theo thời gian: $\frac{de}{dt} \approx \frac{e_k - e_{k-1}}{T_s}$
+        \item Nếu $T_s$ không cố định, tính toán I và D sẽ sai
+    \end{itemize}
+    
+    \item \textbf{Độ ưu tiên cao:}
+    \begin{itemize}
+        \item Cyclic interrupt có độ ưu tiên cao hơn OB1
+        \item Đảm bảo thuật toán PID luôn được thực thi đúng thời điểm
+        \item Không bị ảnh hưởng bởi thời gian thực thi của các tác vụ khác
+    \end{itemize}
+    
+    \item \textbf{Tính xác định (Deterministic):}
+    \begin{itemize}
+        \item Hệ thống điều khiển yêu cầu thời gian đáp ứng xác định
+        \item OB1 có thời gian thực thi thay đổi tùy thuộc vào chương trình
+        \item Cyclic interrupt đảm bảo PID luôn được tính toán đúng chu kỳ
     \end{itemize}
 \end{enumerate}
 
-\textbf{Câu 2: Giải thích ý nghĩa của thời gian tích phân $T_i$ và thời gian vi phân $T_d$?}
+\textbf{Kết luận:}
 
+Cyclic interrupt là \textbf{bắt buộc} cho điều khiển PID vì:
 \begin{itemize}
-    \item \textbf{Thời gian tích phân $T_i$:} Là thời gian cần thiết để thành phần tích phân tạo ra tác động điều khiển bằng với thành phần tỉ lệ khi sai lệch không đổi. $T_i$ nhỏ làm tác động tích phân mạnh hơn, giúp triệt tiêu sai lệch tĩnh nhanh hơn nhưng có thể gây mất ổn định.
-    
-    \item \textbf{Thời gian vi phân $T_d$:} Là thời gian dự đoán (prediction time) của thành phần vi phân, thể hiện khả năng phản ứng với tốc độ thay đổi của sai lệch. $T_d$ lớn làm tác động vi phân mạnh hơn, giúp giảm độ quá điều chỉnh và cải thiện độ ổn định.
-\end{itemize}
-
-\textbf{Câu 3: Khi nào nên sử dụng bộ điều khiển P, PI, hay PID?}
-
-\begin{itemize}
-    \item \textbf{Bộ P:} Sử dụng khi chấp nhận được sai lệch tĩnh và cần đáp ứng đơn giản, nhanh. Ví dụ: điều khiển mức nước trong bể chứa lớn.
-    
-    \item \textbf{Bộ PI:} Sử dụng khi cần triệt tiêu sai lệch tĩnh và hệ thống không quá nhạy với nhiễu. Ví dụ: điều khiển lưu lượng, điều khiển áp suất.
-    
-    \item \textbf{Bộ PID:} Sử dụng cho các hệ thống cần độ chính xác cao, cần triệt tiêu sai lệch tĩnh và giảm độ quá điều chỉnh. Ví dụ: điều khiển nhiệt độ, điều khiển vị trí servo, các quy trình công nghiệp yêu cầu cao.
+    \item Công thức PID số (discrete PID) phụ thuộc vào chu kỳ lấy mẫu $T_s$
+    \item Nếu $T_s$ không cố định, các thông số $K_P$, $T_i$, $T_d$ đã chỉnh định sẽ không còn phù hợp
+    \item Khối PID\_Compact của Siemens yêu cầu phải được gọi trong Cyclic interrupt OB
 \end{itemize}
 
 % ------------------------------------------------------------
