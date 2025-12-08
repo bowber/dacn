@@ -14,7 +14,8 @@
 \begin{itemize}
     \item Làm quen với phần mềm mô phỏng Factory I/O.
     \item Kết nối PLCSIM với Factory I/O qua giao thức S7.
-    \item Lập trình điều khiển và giám sát hệ thống sản xuất ảo.
+    \item Thực hiện điều khiển mức nước (Level Control) với bộ điều khiển PID.
+    \item Chỉnh định thông số PID và đánh giá chất lượng điều khiển.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -90,57 +91,319 @@ Factory I/O hỗ trợ kết nối với PLCSIM (PLC mô phỏng) qua giao thứ
     \item Chạy mô phỏng và quan sát hoạt động của hệ thống.
 \end{enumerate}
 
-\subsubsection{Kịch bản thí nghiệm}
+\subsubsection{Kịch bản thí nghiệm: Điều khiển mức bồn chứa qua van cấp}
 
-% TODO: Mô tả kịch bản cụ thể (sorting, pick & place, conveyor control...)
+Sử dụng scene \texttt{Level Control} trong Factory I/O để thực hiện điều khiển mức nước trong bồn chứa thông qua van cấp nước:
+
+\begin{itemize}
+    \item \textbf{Mục tiêu:} Duy trì mức nước ở giá trị đặt (setpoint = 100cm)
+    \item \textbf{Biến điều khiển (MV):} Độ mở van cấp nước (0-100\%)
+    \item \textbf{Biến được điều khiển (PV):} Mức nước trong bồn (0-100cm)
+    \item \textbf{Nhiễu tải:} Van xả cố định ở mức 4.1, tạo dòng chảy ra liên tục
+    \item \textbf{Thuật toán:} PID\_Compact trong TIA Portal
+\end{itemize}
+
+Nguyên lý hoạt động: Bộ điều khiển PID so sánh mức nước đo được (PV) với giá trị đặt (SV), tính toán sai lệch và điều chỉnh độ mở van cấp nước để bù đắp lượng nước chảy ra qua van xả, duy trì mức nước ổn định.
+
+Quy trình thí nghiệm:
+\begin{enumerate}
+    \item Chỉnh định P-only: tăng $K_P$ từ 4 đến 7.4 để tìm $K_u$
+    \item Xác định chu kỳ dao động $T_u$ từ đáp ứng P-only
+    \item Tính toán thông số PID theo Ziegler-Nichols
+    \item Thử nghiệm PI và tinh chỉnh $T_i$
+    \item Thử nghiệm PID đầy đủ với step response
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Kết quả thí nghiệm}
 % ------------------------------------------------------------
 
+\subsubsection{Giao diện HMI và Factory I/O}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{../assets/HMI_n_FactoryIO_TN4.jpg}
+\caption{Giao diện HMI (phía trước) và mô phỏng Factory I/O (phía sau) - Hệ thống điều khiển mức bồn chứa qua van cấp nước}
+\label{fig:hmi_tn4}
+\end{figure}
+
+Hệ thống điều khiển mức bồn chứa trong Factory I/O bao gồm:
+\begin{itemize}
+    \item Bồn chứa nước với cảm biến mức analog (0-100cm)
+    \item Van cấp nước (Fill Valve) điều khiển bằng tín hiệu analog 0-100\%
+    \item Van xả (Discharge Valve) cố định ở mức 4.1, đóng vai trò nhiễu tải
+    \item Bộ điều khiển PID điều chỉnh độ mở van cấp để duy trì mức đặt
+\end{itemize}
+
 \subsubsection{Cấu hình hệ thống}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|}
 \hline
-\textbf{Thiết bị} & \textbf{Tag Factory I/O} & \textbf{Địa chỉ PLC} \\
+\textbf{Thiết bị} & \textbf{Mô tả} \\
 \hline
-Conveyor 1 & & \\
+Cảm biến mức (Level Sensor) & Đo mức nước 0-100cm (Analog Input) \\
 \hline
-Sensor 1 & & \\
+Van cấp nước (Fill Valve) & Điều khiển lưu lượng cấp 0-100\% (Analog Output) \\
 \hline
-Pusher 1 & & \\
-\hline
-Stack Light & & \\
+Van xả (Discharge Valve) & Cố định ở mức 4.1, đóng vai trò nhiễu tải \\
 \hline
 \end{tabular}
-\caption{Bảng cấu hình I/O}
+\caption{Cấu hình thiết bị hệ thống điều khiển mức bồn chứa}
 \end{table}
 
-\subsubsection{Chương trình điều khiển}
+\subsubsection{Quá trình chỉnh định PID}
 
-% TODO: Chèn hình chụp chương trình Ladder hoặc mô tả logic điều khiển
+Thí nghiệm sử dụng phương pháp Ziegler-Nichols để chỉnh định thông số PID. Quá trình gồm các bước:
 
-\subsubsection{Kết quả vận hành}
+\textbf{Bước 1: Xác định $K_u$ (Ultimate Gain)}
 
-% TODO: Mô tả kết quả quan sát được khi chạy mô phỏng
+Tắt thành phần I và D ($T_i = 0$, $T_d = 0$), tăng dần $K_P$ cho đến khi hệ thống bắt đầu dao động tới hạn:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{$K_P$} & \textbf{Mức trung bình (cm)} & \textbf{Sai lệch tĩnh (cm)} & \textbf{Nhận xét} \\
+\hline
+4.0 & 92.02 & 7.98 & Ổn định, sai lệch lớn \\
+\hline
+5.0 & 93.75 & 6.25 & Ổn định, sai lệch giảm \\
+\hline
+6.0 & 94.89 & 5.11 & Ổn định, sai lệch giảm \\
+\hline
+7.0 & 95.40 & 4.60 & Bắt đầu dao động nhẹ \\
+\hline
+7.2 & 95.50 & 4.50 & Dao động rõ hơn \\
+\hline
+7.4 & 95.61 & 4.39 & Dao động tới hạn ($K_u$) \\
+\hline
+\end{tabular}
+\caption{Kết quả khảo sát $K_P$ để tìm $K_u$}
+\end{table}
+
+Từ kết quả, xác định: $K_u = 7.4$, chu kỳ dao động $T_u \approx 10$s.
+
+\textbf{Bước 2: Tính thông số PID theo Ziegler-Nichols}
+
+\begin{align}
+K_P &= 0.6 \times K_u = 0.6 \times 7.4 = 4.44 \\
+T_i &= \frac{T_u}{2} = \frac{10}{2} = 5 \text{ s (điều chỉnh lên 7.5s)} \\
+T_d &= \frac{T_u}{8} = \frac{10}{8} = 1.25 \text{ s (điều chỉnh lên 1.875s)}
+\end{align}
+
+\textbf{Bộ thông số PID sử dụng:} $K_P = 4.44$, $T_i = 7.5$s, $T_d = 1.875$s
+
+\subsubsection{Đáp ứng điều khiển mức}
+
+\textbf{Giai đoạn chỉnh định (Tuning):}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.95\textwidth,
+    height=7cm,
+    xlabel={Thời gian (s)},
+    ylabel={Mức nước (cm)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    xmin=0, xmax=460,
+    ymin=88, ymax=102,
+    legend pos=south east,
+    restrict x to domain=0:460,
+]
+\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../data/TN4_processed.csv};
+\addlegendentry{PV (Mức đo được)}
+\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../data/TN4_processed.csv};
+\addlegendentry{SV (Giá trị đặt)}
+
+% Đánh dấu các giai đoạn Kp
+\draw[gray, dashed] (axis cs:37,88) -- (axis cs:37,102);
+\node[font=\scriptsize] at (axis cs:18,101) {$K_P=4$};
+
+\draw[gray, dashed] (axis cs:62,88) -- (axis cs:62,102);
+\node[font=\scriptsize] at (axis cs:50,101) {$5$};
+
+\draw[gray, dashed] (axis cs:92,88) -- (axis cs:92,102);
+\node[font=\scriptsize] at (axis cs:77,101) {$6$};
+
+\draw[gray, dashed] (axis cs:163,88) -- (axis cs:163,102);
+\node[font=\scriptsize] at (axis cs:128,101) {$7$};
+
+\draw[gray, dashed] (axis cs:259,88) -- (axis cs:259,102);
+\node[font=\scriptsize] at (axis cs:211,101) {$7.2$};
+
+\node[font=\scriptsize] at (axis cs:360,101) {$7.4$ ($K_u$)};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Giai đoạn chỉnh định: Khảo sát $K_P$ để xác định $K_u$}
+\label{fig:level_tuning_tn4}
+\end{figure}
+
+\textbf{Giai đoạn kiểm tra (Test):}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.95\textwidth,
+    height=7cm,
+    xlabel={Thời gian (s)},
+    ylabel={Mức nước (cm)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    xmin=700, xmax=850,
+    ymin=0, ymax=115,
+    legend pos=south east,
+    restrict x to domain=700:850,
+]
+\addplot[blue, thick] table[x=time_s, y=PV, col sep=comma] {../data/TN4_processed.csv};
+\addlegendentry{PV (Mức đo được)}
+\addplot[red, dashed, thick] table[x=time_s, y=SV, col sep=comma] {../data/TN4_processed.csv};
+\addlegendentry{SV (Giá trị đặt)}
+
+% Đánh dấu thông số PID
+\node[font=\small, fill=white] at (axis cs:775,50) {$K_P=4.44$, $T_i=7.5$s, $T_d=1.875$s};
+
+% Đánh dấu overshoot
+\draw[<->, gray] (axis cs:742,100) -- (axis cs:742,105.5);
+\node[font=\scriptsize] at (axis cs:750,108) {Overshoot 5.52cm};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Giai đoạn kiểm tra: Đáp ứng bước của bộ điều khiển PID (SV: $0 \rightarrow 100$cm)}
+\label{fig:level_test_tn4}
+\end{figure}
+
+\subsubsection{Phân tích đáp ứng}
+
+\begin{itemize}
+    \item \textbf{Giai đoạn chỉnh định (0-460s) - Khảo sát P-only:}
+    \begin{itemize}
+        \item Khảo sát $K_P$ từ 4 đến 7.4
+        \item Xác định $K_u = 7.4$ (hệ thống bắt đầu dao động tới hạn)
+        \item Sai lệch tĩnh với P-only: 4.39cm (do không có thành phần I)
+    \end{itemize}
+    
+    \item \textbf{Giai đoạn kiểm tra (736-832s) - PID hoàn chỉnh:}
+    \begin{itemize}
+        \item Áp dụng $K_P = 4.44$, $T_i = 7.5$s, $T_d = 1.875$s
+        \item Step từ mức 9.1cm lên 100cm
+        \item Độ quá điều chỉnh: 5.52cm
+        \item Sai lệch tĩnh: 0.04cm (gần như triệt tiêu)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Chỉ tiêu chất lượng điều khiển}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Chỉ tiêu} & \textbf{P-only ($K_P=7.4$)} & \textbf{PID (Step response)} \\
+\hline
+Độ quá điều chỉnh & -- & 5.52cm (5.52\%) \\
+\hline
+Sai lệch tĩnh & 4.39cm & 0.04cm \\
+\hline
+Thời gian đạt setpoint & -- & $\approx$ 20s \\
+\hline
+Thời gian xác lập ($\pm 2$cm) & -- & $\approx$ 50s \\
+\hline
+\end{tabular}
+\caption{So sánh chất lượng điều khiển P-only và PID}
+\end{table}
 
 % ------------------------------------------------------------
 \subsection{Bàn luận}
 % ------------------------------------------------------------
 
+\subsubsection{So sánh điều khiển P-only và PID}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{P-only ($K_P=7.4$)} & \textbf{PID} \\
+\hline
+Sai lệch tĩnh & 4.39cm & 0.04cm \\
+\hline
+Độ quá điều chỉnh & 0 (không đạt setpoint) & 5.52cm \\
+\hline
+Đáp ứng động & Chậm, không đạt mục tiêu & Nhanh, đạt mục tiêu \\
+\hline
+Triệt tiêu nhiễu & Kém & Tốt \\
+\hline
+\end{tabular}
+\caption{So sánh điều khiển P-only và PID cho hệ thống mức nước}
+\end{table}
+
+\subsubsection{Nhận xét về phương pháp Ziegler-Nichols}
+
 \begin{itemize}
-    \item Đánh giá ưu điểm của việc sử dụng mô phỏng Factory I/O trong học tập.
-    \item So sánh với thực hành trên thiết bị thực.
-    \item Nhận xét về khả năng áp dụng vào các hệ thống công nghiệp thực tế.
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item Phương pháp đơn giản, dễ thực hiện trong môi trường mô phỏng
+        \item Cho kết quả ban đầu tốt, có thể tinh chỉnh thêm
+        \item Phù hợp cho các hệ thống có đáp ứng nhanh như điều khiển mức
+    \end{itemize}
+    
+    \item \textbf{Điều chỉnh so với công thức gốc:}
+    \begin{itemize}
+        \item $T_i$ tăng từ 5s (theo công thức) lên 7.5s để giảm overshoot
+        \item $T_d$ tăng từ 1.25s lên 1.875s để cải thiện độ ổn định
+        \item Các điều chỉnh này phù hợp với đặc tính hệ thống mức nước trong Factory I/O
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Đánh giá Factory I/O trong đào tạo}
+
+\begin{itemize}
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item Môi trường an toàn để thử nghiệm các thuật toán điều khiển
+        \item Dễ dàng thay đổi thông số và quan sát kết quả ngay lập tức
+        \item Tiết kiệm chi phí so với thiết bị thực
+        \item Có thể mô phỏng các tình huống khó xảy ra trong thực tế
+    \end{itemize}
+    
+    \item \textbf{Hạn chế:}
+    \begin{itemize}
+        \item Không phản ánh hoàn toàn các yếu tố nhiễu trong thực tế
+        \item Độ chính xác phụ thuộc vào mô hình vật lý của phần mềm
+    \end{itemize}
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{Kết luận}
 % ------------------------------------------------------------
 
-% TODO: Điền kết luận sau khi thực hiện thí nghiệm
+Qua thí nghiệm điều khiển mức nước với Factory I/O và PLCSIM, rút ra các kết luận sau:
+
+\begin{enumerate}
+    \item \textbf{Kết nối thành công:} Thiết lập kết nối giữa PLCSIM và Factory I/O qua giao thức S7, cho phép điều khiển thời gian thực hệ thống mô phỏng.
+    
+    \item \textbf{Chỉnh định PID theo Ziegler-Nichols:}
+    \begin{itemize}
+        \item Xác định $K_u = 7.4$ và $T_u \approx 10$s từ thí nghiệm P-only
+        \item Tính toán: $K_P = 4.44$, $T_i = 7.5$s, $T_d = 1.875$s
+        \item Bộ thông số này cho đáp ứng tốt với độ quá điều chỉnh 5.52cm
+    \end{itemize}
+    
+    \item \textbf{Kết quả điều khiển:}
+    \begin{itemize}
+        \item Điều khiển P-only: sai lệch tĩnh 4.39cm, không đạt setpoint 100cm
+        \item Điều khiển PID: sai lệch tĩnh 0.04cm, overshoot 5.52cm
+        \item Thời gian xác lập khoảng 50s
+    \end{itemize}
+    
+    \item \textbf{Ưu điểm Factory I/O:} Môi trường mô phỏng an toàn, tiện lợi cho việc học tập và thử nghiệm các thuật toán điều khiển.
+\end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Câu hỏi kiểm tra}
@@ -148,15 +411,52 @@ Stack Light & & \\
 
 \textbf{Câu 1: Factory I/O là gì? Ứng dụng trong đào tạo tự động hóa?}
 
-% TODO: Trả lời
+Factory I/O là phần mềm mô phỏng 3D các hệ thống tự động hóa công nghiệp. Ứng dụng trong đào tạo:
+\begin{itemize}
+    \item Tạo môi trường thực hành an toàn, không rủi ro hư hỏng thiết bị
+    \item Mô phỏng nhiều kịch bản sản xuất: băng tải, phân loại, điều khiển mức, palletizing...
+    \item Kết nối với PLC thực hoặc mô phỏng (PLCSIM) để kiểm tra chương trình
+    \item Tiết kiệm chi phí đầu tư thiết bị thực cho cơ sở đào tạo
+    \item Cho phép sinh viên luyện tập nhiều lần, điều chỉnh thông số dễ dàng
+\end{itemize}
 
 \textbf{Câu 2: Mô tả các bước kết nối PLCSIM với Factory I/O?}
 
-% TODO: Trả lời
+\begin{enumerate}
+    \item Tạo project trong TIA Portal với PLC S7-1200/1500
+    \item Cấu hình địa chỉ IP cho PLC (ví dụ: 192.168.0.1)
+    \item Khởi chạy PLCSIM và download chương trình
+    \item Mở Factory I/O, vào \texttt{File > Driver Configuration}
+    \item Chọn Driver: \texttt{Siemens S7-PLCSIM}
+    \item Nhập địa chỉ IP của PLCSIM
+    \item Cấu hình vùng nhớ I/O (Input/Output addresses)
+    \item Nhấn \texttt{Connect} để kiểm tra kết nối
+    \item Map các tag trong Factory I/O với địa chỉ PLC tương ứng
+\end{enumerate}
 
 \textbf{Câu 3: So sánh ưu nhược điểm của mô phỏng so với thực hành trên thiết bị thực?}
 
-% TODO: Trả lời
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mô phỏng} & \textbf{Thiết bị thực} \\
+\hline
+Chi phí & Thấp (chỉ cần phần mềm) & Cao (mua, bảo trì thiết bị) \\
+\hline
+An toàn & Hoàn toàn an toàn & Có rủi ro hư hỏng, tai nạn \\
+\hline
+Độ chính xác & Phụ thuộc mô hình & Phản ánh thực tế \\
+\hline
+Linh hoạt & Dễ thay đổi, reset nhanh & Mất thời gian thiết lập lại \\
+\hline
+Nhiễu & Không có nhiễu thực tế & Có nhiễu môi trường \\
+\hline
+Kỹ năng thực hành & Hạn chế (không thao tác thật) & Rèn luyện kỹ năng thực tế \\
+\hline
+\end{tabular}
+\caption{So sánh mô phỏng và thực hành trên thiết bị thực}
+\end{table}
 
 % ------------------------------------------------------------
 \subsection{Tài liệu tham khảo}
