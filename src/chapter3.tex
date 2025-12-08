@@ -1,0 +1,339 @@
+% ============================================================
+% Chương 3: Mô hình thí nghiệm
+% ============================================================
+
+\newpage
+\section{MÔ HÌNH THÍ NGHIỆM}
+
+% ------------------------------------------------------------
+\subsection{Hệ thống chưng cất}
+% ------------------------------------------------------------
+
+\subsubsection{Quy trình công nghệ}
+
+Hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm tại Khoa Kỹ thuật Hóa học, Đại học Bách Khoa TP.HCM được thiết kế với các thành phần chính như sau:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape]
+    % Tháp chưng cất
+    \draw[thick] (0,0) rectangle (2,8);
+    \node at (1,4) [rotate=90] {Tháp chưng cất};
+    
+    % Reboiler
+    \draw[thick] (-1,-1.5) rectangle (3,-0.5);
+    \node at (1,-1) {Reboiler};
+    \draw[thick] (1,0) -- (1,-0.5);
+    
+    % Condenser
+    \draw[thick] (4,7) rectangle (7,8);
+    \node at (5.5,7.5) {Condenser};
+    \draw[thick] (2,7.5) -- (4,7.5);
+    
+    % Bình chứa hồi lưu
+    \draw[thick] (5,5) rectangle (7,6.5);
+    \node at (6,5.75) [font=\small] {Bình hồi lưu};
+    \draw[thick] (5.5,7) -- (5.5,6.5);
+    
+    % Van làm mát
+    \draw[thick, fill=gray!30] (7.5,7.2) -- (8,7.5) -- (7.5,7.8) -- cycle;
+    \draw[thick] (7,7.5) -- (7.5,7.5);
+    \draw[thick] (8,7.5) -- (9,7.5);
+    \node at (8.5,8.2) [font=\small] {Van làm mát};
+    
+    % Nước làm mát vào
+    \draw[->, thick, blue] (9.5,7.5) -- (9,7.5);
+    \node at (10.5,7.5) [font=\small, blue] {Nước vào};
+    
+    % Nước làm mát ra
+    \draw[->, thick, red] (5.5,8) -- (5.5,8.5) -- (10,8.5);
+    \node at (10.5,8.5) [font=\small, red] {Nước ra};
+    
+    % Dòng hồi lưu
+    \draw[->, thick] (5,5.75) -- (2.5,5.75) -- (2.5,7) -- (2,7);
+    \node at (3.5,6.2) [font=\small] {Hồi lưu};
+    
+    % Sản phẩm đỉnh
+    \draw[->, thick] (7,5.75) -- (8,5.75);
+    \node at (9,5.75) [font=\small] {Sản phẩm đỉnh};
+    
+    % Nhập liệu
+    \draw[->, thick] (-2,4) -- (0,4);
+    \node at (-2.5,4) [font=\small] {Nhập liệu};
+    
+    % Sản phẩm đáy
+    \draw[->, thick] (1,-1.5) -- (1,-2.5);
+    \node at (1,-3) [font=\small] {Sản phẩm đáy};
+    
+    % Cảm biến áp suất
+    \draw[thick, fill=white] (2.3,7.5) circle (0.3);
+    \node at (2.3,7.5) [font=\tiny] {PT};
+    \node at (2.3,8.2) [font=\small] {Áp suất};
+    
+    % Điện trở gia nhiệt
+    \draw[thick, red, decorate, decoration={coil, segment length=4pt, amplitude=2pt}] (-0.5,-1) -- (2.5,-1);
+    \node at (1,-1.8) [font=\small, red] {Điện trở};
+    
+\end{tikzpicture}
+\caption{Sơ đồ công nghệ hệ thống chưng cất ethanol -- nước}
+\label{fig:process_flow}
+\end{figure}
+
+Quy trình hoạt động:
+\begin{enumerate}
+    \item Hỗn hợp ethanol -- nước được bơm từ bình chứa nhập liệu vào giữa tháp chưng cất.
+    \item Reboiler (sử dụng điện trở gia nhiệt) cung cấp nhiệt để hóa hơi hỗn hợp đáy tháp.
+    \item Hơi đi lên qua các mâm, tiếp xúc với dòng lỏng hồi lưu đi xuống.
+    \item Hơi giàu ethanol thoát ra ở đỉnh tháp được ngưng tụ tại bộ ngưng tụ.
+    \item Một phần sản phẩm ngưng tụ hồi lưu về tháp, phần còn lại là sản phẩm đỉnh.
+    \item Sản phẩm đáy (nghèo ethanol) được lấy ra từ reboiler.
+\end{enumerate}
+
+\subsubsection{Thông số công nghệ của hệ thống chưng cất}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Thông số} & \textbf{Giá trị} & \textbf{Đơn vị} \\
+\hline
+Đường kính tháp & 100 & mm \\
+\hline
+Chiều cao tháp & 1500 & mm \\
+\hline
+Số mâm lý thuyết & 8 & mâm \\
+\hline
+Loại mâm & Mâm xuyên lỗ & -- \\
+\hline
+Công suất reboiler tối đa & 3000 & W \\
+\hline
+Diện tích trao đổi nhiệt condenser & 0.5 & m$^2$ \\
+\hline
+Lưu lượng nhập liệu & 0.5 -- 2.0 & L/h \\
+\hline
+Nồng độ nhập liệu & 10 -- 20 & \% vol \\
+\hline
+\end{tabular}
+\caption{Thông số thiết bị chính của hệ thống chưng cất}
+\label{tab:equipment_specs}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Thiết bị đo và điều khiển}
+% ------------------------------------------------------------
+
+\subsubsection{Thiết bị đo}
+
+Hệ thống được trang bị các thiết bị đo sau:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|c|c|}
+\hline
+\textbf{Thiết bị} & \textbf{Loại/Model} & \textbf{Dải đo} & \textbf{Tín hiệu} \\
+\hline
+Cảm biến nhiệt độ đỉnh tháp & PT100 & 0 -- 200$^\circ$C & 4-20 mA \\
+\hline
+Cảm biến nhiệt độ nhập liệu & PT100 & 0 -- 200$^\circ$C & 4-20 mA \\
+\hline
+Cảm biến áp suất đỉnh tháp & Pressure transmitter & 0 -- 2 bar & 4-20 mA \\
+\hline
+Cảm biến lưu lượng nhập liệu & Flowmeter & 0 -- 5 L/h & 4-20 mA \\
+\hline
+Cảm biến mức bình hồi lưu & Level transmitter & 0 -- 300 mm & 4-20 mA \\
+\hline
+\end{tabular}
+\caption{Danh sách thiết bị đo}
+\label{tab:sensors}
+\end{table}
+
+\textbf{Cảm biến áp suất đỉnh tháp:}
+
+Cảm biến áp suất được lắp đặt tại đường ống hơi ra khỏi đỉnh tháp, trước bộ ngưng tụ. Cảm biến này đóng vai trò quan trọng trong việc giám sát và điều khiển áp suất đỉnh tháp.
+
+% Placeholder cho hình ảnh thực tế
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.6\textwidth}{\centering\vspace{3cm}Hình ảnh cảm biến áp suất đỉnh tháp\\(Sẽ cập nhật sau)\vspace{3cm}}}
+\caption{Cảm biến áp suất đỉnh tháp}
+\label{fig:pressure_sensor}
+\end{figure}
+
+\subsubsection{Bộ điều khiển PLC S7-1200}
+
+Hệ thống sử dụng PLC Siemens S7-1200 CPU 1214C làm bộ điều khiển trung tâm, với các đặc điểm:
+
+\begin{itemize}
+    \item CPU 1214C DC/DC/DC
+    \item 14 DI / 10 DO tích hợp
+    \item 2 AI tích hợp (0-10V)
+    \item Module mở rộng SM 1234 (4 AI, 2 AO)
+    \item Giao tiếp PROFINET
+\end{itemize}
+
+\textbf{Cấu hình I/O:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Tín hiệu} & \textbf{Địa chỉ} & \textbf{Mô tả} \\
+\hline
+AI0 & IW64 & Nhiệt độ đỉnh tháp \\
+\hline
+AI1 & IW66 & Nhiệt độ nhập liệu \\
+\hline
+AI2 & IW68 & Áp suất đỉnh tháp \\
+\hline
+AI3 & IW70 & Lưu lượng nhập liệu \\
+\hline
+AO0 & QW64 & Công suất reboiler \\
+\hline
+AO1 & QW66 & Độ mở van làm mát \\
+\hline
+AO2 & QW68 & Tốc độ bơm nhập liệu \\
+\hline
+\end{tabular}
+\caption{Cấu hình I/O của PLC}
+\label{tab:io_config}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Xây dựng các vòng điều khiển}
+% ------------------------------------------------------------
+
+Hệ thống chưng cất được thiết kế với các vòng điều khiển sau:
+
+\begin{enumerate}
+    \item \textbf{Vòng điều khiển lưu lượng nhập liệu (FC-01):} Điều khiển tốc độ bơm để duy trì lưu lượng nhập liệu theo giá trị đặt.
+    \item \textbf{Vòng điều khiển nhiệt độ nhập liệu (TC-01):} Điều khiển bộ gia nhiệt nhập liệu để đạt nhiệt độ mong muốn.
+    \item \textbf{Vòng điều khiển nhiệt độ đỉnh tháp (TC-02):} Điều khiển công suất reboiler để duy trì nhiệt độ đỉnh tháp.
+    \item \textbf{Vòng điều khiển áp suất đỉnh tháp (PC-01):} Điều khiển độ mở van nước làm mát để ổn định áp suất đỉnh tháp -- \textbf{đây là vòng điều khiển mới được thiết kế trong đồ án này}.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Phương án điều khiển cho hệ thống}
+% ------------------------------------------------------------
+
+\subsubsection{Phương án vận hành hiện tại (Baseline)}
+
+Trong phương án vận hành hiện tại, van nước làm mát được mở cố định ở mức 100\% để đảm bảo áp suất đỉnh tháp luôn ổn định. Phương án này có ưu điểm là đơn giản, không cần hệ thống điều khiển phức tạp, nhưng gây lãng phí năng lượng đáng kể.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Process
+    \node[block, minimum width=4cm] (condenser) {Bộ ngưng tụ};
+    \node[left=2cm of condenser] (vapor) {Hơi đỉnh tháp};
+    \node[right=2cm of condenser] (liquid) {Lỏng ngưng tụ};
+    
+    % Cooling water - fixed
+    \node[above=1.5cm of condenser] (cw_in) {Nước làm mát (100\%)};
+    \node[block, above=0.5cm of condenser, minimum width=2cm, fill=gray!30] (valve) {Van mở 100\%};
+    
+    % Arrows
+    \draw[arrow] (vapor) -- (condenser);
+    \draw[arrow] (condenser) -- (liquid);
+    \draw[arrow] (cw_in) -- (valve);
+    \draw[arrow] (valve) -- (condenser);
+    
+\end{tikzpicture}
+\caption{Sơ đồ vận hành hiện tại -- Van làm mát mở cố định 100\%}
+\label{fig:baseline_control}
+\end{figure}
+
+\subsubsection{Phương án điều khiển tối ưu năng lượng (Đề xuất)}
+
+Phương án đề xuất sử dụng bộ điều khiển PID để điều chỉnh độ mở van nước làm mát dựa trên áp suất đỉnh tháp. Van chỉ mở đủ để duy trì áp suất ở giá trị đặt, giảm thiểu lượng nhiệt bị lấy đi và từ đó giảm năng lượng cần cung cấp cho reboiler.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Setpoint
+    \node (sp) {SP$_P$};
+    
+    % Sum
+    \node[sum, right=1cm of sp] (sum) {};
+    
+    % Controller
+    \node[block, right=1.2cm of sum] (controller) {PID};
+    
+    % Valve
+    \node[block, right=1.2cm of controller] (valve) {Van làm mát};
+    
+    % Condenser
+    \node[block, right=1.2cm of valve, minimum width=2.5cm] (condenser) {Bộ ngưng tụ};
+    
+    % Pressure output
+    \node[right=1cm of condenser] (output) {$P$};
+    
+    % Sensor
+    \node[block, below=1cm of controller] (sensor) {Cảm biến áp suất};
+    
+    % Arrows
+    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (valve);
+    \draw[arrow] (valve) -- node[above, font=\small] {$Q_C$} (condenser);
+    \draw[arrow] (condenser) -- (output);
+    
+    % Feedback
+    \coordinate (fb) at ($(condenser.east)!0.5!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    
+\end{tikzpicture}
+\caption{Sơ đồ khối vòng điều khiển áp suất đỉnh tháp (PC-01)}
+\label{fig:pressure_control_loop}
+\end{figure}
+
+\textbf{Nguyên lý hoạt động:}
+\begin{itemize}
+    \item Khi áp suất đỉnh tháp tăng cao hơn setpoint: Bộ điều khiển tăng độ mở van làm mát $\rightarrow$ tăng công suất ngưng tụ $\rightarrow$ áp suất giảm.
+    \item Khi áp suất đỉnh tháp giảm thấp hơn setpoint: Bộ điều khiển giảm độ mở van làm mát $\rightarrow$ giảm công suất ngưng tụ $\rightarrow$ áp suất tăng.
+\end{itemize}
+
+\subsubsection{Điều khiển nhiệt độ đỉnh tháp}
+
+Song song với vòng điều khiển áp suất, vòng điều khiển nhiệt độ đỉnh tháp (TC-02) duy trì nhiệt độ ổn định để đảm bảo chất lượng sản phẩm:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.8cm]
+    % Setpoint
+    \node (sp) {SP$_T$};
+    
+    % Sum
+    \node[sum, right=1cm of sp] (sum) {};
+    
+    % Controller
+    \node[block, right=1.2cm of sum] (controller) {PID};
+    
+    % Reboiler
+    \node[block, right=1.2cm of controller] (reboiler) {Reboiler};
+    
+    % Column
+    \node[block, right=1.2cm of reboiler, minimum width=2cm] (column) {Tháp chưng cất};
+    
+    % Temperature output
+    \node[right=1cm of column] (output) {$T$};
+    
+    % Sensor
+    \node[block, below=1cm of controller] (sensor) {Cảm biến nhiệt độ};
+    
+    % Arrows
+    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (reboiler);
+    \draw[arrow] (reboiler) -- node[above, font=\small] {$Q_R$} (column);
+    \draw[arrow] (column) -- (output);
+    
+    % Feedback
+    \coordinate (fb) at ($(column.east)!0.5!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    
+\end{tikzpicture}
+\caption{Sơ đồ khối vòng điều khiển nhiệt độ đỉnh tháp (TC-02)}
+\label{fig:temp_control_loop}
+\end{figure}

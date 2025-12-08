@@ -1,0 +1,296 @@
+% ============================================================
+% Chương 2: Cơ sở lý thuyết
+% ============================================================
+
+\newpage
+\section{CƠ SỞ LÝ THUYẾT}
+
+% ------------------------------------------------------------
+\subsection{Quá trình và thiết bị chưng cất}
+% ------------------------------------------------------------
+
+\subsubsection{Cơ sở lý thuyết quá trình chưng cất}
+
+Chưng cất là phương pháp phân tách hỗn hợp lỏng dựa trên sự khác biệt về độ bay hơi của các cấu tử. Nguyên lý cơ bản của chưng cất dựa trên cân bằng lỏng -- hơi: khi một hỗn hợp lỏng được đun sôi, pha hơi tạo thành sẽ giàu cấu tử dễ bay hơi hơn so với pha lỏng.
+
+Trong tháp chưng cất liên tục, quá trình phân tách diễn ra qua nhiều bậc cân bằng. Hỗn hợp nhập liệu được đưa vào giữa tháp, chia tháp thành hai phần:
+
+\begin{itemize}
+    \item \textbf{Phần cất (rectifying section):} Phía trên mâm nhập liệu, nơi pha hơi đi lên tiếp xúc với dòng lỏng hồi lưu đi xuống. Quá trình trao đổi chất làm pha hơi ngày càng giàu cấu tử nhẹ.
+    \item \textbf{Phần chưng (stripping section):} Phía dưới mâm nhập liệu, nơi pha lỏng đi xuống tiếp xúc với pha hơi đi lên từ reboiler. Quá trình này tách cấu tử nhẹ ra khỏi pha lỏng.
+\end{itemize}
+
+Cân bằng vật chất tổng quát cho tháp chưng cất:
+\begin{equation}
+    F = D + W
+\end{equation}
+
+Cân bằng cấu tử nhẹ:
+\begin{equation}
+    F \cdot x_F = D \cdot x_D + W \cdot x_W
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $F$: Lưu lượng dòng nhập liệu (kmol/h)
+    \item $D$: Lưu lượng sản phẩm đỉnh (kmol/h)
+    \item $W$: Lưu lượng sản phẩm đáy (kmol/h)
+    \item $x_F, x_D, x_W$: Nồng độ mol cấu tử nhẹ trong nhập liệu, sản phẩm đỉnh và sản phẩm đáy
+\end{itemize}
+
+\subsubsection{Thiết bị chưng cất}
+
+Tháp chưng cất là thiết bị chính trong quá trình phân tách. Có hai loại tháp phổ biến:
+
+\textbf{Tháp mâm:} Sử dụng các mâm (tray) để tạo tiếp xúc giữa pha lỏng và pha hơi. Các loại mâm thường dùng:
+\begin{itemize}
+    \item Mâm chóp (bubble cap tray): Ổn định, hoạt động tốt ở dải lưu lượng rộng
+    \item Mâm xuyên lỗ (sieve tray): Đơn giản, chi phí thấp
+    \item Mâm van (valve tray): Kết hợp ưu điểm của hai loại trên
+\end{itemize}
+
+\textbf{Tháp đệm:} Sử dụng vật liệu đệm để tăng diện tích tiếp xúc giữa hai pha. Phù hợp cho các hệ thống quy mô nhỏ và trung bình.
+
+\subsubsection{Nguyên lý hoạt động của hệ thống chưng cất}
+
+Hệ thống chưng cất hoàn chỉnh bao gồm các thành phần chính:
+
+\begin{enumerate}
+    \item \textbf{Tháp chưng cất:} Nơi diễn ra quá trình phân tách.
+    \item \textbf{Reboiler:} Cung cấp nhiệt để tạo pha hơi đi lên trong tháp.
+    \item \textbf{Bộ ngưng tụ (condenser):} Ngưng tụ hơi đỉnh tháp thành lỏng.
+    \item \textbf{Bình chứa hồi lưu:} Chứa sản phẩm đỉnh ngưng tụ, một phần hồi lưu về tháp.
+    \item \textbf{Bơm và van điều khiển:} Điều chỉnh lưu lượng các dòng.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Tính chất hệ ethanol -- nước}
+% ------------------------------------------------------------
+
+Hệ ethanol -- nước là hệ hai cấu tử không lý tưởng, có điểm đẳng phí ở nồng độ khoảng 95.6\% mol ethanol (89.4\% khối lượng) tại áp suất khí quyển.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Tính chất} & \textbf{Ethanol} & \textbf{Nước} \\
+\hline
+Công thức phân tử & C$_2$H$_5$OH & H$_2$O \\
+\hline
+Khối lượng mol (g/mol) & 46.07 & 18.02 \\
+\hline
+Nhiệt độ sôi tại 1 atm ($^\circ$C) & 78.37 & 100.00 \\
+\hline
+Nhiệt hóa hơi (kJ/mol) & 38.56 & 40.66 \\
+\hline
+\end{tabular}
+\caption{Tính chất vật lý của ethanol và nước}
+\label{tab:ethanol_water_properties}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.85\textwidth,
+    height=8cm,
+    xlabel={Nồng độ mol ethanol ($x$, $y$)},
+    ylabel={Nhiệt độ ($^\circ$C)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    xmin=0, xmax=1,
+    ymin=75, ymax=105,
+    legend pos=north east,
+]
+% Đường lỏng (bubble point)
+\addplot[blue, thick, smooth] coordinates {
+    (0, 100) (0.1, 95.5) (0.2, 91.3) (0.3, 87.7) (0.4, 85.0)
+    (0.5, 82.7) (0.6, 81.0) (0.7, 79.8) (0.8, 79.0) (0.89, 78.2) (0.956, 78.15) (1, 78.37)
+};
+\addlegendentry{Đường lỏng}
+
+% Đường hơi (dew point)
+\addplot[red, thick, smooth] coordinates {
+    (0, 100) (0.35, 95.5) (0.48, 91.3) (0.57, 87.7) (0.64, 85.0)
+    (0.70, 82.7) (0.76, 81.0) (0.82, 79.8) (0.87, 79.0) (0.92, 78.2) (0.956, 78.15) (1, 78.37)
+};
+\addlegendentry{Đường hơi}
+
+% Điểm đẳng phí
+\node[fill=white, font=\small] at (axis cs:0.85, 79) {Điểm đẳng phí};
+\draw[dashed, gray] (axis cs:0.956, 75) -- (axis cs:0.956, 78.15);
+
+\end{axis}
+\end{tikzpicture}
+\caption{Đồ thị cân bằng T-xy của hệ ethanol -- nước tại 1 atm}
+\label{fig:txy_ethanol_water}
+\end{figure}
+
+Do có điểm đẳng phí, chưng cất thông thường không thể thu được ethanol tinh khiết 100\%. Nồng độ tối đa đạt được bằng chưng cất thông thường là khoảng 95.6\% mol (tương đương 89.4\% khối lượng hay 89$^\circ$ rượu).
+
+% ------------------------------------------------------------
+\subsection{Điều khiển quá trình}
+% ------------------------------------------------------------
+
+\subsubsection{Mục đích điều khiển quá trình}
+
+Điều khiển quá trình nhằm duy trì các thông số vận hành của hệ thống tại giá trị mong muốn, đảm bảo:
+\begin{itemize}
+    \item An toàn cho thiết bị và con người
+    \item Chất lượng sản phẩm ổn định
+    \item Hiệu suất vận hành cao
+    \item Tiết kiệm năng lượng và nguyên liệu
+\end{itemize}
+
+\subsubsection{Các thành phần bộ điều khiển}
+
+Một vòng điều khiển cơ bản bao gồm:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    % Nodes
+    \node (sp) {SP};
+    \node[sum, right=1.2cm of sp] (sum) {};
+    \node[block, right=1.5cm of sum] (controller) {Bộ điều khiển};
+    \node[block, right=1.5cm of controller] (actuator) {Cơ cấu chấp hành};
+    \node[block, right=1.5cm of actuator] (process) {Quá trình};
+    \node[right=1.2cm of process] (output) {PV};
+    \node[block, below=1cm of controller] (sensor) {Cảm biến};
+    
+    % Arrows
+    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (actuator);
+    \draw[arrow] (actuator) -- (process);
+    \draw[arrow] (process) -- (output);
+    
+    % Feedback
+    \coordinate (fb) at ($(process.east)!0.5!(output.west)$);
+    \draw[line] (fb) |- (sensor);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+\end{tikzpicture}
+\caption{Sơ đồ khối vòng điều khiển phản hồi}
+\label{fig:feedback_control}
+\end{figure}
+
+Trong đó:
+\begin{itemize}
+    \item \textbf{SP (Setpoint):} Giá trị đặt mong muốn
+    \item \textbf{PV (Process Variable):} Giá trị thực tế đo được
+    \item \textbf{e (Error):} Sai lệch giữa SP và PV ($e = SP - PV$)
+    \item \textbf{u (Control signal):} Tín hiệu điều khiển
+\end{itemize}
+
+\subsubsection{Bộ điều khiển PID}
+
+Bộ điều khiển PID (Proportional-Integral-Derivative) là loại bộ điều khiển phổ biến nhất trong công nghiệp. Tín hiệu điều khiển được tính theo công thức:
+
+\begin{equation}
+    u(t) = K_P \left[ e(t) + \frac{1}{T_i} \int_0^t e(\tau) d\tau + T_d \frac{de(t)}{dt} \right]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $K_P$: Hệ số khuếch đại (Proportional gain)
+    \item $T_i$: Thời gian tích phân (Integral time)
+    \item $T_d$: Thời gian vi phân (Derivative time)
+\end{itemize}
+
+\textbf{Vai trò của từng thành phần:}
+\begin{itemize}
+    \item \textbf{Thành phần P:} Tạo tác động điều khiển tỉ lệ với sai lệch hiện tại. Giúp đáp ứng nhanh nhưng không triệt tiêu được sai lệch tĩnh.
+    \item \textbf{Thành phần I:} Tích lũy sai lệch theo thời gian, giúp triệt tiêu sai lệch tĩnh nhưng có thể gây quá điều chỉnh.
+    \item \textbf{Thành phần D:} Dự đoán xu hướng thay đổi của sai lệch, giúp giảm quá điều chỉnh và cải thiện độ ổn định.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Thay đổi} & \textbf{Thời gian đáp ứng} & \textbf{Quá điều chỉnh} & \textbf{Sai lệch tĩnh} & \textbf{Ổn định} \\
+\hline
+Tăng $K_P$ & Giảm & Tăng & Giảm & Xấu đi \\
+\hline
+Giảm $T_i$ & Giảm & Tăng & Triệt tiêu & Xấu đi \\
+\hline
+Tăng $T_d$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
+\hline
+\end{tabular}
+\caption{Ảnh hưởng của các thông số PID đến chất lượng điều khiển}
+\label{tab:pid_effects}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Cơ sở lý thuyết tối ưu hoá năng lượng}
+% ------------------------------------------------------------
+
+\subsubsection{Tiêu thụ năng lượng trong quá trình chưng cất}
+
+Reboiler là thiết bị tiêu thụ năng lượng chính trong hệ thống chưng cất. Nhiệt lượng cung cấp cho reboiler ($Q_R$) được sử dụng để:
+\begin{itemize}
+    \item Hóa hơi một phần chất lỏng đáy tháp
+    \item Bù đắp nhiệt mất mát qua thành thiết bị
+    \item Cân bằng với nhiệt lượng lấy đi tại bộ ngưng tụ
+\end{itemize}
+
+Cân bằng năng lượng tổng quát cho tháp chưng cất:
+\begin{equation}
+    Q_R + F \cdot H_F = Q_C + D \cdot H_D + W \cdot H_W + Q_{loss}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $Q_R$: Nhiệt lượng cung cấp tại reboiler (kW)
+    \item $Q_C$: Nhiệt lượng lấy đi tại bộ ngưng tụ (kW)
+    \item $H_F, H_D, H_W$: Enthalpy của dòng nhập liệu, sản phẩm đỉnh và sản phẩm đáy
+    \item $Q_{loss}$: Nhiệt mất mát ra môi trường
+\end{itemize}
+
+\subsubsection{Các phương pháp tối ưu hoá năng lượng}
+
+\textbf{Mối quan hệ giữa công suất làm mát và năng lượng reboiler:}
+
+Khi tăng công suất làm mát tại bộ ngưng tụ:
+\begin{itemize}
+    \item Áp suất đỉnh tháp giảm do hơi ngưng tụ nhiều hơn
+    \item Lượng hơi ngưng tụ tăng, lưu lượng hồi lưu tăng
+    \item Reboiler phải cung cấp thêm năng lượng để duy trì lượng hơi đi lên trong tháp
+\end{itemize}
+
+Ngược lại, nếu công suất làm mát quá thấp:
+\begin{itemize}
+    \item Áp suất đỉnh tháp tăng
+    \item Có thể vượt quá giới hạn an toàn của thiết bị
+    \item Ảnh hưởng đến chất lượng phân tách
+\end{itemize}
+
+\textbf{Nguyên lý tối ưu năng lượng thông qua điều khiển áp suất:}
+
+Thay vì mở van làm mát ở mức tối đa (100\%), phương pháp tối ưu sử dụng bộ điều khiển để duy trì áp suất đỉnh tháp ở giá trị đặt với độ mở van làm mát tối thiểu cần thiết. Điều này đạt được bằng cách:
+
+\begin{enumerate}
+    \item Đo áp suất đỉnh tháp liên tục bằng cảm biến áp suất
+    \item So sánh với giá trị đặt (setpoint)
+    \item Điều chỉnh độ mở van làm mát thông qua bộ điều khiển PID
+    \item Van chỉ mở đủ để duy trì áp suất ổn định
+\end{enumerate}
+
+\textbf{Tiềm năng tiết kiệm năng lượng:}
+
+Ước tính năng lượng tiết kiệm được:
+\begin{equation}
+    \Delta Q_R = Q_{R,100\%} - Q_{R,optimal} = Q_{C,100\%} - Q_{C,optimal}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $Q_{R,100\%}$: Năng lượng reboiler khi van làm mát mở 100\%
+    \item $Q_{R,optimal}$: Năng lượng reboiler khi vận hành tối ưu
+    \item $Q_{C,100\%}$, $Q_{C,optimal}$: Công suất làm mát tương ứng
+\end{itemize}
+
+Hiệu suất tiết kiệm năng lượng:
+\begin{equation}
+    \eta_{saving} = \frac{\Delta Q_R}{Q_{R,100\%}} \times 100\%
+\end{equation}

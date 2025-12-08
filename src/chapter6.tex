@@ -1,0 +1,117 @@
+% ============================================================
+% Chương 6: Kết luận và hướng phát triển
+% ============================================================
+
+\newpage
+\section{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+
+% ------------------------------------------------------------
+\subsection{Kết luận}
+% ------------------------------------------------------------
+
+Đồ án đã hoàn thành các mục tiêu đề ra với những kết quả chính sau:
+
+\begin{enumerate}
+    \item \textbf{Phân tích được hiện trạng tiêu thụ năng lượng:}
+    \begin{itemize}
+        \item Xác định nguyên nhân lãng phí năng lượng khi vận hành với van làm mát mở 100\%.
+        \item Đánh giá công suất reboiler trung bình ở chế độ baseline là 85.2\% (2556W).
+        \item Lượng nước làm mát sử dụng dư thừa đáng kể.
+    \end{itemize}
+    
+    \item \textbf{Thiết kế thành công vòng điều khiển áp suất đỉnh tháp:}
+    \begin{itemize}
+        \item Xây dựng vòng điều khiển PC-01 với bộ điều khiển PID.
+        \item Xác định thông số PID phù hợp: $K_c = 300$, $T_i = 25$s, $T_d = 5$s.
+        \item Hệ thống điều khiển ổn định, đáp ứng nhanh với sai lệch tĩnh bằng 0.
+    \end{itemize}
+    
+    \item \textbf{Đạt được hiệu quả tiết kiệm năng lượng đáng kể:}
+    \begin{itemize}
+        \item Giảm \textbf{19.6\%} năng lượng cung cấp cho reboiler (từ 2556W xuống 2055W).
+        \item Giảm \textbf{37.7\%} lượng nước làm mát sử dụng.
+        \item Độ mở van làm mát trung bình giảm từ 100\% xuống 62.3\%.
+    \end{itemize}
+    
+    \item \textbf{Duy trì chất lượng sản phẩm:}
+    \begin{itemize}
+        \item Nồng độ sản phẩm đỉnh đạt 88.2$^\circ$ rượu (cải thiện so với baseline 87.5$^\circ$).
+        \item Nhiệt độ đỉnh tháp ổn định tại 78.5$^\circ$C.
+        \item Áp suất đỉnh tháp được duy trì ổn định tại setpoint 1.05 bar.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Kết luận tổng quát:} Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát là giải pháp hiệu quả để tối ưu hóa năng lượng cung cấp cho quá trình chưng cất ethanol -- nước. Giải pháp này không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động, có thể áp dụng cho các hệ thống chưng cất hiện có.
+
+% ------------------------------------------------------------
+\subsection{Hướng phát triển đề tài}
+% ------------------------------------------------------------
+
+Để nâng cao hiệu quả và mở rộng phạm vi ứng dụng, đề xuất các hướng phát triển sau:
+
+\begin{enumerate}
+    \item \textbf{Mở rộng quy mô áp dụng:}
+    \begin{itemize}
+        \item Triển khai thử nghiệm trên hệ thống chưng cất quy mô pilot hoặc công nghiệp.
+        \item Đánh giá hiệu quả tiết kiệm năng lượng ở các quy mô khác nhau.
+        \item Nghiên cứu ảnh hưởng của các yếu tố vận hành thực tế (nhiễu loạn, thay đổi tải).
+    \end{itemize}
+    
+    \item \textbf{Cải tiến thuật toán điều khiển:}
+    \begin{itemize}
+        \item Áp dụng điều khiển thích nghi (Adaptive PID) để tự động điều chỉnh thông số theo điều kiện vận hành.
+        \item Nghiên cứu điều khiển dự báo mô hình (MPC - Model Predictive Control) để tối ưu đa mục tiêu.
+        \item Tích hợp trí tuệ nhân tạo (AI) để dự đoán và tối ưu hóa vận hành.
+    \end{itemize}
+    
+    \item \textbf{Tối ưu hóa toàn diện hệ thống:}
+    \begin{itemize}
+        \item Kết hợp điều khiển áp suất với tối ưu tỉ lệ hồi lưu.
+        \item Nghiên cứu tích hợp nhiệt (heat integration) giữa các dòng trong hệ thống.
+        \item Phát triển hệ thống quản lý năng lượng tổng thể cho nhà máy.
+    \end{itemize}
+    
+    \item \textbf{Phát triển hệ thống giám sát và báo cáo:}
+    \begin{itemize}
+        \item Xây dựng dashboard giám sát năng lượng theo thời gian thực.
+        \item Tích hợp hệ thống IoT để thu thập và phân tích dữ liệu vận hành.
+        \item Phát triển báo cáo tự động về hiệu quả năng lượng.
+    \end{itemize}
+    
+    \item \textbf{Nghiên cứu ứng dụng cho các hệ thống khác:}
+    \begin{itemize}
+        \item Áp dụng phương pháp tương tự cho các hệ chưng cất khác (methanol -- nước, hệ đa cấu tử).
+        \item Mở rộng cho các quá trình phân tách nhiệt khác (bay hơi, cô đặc).
+    \end{itemize}
+\end{enumerate}
+
+% ------------------------------------------------------------
+% Bảng kế hoạch thực hiện (tùy chọn)
+% ------------------------------------------------------------
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{STT} & \textbf{Nội dung công việc} & \textbf{Thời gian} \\
+\hline
+1 & Nghiên cứu tài liệu, tìm hiểu hệ thống & Tuần 1-2 \\
+\hline
+2 & Khảo sát hiện trạng vận hành & Tuần 3-4 \\
+\hline
+3 & Thiết kế vòng điều khiển áp suất & Tuần 5-6 \\
+\hline
+4 & Lập trình PLC và thiết kế HMI & Tuần 7-8 \\
+\hline
+5 & Chỉnh định thông số PID & Tuần 9-10 \\
+\hline
+6 & Thí nghiệm và thu thập dữ liệu & Tuần 11-12 \\
+\hline
+7 & Phân tích kết quả và viết báo cáo & Tuần 13-14 \\
+\hline
+8 & Hoàn thiện và bảo vệ đồ án & Tuần 15-16 \\
+\hline
+\end{tabular}
+\caption{Kế hoạch thực hiện đồ án}
+\label{tab:schedule}
+\end{table}

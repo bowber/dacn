@@ -10,6 +10,12 @@
 % Cover page
 \input{cover_page}
 
+% Lời cảm ơn
+\input{acknowledgements}
+
+% Tóm tắt đồ án
+\input{abstract}
+
 % Table of contents
 \tableofcontents
 \newpage
@@ -18,6 +24,7 @@
 \phantomsection
 \addcontentsline{toc}{section}{Danh mục hình ảnh}
 \listoffigures
+\newpage
 
 % List of tables
 \phantomsection
@@ -25,10 +32,15 @@
 \listoftables
 \newpage
 
-% Lab experiments
-\input{lab1}
-\input{lab2}
-\input{lab3}
-\input{lab4}
+% Chapters
+\input{chapter1}
+\input{chapter2}
+\input{chapter3}
+\input{chapter4}
+\input{chapter5}
+\input{chapter6}
+
+% References
+\input{references}
 
 \end{document}

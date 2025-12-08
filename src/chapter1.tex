@@ -1,0 +1,98 @@
+% ============================================================
+% Chương 1: Mở đầu
+% ============================================================
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\section{MỞ ĐẦU}
+
+% ------------------------------------------------------------
+\subsection{Đặt vấn đề}
+% ------------------------------------------------------------
+
+Chưng cất là một trong những quá trình phân tách quan trọng nhất trong công nghiệp hóa học, đặc biệt trong sản xuất ethanol. Hệ thống chưng cất ethanol -- nước được sử dụng rộng rãi trong các nhà máy sản xuất nhiên liệu sinh học, đồ uống có cồn và dung môi công nghiệp. Tuy nhiên, quá trình chưng cất tiêu tốn một lượng năng lượng đáng kể, chiếm từ 40--70\% tổng chi phí vận hành của nhà máy.
+
+Trong hệ thống chưng cất quy mô phòng thí nghiệm tại Khoa Kỹ thuật Hóa học, Đại học Bách Khoa TP.HCM, việc ổn định áp suất đỉnh tháp hiện đang được thực hiện bằng cách mở van nước làm mát ở mức tối đa (100\%). Phương pháp này đảm bảo áp suất đỉnh tháp luôn ổn định nhưng gây ra một số vấn đề nghiêm trọng:
+
+\begin{itemize}
+    \item \textbf{Lãng phí năng lượng tại reboiler:} Khi công suất làm mát quá lớn, một phần hơi ethanol ngưng tụ quá mức cần thiết, dẫn đến việc reboiler phải cung cấp thêm năng lượng để bù đắp lượng nhiệt bị lấy đi.
+    \item \textbf{Lãng phí nước làm mát:} Lưu lượng nước làm mát sử dụng vượt xa nhu cầu thực tế, gây tốn kém chi phí vận hành.
+    \item \textbf{Giảm hiệu suất tổng thể:} Hệ thống hoạt động không tối ưu về mặt năng lượng, ảnh hưởng đến hiệu quả kinh tế.
+\end{itemize}
+
+Vấn đề này đặt ra yêu cầu cần thiết phải nghiên cứu và phát triển một phương pháp điều khiển thông minh hơn, có khả năng điều chỉnh lưu lượng nước làm mát phù hợp với nhu cầu thực tế của quá trình, từ đó tối ưu hóa năng lượng cung cấp cho hệ thống chưng cất.
+
+% ------------------------------------------------------------
+\subsection{Mục tiêu đồ án}
+% ------------------------------------------------------------
+
+Đồ án này nhằm đạt được các mục tiêu sau:
+
+\begin{enumerate}
+    \item Phân tích và đánh giá hiện trạng tiêu thụ năng lượng của hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm.
+    \item Nghiên cứu mối quan hệ giữa lưu lượng nước làm mát, áp suất đỉnh tháp và năng lượng cung cấp cho reboiler.
+    \item Thiết kế và triển khai bộ điều khiển tự động cho van nước làm mát nhằm ổn định áp suất đỉnh tháp với mức tiêu thụ năng lượng tối thiểu.
+    \item Đánh giá hiệu quả tiết kiệm năng lượng của phương pháp điều khiển mới so với phương pháp vận hành hiện tại.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Nội dung thực hiện}
+% ------------------------------------------------------------
+
+Để đạt được các mục tiêu đề ra, đồ án thực hiện các nội dung sau:
+
+\begin{enumerate}
+    \item \textbf{Nghiên cứu lý thuyết:}
+    \begin{itemize}
+        \item Tìm hiểu cơ sở lý thuyết quá trình chưng cất và đặc tính hệ ethanol -- nước.
+        \item Nghiên cứu các phương pháp điều khiển quá trình và tối ưu hóa năng lượng.
+    \end{itemize}
+    
+    \item \textbf{Khảo sát hệ thống hiện tại:}
+    \begin{itemize}
+        \item Phân tích cấu hình thiết bị và sơ đồ công nghệ.
+        \item Đánh giá hiện trạng tiêu thụ năng lượng khi vận hành với van làm mát mở 100\%.
+    \end{itemize}
+    
+    \item \textbf{Thiết kế hệ thống điều khiển:}
+    \begin{itemize}
+        \item Xây dựng vòng điều khiển áp suất đỉnh tháp thông qua van nước làm mát.
+        \item Xác định thông số bộ điều khiển PID phù hợp.
+    \end{itemize}
+    
+    \item \textbf{Thí nghiệm và đánh giá:}
+    \begin{itemize}
+        \item Vận hành hệ thống với bộ điều khiển mới.
+        \item So sánh hiệu quả năng lượng trước và sau khi áp dụng giải pháp tối ưu.
+    \end{itemize}
+\end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Phạm vi đồ án}
+% ------------------------------------------------------------
+
+Đồ án được thực hiện trong phạm vi sau:
+
+\begin{itemize}
+    \item \textbf{Đối tượng nghiên cứu:} Hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm tại phòng thí nghiệm B2-201A, Khoa Kỹ thuật Hóa học, Đại học Bách Khoa TP.HCM.
+    \item \textbf{Biến điều khiển:} Độ mở van nước làm mát bộ ngưng tụ.
+    \item \textbf{Biến được điều khiển:} Áp suất đỉnh tháp chưng cất.
+    \item \textbf{Mục tiêu tối ưu:} Giảm năng lượng cung cấp cho reboiler trong khi duy trì chất lượng sản phẩm đỉnh.
+    \item \textbf{Giới hạn:} Không thay đổi cấu hình thiết bị hiện có, chỉ thay đổi chiến lược điều khiển.
+\end{itemize}
+
+% ------------------------------------------------------------
+\subsection{Sản phẩm đồ án}
+% ------------------------------------------------------------
+
+Sản phẩm của đồ án bao gồm:
+
+\begin{enumerate}
+    \item Báo cáo phân tích hiện trạng tiêu thụ năng lượng của hệ thống chưng cất.
+    \item Chương trình điều khiển PLC cho vòng điều khiển áp suất đỉnh tháp.
+    \item Giao diện HMI giám sát và vận hành hệ thống.
+    \item Kết quả thí nghiệm và đánh giá hiệu quả tiết kiệm năng lượng.
+    \item Báo cáo đồ án chuyên ngành hoàn chỉnh.
+\end{enumerate}

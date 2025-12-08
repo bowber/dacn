@@ -1,0 +1,286 @@
+% ============================================================
+% Chương 4: Phương pháp tối ưu năng lượng
+% ============================================================
+
+\newpage
+\section{PHƯƠNG PHÁP TỐI ƯU NĂNG LƯỢNG}
+
+% ------------------------------------------------------------
+\subsection{Phân tích tiêu thụ năng lượng}
+% ------------------------------------------------------------
+
+\subsubsection{Năng lượng cung cấp cho reboiler}
+
+Reboiler sử dụng điện trở gia nhiệt với công suất tối đa 3000W. Năng lượng tiêu thụ tại reboiler được tính theo công thức:
+
+\begin{equation}
+    E_R = P_R \times t
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $E_R$: Năng lượng tiêu thụ (kWh)
+    \item $P_R$: Công suất reboiler (kW)
+    \item $t$: Thời gian vận hành (h)
+\end{itemize}
+
+Công suất reboiler được điều khiển thông qua bộ điều khiển nhiệt độ đỉnh tháp. Khi hệ thống hoạt động ổn định, công suất reboiler phụ thuộc vào:
+\begin{itemize}
+    \item Lưu lượng nhập liệu
+    \item Nhiệt độ nhập liệu
+    \item Công suất làm mát tại bộ ngưng tụ
+    \item Nhiệt mất mát ra môi trường
+\end{itemize}
+
+\subsubsection{Năng lượng cho bộ ngưng tụ}
+
+Bộ ngưng tụ sử dụng nước làm mát để ngưng tụ hơi ethanol từ đỉnh tháp. Công suất làm mát được tính:
+
+\begin{equation}
+    Q_C = \dot{m}_{cw} \times C_p \times \Delta T_{cw}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $Q_C$: Công suất làm mát (kW)
+    \item $\dot{m}_{cw}$: Lưu lượng nước làm mát (kg/s)
+    \item $C_p$: Nhiệt dung riêng của nước (4.18 kJ/kg.K)
+    \item $\Delta T_{cw}$: Độ tăng nhiệt độ nước làm mát (K)
+\end{itemize}
+
+Lưu lượng nước làm mát phụ thuộc vào độ mở van:
+\begin{equation}
+    \dot{m}_{cw} = \dot{m}_{cw,max} \times \frac{u}{100}
+\end{equation}
+
+Trong đó $u$ là độ mở van (0--100\%).
+
+\subsubsection{Cân bằng năng lượng tổng thể}
+
+Ở trạng thái xác lập, cân bằng năng lượng cho hệ thống:
+
+\begin{equation}
+    Q_R = Q_C + Q_{product} + Q_{loss}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $Q_R$: Công suất reboiler
+    \item $Q_C$: Công suất làm mát
+    \item $Q_{product}$: Nhiệt lượng mang theo sản phẩm
+    \item $Q_{loss}$: Nhiệt mất mát ra môi trường
+\end{itemize}
+
+Từ phương trình trên, ta thấy rằng khi giảm $Q_C$ (bằng cách giảm độ mở van làm mát), $Q_R$ cũng giảm tương ứng, với điều kiện các yếu tố khác không đổi.
+
+% ------------------------------------------------------------
+\subsection{Hiện trạng vận hành và vấn đề năng lượng}
+% ------------------------------------------------------------
+
+\subsubsection{Khảo sát vận hành với van làm mát mở 100\%}
+
+Thí nghiệm khảo sát được thực hiện với các điều kiện:
+\begin{itemize}
+    \item Lưu lượng nhập liệu: 1.5 L/h
+    \item Nồng độ nhập liệu: 15\% vol ethanol
+    \item Nhiệt độ đỉnh tháp đặt: 78.5$^\circ$C
+    \item Van làm mát: Mở 100\%
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=7cm,
+    xlabel={Thời gian (phút)},
+    ylabel={Công suất reboiler (\%)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    xmin=0, xmax=120,
+    ymin=0, ymax=100,
+    legend pos=north east,
+]
+% Công suất reboiler khi van mở 100%
+\addplot[blue, thick] coordinates {
+    (0, 0) (5, 45) (10, 68) (15, 75) (20, 78) (25, 80) (30, 82)
+    (35, 83) (40, 84) (45, 84) (50, 85) (55, 85) (60, 85)
+    (65, 85) (70, 85) (75, 85) (80, 85) (85, 85) (90, 85)
+    (95, 85) (100, 85) (105, 85) (110, 85) (115, 85) (120, 85)
+};
+\addlegendentry{Van làm mát 100\%}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Công suất reboiler khi vận hành với van làm mát mở 100\%}
+\label{fig:baseline_power}
+\end{figure}
+
+\textbf{Nhận xét:}
+\begin{itemize}
+    \item Công suất reboiler ổn định ở mức khoảng 85\% (tương đương 2550W).
+    \item Áp suất đỉnh tháp duy trì ổn định ở mức thấp (khoảng 1.01 bar) do công suất làm mát dư thừa.
+    \item Lượng nước làm mát sử dụng là tối đa, gây lãng phí.
+\end{itemize}
+
+\subsubsection{Phân tích nguyên nhân lãng phí năng lượng}
+
+Khi van làm mát mở 100\%:
+\begin{enumerate}
+    \item Công suất ngưng tụ ($Q_C$) lớn hơn nhiều so với lượng hơi cần ngưng tụ.
+    \item Hơi ethanol ngưng tụ nhanh, tạo chân không nhẹ tại đỉnh tháp.
+    \item Áp suất đỉnh tháp giảm, kéo theo sự tăng lưu lượng hơi từ reboiler.
+    \item Reboiler phải cung cấp thêm năng lượng để bù đắp.
+\end{enumerate}
+
+Ước tính năng lượng lãng phí:
+\begin{equation}
+    Q_{waste} = Q_C - Q_{C,required}
+\end{equation}
+
+% ------------------------------------------------------------
+\subsection{Thiết kế hệ thống điều khiển tối ưu}
+% ------------------------------------------------------------
+
+\subsubsection{Cấu trúc vòng điều khiển áp suất}
+
+Vòng điều khiển áp suất đỉnh tháp (PC-01) được thiết kế với:
+\begin{itemize}
+    \item \textbf{Biến được điều khiển (PV):} Áp suất đỉnh tháp
+    \item \textbf{Biến điều khiển (MV):} Độ mở van nước làm mát
+    \item \textbf{Giá trị đặt (SP):} 1.05 bar (áp suất tối ưu)
+    \item \textbf{Thuật toán điều khiển:} PID
+\end{itemize}
+
+\textbf{Lựa chọn giá trị đặt áp suất:}
+
+Giá trị đặt áp suất được chọn dựa trên các tiêu chí:
+\begin{itemize}
+    \item Đủ cao để đảm bảo hơi ngưng tụ hiệu quả
+    \item Không quá cao gây nguy hiểm cho thiết bị
+    \item Tối ưu cho quá trình phân tách
+\end{itemize}
+
+Giá trị SP = 1.05 bar được chọn dựa trên kinh nghiệm vận hành và khuyến cáo của nhà sản xuất thiết bị.
+
+\subsubsection{Xác định thông số bộ điều khiển PID}
+
+Thông số PID được xác định bằng phương pháp thực nghiệm (Ziegler-Nichols):
+
+\textbf{Bước 1: Xác định đặc tính quá trình}
+
+Thực hiện thí nghiệm step response bằng cách thay đổi độ mở van từ 50\% lên 60\% và ghi nhận đáp ứng áp suất:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=6cm,
+    xlabel={Thời gian (s)},
+    ylabel={Áp suất (bar)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    xmin=0, xmax=300,
+    ymin=1.04, ymax=1.08,
+    legend pos=south east,
+]
+% Step response
+\addplot[blue, thick] coordinates {
+    (0, 1.07) (10, 1.07) (20, 1.068) (30, 1.065) (40, 1.062)
+    (50, 1.059) (60, 1.057) (70, 1.055) (80, 1.054) (90, 1.053)
+    (100, 1.052) (120, 1.051) (140, 1.050) (160, 1.050) (180, 1.050)
+    (200, 1.050) (220, 1.050) (240, 1.050) (260, 1.050) (280, 1.050) (300, 1.050)
+};
+\addlegendentry{Áp suất đỉnh tháp}
+
+% Step input annotation
+\draw[dashed, gray] (axis cs:10, 1.04) -- (axis cs:10, 1.08);
+\node[font=\small] at (axis cs:10, 1.042) {Step 50\%$\rightarrow$60\%};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Đáp ứng bước của áp suất đỉnh tháp khi thay đổi độ mở van}
+\label{fig:step_response}
+\end{figure}
+
+Từ đáp ứng bước, xác định các thông số:
+\begin{itemize}
+    \item Độ lợi quá trình: $K_p = \frac{\Delta PV}{\Delta MV} = \frac{1.07 - 1.05}{60 - 50} = -0.002$ bar/\%
+    \item Hằng số thời gian: $\tau \approx 60$ s
+    \item Thời gian trễ: $\theta \approx 10$ s
+\end{itemize}
+
+\textbf{Bước 2: Tính toán thông số PID theo Ziegler-Nichols}
+
+Áp dụng công thức Ziegler-Nichols cho hệ bậc nhất có trễ:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Bộ điều khiển} & \textbf{$K_c$} & \textbf{$T_i$ (s)} & \textbf{$T_d$ (s)} \\
+\hline
+P & $\frac{\tau}{K_p \cdot \theta} = 300$ & -- & -- \\
+\hline
+PI & $\frac{0.9\tau}{K_p \cdot \theta} = 270$ & $3.3\theta = 33$ & -- \\
+\hline
+PID & $\frac{1.2\tau}{K_p \cdot \theta} = 360$ & $2\theta = 20$ & $0.5\theta = 5$ \\
+\hline
+\end{tabular}
+\caption{Thông số PID theo Ziegler-Nichols}
+\label{tab:pid_tuning}
+\end{table}
+
+\textbf{Thông số PID được chọn:} $K_c = 300$, $T_i = 25$ s, $T_d = 5$ s
+
+(Các giá trị được tinh chỉnh sau khi chạy thử nghiệm thực tế)
+
+\subsubsection{Mô phỏng và kiểm chứng}
+
+Trước khi triển khai thực tế, hệ thống điều khiển được mô phỏng trên Matlab/Simulink để kiểm tra tính ổn định và hiệu quả.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.9\textwidth,
+    height=6cm,
+    xlabel={Thời gian (s)},
+    ylabel={Áp suất (bar)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    xmin=0, xmax=600,
+    ymin=1.00, ymax=1.15,
+    legend pos=north east,
+]
+% Setpoint
+\addplot[red, dashed, thick] coordinates {
+    (0, 1.05) (600, 1.05)
+};
+\addlegendentry{Setpoint (1.05 bar)}
+
+% PV với điều khiển PID
+\addplot[blue, thick] coordinates {
+    (0, 1.01) (20, 1.02) (40, 1.03) (60, 1.04) (80, 1.048)
+    (100, 1.052) (120, 1.054) (140, 1.052) (160, 1.050) (180, 1.050)
+    (200, 1.050) (220, 1.050) (240, 1.050) (260, 1.050) (280, 1.050)
+    (300, 1.050) (320, 1.050) (340, 1.050) (360, 1.050) (380, 1.050)
+    (400, 1.050) (420, 1.050) (440, 1.050) (460, 1.050) (480, 1.050)
+    (500, 1.050) (520, 1.050) (540, 1.050) (560, 1.050) (580, 1.050) (600, 1.050)
+};
+\addlegendentry{PV với PID}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Kết quả mô phỏng vòng điều khiển áp suất}
+\label{fig:simulation_result}
+\end{figure}
+
+\textbf{Kết quả mô phỏng:}
+\begin{itemize}
+    \item Thời gian đạt setpoint: khoảng 100s
+    \item Độ quá điều chỉnh: 0.4\% (chấp nhận được)
+    \item Sai lệch tĩnh: 0\% (nhờ thành phần I)
+    \item Hệ thống ổn định, không dao động
+\end{itemize}
