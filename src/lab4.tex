@@ -449,28 +449,29 @@ Phương pháp Ziegler-Nichols II (còn gọi là phương pháp dao động t�
 
 \textbf{Nguyên lý hoạt động của cảm biến đo mức:}
 
-Trong Factory I/O, cảm biến đo mức hoạt động theo nguyên lý \textbf{đo áp suất thủy tĩnh} (hydrostatic pressure):
+Trong Factory I/O, cảm biến đo mức hoạt động theo nguyên lý \textbf{cảm biến điện dung}:
 \begin{itemize}
-    \item Áp suất tại đáy bể tỉ lệ với chiều cao cột chất lỏng: $P = \rho g h$
-    \item Trong đó: $\rho$ là khối lượng riêng chất lỏng, $g$ là gia tốc trọng trường, $h$ là chiều cao mức
-    \item Cảm biến áp suất chuyển đổi áp suất thành tín hiệu điện (4-20mA hoặc 0-10V)
+    \item Cảm biến điện dung đo sự thay đổi điện dung khi mức chất lỏng thay đổi
+    \item Điện dung tỉ lệ với diện tích bản cực và hằng số điện môi của môi trường: $C = \varepsilon \frac{A}{d}$
+    \item Khi mức chất lỏng tăng, phần điện cực ngập trong chất lỏng tăng, làm thay đổi điện dung
+    \item Mạch điện tử chuyển đổi sự thay đổi điện dung thành tín hiệu điện (0-10V)
     \item PLC đọc tín hiệu analog và quy đổi ra giá trị mức (cm hoặc \%)
 \end{itemize}
 
-\textbf{Các yếu tố gây nhiễu cho cảm biến đo mức:}
+\textbf{Các yếu tố gây nhiễu cho cảm biến đo mức điện dung:}
 
 \begin{enumerate}
-    \item \textbf{Nhiễu do sóng trên bề mặt chất lỏng:}
+    \item \textbf{Thay đổi hằng số điện môi của chất lỏng:}
     \begin{itemize}
-        \item Dòng chảy vào/ra tạo sóng, gây dao động tín hiệu đo
-        \item Khắc phục: Dùng ống giảm chấn (stilling well), lọc tín hiệu
+        \item Nhiệt độ thay đổi làm hằng số điện môi thay đổi
+        \item Thành phần chất lỏng thay đổi (nồng độ, tạp chất)
+        \item Khắc phục: Bù nhiệt độ, hiệu chuẩn định kỳ
     \end{itemize}
     
-    \item \textbf{Thay đổi khối lượng riêng chất lỏng:}
+    \item \textbf{Bám cặn trên điện cực:}
     \begin{itemize}
-        \item Nhiệt độ thay đổi làm $\rho$ thay đổi, ảnh hưởng đến phép đo
-        \item Chất lỏng có bọt khí hoặc tạp chất
-        \item Khắc phục: Bù nhiệt độ, hiệu chuẩn định kỳ
+        \item Cặn bẩn bám trên bề mặt điện cực làm sai lệch phép đo
+        \item Khắc phục: Vệ sinh định kỳ, dùng lớp phủ chống bám
     \end{itemize}
     
     \item \textbf{Nhiễu điện từ:}
@@ -479,16 +480,11 @@ Trong Factory I/O, cảm biến đo mức hoạt động theo nguyên lý \textb
         \item Khắc phục: Dùng cáp chống nhiễu, nối đất đúng cách
     \end{itemize}
     
-    \item \textbf{Tắc nghẽn đường ống dẫn áp:}
+    \item \textbf{Bọt khí và sóng trên bề mặt:}
     \begin{itemize}
-        \item Cặn bẩn tích tụ trong đường ống nối cảm biến
-        \item Khắc phục: Bảo trì định kỳ, dùng màng cách ly
-    \end{itemize}
-    
-    \item \textbf{Thay đổi áp suất khí quyển:}
-    \begin{itemize}
-        \item Ảnh hưởng đến cảm biến đo áp suất tuyệt đối
-        \item Khắc phục: Dùng cảm biến đo áp suất gauge (có thông khí)
+        \item Bọt khí làm thay đổi hằng số điện môi cục bộ
+        \item Sóng trên bề mặt gây dao động tín hiệu
+        \item Khắc phục: Lọc tín hiệu, lắp đặt ống giảm chấn
     \end{itemize}
 \end{enumerate}
 
@@ -498,6 +494,7 @@ Trong Factory I/O, cảm biến đo mức hoạt động theo nguyên lý \textb
 
 \begin{enumerate}[label={[\arabic*]}]
     \item B. N. Pha, \textit{Điều khiển quá trình công nghệ hoá học - Quyển 1: Cơ sở điều khiển quá trình}. Khoa Kỹ thuật Hóa học, Trường Đại học Bách khoa, ĐHQG-HCM, 2021.
+    \item Real Games, \textit{Factory I/O Documentation - Tank}. \url{https://docs.factoryio.com/manual/parts/stations/#tank}
 \end{enumerate}
 
 \newpage

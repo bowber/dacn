@@ -56,7 +56,7 @@ HMI (Human-Machine Interface) là giao diện giữa người vận hành và h�
 \begin{itemize}
     \item Máy tính cài đặt TIA Portal V16
     \item PLC Siemens S7-1200 CPU 1213C
-    \item Cảm biến nhiệt độ
+    \item Cảm biến nhiệt độ loại K
     \item Kết nối WiFi giữa PLC và máy tính
 \end{itemize}
 
@@ -234,11 +234,12 @@ Cảm biến nhiệt độ sử dụng trong bài thí nghiệm có 3 chân, nh�
     % Output
     \node[right=1cm of process] (output) {$T$};
     
-    % Sensor
-    \node[block, below=1cm of process] (sensor) {Cảm biến nhiệt độ};
+    % Sensor - centered between sum and output
+    \coordinate (center) at ($(sum)!0.5!(output)$);
+    \node[block, below=1cm of center] (sensor) {Cảm biến nhiệt độ};
     
     % Arrows
-    \draw[arrow] (sp) -- (sum);
+    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
     \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
     \draw[arrow] (controller) -- node[above, font=\small] {$u$} (actuator);
     \draw[arrow] (actuator) -- node[above, font=\small] {$Q$} (process);
@@ -247,10 +248,7 @@ Cảm biến nhiệt độ sử dụng trong bài thí nghiệm có 3 chân, nh�
     % Feedback
     \coordinate (fb) at ($(process.east)!0.5!(output.west)$);
     \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| (sum) node[pos=0.9, left, font=\small] {$-$};
-    
-    % Sum signs
-    \node[font=\scriptsize] at ($(sum.north)+(0.15,0)$) {$+$};
+    \draw[arrow] (sensor) -| (sum) node[pos=0.95, left, font=\small] {$-$};
     
 \end{tikzpicture}
 \caption{Sơ đồ khối điều khiển nhiệt độ thiết bị sấy đối lưu}
