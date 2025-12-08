@@ -1,0 +1,22 @@
+
+lab1
+1. Cảm biến đang sử dụng trong bài thí nghiệm là cảm biến loại 2 chân, 3 chân hay
+4 chân? Vẽ sơ đồ kết nối cảm biến vào CPU.
+2. Viết sơ đồ khối điều khiển cho điều khiển nhiệt độ ở thiết bị sấy đối lưu.
+
+
+lab2
+1. Anh/chị hãy trình bày ưu và nhược điểm thuật toán điều khiển ON/OFF và PID.
+
+lab3
+1. Anh/chị hãy thử tạo một khối chức năng FB và chạy thử thuật toán PID mà
+không sử dụng Cylic interrupt. Thuật toán đó có chạy được không? Anh/chị có rút ra
+nhận xét gì về nguyên lý của khối Cylic interrupt trong thuật toán điều khiển điện trở
+PID?
+
+lab4
+1. Phương pháp Ziegler – Nichols II là gì? Tại sao trong bài này lại sử dụng phương
+pháp này để chỉnh định bộ điều khiển? Phương pháp này thích hợp cho những hệ có tính
+chất như thế nào?
+2. Cảm biến đo mức trong bài hoạt động theo nguyên lý nào? Trong khi vận hành,
+loại cảm biến này sẽ bị nhiễu bởi những yếu tố nào?
