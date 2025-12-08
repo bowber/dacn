@@ -89,6 +89,62 @@ Tăng $T_D$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \caption{Ảnh hưởng của các thông số PID}
 \end{table}
 
+\subsubsection{Phương pháp chỉnh định Ziegler-Nichols và Relay}
+
+Có hai phương pháp phổ biến để xác định thông số PID dựa trên dao động tới hạn:
+
+\textbf{Phương pháp Ziegler-Nichols gốc (1942):}
+
+Phương pháp này được đề xuất bởi John G. Ziegler và Nathaniel B. Nichols năm 1942. Các bước thực hiện:
+\begin{enumerate}
+    \item Đặt $T_i = \infty$ (tắt I), $T_d = 0$ (tắt D), chỉ dùng điều khiển P
+    \item Tăng dần $K_P$ từ 0 cho đến khi hệ thống bắt đầu dao động điều hòa với biên độ không đổi
+    \item Ghi nhận $K_u$ (ultimate gain) và $T_u$ (chu kỳ dao động)
+    \item Tính thông số PID theo bảng Ziegler-Nichols
+\end{enumerate}
+
+\textbf{Hạn chế:} Phương pháp gốc yêu cầu đưa hệ thống đến biên giới mất ổn định, có thể gây nguy hiểm cho thiết bị và quá trình.
+
+\textbf{Phương pháp Relay (Åström-Hägglund, 1984):}
+
+Phương pháp này được đề xuất bởi Karl Johan Åström và Tore Hägglund năm 1984, khắc phục hạn chế của phương pháp gốc bằng cách sử dụng điều khiển relay (ON/OFF):
+\begin{enumerate}
+    \item Điều khiển hệ thống bằng relay (bang-bang control) quanh setpoint
+    \item Đo chu kỳ dao động $T_u$ và biên độ dao động $a$ của biến quá trình
+    \item Tính $K_u$ theo công thức:
+    \begin{equation}
+    K_u = \frac{4d}{\pi a}
+    \end{equation}
+    trong đó $d$ là biên độ relay (từ tâm đến đỉnh), $a$ là biên độ dao động ngõ ra
+    \item Áp dụng bảng Ziegler-Nichols để tính $K_P$, $T_i$, $T_d$
+\end{enumerate}
+
+\textbf{Ưu điểm:} Không cần đưa hệ thống đến biên giới mất ổn định; dao động được kiểm soát bởi relay; an toàn hơn cho thiết bị.
+
+\textbf{So sánh hai phương pháp:}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Tiêu chí} & \textbf{Z-N gốc (1942)} & \textbf{Relay (1984)} \\
+\hline
+Người đề xuất & Ziegler \& Nichols & Åström \& Hägglund \\
+\hline
+Cách tạo dao động & Tăng $K_P$ đến mất ổn định & Điều khiển ON/OFF \\
+\hline
+Xác định $K_u$ & $K_u$ = giá trị $K_P$ tới hạn & $K_u = 4d/(\pi a)$ \\
+\hline
+Mức độ an toàn & Rủi ro cao & An toàn hơn \\
+\hline
+Ứng dụng thực tế & Hạn chế & Phổ biến (auto-tuning) \\
+\hline
+\end{tabular}
+\caption{So sánh phương pháp Ziegler-Nichols gốc và Relay}
+\end{table}
+
+\textbf{Lưu ý:} Trong bài thí nghiệm này, chúng ta sử dụng phương pháp Relay (Åström-Hägglund).
+
 \subsubsection{Khối PID\_Compact trong TIA Portal}
 
 TIA Portal cung cấp khối \texttt{PID\_Compact} để thực hiện điều khiển PID. Các tham số chính:
@@ -125,9 +181,9 @@ TIA Portal cung cấp khối \texttt{PID\_Compact} để thực hiện điều k
     \item Kết nối Setpoint và Input với biến tương ứng.
 \end{enumerate}
 
-\subsubsection{Chỉnh định thông số PID theo phương pháp Ziegler-Nichols (phương pháp 2 - dao động tới hạn)}
+\subsubsection{Chỉnh định thông số PID theo phương pháp Relay (Åström-Hägglund)}
 
-Sử dụng dữ liệu từ thí nghiệm điều khiển ON/OFF (Bài 2) để tính toán thông số PID theo phương pháp Ziegler-Nichols (relay method):
+Sử dụng dữ liệu từ thí nghiệm điều khiển ON/OFF (Bài 2) để tính toán thông số PID theo phương pháp Relay:
 
 \textbf{Bước 1: Xác định các thông số từ thí nghiệm ON/OFF}
 \begin{itemize}
@@ -141,7 +197,7 @@ Sử dụng dữ liệu từ thí nghiệm điều khiển ON/OFF (Bài 2) để
 K_u = \frac{4d}{\pi a} = \frac{4 \times 50}{\pi \times 6.5} \approx 9.8
 \end{equation}
 
-\textbf{Bước 3: Tính thông số PID theo công thức Ziegler-Nichols}
+\textbf{Bước 3: Tính thông số PID theo bảng Ziegler-Nichols}
 \begin{align}
 K_P &= 0.6 \times K_u = 0.6 \times 9.8 \approx 5.9 \\
 T_i &= \frac{T_u}{2} = \frac{250}{2} = 125 \text{ s} \\
@@ -285,11 +341,11 @@ MAE trạng thái xác lập & $0.12^\circ$C \\
 Bộ thông số PID ($K_P = 5.9$, $T_i = 125$s, $T_d = 31$s) cho kết quả:
 
 \begin{itemize}
-    \item \textbf{Hệ số khuếch đại $K_P = 5.9$:} Đúng theo công thức Ziegler-Nichols ($0.6 \times K_u$). Độ quá điều chỉnh 12.2\% trong giai đoạn khởi động là chấp nhận được.
+    \item \textbf{Hệ số khuếch đại $K_P = 5.9$:} Đúng theo bảng Ziegler-Nichols ($0.6 \times K_u$). Độ quá điều chỉnh 12.2\% trong giai đoạn khởi động là chấp nhận được.
     
-    \item \textbf{Thời gian tích phân $T_i = 125$s:} Đúng theo công thức $T_u/2$, giúp triệt tiêu sai lệch tĩnh hiệu quả (sai lệch tĩnh $\approx 0^\circ$C).
+    \item \textbf{Thời gian tích phân $T_i = 125$s:} Đúng theo bảng Ziegler-Nichols ($T_u/2$), giúp triệt tiêu sai lệch tĩnh hiệu quả (sai lệch tĩnh $\approx 0^\circ$C).
     
-    \item \textbf{Thời gian vi phân $T_d = 31$s:} Đúng theo công thức $T_u/8$, giúp giảm độ quá điều chỉnh trong giai đoạn step change xuống còn 3.7\%.
+    \item \textbf{Thời gian vi phân $T_d = 31$s:} Đúng theo bảng Ziegler-Nichols ($T_u/8$), giúp giảm độ quá điều chỉnh trong giai đoạn step change xuống còn 3.7\%.
 \end{itemize}
 
 \subsubsection{So sánh với điều khiển ON/OFF (Bài 2)}
@@ -318,7 +374,7 @@ Chất lượng điều khiển & Thấp & Cao \\
 \begin{itemize}
     \item Điều khiển PID cải thiện đáng kể chất lượng so với ON/OFF: giảm biên độ dao động từ $\pm 6.5^\circ$C xuống gần như bằng 0 trong trạng thái xác lập
     \item PID triệt tiêu hoàn toàn sai lệch tĩnh, trong khi ON/OFF luôn dao động quanh setpoint
-    \item Thông số PID tính từ dữ liệu ON/OFF theo Ziegler-Nichols cho kết quả tốt, xác nhận tính hiệu quả của phương pháp
+    \item Thông số PID tính từ dữ liệu ON/OFF theo phương pháp Relay cho kết quả tốt, xác nhận tính hiệu quả của phương pháp
 \end{itemize}
 
 \subsubsection{Đánh giá chất lượng điều khiển}
@@ -340,11 +396,11 @@ Chất lượng điều khiển & Thấp & Cao \\
 Qua thí nghiệm điều khiển PID hệ thống gia nhiệt, rút ra các kết luận sau:
 
 \begin{enumerate}
-    \item \textbf{Phương pháp chỉnh định:} Thông số PID được tính toán theo phương pháp Ziegler-Nichols relay, sử dụng dữ liệu từ thí nghiệm ON/OFF (Bài 2):
+    \item \textbf{Phương pháp chỉnh định:} Thông số PID được tính toán theo phương pháp Relay (Åström-Hägglund), sử dụng dữ liệu từ thí nghiệm ON/OFF (Bài 2):
     \begin{itemize}
         \item Chu kỳ dao động $T_u = 250$s, biên độ $a = 6.5^\circ$C, biên độ relay $d = 50\%$
         \item Ultimate gain $K_u = 4d/(\pi a) = 9.8$
-        \item $K_P = 0.6 K_u = 5.9$, $T_i = T_u/2 = 125$s, $T_d = T_u/8 = 31$s
+        \item Áp dụng bảng Ziegler-Nichols: $K_P = 0.6 K_u = 5.9$, $T_i = T_u/2 = 125$s, $T_d = T_u/8 = 31$s
     \end{itemize}
     
     \item \textbf{Kết quả điều khiển giai đoạn khởi động (SV = $40^\circ$C):}
@@ -370,21 +426,21 @@ Qua thí nghiệm điều khiển PID hệ thống gia nhiệt, rút ra các k�
         \item Hệ thống ổn định, không có chu kỳ dao động
     \end{itemize}
     
-    \item \textbf{Kết luận:} Phương pháp Ziegler-Nichols relay cho phép tính toán thông số PID hiệu quả từ dữ liệu thí nghiệm ON/OFF, không cần sử dụng Auto-tuning.
+    \item \textbf{Kết luận:} Phương pháp Relay (Åström-Hägglund) cho phép tính toán thông số PID hiệu quả từ dữ liệu thí nghiệm ON/OFF, không cần sử dụng Auto-tuning.
 \end{enumerate}
 
 % ------------------------------------------------------------
 \subsection{Câu hỏi kiểm tra}
 % ------------------------------------------------------------
 
-\textbf{Câu 1: Trình bày các bước chỉnh định PID theo phương pháp Ziegler-Nichols?}
+\textbf{Câu 1: Trình bày các bước chỉnh định PID theo phương pháp Relay (Åström-Hägglund)?}
 
-Phương pháp Ziegler-Nichols (phương pháp dao động tới hạn):
+Phương pháp Relay (Åström-Hägglund, 1984):
 \begin{enumerate}
-    \item Đặt $T_i = \infty$ (tắt thành phần I), $T_d = 0$ (tắt thành phần D)
-    \item Tăng dần $K_P$ từ 0 cho đến khi hệ thống bắt đầu dao động điều hòa với biên độ không đổi
-    \item Ghi nhận giá trị $K_P$ tới hạn ($K_u$) và chu kỳ dao động ($T_u$)
-    \item Tính toán thông số PID theo bảng Ziegler-Nichols:
+    \item Điều khiển hệ thống bằng relay (ON/OFF) quanh setpoint
+    \item Đo chu kỳ dao động $T_u$ và biên độ dao động $a$ của biến quá trình
+    \item Tính ultimate gain theo công thức: $K_u = \frac{4d}{\pi a}$ (với $d$ là biên độ relay)
+    \item Áp dụng bảng Ziegler-Nichols để tính thông số PID:
     \begin{itemize}
         \item Bộ P: $K_P = 0.5 K_u$
         \item Bộ PI: $K_P = 0.45 K_u$, $T_i = T_u/1.2$
