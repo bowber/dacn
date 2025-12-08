@@ -1,0 +1,12 @@
+DANH MỤC BẢNG
+
+Bảng 2.1. Cân bằng lỏng – hơi cho hệ ethanol – nước tại 1 atm .............................. 9
+Bảng 3.1. Thông số thiết bị chính ........................................................................... 30
+Bảng 3.2. Danh sách thiết bị phụ ............................................................................ 30
+Bảng 4.1. Lưu lượng nhập liệu theo từng mức công suất cấp cho bơm ................ 42
+Bảng 5.1. Thông số vận hành của hệ thống chưng cất ........................................... 56
+Bảng 5.2. Kết quả đo nồng độ sản phẩm đỉnh theo điều kiện vận hành ................ 57
+Bảng 5.3. Chỉ số chất lượng bộ điều khiển lưu lượng nhập liệu FC-01 ................ 58
+Bảng 5.4. Chỉ số chất lượng bộ điều khiển nhiệt độ nhập liệu TC-02 ................... 59
+Bảng 5.5. Chỉ số chất lượng bộ điều khiển nhiệt độ đỉnh tháp TC-03 ................... 60
+Bảng 6.1. Kế hoạch thực hiện đồ án ...................................................................... 62
