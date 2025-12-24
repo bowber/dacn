@@ -68,9 +68,14 @@
 % ============================================================
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\contentsname}{MỤC LỤC}
-\renewcommand{\listfigurename}{DANH MỤC HÌNH ẢNH}
-\renewcommand{\listtablename}{DANH MỤC BẢNG}
+
+% Babel (vietnamese) defines these names; override in its caption hook so
+% they don't get reset at \begin{document}.
+\addto\captionsvietnamese{%
+    \renewcommand{\contentsname}{MỤC LỤC}%
+    \renewcommand{\listfigurename}{DANH MỤC HÌNH}%
+    \renewcommand{\listtablename}{DANH MỤC BẢNG}%
+}
 
 % ============================================================
 % LISTS
