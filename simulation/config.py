@@ -50,8 +50,9 @@ CONDENSER_AREA = 0.28  # m² (calculated)
 COOLANT_FLOW_MAX = 7.2  # L/min
 
 # Estimated overall heat transfer coefficient for coil condenser
-# Typical range: 500-1500 W/(m²·K) for steam/water systems
-CONDENSER_U = 800.0  # W/(m²·K)
+# Source: Engineering ToolBox - organic vapors/water condensers: 300-1200 W/(m²·K)
+# Reference: https://www.engineeringtoolbox.com/overall-heat-transfer-coefficient-d_434.html
+CONDENSER_U = 800.0  # W/(m²·K) - conservative middle value
 
 # =============================================================================
 # Reflux Drum
@@ -61,34 +62,39 @@ REFLUX_DRUM_HEIGHT = 0.245  # m (245 mm)
 
 # =============================================================================
 # Physical Properties - Ethanol
+# Source: NIST Chemistry WebBook (https://webbook.nist.gov/cgi/cbook.cgi?ID=C64175)
 # =============================================================================
-ETHANOL_MW = 46.07  # g/mol
-ETHANOL_DENSITY = 789.0  # kg/m³ at 20°C
-ETHANOL_BP = 78.37  # °C at 1 atm
-ETHANOL_LATENT_HEAT = 38.56e3  # J/mol (at boiling point)
-ETHANOL_CP = 2.44e3  # J/(kg·K) liquid heat capacity
+ETHANOL_MW = 46.07  # g/mol (NIST: 46.0684)
+ETHANOL_DENSITY = 789.0  # kg/m³ at 20°C (CRC Handbook)
+ETHANOL_BP = 78.35  # °C at 1 atm (NIST: 351.5 ± 0.2 K)
+ETHANOL_LATENT_HEAT = 38.56e3  # J/mol at Tb (NIST: Majer & Svoboda, 1985)
+ETHANOL_CP = 2.44e3  # J/(kg·K) liquid heat capacity (CRC Handbook)
 
 # Antoine constants for ethanol (log10(P[mmHg]) = A - B/(C + T[°C]))
+# Source: NIST WebBook / Kretschmer and Wiebe, 1949
 ETHANOL_ANTOINE_A = 8.20417
 ETHANOL_ANTOINE_B = 1642.89
 ETHANOL_ANTOINE_C = 230.300
 
 # =============================================================================
 # Physical Properties - Water
+# Source: NIST Chemistry WebBook (https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185)
 # =============================================================================
-WATER_MW = 18.015  # g/mol
+WATER_MW = 18.015  # g/mol (NIST: 18.0153)
 WATER_DENSITY = 998.0  # kg/m³ at 20°C
-WATER_BP = 100.0  # °C at 1 atm
-WATER_LATENT_HEAT = 40.66e3  # J/mol (at boiling point)
+WATER_BP = 100.0  # °C at 1 atm (NIST: 373.17 K)
+WATER_LATENT_HEAT = 40.66e3  # J/mol at Tb (CRC Handbook)
 WATER_CP = 4.18e3  # J/(kg·K) liquid heat capacity
 
 # Antoine constants for water (log10(P[mmHg]) = A - B/(C + T[°C]))
+# Source: NIST WebBook / Stull, 1947
 WATER_ANTOINE_A = 8.07131
 WATER_ANTOINE_B = 1730.63
 WATER_ANTOINE_C = 233.426
 
 # =============================================================================
 # Azeotrope Data
+# Source: CRC Handbook of Chemistry and Physics, Lange's Handbook
 # =============================================================================
 AZEOTROPE_COMP_MOL = 0.8943  # mol fraction ethanol (≈ 95.6 mol%)
 AZEOTROPE_COMP_WT = 0.955  # weight fraction (≈ 95.5 wt%)

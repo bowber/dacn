@@ -118,7 +118,8 @@ def activity_coefficients_van_laar(x_eth, T=None):
     Calculate activity coefficients using Van Laar equation for ethanol-water.
 
     Van Laar parameters for ethanol(1)-water(2) at ~1 atm:
-    A12 = 1.6798, A21 = 0.9227 (from experiment)
+    A12 = 1.6798, A21 = 0.9227
+    Source: DECHEMA Chemistry Data Series, Vol. I (Gmehling et al.)
 
     Parameters:
         x_eth: Mole fraction of ethanol
@@ -128,6 +129,7 @@ def activity_coefficients_van_laar(x_eth, T=None):
         gamma_eth, gamma_water: Activity coefficients
     """
     # Van Laar parameters for ethanol-water system
+    # Source: DECHEMA VLE Data Collection (Gmehling, Onken, Arlt)
     A12 = 1.6798  # ethanol parameter
     A21 = 0.9227  # water parameter
 

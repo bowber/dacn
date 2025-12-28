@@ -89,10 +89,14 @@ def calculate_heat_transfer_coefficient(coolant_flow_Lmin):
         return 0.0
 
     # Reference: U = 800 W/(m²·K) at maximum flow (7.2 L/min)
+    # Source: Engineering ToolBox - typical range for organic vapor/water
+    # condensers is 300-1200 W/(m²·K). We use middle-conservative value.
+    # Reference: https://www.engineeringtoolbox.com/overall-heat-transfer-coefficient-d_434.html
     U_ref = CONDENSER_U  # 800 W/(m²·K)
     flow_ref = COOLANT_FLOW_MAX  # 7.2 L/min
 
     # For turbulent flow: Nu ∝ Re^0.8 ∝ (flow)^0.8
+    # Source: Dittus-Boelter correlation (Incropera & DeWitt, Heat Transfer)
     # U scales approximately with the coolant-side heat transfer coefficient
     flow_ratio = coolant_flow_Lmin / flow_ref
 
