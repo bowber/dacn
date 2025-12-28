@@ -101,7 +101,6 @@ Nhiệt hóa hơi (kJ/mol) & 38.56 & 40.66 \\
     xmin=0, xmax=1,
     ymin=75, ymax=105,
     legend pos=north east,
-    clip=false,
 ]
 % Đường lỏng (bubble point)
 \addplot[blue, thick, smooth] coordinates {
@@ -118,8 +117,8 @@ Nhiệt hóa hơi (kJ/mol) & 38.56 & 40.66 \\
 \addlegendentry{Đường hơi}
 
 % Điểm đẳng phí
-\draw[dashed, gray] (axis cs:0.956, 75) -- (axis cs:0.956, 78.15);
-\node[fill=white, font=\normalsize, anchor=east] at (axis cs:0.94, 76.5) {Điểm đẳng phí};
+\addplot[dashed, gray] coordinates {(0.956, 75) (0.956, 78.15)};
+\addlegendentry{Điểm đẳng phí}
 
 \end{axis}
 \end{tikzpicture}
