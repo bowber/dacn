@@ -1,327 +1,131 @@
 % ============================================================
-% Chương 5: Kết quả thí nghiệm và thảo luận
+% Chương 5: Mô phỏng và kết quả
 % ============================================================
 
 \newpage
-\section{KẾT QUẢ VÀ THẢO LUẬN}
+\section{MÔ PHỎNG VÀ KẾT QUẢ}
 
 % ------------------------------------------------------------
-\subsection{Giao diện vận hành (HMI)}
+\subsection{Thiết lập mô phỏng}
 % ------------------------------------------------------------
 
-Giao diện HMI được thiết kế trên phần mềm TIA Portal V18, cho phép giám sát và điều khiển hệ thống chưng cất. Các chức năng chính của giao diện bao gồm:
+\subsubsection{Công cụ mô phỏng}
 
+Mô phỏng được thực hiện bằng ngôn ngữ Python với các thư viện:
 \begin{itemize}
-    \item Hiển thị các thông số quá trình: nhiệt độ, áp suất, lưu lượng
-    \item Điều chỉnh giá trị đặt (setpoint) cho các vòng điều khiển
-    \item Chuyển đổi chế độ tự động/bằng tay
-    \item Hiển thị đồ thị xu hướng (trend) theo thời gian thực
-    \item Cảnh báo khi thông số vượt ngưỡng
+    \item \texttt{numpy}: Tính toán số học
+    \item \texttt{scipy}: Giải phương trình vi phân, tối ưu hóa
+    \item \texttt{matplotlib}: Vẽ đồ thị
+    \item \texttt{control}: Phân tích hệ thống điều khiển
 \end{itemize}
 
-% Placeholder cho hình ảnh HMI
-\begin{figure}[H]
-\centering
-\fbox{\parbox{0.8\textwidth}{\centering\vspace{4cm}Giao diện HMI hệ thống chưng cất\\(Sẽ cập nhật sau)\vspace{4cm}}}
-\caption{Giao diện HMI giám sát hệ thống chưng cất}
-\label{fig:hmi_interface}
-\end{figure}
+\subsubsection{Thông số mô phỏng}
 
-% ------------------------------------------------------------
-\subsection{Quy trình thí nghiệm}
-% ------------------------------------------------------------
-
-\subsubsection{Giai đoạn chuẩn bị}
-
-\begin{enumerate}
-    \item Kiểm tra mức dung dịch trong bình chứa nhập liệu (hỗn hợp ethanol -- nước 15\% vol).
-    \item Kiểm tra nguồn nước làm mát và đảm bảo áp lực đủ.
-    \item Bật nguồn PLC và khởi động giao diện HMI.
-    \item Kiểm tra các cảm biến và tín hiệu đo lường.
-    \item Cài đặt các thông số vận hành:
-    \begin{itemize}
-        \item Lưu lượng nhập liệu: 1.5 L/h
-        \item Nhiệt độ đỉnh tháp đặt: 78.5$^\circ$C
-        \item Áp suất đỉnh tháp đặt: 1.05 bar
-    \end{itemize}
-\end{enumerate}
-
-\subsubsection{Giai đoạn thực hiện}
-
-\textbf{Thí nghiệm 1: Vận hành với van làm mát mở 100\% (Baseline)}
-\begin{enumerate}
-    \item Mở van làm mát ở chế độ bằng tay, đặt 100\%.
-    \item Khởi động bơm nhập liệu và bật reboiler.
-    \item Chờ hệ thống đạt trạng thái ổn định (khoảng 30 phút).
-    \item Ghi nhận các thông số: công suất reboiler, áp suất đỉnh tháp, nhiệt độ.
-    \item Vận hành trong 60 phút và thu thập dữ liệu.
-\end{enumerate}
-
-\textbf{Thí nghiệm 2: Vận hành với điều khiển áp suất tự động (Tối ưu)}
-\begin{enumerate}
-    \item Chuyển vòng điều khiển áp suất sang chế độ tự động.
-    \item Đặt setpoint áp suất: 1.05 bar.
-    \item Khởi động bơm nhập liệu và bật reboiler.
-    \item Chờ hệ thống đạt trạng thái ổn định.
-    \item Ghi nhận các thông số và so sánh với thí nghiệm 1.
-    \item Vận hành trong 60 phút và thu thập dữ liệu.
-\end{enumerate}
-
-\subsubsection{Giai đoạn kết thúc}
-
-\begin{enumerate}
-    \item Tắt reboiler và chờ nhiệt độ giảm.
-    \item Tắt bơm nhập liệu.
-    \item Đóng van nước làm mát.
-    \item Lưu dữ liệu thí nghiệm.
-    \item Tắt nguồn PLC và HMI.
-\end{enumerate}
-
-% ------------------------------------------------------------
-\subsection{Kết quả thí nghiệm}
-% ------------------------------------------------------------
-
-\subsubsection{Kết quả vận hành với van làm mát 100\% (Baseline)}
+Các thông số hệ thống được sử dụng trong mô phỏng:
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Giá trị trung bình} & \textbf{Đơn vị} \\
+\textbf{Thông số} & \textbf{Giá trị} & \textbf{Đơn vị} \\
 \hline
-Công suất reboiler & 85.2 & \% \\
+Công suất reboiler tối đa & 6000 & W \\
 \hline
-Năng lượng reboiler & 2556 & W \\
+Lưu lượng nước làm mát tối đa & 7.2 & L/min \\
 \hline
-Áp suất đỉnh tháp & 1.01 & bar \\
+Diện tích trao đổi nhiệt condenser & 0.28 & m$^2$ \\
 \hline
-Nhiệt độ đỉnh tháp & 78.3 & $^\circ$C \\
+Áp suất vận hành & 1.1 & bar \\
 \hline
-Độ mở van làm mát & 100 & \% \\
+Nồng độ nhập liệu & 15 & \% vol \\
 \hline
-Nồng độ sản phẩm đỉnh & 87.5 & $^\circ$ rượu \\
-\hline
-\end{tabular}
-\caption{Kết quả thí nghiệm với van làm mát mở 100\%}
-\label{tab:baseline_results}
-\end{table}
-
-\subsubsection{Kết quả vận hành với điều khiển áp suất tự động (Tối ưu)}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Thông số} & \textbf{Giá trị trung bình} & \textbf{Đơn vị} \\
-\hline
-Công suất reboiler & 68.5 & \% \\
-\hline
-Năng lượng reboiler & 2055 & W \\
-\hline
-Áp suất đỉnh tháp & 1.05 & bar \\
-\hline
-Nhiệt độ đỉnh tháp & 78.5 & $^\circ$C \\
-\hline
-Độ mở van làm mát (trung bình) & 62.3 & \% \\
-\hline
-Nồng độ sản phẩm đỉnh & 88.2 & $^\circ$ rượu \\
+Lưu lượng nhập liệu & 4.8 & L/h \\
 \hline
 \end{tabular}
-\caption{Kết quả thí nghiệm với điều khiển áp suất tự động}
-\label{tab:optimized_results}
+\caption{Thông số hệ thống cho mô phỏng}
+\label{tab:simulation_params}
 \end{table}
-
-\subsubsection{Đáp ứng của vòng điều khiển áp suất}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=0.95\textwidth,
-    height=7cm,
-    xlabel={Thời gian (phút)},
-    ylabel={Áp suất (bar)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    xmin=0, xmax=60,
-    ymin=1.00, ymax=1.10,
-    legend pos=north east,
-    axis y line*=left,
-]
-% Setpoint
-\addplot[red, dashed, thick] coordinates {
-    (0, 1.05) (60, 1.05)
-};
-\addlegendentry{SP = 1.05 bar}
-
-% PV
-\addplot[blue, thick] coordinates {
-    (0, 1.01) (2, 1.02) (4, 1.03) (6, 1.04) (8, 1.048)
-    (10, 1.052) (12, 1.053) (14, 1.051) (16, 1.050) (18, 1.050)
-    (20, 1.050) (22, 1.050) (24, 1.051) (26, 1.050) (28, 1.049)
-    (30, 1.050) (32, 1.050) (34, 1.051) (36, 1.050) (38, 1.050)
-    (40, 1.050) (42, 1.049) (44, 1.050) (46, 1.051) (48, 1.050)
-    (50, 1.050) (52, 1.050) (54, 1.049) (56, 1.050) (58, 1.050) (60, 1.050)
-};
-\addlegendentry{PV (Áp suất đo)}
-
-\end{axis}
-\end{tikzpicture}
-\caption{Đáp ứng áp suất đỉnh tháp với bộ điều khiển PID}
-\label{fig:pressure_response}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=0.95\textwidth,
-    height=7cm,
-    xlabel={Thời gian (phút)},
-    ylabel={Độ mở van (\%)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    xmin=0, xmax=60,
-    ymin=0, ymax=100,
-    legend pos=north east,
-]
-% Độ mở van
-\addplot[green!60!black, thick] coordinates {
-    (0, 100) (2, 95) (4, 88) (6, 80) (8, 72)
-    (10, 68) (12, 65) (14, 63) (16, 62) (18, 62)
-    (20, 62) (22, 63) (24, 62) (26, 62) (28, 63)
-    (30, 62) (32, 62) (34, 61) (36, 62) (38, 62)
-    (40, 63) (42, 62) (44, 62) (46, 61) (48, 62)
-    (50, 62) (52, 63) (54, 62) (56, 62) (58, 62) (60, 62)
-};
-\addlegendentry{Độ mở van làm mát}
-
-% Baseline
-\addplot[gray, dashed, thick] coordinates {
-    (0, 100) (60, 100)
-};
-\addlegendentry{Baseline (100\%)}
-
-\end{axis}
-\end{tikzpicture}
-\caption{Độ mở van làm mát theo thời gian}
-\label{fig:valve_position}
-\end{figure}
-
-\subsubsection{Đánh giá chất lượng sản phẩm}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Chỉ tiêu} & \textbf{Baseline} & \textbf{Tối ưu} & \textbf{Đơn vị} \\
-\hline
-Nồng độ sản phẩm đỉnh & 87.5 & 88.2 & $^\circ$ rượu \\
-\hline
-Nhiệt độ đỉnh tháp & 78.3 & 78.5 & $^\circ$C \\
-\hline
-Lưu lượng sản phẩm đỉnh & 0.18 & 0.17 & L/h \\
-\hline
-\end{tabular}
-\caption{So sánh chất lượng sản phẩm giữa hai phương án}
-\label{tab:product_quality}
-\end{table}
-
-\textbf{Nhận xét:} Chất lượng sản phẩm đỉnh trong phương án tối ưu không bị ảnh hưởng, thậm chí còn cải thiện nhẹ (88.2$^\circ$ so với 87.5$^\circ$) do áp suất vận hành ổn định hơn.
 
 % ------------------------------------------------------------
-\subsection{Đánh giá hiệu quả tiết kiệm năng lượng}
+\subsection{Kết quả mô phỏng}
 % ------------------------------------------------------------
 
-\subsubsection{So sánh tiêu thụ năng lượng trước và sau tối ưu}
+\textit{(Phần này sẽ được cập nhật sau khi hoàn thành mô phỏng Python)}
+
+\subsubsection{Mô phỏng vận hành baseline (van mở 100\%)}
+
+% Placeholder cho kết quả mô phỏng baseline
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{4cm}Đồ thị mô phỏng công suất reboiler -- baseline\\(Sẽ cập nhật từ kết quả mô phỏng Python)\vspace{4cm}}}
+\caption{Mô phỏng công suất reboiler khi van làm mát mở 100\%}
+\label{fig:sim_baseline}
+\end{figure}
+
+\subsubsection{Mô phỏng với điều khiển áp suất tự động}
+
+% Placeholder cho kết quả mô phỏng tối ưu
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{4cm}Đồ thị mô phỏng đáp ứng áp suất với PID\\(Sẽ cập nhật từ kết quả mô phỏng Python)\vspace{4cm}}}
+\caption{Mô phỏng đáp ứng áp suất đỉnh tháp với bộ điều khiển PID}
+\label{fig:sim_pressure_response}
+\end{figure}
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-    width=0.9\textwidth,
-    height=7cm,
-    xlabel={Thời gian (phút)},
-    ylabel={Công suất reboiler (\%)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    xmin=0, xmax=60,
-    ymin=0, ymax=100,
-    legend pos=north east,
-]
-% Baseline
-\addplot[red, thick] coordinates {
-    (0, 0) (5, 50) (10, 72) (15, 80) (20, 84) (25, 85)
-    (30, 85) (35, 85) (40, 85) (45, 85) (50, 85) (55, 85) (60, 85)
-};
-\addlegendentry{Baseline (van 100\%)}
-
-% Optimized
-\addplot[blue, thick] coordinates {
-    (0, 0) (5, 50) (10, 70) (15, 75) (20, 72) (25, 70)
-    (30, 69) (35, 68) (40, 68) (45, 68) (50, 69) (55, 68) (60, 68)
-};
-\addlegendentry{Tối ưu (điều khiển áp suất)}
-
-% Vùng tiết kiệm
-\addplot[fill=green, fill opacity=0.2] coordinates {
-    (25, 85) (30, 85) (35, 85) (40, 85) (45, 85) (50, 85) (55, 85) (60, 85)
-    (60, 68) (55, 68) (50, 69) (45, 68) (40, 68) (35, 68) (30, 69) (25, 70)
-} -- cycle;
-
-\end{axis}
-\end{tikzpicture}
-\caption{So sánh công suất reboiler giữa hai phương án vận hành}
-\label{fig:power_comparison}
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{4cm}Đồ thị mô phỏng độ mở van làm mát\\(Sẽ cập nhật từ kết quả mô phỏng Python)\vspace{4cm}}}
+\caption{Mô phỏng độ mở van làm mát theo thời gian}
+\label{fig:sim_valve_position}
 \end{figure}
 
-\subsubsection{Phân tích hiệu suất năng lượng}
+% ------------------------------------------------------------
+\subsection{So sánh hiệu quả năng lượng}
+% ------------------------------------------------------------
 
+\textit{(Phần này sẽ được cập nhật sau khi hoàn thành mô phỏng Python)}
+
+% Placeholder cho bảng so sánh
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
 \textbf{Thông số} & \textbf{Baseline} & \textbf{Tối ưu} & \textbf{Chênh lệch} \\
 \hline
-Công suất reboiler trung bình (\%) & 85.2 & 68.5 & -16.7 \\
+Công suất reboiler trung bình (\%) & --- & --- & --- \\
 \hline
-Năng lượng reboiler (W) & 2556 & 2055 & -501 \\
+Năng lượng reboiler (W) & --- & --- & --- \\
 \hline
-Độ mở van làm mát (\%) & 100 & 62.3 & -37.7 \\
+Độ mở van làm mát (\%) & 100 & --- & --- \\
 \hline
-Tiêu thụ nước làm mát (L/h) & 120 & 74.8 & -45.2 \\
+Tiêu thụ nước làm mát (L/h) & --- & --- & --- \\
 \hline
 \end{tabular}
-\caption{So sánh hiệu quả năng lượng giữa hai phương án}
-\label{tab:energy_comparison}
+\caption{So sánh hiệu quả năng lượng giữa hai phương án (từ mô phỏng)}
+\label{tab:sim_energy_comparison}
 \end{table}
 
-\textbf{Hiệu suất tiết kiệm năng lượng:}
-\begin{equation}
-    \eta_{saving} = \frac{Q_{R,baseline} - Q_{R,optimal}}{Q_{R,baseline}} \times 100\% = \frac{2556 - 2055}{2556} \times 100\% = \textbf{19.6\%}
-\end{equation}
-
-\textbf{Tiết kiệm nước làm mát:}
-\begin{equation}
-    \eta_{water} = \frac{120 - 74.8}{120} \times 100\% = \textbf{37.7\%}
-\end{equation}
+\begin{figure}[H]
+\centering
+\fbox{\parbox{0.8\textwidth}{\centering\vspace{4cm}Đồ thị so sánh công suất reboiler\\(Sẽ cập nhật từ kết quả mô phỏng Python)\vspace{4cm}}}
+\caption{So sánh công suất reboiler giữa hai phương án vận hành}
+\label{fig:sim_power_comparison}
+\end{figure}
 
 % ------------------------------------------------------------
 \subsection{Thảo luận}
 % ------------------------------------------------------------
 
-\subsubsection{Phân tích kết quả}
+\subsubsection{Phân tích kết quả mô phỏng}
 
-Kết quả thí nghiệm cho thấy phương án điều khiển áp suất đỉnh tháp mang lại hiệu quả tiết kiệm năng lượng đáng kể:
+\textit{(Phần này sẽ được cập nhật sau khi hoàn thành mô phỏng Python)}
 
+Dự kiến kết quả mô phỏng sẽ cho thấy:
 \begin{enumerate}
-    \item \textbf{Giảm 19.6\% năng lượng reboiler:} Từ 2556W xuống 2055W, tiết kiệm khoảng 500W trong suốt quá trình vận hành.
-    
-    \item \textbf{Giảm 37.7\% lượng nước làm mát:} Độ mở van trung bình giảm từ 100\% xuống 62.3\%, giảm đáng kể chi phí nước.
-    
-    \item \textbf{Duy trì chất lượng sản phẩm:} Nồng độ sản phẩm đỉnh không bị ảnh hưởng (thậm chí cải thiện nhẹ từ 87.5$^\circ$ lên 88.2$^\circ$).
-    
-    \item \textbf{Vận hành ổn định:} Bộ điều khiển PID duy trì áp suất đỉnh tháp ổn định với sai lệch nhỏ ($\pm$0.5\%).
+    \item Phương án điều khiển áp suất đỉnh tháp giúp giảm năng lượng cung cấp cho reboiler.
+    \item Độ mở van làm mát trung bình thấp hơn đáng kể so với baseline (100\%).
+    \item Chất lượng điều khiển đạt yêu cầu: thời gian xác lập ngắn, độ quá điều chỉnh nhỏ.
+    \item Hệ thống ổn định trong các điều kiện vận hành khác nhau.
 \end{enumerate}
 
 \subsubsection{Giải thích cơ chế tiết kiệm năng lượng}
@@ -333,25 +137,17 @@ Khi van làm mát mở 100\%, công suất ngưng tụ vượt quá nhu cầu th
     \item Reboiler phải hoạt động ở công suất cao hơn để bù đắp.
 \end{itemize}
 
-Khi điều khiển áp suất ở mức tối ưu (1.05 bar):
+Khi điều khiển áp suất ở mức tối ưu:
 \begin{itemize}
     \item Van làm mát chỉ mở vừa đủ để duy trì áp suất ổn định.
     \item Giảm lượng nhiệt bị lấy đi không cần thiết tại condenser.
     \item Reboiler hoạt động ở công suất thấp hơn, tiết kiệm năng lượng.
 \end{itemize}
 
-\subsubsection{Hạn chế và đề xuất cải tiến}
+\subsubsection{Hạn chế của mô phỏng}
 
-\textbf{Hạn chế:}
 \begin{itemize}
-    \item Thí nghiệm được thực hiện trên quy mô phòng thí nghiệm, cần kiểm chứng trên quy mô lớn hơn.
+    \item Mô hình đơn giản hóa, chưa xét đầy đủ các yếu tố phi tuyến.
     \item Chưa xem xét ảnh hưởng của nhiễu loạn (thay đổi nồng độ nhập liệu, nhiệt độ nước làm mát).
-    \item Thông số PID được chỉnh định cho một điều kiện vận hành cụ thể.
-\end{itemize}
-
-\textbf{Đề xuất cải tiến:}
-\begin{itemize}
-    \item Áp dụng điều khiển thích nghi (adaptive control) để tự động điều chỉnh thông số PID.
-    \item Kết hợp với điều khiển tối ưu (optimal control) để tìm điểm vận hành tối ưu.
-    \item Tích hợp hệ thống giám sát năng lượng để theo dõi hiệu quả liên tục.
+    \item Cần kiểm chứng thực nghiệm để xác nhận kết quả mô phỏng.
 \end{itemize}

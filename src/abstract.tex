@@ -8,19 +8,19 @@
 
 Trong hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm, việc ổn định áp suất đỉnh tháp hiện đang được thực hiện bằng cách mở van nước làm mát ở mức tối đa (100\%). Phương pháp này gây lãng phí năng lượng đáng kể do reboiler phải hoạt động ở công suất cao để bù đắp lượng nhiệt bị lấy đi quá mức tại bộ ngưng tụ.
 
-Đồ án này nghiên cứu và triển khai giải pháp tối ưu hóa năng lượng thông qua việc thiết kế vòng điều khiển tự động cho van nước làm mát dựa trên áp suất đỉnh tháp. Bộ điều khiển PID được sử dụng để điều chỉnh độ mở van, duy trì áp suất đỉnh tháp ổn định tại giá trị đặt (1.05 bar) với mức tiêu thụ năng lượng tối thiểu.
+Đồ án này nghiên cứu và đề xuất giải pháp tối ưu hóa năng lượng thông qua việc thiết kế vòng điều khiển tự động cho van nước làm mát dựa trên áp suất đỉnh tháp. Bộ điều khiển PID được sử dụng để điều chỉnh độ mở van, duy trì áp suất đỉnh tháp ổn định tại giá trị đặt với mức tiêu thụ năng lượng tối thiểu.
 
-Kết quả thí nghiệm cho thấy phương pháp điều khiển mới mang lại hiệu quả tiết kiệm năng lượng đáng kể:
+Các nội dung chính của đồ án bao gồm:
 \begin{itemize}
-    \item Giảm \textbf{19.6\%} năng lượng cung cấp cho reboiler (từ 2556W xuống 2055W)
-    \item Giảm \textbf{37.7\%} lượng nước làm mát sử dụng
-    \item Duy trì chất lượng sản phẩm đỉnh (88.2$^\circ$ rượu)
-    \item Áp suất đỉnh tháp ổn định với sai lệch $\pm$0.5\%
+    \item Phân tích hiện trạng tiêu thụ năng lượng và xác định nguyên nhân lãng phí
+    \item Thiết kế vòng điều khiển áp suất đỉnh tháp (PC-01) với bộ điều khiển PID
+    \item Xây dựng mô hình toán học của hệ thống
+    \item Mô phỏng và đánh giá hiệu quả tiết kiệm năng lượng bằng Python
 \end{itemize}
 
-Bộ điều khiển được thiết kế với thông số PID: $K_c = 300$, $T_i = 25$s, $T_d = 5$s, đảm bảo hệ thống hoạt động ổn định và đáp ứng nhanh với các thay đổi của quá trình.
+Kết quả mô phỏng dự kiến cho thấy phương pháp điều khiển mới có thể giảm đáng kể năng lượng cung cấp cho reboiler và lượng nước làm mát sử dụng, trong khi vẫn duy trì chất lượng sản phẩm và áp suất đỉnh tháp ổn định.
 
 \vspace{0.5cm}
-\textbf{Từ khóa:} Chưng cất ethanol -- nước, tối ưu năng lượng, điều khiển áp suất, PID, tiết kiệm năng lượng.
+\textbf{Từ khóa:} Chưng cất ethanol -- nước, tối ưu năng lượng, điều khiển áp suất, PID, mô phỏng Python.
 
 \newpage
