@@ -141,34 +141,83 @@ Hệ thống được trang bị các thiết bị đo sau:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|c|c|}
+\small
+\begin{tabularx}{\textwidth}{|X|l|c|c|}
 \hline
 \textbf{Thiết bị} & \textbf{Loại/Model} & \textbf{Dải đo} & \textbf{Tín hiệu} \\
 \hline
-Cảm biến nhiệt độ đỉnh tháp & PT100 & 0 -- 200$^\circ$C & 4-20 mA \\
+Cảm biến nhiệt độ đỉnh tháp & Pt100 + Transmitter & 0 -- 200$^\circ$C & 4-20 mA \\
 \hline
-Cảm biến nhiệt độ nhập liệu & PT100 & 0 -- 200$^\circ$C & 4-20 mA \\
+Cảm biến nhiệt độ nhập liệu & Pt100 + Transmitter & 0 -- 200$^\circ$C & 4-20 mA \\
 \hline
-Cảm biến áp suất đỉnh tháp & Pressure transmitter & 0 -- 2 bar & 4-20 mA \\
+Cảm biến áp suất đỉnh tháp & SITRANS P200 & 1 -- 60 bar & 4-20 mA \\
 \hline
-Cảm biến lưu lượng nhập liệu & Flowmeter & 0 -- 5 L/h & 4-20 mA \\
+Cảm biến lưu lượng hồi lưu & DPM-1507-G1-L443 & 50 -- 700 ml/min & 4-20 mA \\
 \hline
-Cảm biến mức bình hồi lưu & Level transmitter & 0 -- 300 mm & 4-20 mA \\
+Cảm biến mức bình hồi lưu & NMC-H1.2G603 & 0 -- 1200 mm & 4-20 mA \\
 \hline
-\end{tabular}
+\end{tabularx}
 \caption{Danh sách thiết bị đo}
 \label{tab:sensors}
 \end{table}
 
-\textbf{Cảm biến áp suất đỉnh tháp:}
+\textbf{Cảm biến áp suất đỉnh tháp -- SITRANS P200:}
 
-Cảm biến áp suất được lắp đặt tại đường ống hơi ra khỏi đỉnh tháp, trước bộ ngưng tụ. Cảm biến này đóng vai trò quan trọng trong việc giám sát và điều khiển áp suất đỉnh tháp.
+Cảm biến áp suất SITRANS P200 [8] được lắp đặt tại đường ống hơi ra khỏi đỉnh tháp, trước bộ ngưng tụ. Đây là cảm biến áp suất compact với các đặc điểm kỹ thuật:
+\begin{itemize}
+    \item Nguyên lý đo: Cảm biến áp điện trở (piezoresistive) với màng gốm ceramic
+    \item Dải đo: 1 -- 60 bar (áp suất tương đối và tuyệt đối)
+    \item Tín hiệu ra: 4-20 mA hoặc 0-10 V DC
+    \item Độ chính xác: $\pm$0.25\% của dải đo
+    \item Vỏ bọc: Thép không gỉ, IP65/IP67
+    \item Kết nối điện: Đầu nối M12 hoặc EN 175301-803-A
+\end{itemize}
+
+\textbf{Cảm biến lưu lượng hồi lưu -- Kobold DPM-1507-G1-L443:}
+
+Lưu lượng kế cánh quay thể tích nhỏ Kobold DPM [9] được sử dụng để đo lưu lượng dòng hồi lưu:
+\begin{itemize}
+    \item Nguyên lý đo: Cánh quay (Rotating Vane) với cảm biến quang học
+    \item Dải đo: 50 -- 700 ml/min (nước)
+    \item Vật liệu: Thép không gỉ 1.4404
+    \item Áp suất làm việc tối đa: 16 bar
+    \item Nhiệt độ làm việc: -40 đến +80$^\circ$C
+    \item Tín hiệu ra: 4-20 mA (mã L443 -- đầu nối DIN 43650)
+    \item Kết nối: G$\frac{1}{8}$ ren trong (mã G1)
+    \item Độ chính xác: $\pm$1\% của thang đo
+\end{itemize}
+
+\textbf{Cảm biến mức bình hồi lưu -- Kobold NMC-H1.2G603:}
+
+Cảm biến mức điện dung Kobold NMC [10] được lắp đặt tại bình chứa sản phẩm hồi lưu:
+\begin{itemize}
+    \item Nguyên lý đo: Điện dung (Capacitive)
+    \item Chiều dài que đo: 1200 mm (mã H1.2)
+    \item Dải áp suất: -1 đến +30 bar
+    \item Nhiệt độ môi trường đo: -20 đến +200$^\circ$C (Model NMC-H)
+    \item Sai số đo: < 1.5\% chiều dài que đo
+    \item Tín hiệu ra: 4-20 mA
+    \item Kết nối cơ khí: G1 ren ngoài, thép không gỉ (mã G6)
+    \item Bảo vệ: IP65, phù hợp ứng dụng ATEX
+\end{itemize}
+
+\textbf{Cảm biến nhiệt độ -- Pt100 với Transmitter 4-20mA:}
+
+Cảm biến nhiệt độ RTD Pt100 theo tiêu chuẩn IEC 60751 được sử dụng kết hợp với bộ chuyển đổi tín hiệu 4-20mA:
+\begin{itemize}
+    \item Loại cảm biến: Pt100 (100$\Omega$ tại 0$^\circ$C, $\alpha$ = 0.00385)
+    \item Dải đo: 0 -- 200$^\circ$C (có thể cấu hình)
+    \item Cấp chính xác: Class A theo IEC 60751
+    \item Tín hiệu ra: 4-20 mA (2-wire loop powered)
+    \item Kết nối: 3-wire hoặc 4-wire RTD
+    \item Nguồn cấp: 10-30 VDC
+\end{itemize}
 
 % Placeholder cho hình ảnh thực tế
 \begin{figure}[H]
 \centering
-\fbox{\parbox{0.6\textwidth}{\centering\vspace{3cm}Hình ảnh cảm biến áp suất đỉnh tháp\\(Sẽ cập nhật sau)\vspace{3cm}}}
-\caption{Cảm biến áp suất đỉnh tháp}
+\fbox{\parbox{0.6\textwidth}{\centering\vspace{3cm}Hình ảnh cảm biến áp suất SITRANS P200\\(Sẽ cập nhật sau)\vspace{3cm}}}
+\caption{Cảm biến áp suất đỉnh tháp SITRANS P200}
 \label{fig:pressure_sensor}
 \end{figure}
 

@@ -136,6 +136,57 @@ Số mâm lý thuyết được xác định bằng cách vẽ các bậc thang 
     \item Vẽ các bậc thang từ $x_D$ đến $x_W$, đếm số bậc
 \end{enumerate}
 
+\subsubsection{Xác định tỷ số hồi lưu vận hành}
+
+Với hệ thống thí nghiệm có 6 mâm thực tế và hiệu suất Murphree $E_{MV} = 80\%$, số mâm lý thuyết khả dụng:
+\begin{equation}
+    N_{\text{khả dụng}} = N_{\text{thực tế}} \times E_{MV} = 6 \times 0.8 = 4.8 \text{ mâm lý thuyết}
+\end{equation}
+
+Phương pháp McCabe-Thiele cho thấy số mâm lý thuyết cần thiết phụ thuộc vào tỷ số hồi lưu $R$: khi $R$ tăng, số mâm cần thiết giảm (và ngược lại). Với các thông số vận hành:
+\begin{itemize}
+    \item Nồng độ nhập liệu: $x_F = 10\%$ vol (3.32\% mol)
+    \item Nồng độ sản phẩm đỉnh: $x_D = 90\%$ vol (73.56\% mol)
+    \item Nồng độ sản phẩm đáy: $x_W = 1\%$ vol (0.31\% mol)
+    \item Hệ số q = 1.042 (nhập liệu lạnh ở 70°C)
+\end{itemize}
+
+Tỷ số hồi lưu tối thiểu được xác định từ giao điểm của đường q với đường cân bằng:
+\begin{equation}
+    R_{min} = \frac{x_D - y_{pinch}}{y_{pinch} - x_{pinch}} = 1.68
+\end{equation}
+
+Từ phân tích McCabe-Thiele với các giá trị $R$ khác nhau:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Tỷ số hồi lưu $R$} & \textbf{Số mâm lý thuyết $N$} & \textbf{$R/R_{min}$} \\
+\hline
+7.7 & 5 & 4.6 \\
+\hline
+10.4 & 4.8 (nội suy) & 6.2 \\
+\hline
+35.1 & 4 & 20.9 \\
+\hline
+\end{tabular}
+\caption{Quan hệ giữa tỷ số hồi lưu và số mâm lý thuyết}
+\label{tab:reflux_stages}
+\end{table}
+
+Vì phương pháp McCabe-Thiele cho kết quả số nguyên (đếm bậc thang), giá trị $R$ cho $N = 4.8$ được xác định bằng nội suy logarit giữa hai biên:
+\begin{equation}
+    R_{4.8} = R_5 \times \left(\frac{R_4}{R_5}\right)^{(5-4.8)/(5-4)} = 7.7 \times \left(\frac{35.1}{7.7}\right)^{0.2} = 10.4
+\end{equation}
+
+Do đó, tỷ số hồi lưu vận hành được chọn là $R \approx 10$ (làm tròn cho thực tế), tương đương $6.2 \times R_{min}$. Giá trị này đảm bảo:
+\begin{itemize}
+    \item Đủ để đạt nồng độ sản phẩm 90\% vol với 6 mâm thực tế
+    \item Không quá cao gây lãng phí năng lượng
+    \item Có biên độ an toàn cho các nhiễu loạn vận hành
+\end{itemize}
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -152,59 +203,58 @@ Số mâm lý thuyết được xác định bằng cách vẽ các bậc thang 
     legend style={font=\small},
 ]
 
-% Đường chéo y = x
-\addplot[gray, dashed, thin] coordinates {(0,0) (1,1)};
+% Đường chéo y = x (không có legend)
+\addplot[gray, dashed, thin, forget plot] coordinates {(0,0) (1,1)};
 
-% Đường cân bằng ethanol-nước (dữ liệu thực nghiệm)
+% Đường cân bằng ethanol-nước (tính từ phương trình Antoine + Van Laar)
 \addplot[blue, thick, smooth] coordinates {
-    (0, 0) (0.019, 0.17) (0.0721, 0.389) (0.0966, 0.437) 
-    (0.1238, 0.470) (0.1661, 0.509) (0.2337, 0.545)
-    (0.2608, 0.558) (0.3273, 0.583) (0.3965, 0.612)
-    (0.5079, 0.656) (0.5198, 0.670) (0.5732, 0.699)
-    (0.6763, 0.753) (0.7472, 0.788) (0.8943, 0.878) (1, 1)
+    (0.0000, 0.0000) (0.0503, 0.3246) (0.1005, 0.4410) (0.1508, 0.4999)
+    (0.2010, 0.5360) (0.2513, 0.5619) (0.3015, 0.5830) (0.3518, 0.6020)
+    (0.4020, 0.6205) (0.4523, 0.6394) (0.5025, 0.6594) (0.6030, 0.7046)
+    (0.7035, 0.7588) (0.8040, 0.8248) (0.9045, 0.9056) (1.0000, 1.0000)
 };
 \addlegendentry{Đường cân bằng}
 
-% Đường vận hành phần cất (R = 2, xD = 0.8)
-% y = (2/3)x + 0.8/3 = 0.667x + 0.267
-\addplot[red, thick] coordinates {(0.35, 0.50) (0.8, 0.8)};
+% Đường vận hành phần cất (R = 10.4, x_D = 0.7356)
+% y = 0.9123*x + 0.0645
+\addplot[red, thick] coordinates {(0.0358, 0.0972) (0.7356, 0.7356)};
 \addlegendentry{Đường vận hành phần cất}
 
 % Đường vận hành phần chưng
-\addplot[orange, thick] coordinates {(0.02, 0.02) (0.35, 0.50)};
+\addplot[orange, thick] coordinates {(0.0031, 0.0031) (0.0358, 0.0972)};
 \addlegendentry{Đường vận hành phần chưng}
 
-% Đường q (q = 1.04, xF = 0.1)
-\addplot[green!60!black, thick, dashed] coordinates {(0.1, 0.1) (0.35, 0.50)};
+% Đường q (q = 1.042, x_F = 0.0332)
+\addplot[green!60!black, thick, dashed] coordinates {(0.0332, 0.0332) (0.0358, 0.0972)};
 \addlegendentry{Đường q}
 
-% Các bậc thang (minh họa 5 bậc)
-\addplot[black, thin] coordinates {
-    (0.8, 0.8) (0.8, 0.878)    % lên đường CB
-    (0.8, 0.878) (0.68, 0.878) % sang trái
-    (0.68, 0.878) (0.68, 0.753) % xuống đường VH
-    (0.68, 0.753) (0.52, 0.753) % sang trái
-    (0.52, 0.753) (0.52, 0.67)  % xuống
-    (0.52, 0.67) (0.35, 0.67)   % sang trái
-    (0.35, 0.67) (0.35, 0.50)   % xuống (qua điểm nhập liệu)
-    (0.35, 0.50) (0.15, 0.50)   % sang trái
-    (0.15, 0.50) (0.15, 0.28)   % xuống
-    (0.15, 0.28) (0.02, 0.28)   % sang trái
+% Các bậc thang (5 mâm lý thuyết)
+\addplot[black, thin, forget plot] coordinates {
+    (0.7356, 0.7356)
+    (0.6629, 0.7356)
+    (0.6629, 0.6693)
+    (0.5259, 0.6693)
+    (0.5259, 0.5443)
+    (0.2156, 0.5443)
+    (0.2156, 0.2612)
+    (0.0346, 0.2612)
+    (0.0346, 0.0936)
+    (0.0090, 0.0936)
 };
 
 % Điểm đánh dấu
-\addplot[only marks, mark=*, mark size=2pt, black] coordinates {
-    (0.8, 0.8) (0.1, 0.1) (0.02, 0.02) (0.35, 0.50)
+\addplot[only marks, mark=*, mark size=2pt, black, forget plot] coordinates {
+    (0.7356, 0.7356) (0.0332, 0.0332) (0.0031, 0.0031) (0.0358, 0.0972)
 };
 
 % Labels
-\node at (axis cs:0.85, 0.75) {\small $x_D$};
-\node at (axis cs:0.15, 0.08) {\small $x_F$};
-\node at (axis cs:0.07, 0.02) {\small $x_W$};
+\node at (axis cs:0.80, 0.70) {\small $x_D$};
+\node at (axis cs:0.08, 0.08) {\small $x_F$};
+\node at (axis cs:0.05, 0.00) {\small $x_W$};
 
 \end{axis}
 \end{tikzpicture}
-\caption{Phương pháp McCabe-Thiele xác định số mâm lý thuyết [7]}
+\caption{Phương pháp McCabe-Thiele với $R = 10.4$ (đồ thị vẽ 5 bậc; tương đương 4.8 mâm lý thuyết khi nội suy)}
 \label{fig:mccabe_thiele}
 \end{figure}
 
