@@ -33,11 +33,12 @@ TRAY_SPACING = 0.140  # m (140 mm)
 # Reboiler Specifications
 # =============================================================================
 REBOILER_POWER_MAX = 6000.0  # W (2 x 3000W heaters)
-REBOILER_POWER_OPERATING = 4500.0  # W (typical operating point)
+REBOILER_POWER_OPERATING = 6000.0  # W (SSR control - ON/OFF only, no analog)
 
 # Power loss factor (voltage drops, contact resistance, heat loss to environment)
 # Effective power = REBOILER_POWER * (1 - REBOILER_POWER_LOSS)
 REBOILER_POWER_LOSS = 0.10  # 10% loss
+# Effective power = 6000 * 0.9 = 5400W
 
 # =============================================================================
 # Condenser Specifications (Coil type)

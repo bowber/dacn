@@ -18,16 +18,16 @@ KEY PHYSICS - Heat Transfer Coefficient varies with flow rate:
 Control strategy:
 - If Q_condenser < Q_reboiler: excess vapor escapes through vent (product loss!)
 - If Q_condenser > Q_reboiler: overcooling (wastes cooling water)
-- Optimal: Q_condenser ≈ Q_reboiler_effective = 4050W → valve ~60%
+- Optimal: Q_condenser ≈ Q_reboiler_effective = 5400W → valve ~54%
 
 The control objective is to find the OPTIMAL valve opening that:
 1. Matches condenser duty to reboiler duty (no product loss)
 2. Minimizes excess cooling water usage
 
 Key insight from energy balance with flow-dependent U:
-- Reboiler at 4500W electrical, 4050W effective (10% loss)
-- At 100% valve: Q_condenser = 6200W (overcooling, wastes water)
-- At 60% valve: Q_condenser ≈ 4050W (optimal)
+- Reboiler at 6000W electrical (2x3kW, SSR ON/OFF), 5400W effective (10% loss)
+- At 100% valve: Q_condenser = 9088W (overcooling, wastes water)
+- At 54% valve: Q_condenser ≈ 5400W (optimal)
 - At 20% valve: Q_condenser = 1700W (undercooling, product loss!)
 """
 
@@ -100,9 +100,9 @@ class DistillationProcess:
         self.tau = 30.0  # s (time constant)
 
         # Calculate equilibrium valve position where Q_condenser = Q_reboiler
-        # At Q_reboiler = 4500W, need Q_condenser ~4500W
-        # From energy balance with flow-dependent U: valve ~65-70%
-        self.valve_equilibrium = 68.0  # % (optimal valve position)
+        # At Q_reboiler = 6000W electrical (5400W effective), need Q_condenser ~5400W
+        # From energy balance with flow-dependent U: valve ~54%
+        self.valve_equilibrium = 54.0  # % (optimal valve position)
 
         # State
         self.P = OPERATING_PRESSURE  # bar

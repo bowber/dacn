@@ -845,7 +845,7 @@ def actual_operation_analysis():
     """
     Analyze actual operation with configured reboiler power.
 
-    The reboiler power (4500W electrical) minus 10% losses gives effective
+    The reboiler power (6000W electrical, 2x3kW SSR ON/OFF) minus 10% losses gives effective
     thermal power. This analysis shows optimal valve position for actual
     equipment configuration.
     """
@@ -941,6 +941,6 @@ if __name__ == "__main__":
     # Run the actual operation analysis
     print("\n\n")
     print("=" * 70)
-    print("PART 2: ACTUAL OPERATION (With 4500W Reboiler)")
+    print("PART 2: ACTUAL OPERATION (With 6000W Reboiler)")
     print("=" * 70)
     results_actual = actual_operation_analysis()
