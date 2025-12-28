@@ -30,6 +30,7 @@ from config import (
     OUTPUT_DIR,
     FIGURE_DPI,
     REBOILER_POWER_OPERATING,
+    REFLUX_RATIO,
 )
 from process_model import DistillationProcess
 from energy_balance import (
@@ -109,7 +110,7 @@ def run_baseline_simulation(duration=None, save_figures=True):
         # Product rate is determined by REBOILER vapor generation, not condensation
         # As long as Q_condenser >= Q_reboiler, all vapor condenses
         _, V_reboiler_Lh = reboiler_vapor_rate(REBOILER_POWER_OPERATING, x_W_mol)
-        D, L = calculate_product_rate(V_reboiler_Lh, R=16.8)
+        D, L = calculate_product_rate(V_reboiler_Lh, R=REFLUX_RATIO)
 
         Q_condensers.append(Q_c)
         product_rates.append(D)

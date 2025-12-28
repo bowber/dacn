@@ -47,6 +47,7 @@ from config import (
     PRODUCT_CONC_VOL,
     WATER_CP,
     WATER_DENSITY,
+    REFLUX_RATIO,
 )
 from thermodynamics import (
     vol_to_mol_fraction,
@@ -296,7 +297,7 @@ class DistillationProcess:
         rho_mix = 810  # kg/m³ approximate
         V_condensed_Lh = V_condensed_mol * MW_mix / 1000 / rho_mix * 1000 * 3600
 
-        R = 16.8  # Reflux ratio from McCabe-Thiele
+        R = REFLUX_RATIO  # Reflux ratio from McCabe-Thiele
         D = V_condensed_Lh / (R + 1)
         L = R * D
 
@@ -312,7 +313,7 @@ class DistillationProcess:
         MW_mix = 40
         rho_mix = 810
         V_condensed_Lh = V_out * MW_mix / 1000 / rho_mix * 1000 * 3600
-        R = 16.8
+        R = REFLUX_RATIO
         D = V_condensed_Lh / (R + 1)
         L = R * D
 

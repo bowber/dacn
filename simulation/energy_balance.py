@@ -41,6 +41,7 @@ from config import (
     BOTTOM_CONC_VOL,
     WATER_CP,
     WATER_DENSITY,
+    REFLUX_RATIO,
 )
 
 
@@ -827,8 +828,8 @@ def energy_balance_analysis():
         )
 
     # Product rate analysis with typical reflux ratio
-    print(f"\nProduct Rate vs Valve Opening (R = 16.8):")
-    R = 16.8  # From McCabe-Thiele analysis
+    print(f"\nProduct Rate vs Valve Opening (R = {REFLUX_RATIO}):")
+    R = REFLUX_RATIO  # From McCabe-Thiele analysis
 
     print(f"\n  Valve%  | Condensed | Product D | Reflux L")
     print(f"          | (L/h)     | (L/h)     | (L/h)")

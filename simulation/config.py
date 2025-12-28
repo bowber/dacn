@@ -55,6 +55,13 @@ COOLANT_FLOW_MAX = 7.2  # L/min
 CONDENSER_U = 800.0  # W/(m²·K) - conservative middle value
 
 # =============================================================================
+# Reflux Ratio (from McCabe-Thiele analysis)
+# =============================================================================
+# R = 10.4 for N = 4.8 theoretical stages (6 trays × 80% Murphree efficiency)
+# R_min = 1.68, so R = 6.2 × R_min
+REFLUX_RATIO = 10.4
+
+# =============================================================================
 # Reflux Drum
 # =============================================================================
 REFLUX_DRUM_DIAMETER = 0.020  # m (20 mm)

@@ -34,6 +34,7 @@ from config import (
     FIGURE_DPI,
     REBOILER_POWER_OPERATING,
     REBOILER_POWER_LOSS,
+    REFLUX_RATIO,
 )
 from process_model import DistillationProcess, get_effective_reboiler_power
 from pid_controller import PIDController, tune_pid_imc
@@ -163,7 +164,7 @@ def run_pid_simulation(duration=None, save_figures=True, include_disturbance=Tru
         # Product rate is determined by REBOILER vapor generation, not condensation
         # As long as Q_condenser >= Q_reboiler, all vapor condenses
         _, V_reboiler_Lh = reboiler_vapor_rate(process.Q_reboiler, x_W_mol)
-        D, L = calculate_product_rate(V_reboiler_Lh, R=16.8)
+        D, L = calculate_product_rate(V_reboiler_Lh, R=REFLUX_RATIO)
 
         Q_condensers.append(Q_c)
         product_rates.append(D)
