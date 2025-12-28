@@ -4,29 +4,31 @@ Dynamic process model for distillation column pressure control.
 This model simulates:
 1. Column top pressure dynamics based on vapor balance
 2. Condenser response to cooling water valve changes
-3. Effect of pressure on product rate
+3. Effect of valve position on heat transfer and condensation rate
 
 CRITICAL: This is a lab-scale ATMOSPHERIC distillation column.
-The column top is OPEN to atmosphere (vented), so pressure is ALWAYS 1.0 bar.
-Unlike pressurized columns, the pressure cannot deviate significantly from
-atmospheric regardless of valve position or cooling rate.
+The column top is OPEN to atmosphere (vented), so pressure is ~1.0 bar.
 
-The control objective is NOT to correct pressure deviations (there are none).
-Instead, the goal is to find the MINIMUM valve opening that maintains stable
-operation, thus SAVING COOLING WATER.
+KEY PHYSICS - Heat Transfer Coefficient varies with flow rate:
+- Valve opening → coolant flow rate
+- Flow rate → Reynolds number (Re) → Nusselt number (Nu)
+- Nu → heat transfer coefficient (α)
+- Q = U × A × ΔTLMTD where U ∝ (flow)^0.8
 
 Control strategy:
-- Baseline (100% valve): Pressure = 1.0 bar, but wastes cooling water
-- PID control (~20-27% valve): Pressure = 1.0 bar, optimal cooling
+- If Q_condenser < Q_reboiler: excess vapor escapes through vent (product loss!)
+- If Q_condenser > Q_reboiler: overcooling (wastes cooling water)
+- Optimal: Q_condenser ≈ Q_reboiler = 4500W → valve ~65-70%
 
-The benefit of PID control is ENERGY/WATER SAVINGS, not pressure accuracy.
-Both baseline and PID achieve the same pressure (1.0 bar).
+The control objective is to find the OPTIMAL valve opening that:
+1. Matches condenser duty to reboiler duty (no product loss)
+2. Minimizes excess cooling water usage
 
-Key insight from energy balance:
-- Reboiler at 4500W generates ~0.115 mol/s vapor
-- Condenser can remove up to ~6200W at full cooling
-- Optimal valve position is ~20% to match reboiler heat input
-- Baseline (100% valve) wastes ~73% of cooling water
+Key insight from energy balance with flow-dependent U:
+- Reboiler at 4500W generates vapor
+- At 100% valve: Q_condenser = 6200W (overcooling, wastes water)
+- At 65-70% valve: Q_condenser ≈ 4500W (optimal)
+- At 20% valve: Q_condenser = 1700W (undercooling, product loss!)
 """
 
 import numpy as np
@@ -88,10 +90,10 @@ class DistillationProcess:
         self.Kp = -0.0001  # bar/% (extremely small - atmospheric column simulation)
         self.tau = 30.0  # s (time constant)
 
-        # Calculate equilibrium valve position where V_in = V_out
-        # At Q_reboiler = 4500W, condenser must remove 4500W
-        # From energy balance: valve ~20% gives Q_c ~4500W
-        self.valve_equilibrium = 20.0  # % (optimal valve position)
+        # Calculate equilibrium valve position where Q_condenser = Q_reboiler
+        # At Q_reboiler = 4500W, need Q_condenser ~4500W
+        # From energy balance with flow-dependent U: valve ~65-70%
+        self.valve_equilibrium = 68.0  # % (optimal valve position)
 
         # State
         self.P = OPERATING_PRESSURE  # bar
@@ -144,6 +146,9 @@ class DistillationProcess:
         """
         Calculate condensation rate based on valve opening.
 
+        IMPORTANT: Heat transfer coefficient U varies with flow rate!
+        U ∝ (flow)^0.8 due to Reynolds number effect on Nusselt number.
+
         Parameters:
             valve_pct: Valve opening (0-100%)
 
@@ -151,12 +156,20 @@ class DistillationProcess:
             V_out: Condensation rate (mol/s)
             Q_c: Condenser heat duty (W)
         """
+        if valve_pct <= 0:
+            return 0.0, 0.0
+
         # Coolant flow rate
         coolant_flow_Lmin = COOLANT_FLOW_MAX * valve_pct / 100.0
         coolant_flow_kgs = coolant_flow_Lmin / 60 * WATER_DENSITY / 1000
 
+        # Flow-dependent heat transfer coefficient
+        # U ∝ (flow)^0.8 for turbulent flow regime
+        flow_ratio = coolant_flow_Lmin / COOLANT_FLOW_MAX
+        U = CONDENSER_U * (flow_ratio**0.8)
+        U = max(U, 50.0)  # Minimum U at very low flows
+
         # Temperature driving force
-        # Vapor temperature depends on pressure
         T_vapor = self.T
         T_coolant_in = COOLANT_INLET_TEMP
 
@@ -166,11 +179,11 @@ class DistillationProcess:
         delta_T_coolant = max(0, T_coolant_out_max - T_coolant_in)
         Q_coolant_max = coolant_flow_kgs * WATER_CP * delta_T_coolant
 
-        # Heat transfer by U*A*LMTD
+        # Heat transfer by U*A*LMTD (with flow-dependent U)
         delta_T_avg = T_vapor - (T_coolant_in + T_coolant_out_max) / 2
-        Q_ht = CONDENSER_U * CONDENSER_AREA * max(0, delta_T_avg)
+        Q_ht = U * CONDENSER_AREA * max(0, delta_T_avg)
 
-        # Actual heat transfer is minimum
+        # Actual heat transfer is minimum of both limits
         Q_c = min(Q_coolant_max, Q_ht)
 
         # Condensation rate

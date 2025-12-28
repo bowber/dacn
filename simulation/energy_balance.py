@@ -1,6 +1,11 @@
 """
 Energy balance calculations for distillation column.
 Includes reboiler and condenser heat duty calculations.
+
+IMPORTANT: Heat transfer coefficient (U) varies with coolant flow rate!
+- Q = U × A × ΔTLMTD where U depends on Reynolds number (Re)
+- Lower flow rate → lower Re → lower Nusselt number (Nu) → lower U
+- This is the key mechanism by which valve position affects heat removal
 """
 
 import numpy as np
@@ -24,6 +29,44 @@ from config import (
     WATER_CP,
     WATER_DENSITY,
 )
+
+
+def calculate_heat_transfer_coefficient(coolant_flow_Lmin):
+    """
+    Calculate overall heat transfer coefficient based on coolant flow rate.
+
+    The heat transfer coefficient U depends on flow regime:
+    - Higher flow rate → higher Reynolds number (Re)
+    - Higher Re → higher Nusselt number (Nu)
+    - Higher Nu → higher heat transfer coefficient
+
+    For turbulent flow in tubes: Nu ∝ Re^0.8
+    Since Re ∝ velocity ∝ flow rate: U ∝ (flow rate)^0.8
+
+    Parameters:
+        coolant_flow_Lmin: Coolant flow rate (L/min)
+
+    Returns:
+        U: Overall heat transfer coefficient (W/(m²·K))
+    """
+    if coolant_flow_Lmin <= 0:
+        return 0.0
+
+    # Reference: U = 800 W/(m²·K) at maximum flow (7.2 L/min)
+    U_ref = CONDENSER_U  # 800 W/(m²·K)
+    flow_ref = COOLANT_FLOW_MAX  # 7.2 L/min
+
+    # For turbulent flow: Nu ∝ Re^0.8 ∝ (flow)^0.8
+    # U scales approximately with the coolant-side heat transfer coefficient
+    flow_ratio = coolant_flow_Lmin / flow_ref
+
+    # U ∝ (flow)^0.8 for turbulent regime
+    U = U_ref * (flow_ratio**0.8)
+
+    # Minimum U when flow is very low (natural convection limit)
+    U_min = 50.0  # W/(m²·K)
+
+    return max(U, U_min)
 
 
 def reboiler_vapor_rate(Q_reboiler, x_bottom_mol):
@@ -61,7 +104,7 @@ def condenser_capacity(coolant_flow_Lmin, T_coolant_in, T_vapor):
     """
     Calculate maximum condenser heat removal capacity.
 
-    Uses both heat transfer and coolant heat balance approaches.
+    Uses both heat transfer (with flow-dependent U) and coolant heat balance.
 
     Parameters:
         coolant_flow_Lmin: Coolant flow rate (L/min)
@@ -72,16 +115,16 @@ def condenser_capacity(coolant_flow_Lmin, T_coolant_in, T_vapor):
         Q_max: Maximum heat removal capacity (W)
         T_coolant_out: Coolant outlet temperature (°C)
     """
+    if coolant_flow_Lmin <= 0:
+        return 0.0, T_coolant_in
+
     # Convert flow rate to kg/s
     coolant_flow_kgs = coolant_flow_Lmin / 60 * WATER_DENSITY / 1000  # L/min -> kg/s
 
-    # Method 1: Heat transfer limit
-    # Q = U * A * LMTD
-    # For condenser with phase change, use simple delta T approximation
-    # LMTD ≈ T_vapor - (T_in + T_out)/2
-    # Assume T_out limited to avoid too close approach
+    # Calculate flow-dependent heat transfer coefficient
+    U = calculate_heat_transfer_coefficient(coolant_flow_Lmin)
 
-    # Method 2: Coolant heat capacity limit
+    # Method 1: Coolant heat capacity limit
     # Q = m_dot * Cp * (T_out - T_in)
     # Maximum T_out should be less than T_vapor (approach temperature)
     approach_temp = 5.0  # °C minimum approach
@@ -90,15 +133,17 @@ def condenser_capacity(coolant_flow_Lmin, T_coolant_in, T_vapor):
     # Maximum Q from coolant capacity
     Q_coolant_max = coolant_flow_kgs * WATER_CP * (T_coolant_out_max - T_coolant_in)
 
-    # Heat transfer Q with average delta T
+    # Method 2: Heat transfer limit with flow-dependent U
+    # Q = U * A * LMTD
+    # For condenser with phase change, use simple delta T approximation
     delta_T_avg = T_vapor - (T_coolant_in + T_coolant_out_max) / 2
-    Q_ht = CONDENSER_U * CONDENSER_AREA * delta_T_avg
+    Q_ht = U * CONDENSER_AREA * delta_T_avg
 
     # Actual Q is minimum of both limits
-    Q_max = min(Q_coolant_max, Q_ht)
+    Q_max = min(max(0, Q_coolant_max), max(0, Q_ht))
 
     # Calculate actual outlet temperature
-    if coolant_flow_kgs > 0:
+    if coolant_flow_kgs > 0 and Q_max > 0:
         T_coolant_out = T_coolant_in + Q_max / (coolant_flow_kgs * WATER_CP)
     else:
         T_coolant_out = T_coolant_in
@@ -121,7 +166,7 @@ def condenser_heat_duty(valve_opening_pct, T_vapor):
     # Coolant flow is proportional to valve opening (linear valve)
     coolant_flow = COOLANT_FLOW_MAX * valve_opening_pct / 100.0  # L/min
 
-    # Get condenser capacity at this flow
+    # Get condenser capacity at this flow (with flow-dependent U)
     Q_c, _ = condenser_capacity(coolant_flow, COOLANT_INLET_TEMP, T_vapor)
 
     return Q_c, coolant_flow
@@ -209,19 +254,23 @@ def energy_balance_analysis():
     print(f"  Operating vapor rate: {V_mol_op * 3600:.2f} mol/h ({V_Lh_op:.2f} L/h)")
 
     # Condenser analysis at different valve openings
-    print(f"\nCondenser Analysis:")
+    print(f"\nCondenser Analysis (with flow-dependent U):")
     print(f"  Area: {CONDENSER_AREA:.3f} m²")
-    print(f"  U: {CONDENSER_U:.0f} W/(m²·K)")
+    print(f"  U_max (at 100% flow): {CONDENSER_U:.0f} W/(m²·K)")
     print(f"  Max coolant flow: {COOLANT_FLOW_MAX:.1f} L/min")
 
-    print(f"\n  Valve%  | Coolant | Q_cond  | Condensation")
-    print(f"          | (L/min) | (W)     | (L/h)")
-    print(f"  " + "-" * 45)
+    print(f"\n  Valve%  | Coolant | U        | Q_cond  | Condensation")
+    print(f"          | (L/min) | W/(m²·K) | (W)     | (L/h)")
+    print(f"  " + "-" * 55)
 
     for valve in [20, 40, 60, 80, 100]:
-        Q_c, flow = condenser_heat_duty(valve, T_vapor)
+        flow = COOLANT_FLOW_MAX * valve / 100.0
+        U = calculate_heat_transfer_coefficient(flow)
+        Q_c, _ = condenser_heat_duty(valve, T_vapor)
         _, V_cond_Lh = condensation_rate(Q_c, x_D_mol)
-        print(f"  {valve:5.0f}   | {flow:5.1f}   | {Q_c:7.0f} | {V_cond_Lh:6.2f}")
+        print(
+            f"  {valve:5.0f}   | {flow:5.1f}   | {U:7.0f}  | {Q_c:7.0f} | {V_cond_Lh:6.2f}"
+        )
 
     # Product rate analysis with typical reflux ratio
     print(f"\nProduct Rate vs Valve Opening (R = 16.8):")
@@ -246,21 +295,18 @@ def energy_balance_analysis():
     print("KEY INSIGHT:")
     print("=" * 60)
     D_100 = results[-1]["D"]
-    D_60 = results[2]["D"]
-    improvement = (D_100 - D_60) / D_60 * 100 if D_60 > 0 else 0
+    D_20 = results[0]["D"]
+    Q_100 = results[-1]["Q_c"]
+    Q_20 = results[0]["Q_c"]
 
-    print(f"  At 100% valve: D = {D_100:.3f} L/h")
-    print(f"  At 60% valve:  D = {D_60:.3f} L/h")
-    print(
-        f"  Product rate is {abs(improvement):.1f}% {'higher' if improvement > 0 else 'lower'} at 100% valve"
-    )
-    print(f"\n  However, 100% valve causes OVERCOOLING:")
-    print(f"  - More condensation than needed for the reflux ratio")
-    print(f"  - Pressure drops below setpoint")
-    print(f"  - System must increase reboiler power to compensate")
-    print(f"\n  With PID control at optimal valve opening:")
-    print(f"  - Maintain pressure at setpoint with less cooling")
-    print(f"  - Same product rate with less energy waste")
+    print(f"  At 100% valve: Q = {Q_100:.0f} W, D = {D_100:.3f} L/h")
+    print(f"  At 20% valve:  Q = {Q_20:.0f} W, D = {D_20:.3f} L/h")
+    print(f"\n  Heat transfer coefficient U decreases with flow rate!")
+    print(f"  Q = U × A × ΔTLMTD, where U ∝ (flow)^0.8")
+    print(f"\n  For atmospheric column:")
+    print(f"  - Pressure stays at 1.0 bar (open to atmosphere)")
+    print(f"  - If Q_condenser < Q_reboiler: excess vapor escapes (product loss!)")
+    print(f"  - Optimal: Q_condenser ≈ Q_reboiler = {REBOILER_POWER_OPERATING:.0f} W")
 
     return results
 

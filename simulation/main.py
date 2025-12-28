@@ -193,10 +193,10 @@ def print_comparison_table(baseline_results, pid_results):
     # Note about product rate
     print(f"\n{'GHI CHÚ:':^70}")
     print("-" * 70)
-    print("- Cả Baseline và PID đều có áp suất 1.0 bar (tháp hở khí quyển)")
-    print("- PID Control giảm độ mở van từ 100% xuống ~27%, tiết kiệm nước")
-    print("- Lưu lượng sản phẩm tương đương ở cả hai chế độ")
-    print("- Lợi ích chính: TIẾT KIỆM 73% NƯỚC LÀM MÁT")
+    print("- Cả Baseline và PID đều có áp suất ~1.0 bar (tháp hở khí quyển)")
+    print("- PID Control giảm độ mở van từ 100% xuống ~70%, tiết kiệm nước")
+    print("- Công suất ngưng tụ giảm từ 6200W xuống ~4800W (phù hợp với reboiler)")
+    print("- Lợi ích: TIẾT KIỆM ~27% NƯỚC LÀM MÁT, phù hợp cân bằng năng lượng")
 
     return {
         "pressure_improvement_mbar": pressure_improvement,
