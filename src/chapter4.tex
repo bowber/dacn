@@ -230,16 +230,16 @@ Sơ đồ khối của hệ thống điều khiển:
     \node[block, below=1cm of controller] (sensor) {$G_m(s)$};
     
     % Arrows
-    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
-    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
-    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (valve);
+    \draw[arrow] (sp) -- node[above, font=\normalsize] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\normalsize] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\normalsize] {$u$} (valve);
     \draw[arrow] (valve) -- (process);
     \draw[arrow] (process) -- (output);
     
     % Feedback
     \coordinate (fb) at ($(process.east)!0.5!(output.west)$);
     \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\normalsize] {$-$} (sum);
     
 \end{tikzpicture}
 \caption{Sơ đồ khối hệ thống điều khiển áp suất đỉnh tháp}

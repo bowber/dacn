@@ -32,47 +32,47 @@ Hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm tại 
     
     % Bình chứa hồi lưu
     \draw[thick] (5,5) rectangle (7,6.5);
-    \node at (6,5.75) [font=\small] {Bình hồi lưu};
+    \node at (6,5.75) [font=\normalsize] {Bình hồi lưu};
     \draw[thick] (5.5,7) -- (5.5,6.5);
     
     % Van làm mát
     \draw[thick, fill=gray!30] (7.5,7.2) -- (8,7.5) -- (7.5,7.8) -- cycle;
     \draw[thick] (7,7.5) -- (7.5,7.5);
     \draw[thick] (8,7.5) -- (9,7.5);
-    \node at (8.5,8.2) [font=\small] {Van làm mát};
+    \node at (8.5,8.2) [font=\normalsize] {Van làm mát};
     
     % Nước làm mát vào
     \draw[->, thick, blue] (9.5,7.5) -- (9,7.5);
-    \node at (10.5,7.5) [font=\small, blue] {Nước vào};
+    \node at (10.5,7.5) [font=\normalsize, blue] {Nước vào};
     
     % Nước làm mát ra
     \draw[->, thick, red] (5.5,8) -- (5.5,8.5) -- (10,8.5);
-    \node at (10.5,8.5) [font=\small, red] {Nước ra};
+    \node at (10.5,8.5) [font=\normalsize, red] {Nước ra};
     
     % Dòng hồi lưu
     \draw[->, thick] (5,5.75) -- (2.5,5.75) -- (2.5,7) -- (2,7);
-    \node at (3.5,6.2) [font=\small] {Hồi lưu};
+    \node at (3.5,6.2) [font=\normalsize] {Hồi lưu};
     
     % Sản phẩm đỉnh
     \draw[->, thick] (7,5.75) -- (8,5.75);
-    \node at (9,5.75) [font=\small] {Sản phẩm đỉnh};
+    \node at (9,5.75) [font=\normalsize] {Sản phẩm đỉnh};
     
     % Nhập liệu
     \draw[->, thick] (-2,4) -- (0,4);
-    \node at (-2.5,4) [font=\small] {Nhập liệu};
+    \node at (-2.5,4) [font=\normalsize] {Nhập liệu};
     
     % Sản phẩm đáy
     \draw[->, thick] (1,-1.5) -- (1,-2.5);
-    \node at (1,-3) [font=\small] {Sản phẩm đáy};
+    \node at (1,-3) [font=\normalsize] {Sản phẩm đáy};
     
     % Cảm biến áp suất
     \draw[thick, fill=white] (2.3,7.5) circle (0.3);
-    \node at (2.3,7.5) [font=\tiny] {PT};
-    \node at (2.3,8.2) [font=\small] {Áp suất};
+    \node at (2.3,7.5) [font=\normalsize] {PT};
+    \node at (2.3,8.2) [font=\normalsize] {Áp suất};
     
     % Điện trở gia nhiệt
     \draw[thick, red, decorate, decoration={coil, segment length=4pt, amplitude=2pt}] (-0.5,-1) -- (2.5,-1);
-    \node at (1,-1.8) [font=\small, red] {Điện trở};
+    \node at (1,-1.8) [font=\normalsize, red] {Điện trở};
     
 \end{tikzpicture}
 \caption{Sơ đồ công nghệ hệ thống chưng cất ethanol -- nước}
@@ -342,16 +342,16 @@ Phương án đề xuất sử dụng bộ điều khiển PID để điều ch�
     \node[block, below=1cm of controller] (sensor) {Cảm biến áp suất};
     
     % Arrows
-    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
-    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
-    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (valve);
-    \draw[arrow] (valve) -- node[above, font=\small] {$Q_C$} (condenser);
+    \draw[arrow] (sp) -- node[above, font=\normalsize] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\normalsize] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\normalsize] {$u$} (valve);
+    \draw[arrow] (valve) -- node[above, font=\normalsize] {$Q_C$} (condenser);
     \draw[arrow] (condenser) -- (output);
     
     % Feedback
     \coordinate (fb) at ($(condenser.east)!0.5!(output.west)$);
     \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\normalsize] {$-$} (sum);
     
 \end{tikzpicture}
 \caption{Sơ đồ khối vòng điều khiển áp suất đỉnh tháp (PC-01)}
@@ -393,16 +393,16 @@ Song song với vòng điều khiển áp suất, vòng điều khiển nhiệt 
     \node[block, below=1cm of controller] (sensor) {Cảm biến nhiệt độ};
     
     % Arrows
-    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
-    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
-    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (reboiler);
-    \draw[arrow] (reboiler) -- node[above, font=\small] {$Q_R$} (column);
+    \draw[arrow] (sp) -- node[above, font=\normalsize] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\normalsize] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\normalsize] {$u$} (reboiler);
+    \draw[arrow] (reboiler) -- node[above, font=\normalsize] {$Q_R$} (column);
     \draw[arrow] (column) -- (output);
     
     % Feedback
     \coordinate (fb) at ($(column.east)!0.5!(output.west)$);
     \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\normalsize] {$-$} (sum);
     
 \end{tikzpicture}
 \caption{Sơ đồ khối vòng điều khiển nhiệt độ đỉnh tháp (TC-02)}

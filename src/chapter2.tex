@@ -117,7 +117,7 @@ Nhiệt hóa hơi (kJ/mol) & 38.56 & 40.66 \\
 \addlegendentry{Đường hơi}
 
 % Điểm đẳng phí
-\node[fill=white, font=\small] at (axis cs:0.85, 79) {Điểm đẳng phí};
+\node[fill=white, font=\normalsize] at (axis cs:0.85, 79) {Điểm đẳng phí};
 \draw[dashed, gray] (axis cs:0.956, 75) -- (axis cs:0.956, 78.15);
 
 \end{axis}
@@ -159,16 +159,16 @@ Một vòng điều khiển cơ bản bao gồm:
     \node[block, below=1cm of controller] (sensor) {Cảm biến};
     
     % Arrows
-    \draw[arrow] (sp) -- node[above, font=\small] {$+$} (sum);
-    \draw[arrow] (sum) -- node[above, font=\small] {$e$} (controller);
-    \draw[arrow] (controller) -- node[above, font=\small] {$u$} (actuator);
+    \draw[arrow] (sp) -- node[above, font=\normalsize] {$+$} (sum);
+    \draw[arrow] (sum) -- node[above, font=\normalsize] {$e$} (controller);
+    \draw[arrow] (controller) -- node[above, font=\normalsize] {$u$} (actuator);
     \draw[arrow] (actuator) -- (process);
     \draw[arrow] (process) -- (output);
     
     % Feedback
     \coordinate (fb) at ($(process.east)!0.5!(output.west)$);
     \draw[line] (fb) |- (sensor);
-    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\small] {$-$} (sum);
+    \draw[arrow] (sensor) -| node[pos=0.95, left, font=\normalsize] {$-$} (sum);
 \end{tikzpicture}
 \caption{Sơ đồ khối vòng điều khiển phản hồi}
 \label{fig:feedback_control}
