@@ -276,21 +276,22 @@ Thay vì mở van làm mát ở mức tối đa (100\%), phương pháp tối ư
     \item Van chỉ mở đủ để duy trì áp suất ổn định
 \end{enumerate}
 
-\textbf{Tiềm năng tiết kiệm năng lượng:}
+\textbf{Tiềm năng tăng năng suất:}
 
-Ước tính năng lượng tiết kiệm được:
+Khi giảm công suất làm mát, lượng hồi lưu giảm, dẫn đến tăng năng suất sản phẩm:
 \begin{equation}
-    \Delta Q_R = Q_{R,100\%} - Q_{R,optimal} = Q_{C,100\%} - Q_{C,optimal}
+    \Delta D = D_{optimal} - D_{baseline} = \frac{L_{baseline} - L_{optimal}}{R}
 \end{equation}
 
 Trong đó:
 \begin{itemize}
-    \item $Q_{R,100\%}$: Năng lượng reboiler khi van làm mát mở 100\%
-    \item $Q_{R,optimal}$: Năng lượng reboiler khi vận hành tối ưu
-    \item $Q_{C,100\%}$, $Q_{C,optimal}$: Công suất làm mát tương ứng
+    \item $D_{baseline}$: Năng suất sản phẩm khi van làm mát mở 100\%
+    \item $D_{optimal}$: Năng suất sản phẩm khi vận hành tối ưu
+    \item $L$: Lưu lượng hồi lưu (đo qua lưu lượng kế)
+    \item $R$: Tỷ số hồi lưu
 \end{itemize}
 
-Hiệu suất tiết kiệm năng lượng:
+Hiệu suất tăng năng suất:
 \begin{equation}
-    \eta_{saving} = \frac{\Delta Q_R}{Q_{R,100\%}} \times 100\%
+    \eta_{productivity} = \frac{\Delta D}{D_{baseline}} \times 100\%
 \end{equation}

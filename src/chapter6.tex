@@ -12,10 +12,10 @@
 Đồ án đã thực hiện các nội dung sau:
 
 \begin{enumerate}
-    \item \textbf{Phân tích hiện trạng tiêu thụ năng lượng:}
+    \item \textbf{Phân tích hiện trạng vận hành:}
     \begin{itemize}
-        \item Xác định nguyên nhân lãng phí năng lượng khi vận hành với van làm mát mở 100\%.
-        \item Phân tích mối quan hệ giữa công suất làm mát và năng lượng reboiler.
+        \item Xác định nguyên nhân hạn chế năng suất khi vận hành với van làm mát mở 100\%.
+        \item Phân tích mối quan hệ giữa công suất làm mát, tỷ số hồi lưu và năng suất sản phẩm.
         \item Đánh giá lượng nước làm mát sử dụng dư thừa trong phương án vận hành hiện tại.
     \end{itemize}
     
@@ -30,7 +30,7 @@
     \begin{itemize}
         \item Xây dựng mô hình hệ thống điều khiển bằng Python.
         \item Mô phỏng so sánh hai phương án: baseline (van 100\%) và điều khiển tối ưu.
-        \item Đánh giá hiệu quả tiết kiệm năng lượng thông qua mô phỏng.
+        \item Đánh giá hiệu quả tăng năng suất thông qua mô phỏng.
     \end{itemize}
 \end{enumerate}
 
@@ -38,13 +38,14 @@
 
 Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát dự kiến mang lại:
 \begin{itemize}
-    \item Giảm đáng kể năng lượng cung cấp cho reboiler
+    \item Tăng đáng kể năng suất sản phẩm đỉnh
     \item Giảm lượng nước làm mát sử dụng
     \item Duy trì chất lượng sản phẩm đỉnh
     \item Áp suất đỉnh tháp ổn định tại giá trị đặt
+    \item Giữ nguyên năng lượng tiêu thụ
 \end{itemize}
 
-\textbf{Kết luận tổng quát:} Giải pháp điều khiển áp suất đỉnh tháp là phương pháp hiệu quả để tối ưu hóa năng lượng cung cấp cho quá trình chưng cất ethanol -- nước. Giải pháp này không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động, có thể áp dụng cho các hệ thống chưng cất hiện có.
+\textbf{Kết luận tổng quát:} Giải pháp điều khiển áp suất đỉnh tháp là phương pháp hiệu quả để tối ưu hóa năng suất cho quá trình chưng cất ethanol -- nước. Giải pháp này không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động, có thể áp dụng cho các hệ thống chưng cất hiện có.
 
 % ------------------------------------------------------------
 \subsection{Kiến nghị và hướng phát triển}
@@ -63,7 +64,7 @@ Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước l
     \item \textbf{Mở rộng quy mô áp dụng:}
     \begin{itemize}
         \item Triển khai thử nghiệm trên hệ thống chưng cất quy mô pilot hoặc công nghiệp.
-        \item Đánh giá hiệu quả tiết kiệm năng lượng ở các quy mô khác nhau.
+        \item Đánh giá hiệu quả tăng năng suất ở các quy mô khác nhau.
         \item Nghiên cứu ảnh hưởng của các yếu tố vận hành thực tế (nhiễu loạn, thay đổi tải).
     \end{itemize}
     
@@ -76,16 +77,16 @@ Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước l
     
     \item \textbf{Tối ưu hóa toàn diện hệ thống:}
     \begin{itemize}
-        \item Kết hợp điều khiển áp suất với tối ưu tỉ lệ hồi lưu.
+        \item Kết hợp điều khiển áp suất với tối ưu tỷ số hồi lưu.
         \item Nghiên cứu tích hợp nhiệt (heat integration) giữa các dòng trong hệ thống.
-        \item Phát triển hệ thống quản lý năng lượng tổng thể cho nhà máy.
+        \item Phát triển hệ thống quản lý năng lượng và năng suất tổng thể cho nhà máy.
     \end{itemize}
     
     \item \textbf{Phát triển hệ thống giám sát và báo cáo:}
     \begin{itemize}
-        \item Xây dựng dashboard giám sát năng lượng theo thời gian thực.
+        \item Xây dựng dashboard giám sát năng suất theo thời gian thực.
         \item Tích hợp hệ thống IoT để thu thập và phân tích dữ liệu vận hành.
-        \item Phát triển báo cáo tự động về hiệu quả năng lượng.
+        \item Phát triển báo cáo tự động về hiệu quả năng suất.
     \end{itemize}
 \end{enumerate}
 
@@ -99,7 +100,7 @@ Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước l
 \hline
 \textbf{Tuần} & \textbf{Thời gian} & \textbf{Nội dung công việc} \\
 \hline
-1 & 05/01 -- 11/01/2026 & Nghiên cứu tài liệu về điều khiển quá trình, PID, tối ưu năng lượng chưng cất \\
+1 & 05/01 -- 11/01/2026 & Nghiên cứu tài liệu về điều khiển quá trình, PID, tối ưu năng suất chưng cất \\
 \hline
 2 & 12/01 -- 18/01/2026 & Khảo sát hệ thống thực tế, đo đạc và thu thập thông số thiết bị \\
 \hline
@@ -115,7 +116,7 @@ Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước l
 \hline
 8 & 09/03 -- 15/03/2026 & Lập trình PLC S7-1200 (TIA Portal), thiết kế giao diện HMI \\
 \hline
-9 & 16/03 -- 22/03/2026 & Thí nghiệm baseline: vận hành van 100\%, thu thập dữ liệu năng lượng \\
+9 & 16/03 -- 22/03/2026 & Thí nghiệm baseline: vận hành van 100\%, thu thập dữ liệu \\
 \hline
 10 & 23/03 -- 29/03/2026 & Thí nghiệm điều khiển PID: áp dụng thông số từ mô phỏng \\
 \hline

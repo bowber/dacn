@@ -6,21 +6,21 @@
 \addcontentsline{toc}{section}{TÓM TẮT}
 \section*{TÓM TẮT}
 
-Trong hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm, việc ổn định áp suất đỉnh tháp hiện đang được thực hiện bằng cách mở van nước làm mát ở mức tối đa (100\%). Phương pháp này gây lãng phí năng lượng đáng kể do reboiler phải hoạt động ở công suất cao để bù đắp lượng nhiệt bị lấy đi quá mức tại bộ ngưng tụ.
+Trong hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm, việc ổn định áp suất đỉnh tháp hiện đang được thực hiện bằng cách mở van nước làm mát ở mức tối đa (100\%). Phương pháp này đảm bảo áp suất ổn định nhưng làm ngưng tụ quá mức hơi đỉnh tháp, dẫn đến lượng hồi lưu cao hơn mức cần thiết và hạn chế năng suất sản phẩm đỉnh.
 
-Đồ án này nghiên cứu và đề xuất giải pháp tối ưu hóa năng lượng thông qua việc thiết kế vòng điều khiển tự động cho van nước làm mát dựa trên áp suất đỉnh tháp. Bộ điều khiển PID được sử dụng để điều chỉnh độ mở van, duy trì áp suất đỉnh tháp ổn định tại giá trị đặt với mức tiêu thụ năng lượng tối thiểu.
+Đồ án này nghiên cứu và đề xuất giải pháp tối ưu hóa năng suất thông qua việc thiết kế vòng điều khiển tự động cho van nước làm mát dựa trên áp suất đỉnh tháp. Bộ điều khiển PID được sử dụng để điều chỉnh độ mở van, duy trì áp suất đỉnh tháp ổn định tại giá trị đặt với lượng nước làm mát vừa đủ, từ đó tăng năng suất sản phẩm trong khi giữ nguyên năng lượng tiêu thụ và chất lượng sản phẩm.
 
 Các nội dung chính của đồ án bao gồm:
 \begin{itemize}
-    \item Phân tích hiện trạng tiêu thụ năng lượng và xác định nguyên nhân lãng phí
+    \item Phân tích hiện trạng vận hành và xác định nguyên nhân hạn chế năng suất
     \item Thiết kế vòng điều khiển áp suất đỉnh tháp (PC-01) với bộ điều khiển PID
     \item Xây dựng mô hình toán học của hệ thống
-    \item Mô phỏng và đánh giá hiệu quả tiết kiệm năng lượng bằng Python
+    \item Mô phỏng và đánh giá hiệu quả tăng năng suất bằng Python
 \end{itemize}
 
-Kết quả mô phỏng dự kiến cho thấy phương pháp điều khiển mới có thể giảm đáng kể năng lượng cung cấp cho reboiler và lượng nước làm mát sử dụng, trong khi vẫn duy trì chất lượng sản phẩm và áp suất đỉnh tháp ổn định.
+Lưu lượng sản phẩm đỉnh được tính toán gián tiếp thông qua lưu lượng hồi lưu (có lưu lượng kế) và tỷ số hồi lưu. Kết quả mô phỏng dự kiến cho thấy phương pháp điều khiển mới có thể tăng đáng kể năng suất sản phẩm đỉnh trong khi vẫn duy trì chất lượng sản phẩm và áp suất đỉnh tháp ổn định.
 
 \vspace{0.5cm}
-\textbf{Từ khóa:} Chưng cất ethanol -- nước, tối ưu năng lượng, điều khiển áp suất, PID, mô phỏng Python.
+\textbf{Từ khóa:} Chưng cất ethanol -- nước, tối ưu năng suất, điều khiển áp suất, PID, mô phỏng Python.
 
 \newpage

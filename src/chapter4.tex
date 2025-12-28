@@ -1,12 +1,12 @@
 % ============================================================
-% Chương 4: Phương pháp tối ưu năng lượng
+% Chương 4: Phương pháp tối ưu năng suất
 % ============================================================
 
 \newpage
-\section{GIẢI PHÁP TỐI ƯU HÓA NĂNG LƯỢNG}
+\section{GIẢI PHÁP TỐI ƯU HÓA NĂNG SUẤT}
 
 % ------------------------------------------------------------
-\subsection{Phân tích tiêu thụ năng lượng}
+\subsection{Phân tích vận hành hệ thống}
 % ------------------------------------------------------------
 
 \subsubsection{Năng lượng cung cấp cho reboiler}
@@ -32,7 +32,7 @@ Công suất reboiler được điều khiển thông qua bộ điều khiển n
     \item Nhiệt mất mát ra môi trường
 \end{itemize}
 
-\subsubsection{Năng lượng cho bộ ngưng tụ}
+\subsubsection{Công suất làm mát tại bộ ngưng tụ}
 
 Bộ ngưng tụ sử dụng nước làm mát để ngưng tụ hơi ethanol từ đỉnh tháp. Công suất làm mát được tính:
 
@@ -55,7 +55,7 @@ Lưu lượng nước làm mát phụ thuộc vào độ mở van:
 
 Trong đó $u$ là độ mở van (0--100\%).
 
-\subsubsection{Cân bằng năng lượng tổng thể}
+\subsubsection{Cân bằng năng lượng và năng suất sản phẩm}
 
 Ở trạng thái xác lập, cân bằng năng lượng cho hệ thống:
 
@@ -71,10 +71,10 @@ Trong đó:
     \item $Q_{loss}$: Nhiệt mất mát ra môi trường
 \end{itemize}
 
-Từ phương trình trên, ta thấy rằng khi giảm $Q_C$ (bằng cách giảm độ mở van làm mát), $Q_R$ cũng giảm tương ứng, với điều kiện các yếu tố khác không đổi.
+Khi giữ nguyên $Q_R$ và giảm $Q_C$ (bằng cách giảm độ mở van làm mát), lượng nhiệt dành cho sản phẩm ($Q_{product}$) sẽ tăng, dẫn đến tăng năng suất sản phẩm đỉnh.
 
 % ------------------------------------------------------------
-\subsection{Phân tích vấn đề năng lượng khi vận hành hiện tại}
+\subsection{Phân tích vấn đề khi vận hành hiện tại}
 % ------------------------------------------------------------
 
 \subsubsection{Vận hành với van làm mát mở 100\%}
@@ -87,23 +87,30 @@ Trong phương án vận hành hiện tại, van nước làm mát được mở
     \item Van làm mát: Mở 100\%
 \end{itemize}
 
-\subsubsection{Phân tích nguyên nhân lãng phí năng lượng}
+\subsubsection{Phân tích nguyên nhân hạn chế năng suất}
 
 Khi van làm mát mở 100\%:
 \begin{enumerate}
     \item Công suất ngưng tụ ($Q_C$) lớn hơn nhiều so với lượng hơi cần ngưng tụ.
-    \item Hơi ethanol ngưng tụ nhanh, tạo chân không nhẹ tại đỉnh tháp.
-    \item Áp suất đỉnh tháp giảm, kéo theo sự tăng lưu lượng hơi từ reboiler.
-    \item Reboiler phải cung cấp thêm năng lượng để bù đắp.
+    \item Hơi ethanol ngưng tụ quá mức, tạo lượng hồi lưu lớn hơn cần thiết.
+    \item Tỷ số hồi lưu cao làm giảm năng suất sản phẩm đỉnh.
+    \item Với cùng năng lượng cung cấp, hệ thống không đạt năng suất tối ưu.
 \end{enumerate}
 
-Ước tính năng lượng lãng phí:
+Mối quan hệ giữa lưu lượng sản phẩm đỉnh và lưu lượng hồi lưu:
 \begin{equation}
-    Q_{waste} = Q_C - Q_{C,required}
+    D = \frac{L}{R}
 \end{equation}
 
+Trong đó:
+\begin{itemize}
+    \item $D$: Lưu lượng sản phẩm đỉnh (L/h)
+    \item $L$: Lưu lượng hồi lưu (L/h) -- đo được qua lưu lượng kế
+    \item $R$: Tỷ số hồi lưu
+\end{itemize}
+
 % ------------------------------------------------------------
-\subsection{Thiết kế hệ thống điều khiển tối ưu hóa năng lượng}
+\subsection{Thiết kế hệ thống điều khiển tối ưu năng suất}
 % ------------------------------------------------------------
 
 \subsubsection{Cấu trúc vòng điều khiển áp suất}
@@ -122,7 +129,7 @@ Giá trị đặt áp suất được chọn dựa trên các tiêu chí:
 \begin{itemize}
     \item Đủ cao để đảm bảo hơi ngưng tụ hiệu quả
     \item Không quá cao gây nguy hiểm cho thiết bị
-    \item Tối ưu cho quá trình phân tách
+    \item Tối ưu cho quá trình phân tách và năng suất sản phẩm
 \end{itemize}
 
 \subsubsection{Phương pháp xác định thông số bộ điều khiển PID}
@@ -273,12 +280,18 @@ Hiệu quả của hệ thống điều khiển được đánh giá dựa trên
     \item \textbf{Sai lệch tĩnh ($e_{ss}$):} Sai lệch giữa giá trị đặt và giá trị xác lập.
 \end{itemize}
 
-\subsubsection{Tiêu chí năng lượng}
+\subsubsection{Tiêu chí năng suất}
 
-\textbf{Hiệu suất tiết kiệm năng lượng:}
+\textbf{Hiệu suất tăng năng suất:}
 \begin{equation}
-    \eta_{saving} = \frac{Q_{R,baseline} - Q_{R,optimal}}{Q_{R,baseline}} \times 100\%
+    \eta_{productivity} = \frac{D_{optimal} - D_{baseline}}{D_{baseline}} \times 100\%
 \end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $D_{optimal}$: Lưu lượng sản phẩm đỉnh khi điều khiển tối ưu
+    \item $D_{baseline}$: Lưu lượng sản phẩm đỉnh khi van mở 100\%
+\end{itemize}
 
 \textbf{Tiết kiệm nước làm mát:}
 \begin{equation}
