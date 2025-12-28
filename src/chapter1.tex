@@ -96,3 +96,35 @@ Sản phẩm của đồ án bao gồm:
     \item Kết quả thí nghiệm và đánh giá hiệu quả tăng năng suất.
     \item Báo cáo đồ án chuyên ngành hoàn chỉnh.
 \end{enumerate}
+
+% ------------------------------------------------------------
+\subsection{Tóm tắt kết quả tính toán}
+% ------------------------------------------------------------
+
+Dựa trên các tính toán cân bằng năng lượng và truyền nhiệt (chi tiết tại Chương 4), đồ án đã xác định được các thông số vận hành tối ưu cho hệ thống:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Tối ưu} & \textbf{Cải thiện} \\
+\hline
+Độ mở van nước làm mát & 100\% & 54\% & --46\% \\
+\hline
+Lưu lượng nước làm mát & 7.2 L/min & 3.9 L/min & --46\% \\
+\hline
+Công suất ngưng tụ & 9084 W & 5400 W & Cân bằng \\
+\hline
+Áp suất đỉnh tháp & 1.0 bar & 1.0 bar & Ổn định \\
+\hline
+\end{tabular}
+\caption{So sánh kết quả tính toán giữa chế độ baseline và tối ưu}
+\label{tab:summary_results}
+\end{table}
+
+\textbf{Kết quả chính:}
+\begin{itemize}
+    \item Phương pháp vận hành hiện tại (van 100\%) sử dụng dư thừa ~3700 W công suất làm mát so với nhu cầu thực tế.
+    \item Với điều khiển tự động, van chỉ cần mở 54\% để đạt cân bằng năng lượng, tiết kiệm 46\% lưu lượng nước làm mát.
+    \item Áp suất đỉnh tháp duy trì ổn định tại 1.0 bar trong cả hai chế độ.
+\end{itemize}

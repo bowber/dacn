@@ -16,36 +16,59 @@
     \begin{itemize}
         \item Xác định nguyên nhân hạn chế năng suất khi vận hành với van làm mát mở 100\%.
         \item Phân tích mối quan hệ giữa công suất làm mát, tỷ số hồi lưu và năng suất sản phẩm.
-        \item Đánh giá lượng nước làm mát sử dụng dư thừa trong phương án vận hành hiện tại.
+        \item Phát hiện hệ thống đang sử dụng dư thừa ~3700 W công suất làm mát so với nhu cầu thực tế.
+    \end{itemize}
+    
+    \item \textbf{Xây dựng cơ sở lý thuyết:}
+    \begin{itemize}
+        \item Trình bày phương pháp McCabe-Thiele xác định số mâm lý thuyết.
+        \item Định nghĩa hiệu suất mâm Murphree và ứng dụng trong tính toán.
+        \item Thiết lập các phương trình cân bằng năng lượng cho hệ thống chưng cất.
     \end{itemize}
     
     \item \textbf{Thiết kế vòng điều khiển áp suất đỉnh tháp:}
     \begin{itemize}
         \item Xây dựng vòng điều khiển PC-01 với bộ điều khiển PID.
-        \item Đề xuất phương pháp xác định thông số PID (Ziegler-Nichols và mô phỏng).
-        \item Xây dựng mô hình toán học của hệ thống để phục vụ mô phỏng.
+        \item Xây dựng mô hình toán học của hệ thống: hàm truyền condenser, van, cảm biến.
+        \item Đề xuất phương pháp xác định thông số PID (Ziegler-Nichols).
     \end{itemize}
     
-    \item \textbf{Mô hình hóa và mô phỏng:}
+    \item \textbf{Tính toán và mô phỏng:}
     \begin{itemize}
-        \item Xây dựng mô hình hệ thống điều khiển bằng Python.
-        \item Mô phỏng so sánh hai phương án: baseline (van 100\%) và điều khiển tối ưu.
-        \item Đánh giá hiệu quả tăng năng suất thông qua mô phỏng.
+        \item Xây dựng chương trình tính toán bằng Python.
+        \item Tính toán cân bằng năng lượng: $Q_{reboiler} = 917$ W (lý thuyết), $Q_{eff} = 5400$ W (thực tế).
+        \item So sánh hai phương án vận hành: baseline (van 100\%) và điều khiển tối ưu.
     \end{itemize}
 \end{enumerate}
 
-\textbf{Kết quả dự kiến:}
+\textbf{Kết quả tính toán chính:}
 
-Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát dự kiến mang lại:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Có điều khiển} & \textbf{Cải thiện} \\
+\hline
+Độ mở van nước làm mát & 100\% & 54\% & --46\% \\
+\hline
+Lưu lượng nước làm mát & 7.2 L/min & 3.9 L/min & --46\% \\
+\hline
+Công suất ngưng tụ & 9084 W & 5400 W & Cân bằng \\
+\hline
+Áp suất đỉnh tháp & 1.0 bar & 1.0 bar & Ổn định \\
+\hline
+\end{tabular}
+\caption{Tổng hợp kết quả tính toán}
+\label{tab:conclusion_results}
+\end{table}
+
+\textbf{Kết luận tổng quát:}
 \begin{itemize}
-    \item Tăng đáng kể năng suất sản phẩm đỉnh
-    \item Giảm lượng nước làm mát sử dụng
-    \item Duy trì chất lượng sản phẩm đỉnh
-    \item Áp suất đỉnh tháp ổn định tại giá trị đặt
-    \item Giữ nguyên năng lượng tiêu thụ
+    \item Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát cho phép tiết kiệm 46\% lưu lượng nước làm mát.
+    \item Van chỉ cần mở 54\% thay vì 100\% để đạt cân bằng năng lượng với reboiler 5400 W hiệu dụng.
+    \item Giải pháp không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động.
+    \item Kết quả cần được kiểm chứng thực nghiệm để xác nhận hiệu quả trong điều kiện vận hành thực tế.
 \end{itemize}
-
-\textbf{Kết luận tổng quát:} Giải pháp điều khiển áp suất đỉnh tháp là phương pháp hiệu quả để tối ưu hóa năng suất cho quá trình chưng cất ethanol -- nước. Giải pháp này không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động, có thể áp dụng cho các hệ thống chưng cất hiện có.
 
 % ------------------------------------------------------------
 \subsection{Kiến nghị và hướng phát triển}
