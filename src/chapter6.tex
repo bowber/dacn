@@ -59,7 +59,33 @@ Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước l
         \item Triển khai thử nghiệm trên hệ thống chưng cất thực tế tại phòng thí nghiệm.
         \item So sánh kết quả thực nghiệm với kết quả mô phỏng.
         \item Tinh chỉnh thông số PID dựa trên đáp ứng thực tế.
+        \item Xác định hệ số truyền nhiệt thực tế của thiết bị ngưng tụ.
     \end{itemize}
+    
+    \textbf{Phân tích độ nhạy:} Kết quả tính toán phụ thuộc vào hệ số truyền nhiệt tổng $U$ của thiết bị ngưng tụ. Giá trị $U_{ref} = 800$ W/(m²·K) được sử dụng trong tính toán dựa trên dữ liệu từ Engineering ToolBox cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát (300--1200 W/(m²·K)). Bảng \ref{tab:sensitivity_U} cho thấy kết quả thay đổi đáng kể theo giá trị $U_{ref}$:
+    
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{$U_{ref}$ [W/(m²·K)]} & \textbf{$Q_{100\%}$ [W]} & \textbf{Van tối ưu} & \textbf{Tiết kiệm} & \textbf{Ghi chú} \\
+    \hline
+    300 & 3890 & 100\% & 0\% & Bám bẩn nặng \\
+    \hline
+    500 & 6144 & 86\% & 14\% & \\
+    \hline
+    800 & 9084 & 54\% & 46\% & Giả định \\
+    \hline
+    1000 & 10792 & 45\% & 55\% & \\
+    \hline
+    1200 & 12317 & 39\% & 61\% & Ống sạch \\
+    \hline
+    \end{tabular}
+    \caption{Ảnh hưởng của hệ số truyền nhiệt $U_{ref}$ đến kết quả tính toán}
+    \label{tab:sensitivity_U}
+    \end{table}
+    
+    Từ bảng trên, nếu $U_{ref} < 400$ W/(m²·K), condenser không đủ công suất để ngưng tụ hết hơi từ reboiler ngay cả khi van mở 100\%. Do đó, việc xác định $U_{ref}$ thực tế qua thí nghiệm là cần thiết để đánh giá chính xác hiệu quả tiết kiệm nước làm mát.
     
     \item \textbf{Mở rộng quy mô áp dụng:}
     \begin{itemize}
