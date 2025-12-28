@@ -18,16 +18,16 @@ KEY PHYSICS - Heat Transfer Coefficient varies with flow rate:
 Control strategy:
 - If Q_condenser < Q_reboiler: excess vapor escapes through vent (product loss!)
 - If Q_condenser > Q_reboiler: overcooling (wastes cooling water)
-- Optimal: Q_condenser ≈ Q_reboiler = 4500W → valve ~65-70%
+- Optimal: Q_condenser ≈ Q_reboiler_effective = 4050W → valve ~60%
 
 The control objective is to find the OPTIMAL valve opening that:
 1. Matches condenser duty to reboiler duty (no product loss)
 2. Minimizes excess cooling water usage
 
 Key insight from energy balance with flow-dependent U:
-- Reboiler at 4500W generates vapor
+- Reboiler at 4500W electrical, 4050W effective (10% loss)
 - At 100% valve: Q_condenser = 6200W (overcooling, wastes water)
-- At 65-70% valve: Q_condenser ≈ 4500W (optimal)
+- At 60% valve: Q_condenser ≈ 4050W (optimal)
 - At 20% valve: Q_condenser = 1700W (undercooling, product loss!)
 """
 
@@ -36,6 +36,7 @@ from config import (
     OPERATING_PRESSURE,
     REBOILER_POWER_OPERATING,
     REBOILER_POWER_MAX,
+    REBOILER_POWER_LOSS,
     CONDENSER_U,
     CONDENSER_AREA,
     COOLANT_FLOW_MAX,
@@ -56,6 +57,14 @@ from thermodynamics import (
 
 # Gas constant
 R_GAS = 8.314  # J/(mol·K)
+
+
+def get_effective_reboiler_power(Q_electrical):
+    """
+    Calculate effective thermal power from electrical input.
+    Accounts for losses (voltage drops, heat loss to environment).
+    """
+    return Q_electrical * (1 - REBOILER_POWER_LOSS)
 
 
 class DistillationProcess:
@@ -105,7 +114,8 @@ class DistillationProcess:
         self.valve_buffer = [self.valve_equilibrium] * max(1, self.dead_time_steps)
 
         # Reboiler power (can be changed for disturbance simulation)
-        self.Q_reboiler = REBOILER_POWER_OPERATING
+        # Apply power loss factor for effective thermal power
+        self.Q_reboiler = get_effective_reboiler_power(REBOILER_POWER_OPERATING)
 
         # History for analysis
         self.history = {
@@ -129,7 +139,7 @@ class DistillationProcess:
             valve_initial if valve_initial is not None else self.valve_equilibrium
         )
         self.valve_buffer = [valve_init] * max(1, self.dead_time_steps)
-        self.Q_reboiler = REBOILER_POWER_OPERATING
+        self.Q_reboiler = get_effective_reboiler_power(REBOILER_POWER_OPERATING)
         self.history = {key: [] for key in self.history}
 
     def vapor_rate_in(self):

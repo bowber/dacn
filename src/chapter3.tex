@@ -242,13 +242,13 @@ Trong phương án vận hành hiện tại, van nước làm mát được mở
     \node[right=2cm of condenser] (liquid) {Lỏng ngưng tụ};
     
     % Cooling water - fixed
-    \node[above=1.5cm of condenser] (cw_in) {Nước làm mát (100\%)};
+    \node[above=2.5cm of condenser] (cw_in) {Nước làm mát (100\%)};
     \node[block, above=0.5cm of condenser, minimum width=2cm, fill=gray!30] (valve) {Van mở 100\%};
     
     % Arrows
     \draw[arrow] (vapor) -- (condenser);
     \draw[arrow] (condenser) -- (liquid);
-    \draw[arrow] (cw_in) -- (valve);
+    \draw[-Stealth, thick] (cw_in.south) -- (valve.north);
     \draw[line] (valve) -- (condenser);
     
 \end{tikzpicture}

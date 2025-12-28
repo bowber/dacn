@@ -29,12 +29,14 @@ from config import (
     TIME_STEP,
     OUTPUT_DIR,
     FIGURE_DPI,
+    REBOILER_POWER_OPERATING,
 )
 from process_model import DistillationProcess
 from energy_balance import (
     condenser_heat_duty,
     condensation_rate,
     calculate_product_rate,
+    reboiler_vapor_rate,
 )
 from thermodynamics import vol_to_mol_fraction, bubble_point_temperature
 
@@ -102,8 +104,12 @@ def run_baseline_simulation(duration=None, save_figures=True):
         # Calculate condenser duty and product rate
         Q_c, _ = condenser_heat_duty(valve_baseline, process.T)
         x_D_mol = vol_to_mol_fraction(0.90)
-        _, V_cond_Lh = condensation_rate(Q_c, x_D_mol)
-        D, L = calculate_product_rate(V_cond_Lh, R=16.8)
+        x_W_mol = vol_to_mol_fraction(0.01)
+
+        # Product rate is determined by REBOILER vapor generation, not condensation
+        # As long as Q_condenser >= Q_reboiler, all vapor condenses
+        _, V_reboiler_Lh = reboiler_vapor_rate(REBOILER_POWER_OPERATING, x_W_mol)
+        D, L = calculate_product_rate(V_reboiler_Lh, R=16.8)
 
         Q_condensers.append(Q_c)
         product_rates.append(D)

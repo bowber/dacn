@@ -71,7 +71,61 @@ def generate_comparison_figures(baseline_results, pid_results):
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_comparison_valve.png"), dpi=FIGURE_DPI)
     plt.close()
 
-    # Figure 3: Combined comparison (2x2 subplot)
+    # Figure 3: Condenser duty comparison
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(
+        t_base,
+        np.array(baseline_results["Q_condenser"]) / 1000,
+        "b-",
+        linewidth=2,
+        label="Baseline (van 100%)",
+    )
+    ax.plot(
+        t_pid,
+        np.array(pid_results["Q_condenser"]) / 1000,
+        "g-",
+        linewidth=2,
+        label="PID Control",
+    )
+    ax.set_xlabel("Thời gian (phút)", fontsize=12)
+    ax.set_ylabel("Công suất làm mát (kW)", fontsize=12)
+    ax.set_title("So sánh công suất thiết bị ngưng tụ", fontsize=14)
+    ax.legend(loc="best", fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 60)
+    plt.tight_layout()
+    plt.savefig(
+        os.path.join(OUTPUT_DIR, "fig_comparison_condenser.png"), dpi=FIGURE_DPI
+    )
+    plt.close()
+
+    # Figure 4: Product rate comparison
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.plot(
+        t_base,
+        baseline_results["product_rate"],
+        "b-",
+        linewidth=2,
+        label="Baseline (van 100%)",
+    )
+    ax.plot(
+        t_pid,
+        pid_results["product_rate"],
+        "g-",
+        linewidth=2,
+        label="PID Control",
+    )
+    ax.set_xlabel("Thời gian (phút)", fontsize=12)
+    ax.set_ylabel("Lưu lượng sản phẩm (L/h)", fontsize=12)
+    ax.set_title("So sánh lưu lượng sản phẩm D", fontsize=14)
+    ax.legend(loc="best", fontsize=11)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlim(0, 60)
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_comparison_product.png"), dpi=FIGURE_DPI)
+    plt.close()
+
+    # Figure 5: Combined comparison (2x2 subplot)
     fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 
     # Pressure
@@ -223,7 +277,7 @@ def main():
     print("PHASE 2: PID Control Simulation")
     print("=" * 70)
     pid_results = run_pid_simulation(
-        duration=3600, save_figures=True, include_disturbance=True
+        duration=3600, save_figures=True, include_disturbance=False
     )
 
     # Generate comparison figures
