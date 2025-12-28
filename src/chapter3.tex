@@ -13,68 +13,10 @@
 
 Hệ thống chưng cất ethanol -- nước quy mô phòng thí nghiệm tại phòng B2-105, Khoa Kỹ thuật Hóa học, Đại học Bách Khoa TP.HCM được thiết kế với các thành phần chính như sau:
 
+% Placeholder cho sơ đồ công nghệ
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.9, transform shape]
-    % Tháp chưng cất
-    \draw[thick] (0,0) rectangle (2,8);
-    \node at (1,4) [rotate=90] {Tháp chưng cất};
-    
-    % Reboiler
-    \draw[thick] (-1,-1.5) rectangle (3,-0.5);
-    \node at (1,-1) {Reboiler};
-    \draw[thick] (1,0) -- (1,-0.5);
-    
-    % Condenser
-    \draw[thick] (4,7) rectangle (7,8);
-    \node at (5.5,7.5) {Condenser};
-    \draw[thick] (2,7.5) -- (4,7.5);
-    
-    % Bình chứa hồi lưu
-    \draw[thick] (5,5) rectangle (7,6.5);
-    \node at (6,5.75) [font=\normalsize] {Bình hồi lưu};
-    \draw[thick] (5.5,7) -- (5.5,6.5);
-    
-    % Van làm mát
-    \draw[thick, fill=gray!30] (7.5,7.2) -- (8,7.5) -- (7.5,7.8) -- cycle;
-    \draw[thick] (7,7.5) -- (7.5,7.5);
-    \draw[thick] (8,7.5) -- (9,7.5);
-    \node at (8.5,8.2) [font=\normalsize] {Van làm mát};
-    
-    % Nước làm mát vào
-    \draw[->, thick, blue] (9.5,7.5) -- (9,7.5);
-    \node at (10.5,7.5) [font=\normalsize, blue] {Nước vào};
-    
-    % Nước làm mát ra
-    \draw[->, thick, red] (5.5,8) -- (5.5,8.5) -- (10,8.5);
-    \node at (10.5,8.5) [font=\normalsize, red] {Nước ra};
-    
-    % Dòng hồi lưu
-    \draw[->, thick] (5,5.75) -- (2.5,5.75) -- (2.5,7) -- (2,7);
-    \node at (3.5,6.2) [font=\normalsize] {Hồi lưu};
-    
-    % Sản phẩm đỉnh
-    \draw[->, thick] (7,5.75) -- (8,5.75);
-    \node at (9,5.75) [font=\normalsize] {Sản phẩm đỉnh};
-    
-    % Nhập liệu
-    \draw[->, thick] (-2,4) -- (0,4);
-    \node at (-2.5,4) [font=\normalsize] {Nhập liệu};
-    
-    % Sản phẩm đáy
-    \draw[->, thick] (1,-1.5) -- (1,-2.5);
-    \node at (1,-3) [font=\normalsize] {Sản phẩm đáy};
-    
-    % Cảm biến áp suất
-    \draw[thick, fill=white] (2.3,7.5) circle (0.3);
-    \node at (2.3,7.5) [font=\normalsize] {PT};
-    \node at (2.3,8.2) [font=\normalsize] {Áp suất};
-    
-    % Điện trở gia nhiệt
-    \draw[thick, red, decorate, decoration={coil, segment length=4pt, amplitude=2pt}] (-0.5,-1) -- (2.5,-1);
-    \node at (1,-1.8) [font=\normalsize, red] {Điện trở};
-    
-\end{tikzpicture}
+\fbox{\parbox{0.6\textwidth}{\centering\vspace{3cm}Sơ đồ công nghệ hệ thống chưng cất ethanol -- nước\\(Sẽ cập nhật sau)\vspace{3cm}}}
 \caption{Sơ đồ công nghệ hệ thống chưng cất ethanol -- nước}
 \label{fig:process_flow}
 \end{figure}
@@ -91,7 +33,7 @@ Quy trình hoạt động:
 
 \subsubsection{Thông số công nghệ của hệ thống chưng cất}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
@@ -238,7 +180,8 @@ Hệ thống sử dụng PLC Siemens S7-1200 CPU 1214C làm bộ điều khiển
     \item CPU 1214C DC/DC/DC
     \item 14 DI / 10 DO tích hợp
     \item 2 AI tích hợp (0-10V)
-    \item Module mở rộng SM 1234 (4 AI, 2 AO)
+    \item 2 module mở rộng SM 1231 AI (4 AI mỗi module)
+    \item 1 module mở rộng SM 1232 AQ (2 AO)
     \item Giao tiếp PROFINET
 \end{itemize}
 
