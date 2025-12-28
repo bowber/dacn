@@ -64,6 +64,168 @@ Hệ thống chưng cất hoàn chỉnh bao gồm các thành phần chính:
 \end{enumerate}
 
 % ------------------------------------------------------------
+\subsection{Phương pháp McCabe-Thiele}
+% ------------------------------------------------------------
+
+Phương pháp McCabe-Thiele [7] là phương pháp đồ thị để xác định số mâm lý thuyết cần thiết cho quá trình chưng cất. Phương pháp này dựa trên hai giả thiết đơn giản hóa:
+\begin{itemize}
+    \item Dòng mol không đổi trong mỗi phần của tháp (constant molar overflow)
+    \item Nhiệt hóa hơi của các cấu tử xấp xỉ bằng nhau
+\end{itemize}
+
+\subsubsection{Đường vận hành phần cất}
+
+Cân bằng vật chất cho phần cất (từ mâm n đến đỉnh tháp):
+\begin{equation}
+    y_{n+1} = \frac{R}{R+1} x_n + \frac{x_D}{R+1}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $R = L/D$: Tỷ số hồi lưu
+    \item $x_D$: Nồng độ mol sản phẩm đỉnh
+    \item $x_n, y_{n+1}$: Nồng độ mol pha lỏng và pha hơi tại mâm n
+\end{itemize}
+
+Đường vận hành phần cất đi qua điểm $(x_D, x_D)$ trên đường chéo với độ dốc $R/(R+1)$.
+
+\subsubsection{Đường vận hành phần chưng}
+
+Cân bằng vật chất cho phần chưng (từ reboiler đến mâm m):
+\begin{equation}
+    y_{m+1} = \frac{\overline{L}}{\overline{V}} x_m - \frac{W \cdot x_W}{\overline{V}}
+\end{equation}
+
+Trong đó $\overline{L}$ và $\overline{V}$ là lưu lượng mol pha lỏng và pha hơi trong phần chưng.
+
+Đường vận hành phần chưng đi qua điểm $(x_W, x_W)$ trên đường chéo.
+
+\subsubsection{Đường q (feed line)}
+
+Đường q biểu diễn trạng thái nhiệt của dòng nhập liệu:
+\begin{equation}
+    y = \frac{q}{q-1} x - \frac{x_F}{q-1}
+\end{equation}
+
+Trong đó $q$ là tỷ số giữa nhiệt cần thiết để hóa hơi 1 mol nhập liệu và nhiệt hóa hơi mol:
+\begin{equation}
+    q = \frac{\lambda + C_{p,L}(T_{bp} - T_F)}{\lambda}
+\end{equation}
+
+Giá trị $q$ phụ thuộc vào trạng thái nhập liệu:
+\begin{itemize}
+    \item $q > 1$: Nhập liệu lạnh (subcooled liquid)
+    \item $q = 1$: Nhập liệu tại điểm sôi (saturated liquid)
+    \item $0 < q < 1$: Nhập liệu hai pha (partially vaporized)
+    \item $q = 0$: Nhập liệu hơi bão hòa (saturated vapor)
+    \item $q < 0$: Nhập liệu hơi quá nhiệt (superheated vapor)
+\end{itemize}
+
+\subsubsection{Xác định số mâm lý thuyết}
+
+Số mâm lý thuyết được xác định bằng cách vẽ các bậc thang giữa đường cân bằng và các đường vận hành (Hình \ref{fig:mccabe_thiele}):
+
+\begin{enumerate}
+    \item Vẽ đường cân bằng $y$-$x$ của hệ ethanol--nước
+    \item Vẽ đường vận hành phần cất từ điểm $(x_D, x_D)$
+    \item Vẽ đường q từ điểm $(x_F, x_F)$
+    \item Xác định giao điểm của đường vận hành phần cất và đường q
+    \item Vẽ đường vận hành phần chưng từ $(x_W, x_W)$ qua giao điểm trên
+    \item Vẽ các bậc thang từ $x_D$ đến $x_W$, đếm số bậc
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.85\textwidth,
+    height=9cm,
+    xlabel={Nồng độ mol pha lỏng ($x$)},
+    ylabel={Nồng độ mol pha hơi ($y$)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    xmin=0, xmax=1,
+    ymin=0, ymax=1,
+    legend pos=south east,
+    legend style={font=\small},
+]
+
+% Đường chéo y = x
+\addplot[gray, dashed, thin] coordinates {(0,0) (1,1)};
+
+% Đường cân bằng ethanol-nước (dữ liệu thực nghiệm)
+\addplot[blue, thick, smooth] coordinates {
+    (0, 0) (0.019, 0.17) (0.0721, 0.389) (0.0966, 0.437) 
+    (0.1238, 0.470) (0.1661, 0.509) (0.2337, 0.545)
+    (0.2608, 0.558) (0.3273, 0.583) (0.3965, 0.612)
+    (0.5079, 0.656) (0.5198, 0.670) (0.5732, 0.699)
+    (0.6763, 0.753) (0.7472, 0.788) (0.8943, 0.878) (1, 1)
+};
+\addlegendentry{Đường cân bằng}
+
+% Đường vận hành phần cất (R = 2, xD = 0.8)
+% y = (2/3)x + 0.8/3 = 0.667x + 0.267
+\addplot[red, thick] coordinates {(0.35, 0.50) (0.8, 0.8)};
+\addlegendentry{Đường vận hành phần cất}
+
+% Đường vận hành phần chưng
+\addplot[orange, thick] coordinates {(0.02, 0.02) (0.35, 0.50)};
+\addlegendentry{Đường vận hành phần chưng}
+
+% Đường q (q = 1.04, xF = 0.1)
+\addplot[green!60!black, thick, dashed] coordinates {(0.1, 0.1) (0.35, 0.50)};
+\addlegendentry{Đường q}
+
+% Các bậc thang (minh họa 5 bậc)
+\addplot[black, thin] coordinates {
+    (0.8, 0.8) (0.8, 0.878)    % lên đường CB
+    (0.8, 0.878) (0.68, 0.878) % sang trái
+    (0.68, 0.878) (0.68, 0.753) % xuống đường VH
+    (0.68, 0.753) (0.52, 0.753) % sang trái
+    (0.52, 0.753) (0.52, 0.67)  % xuống
+    (0.52, 0.67) (0.35, 0.67)   % sang trái
+    (0.35, 0.67) (0.35, 0.50)   % xuống (qua điểm nhập liệu)
+    (0.35, 0.50) (0.15, 0.50)   % sang trái
+    (0.15, 0.50) (0.15, 0.28)   % xuống
+    (0.15, 0.28) (0.02, 0.28)   % sang trái
+};
+
+% Điểm đánh dấu
+\addplot[only marks, mark=*, mark size=2pt, black] coordinates {
+    (0.8, 0.8) (0.1, 0.1) (0.02, 0.02) (0.35, 0.50)
+};
+
+% Labels
+\node at (axis cs:0.85, 0.75) {\small $x_D$};
+\node at (axis cs:0.15, 0.08) {\small $x_F$};
+\node at (axis cs:0.07, 0.02) {\small $x_W$};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Phương pháp McCabe-Thiele xác định số mâm lý thuyết [7]}
+\label{fig:mccabe_thiele}
+\end{figure}
+
+\subsubsection{Hiệu suất mâm Murphree}
+
+Mâm thực tế không đạt được cân bằng hoàn toàn giữa pha lỏng và pha hơi. Hiệu suất mâm Murphree đánh giá mức độ tiếp cận cân bằng:
+\begin{equation}
+    E_{MV} = \frac{y_n - y_{n+1}}{y_n^* - y_{n+1}}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $y_n$: Nồng độ hơi thực tế rời khỏi mâm $n$
+    \item $y_{n+1}$: Nồng độ hơi vào mâm $n$ (từ mâm dưới)
+    \item $y_n^*$: Nồng độ hơi cân bằng với pha lỏng trên mâm $n$
+\end{itemize}
+
+Với mâm xuyên lỗ trong công nghiệp, $E_{MV}$ thường nằm trong khoảng 70--80\% [7]. Số mâm thực tế cần thiết:
+\begin{equation}
+    N_{\text{thực tế}} = \frac{N_{\text{lý thuyết}}}{E_{MV}}
+\end{equation}
+
+% ------------------------------------------------------------
 \subsection{Tính chất hệ ethanol -- nước}
 % ------------------------------------------------------------
 
@@ -130,7 +292,7 @@ Do có điểm đẳng phí, chưng cất thông thường không thể thu đư
 
 \textbf{Giải thích mục tiêu nồng độ 90$^\circ$:}
 
-Tháp chưng cất trong hệ thống thí nghiệm chỉ có 6 mâm xuyên lỗ, tương đương khoảng 4--5 bậc lý thuyết (hiệu suất mâm $\sim$70--80\% [7]). Với số bậc lý thuyết hạn chế này:
+Tháp chưng cất trong hệ thống thí nghiệm chỉ có 6 mâm xuyên lỗ, tương đương khoảng 4--5 bậc lý thuyết (hiệu suất mâm Murphree $\sim$70--80\%, xem mục 2.2). Với số bậc lý thuyết hạn chế này:
 \begin{itemize}
     \item Nồng độ 90$^\circ$ (90\% vol) là mức tối đa có thể đạt được ổn định với nhập liệu 10$^\circ$.
     \item Ethanol 95$^\circ$ (cấp nhiên liệu) yêu cầu 10--15 bậc lý thuyết, vượt quá khả năng của tháp.
