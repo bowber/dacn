@@ -1,25 +1,24 @@
 % ============================================================
-% Chương 5: Mô phỏng và kết quả
+% Chương 5: Tính toán và kết quả
 % ============================================================
 
 \newpage
-\section{MÔ PHỎNG VÀ KẾT QUẢ}
+\section{TÍNH TOÁN VÀ KẾT QUẢ}
 
 % ------------------------------------------------------------
-\subsection{Thiết lập mô phỏng}
+\subsection{Thiết lập tính toán}
 % ------------------------------------------------------------
 
-\subsubsection{Công cụ mô phỏng}
+\subsubsection{Công cụ tính toán}
 
-Mô phỏng được thực hiện bằng ngôn ngữ Python với các thư viện:
+Tính toán được thực hiện bằng ngôn ngữ Python với các thư viện:
 \begin{itemize}
     \item \texttt{numpy}: Tính toán số học
-    \item \texttt{scipy}: Giải phương trình vi phân, tối ưu hóa
+    \item \texttt{scipy}: Giải phương trình, tối ưu hóa
     \item \texttt{matplotlib}: Vẽ đồ thị
-    \item \texttt{control}: Phân tích hệ thống điều khiển
 \end{itemize}
 
-\subsubsection{Thông số mô phỏng}
+\subsubsection{Thông số hệ thống}
 
 Các thông số hệ thống được sử dụng trong mô phỏng:
 
@@ -42,7 +41,7 @@ Nồng độ nhập liệu & 10 & \% vol \\
 Lưu lượng nhập liệu & 4.8 & L/h \\
 \hline
 \end{tabular}
-\caption{Thông số hệ thống cho mô phỏng}
+\caption{Thông số hệ thống cho tính toán}
 \label{tab:simulation_params}
 \end{table}
 
@@ -50,7 +49,7 @@ Lưu lượng nhập liệu & 4.8 & L/h \\
 \subsection{Tính toán cân bằng năng lượng}
 % ------------------------------------------------------------
 
-Trước khi mô phỏng, cần tính toán cân bằng năng lượng để xác định công suất ngưng tụ tối ưu và lưu lượng nước làm mát tương ứng.
+Tính toán cân bằng năng lượng để xác định công suất ngưng tụ tối ưu và lưu lượng nước làm mát tương ứng.
 
 \subsubsection{Phương pháp McCabe-Thiele}
 
@@ -176,77 +175,48 @@ Baseline (100\% valve) & 6189 W & 100\% & 7.2 L/min \\
 \textbf{Nhận xét quan trọng:} Hệ thống thiết bị phòng thí nghiệm thường được thiết kế với hệ số an toàn cao. Công suất reboiler điện (4500 W), sau khi trừ 10\% tổn hao, cho công suất hiệu dụng 4050 W. Với công suất này, lưu lượng nước làm mát tối ưu là khoảng 60\% (4.3 L/min), tiết kiệm 40\% so với mở van 100\%.
 
 % ------------------------------------------------------------
-\subsection{Kết quả mô phỏng}
+\subsection{Kết quả tính toán trạng thái xác lập}
 % ------------------------------------------------------------
 
-Mô phỏng được chạy trong 60 phút (3600 giây) với bước thời gian $\Delta t = 1$ giây.
+Dựa trên các phương trình cân bằng năng lượng và truyền nhiệt, tính toán trạng thái xác lập cho hai chế độ vận hành: baseline (van mở 100\%) và vận hành tối ưu với điều khiển.
 
-\subsubsection{Mô phỏng vận hành baseline (van mở 100\%)}
+\subsubsection{Chế độ baseline (van mở 100\%)}
 
 Trong chế độ vận hành baseline, van nước làm mát được mở hoàn toàn (100\%) -- đây là cách vận hành truyền thống không có điều khiển tự động.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{../simulation/outputs/fig_baseline_combined.png}
-\caption{Mô phỏng vận hành baseline: Áp suất và lưu lượng sản phẩm khi van làm mát mở 100\%}
-\label{fig:sim_baseline}
-\end{figure}
-
-Kết quả mô phỏng baseline cho thấy:
+Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
-    \item Áp suất đỉnh tháp ổn định tại ~1.0 bar (tháp hở khí quyển).
-    \item Van nước làm mát mở 100\% -- gây lãng phí nước làm mát.
-    \item Công suất ngưng tụ: 6180 W (vượt quá nhu cầu thực tế 4050 W hiệu dụng từ reboiler).
-    \item Lưu lượng sản phẩm đỉnh: 1.53 L/h.
-    \item Nhiệt độ đỉnh ổn định tại 78.2°C.
+    \item Áp suất đỉnh tháp: 1.0 bar (tháp hở khí quyển)
+    \item Van nước làm mát: 100\%
+    \item Lưu lượng nước làm mát: 7.2 L/min
+    \item Công suất ngưng tụ: 6179 W (vượt quá nhu cầu thực tế 4050 W hiệu dụng từ reboiler)
+    \item Nhiệt độ đỉnh: 78.2°C
 \end{itemize}
 
-\subsubsection{Mô phỏng với điều khiển áp suất PID}
+\subsubsection{Chế độ vận hành tối ưu với điều khiển}
 
-Bộ điều khiển PID được cài đặt với các thông số:
+Với bộ điều khiển áp suất, van nước làm mát được điều chỉnh tự động để cân bằng công suất ngưng tụ với công suất reboiler hiệu dụng.
+
+Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
-    \item $K_c = 400$ -- Độ lợi bộ điều khiển
-    \item $T_i = 30$ s -- Hằng số thời gian tích phân
-    \item $T_d = 0$ s -- Hằng số thời gian vi phân (điều khiển PI)
-    \item Setpoint: 1.0 bar
-\end{itemize}
-
-Mô phỏng bao gồm nhiễu loạn: tăng 10\% công suất reboiler tại $t = 600$ s (phút thứ 10).
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{../simulation/outputs/fig_pid_combined.png}
-\caption{Mô phỏng điều khiển PID: Áp suất, độ mở van và lưu lượng sản phẩm}
-\label{fig:sim_pressure_response}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\textwidth]{../simulation/outputs/fig_pid_valve.png}
-\caption{Đáp ứng độ mở van làm mát theo thời gian với điều khiển PID}
-\label{fig:sim_valve_position}
-\end{figure}
-
-Kết quả mô phỏng PID cho thấy:
-\begin{itemize}
-    \item Áp suất được duy trì ổn định tại 1.0 bar (giống baseline).
-    \item Van làm mát mở trung bình 63\% (so với 100\% baseline) -- tiết kiệm 37\% nước.
-    \item Công suất ngưng tụ: 4277 W (phù hợp với reboiler 4050 W hiệu dụng).
-    \item Khi có nhiễu (+10\% công suất reboiler tại $t = 600$ s), van tự động tăng từ 63\% lên 68\%.
-    \item Độ lệch áp suất tối đa khi có nhiễu: < 0.2 mbar.
+    \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
+    \item Van nước làm mát: 63\% (tiết kiệm 37\%)
+    \item Lưu lượng nước làm mát: 4.5 L/min
+    \item Công suất ngưng tụ: 4277 W (phù hợp với reboiler 4050 W hiệu dụng)
+    \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
 % ------------------------------------------------------------
 \subsection{So sánh hiệu quả vận hành}
 % ------------------------------------------------------------
 
-Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả mô phỏng giữa hai phương án vận hành.
+Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán giữa hai phương án vận hành.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{PID Control} & \textbf{Đơn vị} \\
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Có điều khiển} & \textbf{Đơn vị} \\
 \hline
 Áp suất xác lập & 1.00 & 1.00 & bar \\
 \hline
@@ -261,37 +231,9 @@ Lưu lượng sản phẩm D & 0.37 & 0.37 & L/h \\
 Nhiệt độ đỉnh tháp & 78.2 & 78.3 & °C \\
 \hline
 \end{tabular}
-\caption{So sánh kết quả mô phỏng giữa baseline và PID control}
+\caption{So sánh kết quả tính toán giữa chế độ baseline và có điều khiển}
 \label{tab:sim_productivity_comparison}
 \end{table}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../simulation/outputs/fig_comparison_pressure.png}
-\caption{So sánh áp suất đỉnh tháp giữa baseline và điều khiển PID}
-\label{fig:comparison_pressure}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../simulation/outputs/fig_comparison_valve.png}
-\caption{So sánh độ mở van nước làm mát giữa baseline và điều khiển PID}
-\label{fig:comparison_valve}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../simulation/outputs/fig_comparison_condenser.png}
-\caption{So sánh công suất thiết bị ngưng tụ giữa baseline và điều khiển PID}
-\label{fig:comparison_condenser}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../simulation/outputs/fig_comparison_product.png}
-\caption{So sánh lưu lượng sản phẩm D giữa baseline và điều khiển PID}
-\label{fig:comparison_product}
-\end{figure}
 
 \textbf{Các chỉ số cải thiện chính:}
 \begin{itemize}
@@ -305,9 +247,9 @@ Nhiệt độ đỉnh tháp & 78.2 & 78.3 & °C \\
 \subsection{Thảo luận}
 % ------------------------------------------------------------
 
-\subsubsection{Phân tích kết quả mô phỏng}
+\subsubsection{Phân tích kết quả tính toán}
 
-Kết quả mô phỏng cho thấy:
+Kết quả tính toán cho thấy:
 \begin{enumerate}
     \item \textbf{Cân bằng năng lượng}: Điều khiển PID tự động điều chỉnh độ mở van để công suất ngưng tụ (4277 W) phù hợp với công suất reboiler hiệu dụng (4050 W = 4500 W $\times$ 0.9). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
     
@@ -358,10 +300,10 @@ Trong đó:
     \item $R$: Tỷ số hồi lưu -- xác định từ thiết kế
 \end{itemize}
 
-\subsubsection{Hạn chế của mô phỏng}
+\subsubsection{Hạn chế của phương pháp tính toán}
 
 \begin{itemize}
     \item Mô hình đơn giản hóa, chưa xét đầy đủ các yếu tố phi tuyến.
     \item Chưa xem xét ảnh hưởng của nhiễu loạn (thay đổi nồng độ nhập liệu, nhiệt độ nước làm mát).
-    \item Cần kiểm chứng thực nghiệm để xác nhận kết quả mô phỏng.
+    \item Cần kiểm chứng thực nghiệm để xác nhận kết quả tính toán.
 \end{itemize}
