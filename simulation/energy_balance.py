@@ -360,9 +360,11 @@ def calculate_optimal_coolant_flow(
 
 def condenser_capacity(coolant_flow_Lmin, T_coolant_in, T_vapor):
     """
-    Calculate maximum condenser heat removal capacity.
+    Calculate condenser heat removal capacity using proper LMTD method.
 
-    Uses both heat transfer (with flow-dependent U) and coolant heat balance.
+    Uses iterative solution to find heat duty that satisfies both:
+    1. Heat transfer equation: Q = U * A * LMTD
+    2. Energy balance: Q = m_dot * Cp * (T_out - T_in)
 
     Parameters:
         coolant_flow_Lmin: Coolant flow rate (L/min)
@@ -370,43 +372,61 @@ def condenser_capacity(coolant_flow_Lmin, T_coolant_in, T_vapor):
         T_vapor: Vapor temperature (°C)
 
     Returns:
-        Q_max: Maximum heat removal capacity (W)
+        Q: Heat removal capacity (W)
         T_coolant_out: Coolant outlet temperature (°C)
     """
     if coolant_flow_Lmin <= 0:
         return 0.0, T_coolant_in
 
     # Convert flow rate to kg/s
-    coolant_flow_kgs = coolant_flow_Lmin / 60 * WATER_DENSITY / 1000  # L/min -> kg/s
+    m_dot = coolant_flow_Lmin / 60 * WATER_DENSITY / 1000  # L/min -> kg/s
 
     # Calculate flow-dependent heat transfer coefficient
     U = calculate_heat_transfer_coefficient(coolant_flow_Lmin)
 
-    # Method 1: Coolant heat capacity limit
-    # Q = m_dot * Cp * (T_out - T_in)
-    # Maximum T_out should be less than T_vapor (approach temperature)
-    approach_temp = 5.0  # °C minimum approach
-    T_coolant_out_max = T_vapor - approach_temp
+    # Iterative solution for T_coolant_out using LMTD
+    # Initial guess: 10°C rise
+    T_out = T_coolant_in + 10.0
+    Q = 0.0  # Initialize Q
 
-    # Maximum Q from coolant capacity
-    Q_coolant_max = coolant_flow_kgs * WATER_CP * (T_coolant_out_max - T_coolant_in)
+    for _ in range(30):
+        # LMTD for counterflow heat exchanger with constant T_vapor (condensing)
+        dT1 = T_vapor - T_coolant_in  # Hot end
+        dT2 = T_vapor - T_out  # Cold end
 
-    # Method 2: Heat transfer limit with flow-dependent U
-    # Q = U * A * LMTD
-    # For condenser with phase change, use simple delta T approximation
-    delta_T_avg = T_vapor - (T_coolant_in + T_coolant_out_max) / 2
-    Q_ht = U * CONDENSER_AREA * delta_T_avg
+        # Prevent invalid LMTD (T_out must be < T_vapor)
+        if dT2 <= 0.1:
+            dT2 = 0.1
 
-    # Actual Q is minimum of both limits
-    Q_max = min(max(0, Q_coolant_max), max(0, Q_ht))
+        # Calculate LMTD
+        if abs(dT1 - dT2) < 0.01:
+            LMTD = dT1  # Avoid division by zero
+        else:
+            LMTD = (dT1 - dT2) / np.log(dT1 / dT2)
 
-    # Calculate actual outlet temperature
-    if coolant_flow_kgs > 0 and Q_max > 0:
-        T_coolant_out = T_coolant_in + Q_max / (coolant_flow_kgs * WATER_CP)
-    else:
-        T_coolant_out = T_coolant_in
+        # Heat transfer: Q = U * A * LMTD
+        Q = U * CONDENSER_AREA * LMTD
 
-    return Q_max, T_coolant_out
+        # Energy balance: T_out = T_in + Q / (m_dot * Cp)
+        T_out_new = T_coolant_in + Q / (m_dot * WATER_CP)
+
+        # Check convergence
+        if abs(T_out_new - T_out) < 0.01:
+            break
+
+        T_out = T_out_new
+
+    # Final values
+    T_coolant_out = T_out
+
+    # Safety check: T_out must be below T_vapor (physical constraint)
+    if T_coolant_out >= T_vapor:
+        # Limit to approach temperature
+        approach_temp = 5.0  # °C minimum approach
+        T_coolant_out = T_vapor - approach_temp
+        Q = m_dot * WATER_CP * (T_coolant_out - T_coolant_in)
+
+    return Q, T_coolant_out
 
 
 def condenser_heat_duty(valve_opening_pct, T_vapor):
