@@ -1,306 +1,162 @@
 % ============================================================
-% Chương 5: Tính toán và kết quả
+% Chương 5: Kết luận và hướng phát triển
 % ============================================================
 
 \newpage
-\section{TÍNH TOÁN VÀ KẾT QUẢ}
+\section{KẾT LUẬN VÀ KIẾN NGHỊ}
 
 % ------------------------------------------------------------
-\subsection{Thiết lập tính toán}
+\subsection{Kết luận}
 % ------------------------------------------------------------
 
-\subsubsection{Công cụ tính toán}
+Đồ án đã thực hiện các nội dung sau:
 
-Tính toán được thực hiện bằng ngôn ngữ Python với các thư viện:
-\begin{itemize}
-    \item \texttt{numpy}: Tính toán số học
-    \item \texttt{scipy}: Giải phương trình, tối ưu hóa
-    \item \texttt{matplotlib}: Vẽ đồ thị
-\end{itemize}
-
-\subsubsection{Thông số hệ thống}
-
-Các thông số hệ thống được sử dụng trong mô phỏng:
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|}
-\hline
-\textbf{Thông số} & \textbf{Giá trị} & \textbf{Đơn vị} \\
-\hline
-Công suất reboiler tối đa & 6000 & W \\
-\hline
-Lưu lượng nước làm mát tối đa & 7.2 & L/min \\
-\hline
-Diện tích trao đổi nhiệt condenser & 0.28 & m$^2$ \\
-\hline
-Áp suất vận hành & 1.0 & bar \\
-\hline
-Nồng độ nhập liệu & 10 & \% vol \\
-\hline
-Lưu lượng nhập liệu & 4.8 & L/h \\
-\hline
-\end{tabular}
-\caption{Thông số hệ thống cho tính toán}
-\label{tab:simulation_params}
-\end{table}
-
-% ------------------------------------------------------------
-\subsection{Tính toán cân bằng năng lượng}
-% ------------------------------------------------------------
-
-Tính toán cân bằng năng lượng để xác định công suất ngưng tụ tối ưu và lưu lượng nước làm mát tương ứng.
-
-\subsubsection{Phương pháp McCabe-Thiele}
-
-Từ phương pháp McCabe-Thiele (xem Chương 2), với các thông số đầu vào:
-\begin{itemize}
-    \item Nhập liệu: 4.8 L/h, 10\% vol ethanol, 70°C (subcooled)
-    \item Sản phẩm đỉnh: 90\% vol ethanol
-    \item Sản phẩm đáy: 1\% vol ethanol (giả thiết)
-    \item Số mâm thực tế: 6
-    \item Hiệu suất mâm giả định: 80\% (giá trị điển hình cho mâm xuyên lỗ)
-    \item Số mâm lý thuyết tương đương: $6 \times 0.80 = 4.8$
-\end{itemize}
-
-Kết quả tính toán:
-\begin{itemize}
-    \item Hệ số q (feed quality): $q = 1.042$ (nhập liệu subcooled)
-    \item Tỷ số hồi lưu tối thiểu: $R_{min} = 1.68$
-    \item Tỷ số hồi lưu vận hành: $R = 16.8$ ($10 \times R_{min}$)
-\end{itemize}
-
-Từ cân bằng vật chất:
-\begin{align}
-    D &= F \cdot \frac{x_F - x_W}{x_D - x_W} = 0.197 \text{ L/h} \\
-    W &= F - D = 4.603 \text{ L/h} \\
-    L &= R \cdot D = 3.31 \text{ L/h} \\
-    V &= (R+1) \cdot D = 3.51 \text{ L/h}
-\end{align}
-
-\subsubsection{Cân bằng năng lượng tại reboiler}
-
-Công suất reboiler bao gồm hai thành phần:
-\begin{equation}
-    Q_{reboiler} = Q_{feed} + Q_{vaporize}
-\end{equation}
-
-\textbf{1. Nhiệt gia nhiệt nhập liệu ($Q_{feed}$):}
-
-Nhiệt cần thiết để nâng nhiệt độ nhập liệu từ 70°C đến điểm sôi (92.5°C):
-\begin{equation}
-    Q_{feed} = \dot{m}_F \cdot C_p \cdot \Delta T
-\end{equation}
-với:
-\begin{itemize}
-    \item $\dot{m}_F = 4.8$ L/h $\times$ 977 kg/m$^3$ / 3600 = 1.30 g/s
-    \item $C_p = 4039$ J/(kg·K) (hỗn hợp 10\% ethanol)
-    \item $\Delta T = 92.5 - 70 = 22.5$ °C
-\end{itemize}
-
-Kết quả: $Q_{feed} = 118$ W
-
-\textbf{2. Nhiệt hóa hơi ($Q_{vaporize}$):}
-
-Nhiệt cần thiết để tạo ra lưu lượng hơi V trong phần cất:
-\begin{equation}
-    Q_{vaporize} = \dot{n}_V \cdot \lambda_{mix}
-\end{equation}
-với:
-\begin{itemize}
-    \item $V = 3.51$ L/h $\rightarrow$ $\dot{n}_V = 73.6$ mol/h
-    \item $\lambda_{mix} = 39.1$ kJ/mol (tại 90\% vol ethanol)
-\end{itemize}
-
-Kết quả: $Q_{vaporize} = 799$ W
-
-\textbf{Tổng công suất reboiler lý thuyết:}
-\begin{equation}
-    Q_{reboiler,theory} = 118 + 799 = 917 \text{ W}
-\end{equation}
-
-\subsubsection{Công suất ngưng tụ tối ưu}
-
-Để vận hành tối ưu (không subcooling), công suất ngưng tụ bằng nhiệt hóa hơi:
-\begin{equation}
-    Q_{condenser,optimal} = Q_{vaporize} = 799 \text{ W}
-\end{equation}
-
-\subsubsection{Tính toán lưu lượng nước làm mát}
-
-Từ phương trình truyền nhiệt:
-\begin{equation}
-    Q = U \cdot A \cdot \Delta T_{LMTD}
-\end{equation}
-
-Với condenser coil (A = 0.28 m$^2$), hệ số truyền nhiệt U phụ thuộc vào lưu lượng:
-\begin{equation}
-    U = U_{ref} \cdot \left(\frac{F}{F_{ref}}\right)^{0.8}
-\end{equation}
-
-Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chiếu $F_{ref} = 7.2$ L/min (van mở 100\%). Số mũ 0.8 xuất phát từ tương quan Dittus-Boelter cho dòng chảy rối trong ống ($Nu \propto Re^{0.8}$).
-
-\textbf{Lựa chọn giá trị $U_{ref}$:} Theo Engineering ToolBox, hệ số truyền nhiệt tổng cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát nằm trong khoảng 300--1200 W/(m²·K). Giá trị thấp (300--500) áp dụng cho thiết bị bám bẩn, cáu cặn; giá trị cao (1000--1200) cho thiết bị sạch. Hệ thống ethanol--nước là hệ sạch (không gây cáu cặn, không ăn mòn với SS304), do đó có thể sử dụng giá trị cao. Tuy nhiên, để đảm bảo tính bảo thủ trong tính toán, chọn $U_{ref} = 800$ W/(m²·K) -- giá trị trung bình của khoảng điển hình. Kết quả thực tế có thể tốt hơn giá trị tính toán.
-
-\textbf{Tổn hao công suất reboiler:}
-
-Công suất điện đầu vào không hoàn toàn chuyển thành nhiệt hữu ích do:
-\begin{itemize}
-    \item Sụt áp trên dây dẫn và tiếp điểm
-    \item Tổn hao nhiệt ra môi trường
-\end{itemize}
-
-Ước tính tổn hao: 10\%. Công suất nhiệt hiệu dụng:
-\begin{equation}
-    Q_{effective} = Q_{electrical} \times (1 - 0.10) = 6000 \times 0.90 = 5400 \text{ W}
-\end{equation}
-
-\textbf{Kết quả với các mức công suất khác nhau:}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Chế độ} & \textbf{$Q_{condenser}$} & \textbf{Valve} & \textbf{Lưu lượng} \\
-\hline
-Lý thuyết tối ưu & 799 W & 7\% & 0.5 L/min \\
-\hline
-Vận hành thực tế (5400 W hiệu dụng) & 5400 W & 54\% & 3.9 L/min \\
-\hline
-Baseline (100\% valve) & 9084 W & 100\% & 7.2 L/min \\
-\hline
-\end{tabular}
-\caption{Công suất ngưng tụ và lưu lượng nước làm mát theo các chế độ}
-\label{tab:condenser_modes}
-\end{table}
-
-\textbf{Nhận xét quan trọng:} Hệ thống thiết bị phòng thí nghiệm thường được thiết kế với hệ số an toàn cao. Công suất reboiler điện (6000 W = 2 $\times$ 3000 W, điều khiển ON/OFF bằng SSR), sau khi trừ 10\% tổn hao, cho công suất hiệu dụng 5400 W. Với công suất này, lưu lượng nước làm mát tối ưu là khoảng 54\% (3.9 L/min), tiết kiệm 46\% so với mở van 100\%.
-
-% ------------------------------------------------------------
-\subsection{Kết quả tính toán trạng thái xác lập}
-% ------------------------------------------------------------
-
-Dựa trên các phương trình cân bằng năng lượng và truyền nhiệt, tính toán trạng thái xác lập cho hai chế độ vận hành: baseline (van mở 100\%) và vận hành tối ưu với điều khiển.
-
-\subsubsection{Chế độ baseline (van mở 100\%)}
-
-Trong chế độ vận hành baseline, van nước làm mát được mở hoàn toàn (100\%) -- đây là cách vận hành truyền thống không có điều khiển tự động.
-
-Kết quả tính toán trạng thái xác lập:
-\begin{itemize}
-    \item Áp suất đỉnh tháp: 1.0 bar (tháp hở khí quyển)
-    \item Van nước làm mát: 100\%
-    \item Lưu lượng nước làm mát: 7.2 L/min
-    \item Công suất ngưng tụ: 9084 W (vượt quá nhu cầu thực tế 5400 W hiệu dụng từ reboiler)
-    \item Nhiệt độ đỉnh: 78.3°C
-\end{itemize}
-
-\subsubsection{Chế độ vận hành tối ưu với điều khiển}
-
-Với bộ điều khiển áp suất, van nước làm mát được điều chỉnh tự động để cân bằng công suất ngưng tụ với công suất reboiler hiệu dụng.
-
-Kết quả tính toán trạng thái xác lập:
-\begin{itemize}
-    \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
-    \item Van nước làm mát: 54\% (tiết kiệm 46\%)
-    \item Lưu lượng nước làm mát: 3.9 L/min
-    \item Công suất ngưng tụ: 5400 W (phù hợp với reboiler 5400 W hiệu dụng)
-    \item Nhiệt độ đỉnh: 78.3°C
-\end{itemize}
-
-% ------------------------------------------------------------
-\subsection{So sánh hiệu quả vận hành}
-% ------------------------------------------------------------
-
-Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán giữa hai phương án vận hành.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{Có điều khiển} & \textbf{Đơn vị} \\
-\hline
-Áp suất xác lập & 1.00 & 1.00 & bar \\
-\hline
-Độ mở van xác lập & 100 & 54 & \% \\
-\hline
-Công suất ngưng tụ & 9084 & 5400 & W \\
-\hline
-Lưu lượng nước làm mát & 7.2 & 3.9 & L/min \\
-\hline
-Nhiệt độ đỉnh tháp & 78.3 & 78.3 & °C \\
-\hline
-\end{tabular}
-\caption{So sánh kết quả tính toán giữa chế độ baseline và có điều khiển}
-\label{tab:sim_productivity_comparison}
-\end{table}
-
-\textbf{Các chỉ số cải thiện chính:}
-\begin{itemize}
-    \item Giảm độ mở van: từ 100\% xuống 54\% (giảm 46\%)
-    \item Giảm lưu lượng nước làm mát: từ 7.2 L/min xuống 3.9 L/min (tiết kiệm 46\%)
-    \item Công suất ngưng tụ phù hợp với reboiler: 5400 W (hiệu dụng)
-\end{itemize}
-
-% ------------------------------------------------------------
-\subsection{Thảo luận}
-% ------------------------------------------------------------
-
-\subsubsection{Phân tích kết quả tính toán}
-
-Kết quả tính toán cho thấy:
 \begin{enumerate}
-    \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5400 W) phù hợp với công suất reboiler hiệu dụng (5400 W = 6000 W $\times$ 0.9). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
+    \item \textbf{Phân tích hiện trạng vận hành:}
+    \begin{itemize}
+        \item Xác định nguyên nhân hạn chế năng suất khi vận hành với van làm mát mở 100\%.
+        \item Phân tích mối quan hệ giữa công suất làm mát, tỷ số hồi lưu và năng suất sản phẩm.
+        \item Đánh giá lượng nước làm mát sử dụng dư thừa trong phương án vận hành hiện tại.
+    \end{itemize}
     
-    \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 54\%, tiết kiệm 46\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
+    \item \textbf{Thiết kế vòng điều khiển áp suất đỉnh tháp:}
+    \begin{itemize}
+        \item Xây dựng vòng điều khiển PC-01 với bộ điều khiển PID.
+        \item Đề xuất phương pháp xác định thông số PID (Ziegler-Nichols và mô phỏng).
+        \item Xây dựng mô hình toán học của hệ thống để phục vụ mô phỏng.
+    \end{itemize}
     
-    \item \textbf{Áp suất ổn định}: Do tháp hở với khí quyển, áp suất đỉnh luôn xấp xỉ 1.0 bar. Điều này là đặc điểm cố hữu của tháp chưng cất quy mô phòng thí nghiệm.
+    \item \textbf{Mô hình hóa và mô phỏng:}
+    \begin{itemize}
+        \item Xây dựng mô hình hệ thống điều khiển bằng Python.
+        \item Mô phỏng so sánh hai phương án: baseline (van 100\%) và điều khiển tối ưu.
+        \item Đánh giá hiệu quả tăng năng suất thông qua mô phỏng.
+    \end{itemize}
 \end{enumerate}
 
-\subsubsection{Giải thích cơ chế hoạt động}
+\textbf{Kết quả dự kiến:}
 
-\textbf{Nguyên lý vật lý quan trọng:} Hệ số truyền nhiệt $U$ phụ thuộc vào lưu lượng nước làm mát:
-\begin{equation}
-    Q = U \cdot A \cdot \Delta T_{LMTD}
-\end{equation}
-trong đó $U$ phụ thuộc vào số Reynolds ($Re$) và số Nusselt ($Nu$):
+Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát dự kiến mang lại:
 \begin{itemize}
-    \item Lưu lượng cao $\rightarrow$ $Re$ cao $\rightarrow$ $Nu$ cao $\rightarrow$ $U$ cao
-    \item Với dòng chảy rối: $U \propto (\text{lưu lượng})^{0.8}$
+    \item Tăng đáng kể năng suất sản phẩm đỉnh
+    \item Giảm lượng nước làm mát sử dụng
+    \item Duy trì chất lượng sản phẩm đỉnh
+    \item Áp suất đỉnh tháp ổn định tại giá trị đặt
+    \item Giữ nguyên năng lượng tiêu thụ
 \end{itemize}
 
-Khi van mở 100\%:
-\begin{itemize}
-    \item Lưu lượng nước: 7.2 L/min $\rightarrow$ $U = 800$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 9084$ W $>$ $Q_{eff} = 5400$ W
-    \item Dư thừa ~3700 W công suất làm mát -- lãng phí nước.
-\end{itemize}
+\textbf{Kết luận tổng quát:} Giải pháp điều khiển áp suất đỉnh tháp là phương pháp hiệu quả để tối ưu hóa năng suất cho quá trình chưng cất ethanol -- nước. Giải pháp này không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động, có thể áp dụng cho các hệ thống chưng cất hiện có.
 
-Với điều khiển (van 54\%):
-\begin{itemize}
-    \item Lưu lượng nước: 3.9 L/min $\rightarrow$ $U = 459$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 5400$ W $=$ $Q_{eff} = 5400$ W
-    \item Cân bằng năng lượng tối ưu -- tiết kiệm 46\% nước làm mát.
-\end{itemize}
+% ------------------------------------------------------------
+\subsection{Kiến nghị và hướng phát triển}
+% ------------------------------------------------------------
 
-\subsubsection{Tính toán năng suất từ lưu lượng hồi lưu}
+Để nâng cao hiệu quả và mở rộng phạm vi ứng dụng, đề xuất các hướng phát triển sau:
 
-Lưu lượng sản phẩm đỉnh được tính gián tiếp qua lưu lượng hồi lưu (đo được qua lưu lượng kế):
-\begin{equation}
-    D = \frac{L}{R}
-\end{equation}
+\begin{enumerate}
+    \item \textbf{Kiểm chứng thực nghiệm:}
+    \begin{itemize}
+        \item Triển khai thử nghiệm trên hệ thống chưng cất thực tế tại phòng thí nghiệm.
+        \item So sánh kết quả thực nghiệm với kết quả mô phỏng.
+        \item Tinh chỉnh thông số PID dựa trên đáp ứng thực tế.
+        \item Xác định hệ số truyền nhiệt thực tế của thiết bị ngưng tụ.
+    \end{itemize}
+    
+    \textbf{Phân tích độ nhạy:} Kết quả tính toán phụ thuộc vào hệ số truyền nhiệt tổng $U$ của thiết bị ngưng tụ. Giá trị $U_{ref} = 800$ W/(m²·K) được sử dụng trong tính toán dựa trên dữ liệu từ Engineering ToolBox cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát (300--1200 W/(m²·K)). Bảng \ref{tab:sensitivity_U} cho thấy kết quả thay đổi đáng kể theo giá trị $U_{ref}$:
+    
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{$U_{ref}$ [W/(m²·K)]} & \textbf{$Q_{100\%}$ [W]} & \textbf{Van tối ưu} & \textbf{Tiết kiệm} & \textbf{Ghi chú} \\
+    \hline
+    300 & 3890 & 100\% & 0\% & Bám bẩn nặng \\
+    \hline
+    500 & 6144 & 86\% & 14\% & \\
+    \hline
+    800 & 9084 & 54\% & 46\% & Giả định \\
+    \hline
+    1000 & 10792 & 45\% & 55\% & \\
+    \hline
+    1200 & 12317 & 39\% & 61\% & Ống sạch \\
+    \hline
+    \end{tabular}
+    \caption{Ảnh hưởng của hệ số truyền nhiệt $U_{ref}$ đến kết quả tính toán}
+    \label{tab:sensitivity_U}
+    \end{table}
+    
+    Từ bảng trên, nếu $U_{ref} < 400$ W/(m²·K), condenser không đủ công suất để ngưng tụ hết hơi từ reboiler ngay cả khi van mở 100\%. Do đó, việc xác định $U_{ref}$ thực tế qua thí nghiệm là cần thiết để đánh giá chính xác hiệu quả tiết kiệm nước làm mát.
+    
+    \item \textbf{Mở rộng quy mô áp dụng:}
+    \begin{itemize}
+        \item Triển khai thử nghiệm trên hệ thống chưng cất quy mô pilot hoặc công nghiệp.
+        \item Đánh giá hiệu quả tăng năng suất ở các quy mô khác nhau.
+        \item Nghiên cứu ảnh hưởng của các yếu tố vận hành thực tế (nhiễu loạn, thay đổi tải).
+    \end{itemize}
+    
+    \item \textbf{Cải tiến thuật toán điều khiển:}
+    \begin{itemize}
+        \item Áp dụng điều khiển thích nghi (Adaptive PID) để tự động điều chỉnh thông số theo điều kiện vận hành.
+        \item Nghiên cứu điều khiển dự báo mô hình (MPC - Model Predictive Control) để tối ưu đa mục tiêu.
+        \item Tích hợp trí tuệ nhân tạo (AI) để dự đoán và tối ưu hóa vận hành.
+    \end{itemize}
+    
+    \item \textbf{Tối ưu hóa toàn diện hệ thống:}
+    \begin{itemize}
+        \item Kết hợp điều khiển áp suất với tối ưu tỷ số hồi lưu.
+        \item Nghiên cứu tích hợp nhiệt (heat integration) giữa các dòng trong hệ thống.
+        \item Phát triển hệ thống quản lý năng lượng và năng suất tổng thể cho nhà máy.
+    \end{itemize}
+    
+    \item \textbf{Phát triển hệ thống giám sát và báo cáo:}
+    \begin{itemize}
+        \item Xây dựng dashboard giám sát năng suất theo thời gian thực.
+        \item Tích hợp hệ thống IoT để thu thập và phân tích dữ liệu vận hành.
+        \item Phát triển báo cáo tự động về hiệu quả năng suất.
+    \end{itemize}
+\end{enumerate}
 
-Trong đó:
-\begin{itemize}
-    \item $D$: Lưu lượng sản phẩm đỉnh (L/h)
-    \item $L$: Lưu lượng hồi lưu (L/h) -- đo trực tiếp
-    \item $R$: Tỷ số hồi lưu -- xác định từ thiết kế
-\end{itemize}
+% ------------------------------------------------------------
+% Bảng kế hoạch thực hiện
+% ------------------------------------------------------------
 
-\subsubsection{Hạn chế của phương pháp tính toán}
-
-\begin{itemize}
-    \item Mô hình đơn giản hóa, chưa xét đầy đủ các yếu tố phi tuyến.
-    \item Chưa xem xét ảnh hưởng của nhiễu loạn (thay đổi nồng độ nhập liệu, nhiệt độ nước làm mát).
-    \item Cần kiểm chứng thực nghiệm để xác nhận kết quả tính toán.
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|p{7cm}|}
+\hline
+\textbf{Tuần} & \textbf{Thời gian} & \textbf{Nội dung công việc} \\
+\hline
+1 & 05/01 -- 11/01/2026 & Nghiên cứu tài liệu về điều khiển quá trình, PID, tối ưu năng suất chưng cất \\
+\hline
+2 & 12/01 -- 18/01/2026 & Khảo sát hệ thống thực tế, đo đạc và thu thập thông số thiết bị \\
+\hline
+3 & 19/01 -- 25/01/2026 & Xây dựng mô hình toán học: hàm truyền condenser, van, cảm biến \\
+\hline
+4 & 02/02 -- 08/02/2026 & Lập trình Python: mô hình hóa quá trình, cân bằng năng lượng \\
+\hline
+5 & 09/02 -- 15/02/2026 & Lập trình Python: bộ điều khiển PID, vòng điều khiển kín \\
+\hline
+6 & 23/02 -- 01/03/2026 & Mô phỏng so sánh: baseline (van 100\%) và điều khiển PID \\
+\hline
+7 & 02/03 -- 08/03/2026 & Tối ưu thông số PID (Ziegler-Nichols, ISE/IAE), xuất đồ thị kết quả \\
+\hline
+8 & 09/03 -- 15/03/2026 & Lập trình PLC S7-1200 (TIA Portal), thiết kế giao diện HMI \\
+\hline
+9 & 16/03 -- 22/03/2026 & Thí nghiệm baseline: vận hành van 100\%, thu thập dữ liệu \\
+\hline
+10 & 23/03 -- 29/03/2026 & Thí nghiệm điều khiển PID: áp dụng thông số từ mô phỏng \\
+\hline
+11 & 30/03 -- 05/04/2026 & Tinh chỉnh thông số PID trên thiết bị thực, thí nghiệm bổ sung \\
+\hline
+12 & 06/04 -- 12/04/2026 & Xử lý số liệu, so sánh kết quả mô phỏng và thực nghiệm \\
+\hline
+13 & 13/04 -- 19/04/2026 & Viết báo cáo: Chương 1--4 (Mở đầu, Lý thuyết, Mô hình, Giải pháp) \\
+\hline
+14 & 20/04 -- 26/04/2026 & Viết báo cáo: Chương 4--5 (Kết quả, Kết luận), hoàn thiện tài liệu \\
+\hline
+15 & 04/05 -- 10/05/2026 & Chuẩn bị slide, poster và bảo vệ đồ án \\
+\hline
+\end{tabular}
+\caption{Kế hoạch thực hiện đồ án}
+\label{tab:schedule}
+\end{table}
