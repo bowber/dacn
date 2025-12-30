@@ -149,79 +149,51 @@ Baseline (100\% valve) & 9113 W & 100\% & 7.2 L/min \\
 
 \textbf{Nhận xét:} Với công suất reboiler hiệu dụng 5400 W, lưu lượng nước làm mát tối ưu là khoảng 53\% (3.8 L/min), tiết kiệm 47\% so với mở van 100\%. Chế độ baseline (van mở 100\%) cung cấp công suất ngưng tụ 9113 W, vượt quá nhu cầu thực tế gần gấp đôi.
 
-\subsubsection{Tính toán công suất reboiler tối ưu (PWM)}
+\subsubsection{Điều khiển công suất reboiler bằng PWM}
 
-Phân tích trên cho thấy reboiler đang chạy 100\% công suất (6000 W), nhưng thực tế có thể không cần nhiều như vậy. Câu hỏi đặt ra: \textit{Công suất reboiler tối thiểu cần thiết là bao nhiêu?}
-
-\textbf{Xác định công suất reboiler tối ưu:}
-
-Công suất reboiler cần thiết phụ thuộc vào năng suất sản phẩm mong muốn. Với năng suất thiết kế và nhập liệu 4.8 L/h ở 10\% vol:
-
+Reboiler hiện tại chạy 100\% công suất (6000 W), nhưng thực tế có thể không cần nhiều như vậy. Việc giảm công suất reboiler sẽ:
 \begin{itemize}
-    \item Nhiệt gia nhiệt nhập liệu: $Q_{feed} = 118$ W (cố định theo lưu lượng nhập liệu)
-    \item Nhiệt hóa hơi: $Q_{vaporize}$ phụ thuộc vào lượng hơi cần tạo ra
+    \item Giảm lượng hơi tạo ra trong tháp
+    \item Giảm công suất ngưng tụ cần thiết
+    \item Tiết kiệm cả điện năng reboiler và nước làm mát
 \end{itemize}
 
-Giả sử hệ thống chỉ cần một nửa lượng hơi hiện tại để đạt năng suất mong muốn:
-\begin{equation}
-    Q_{vaporize,optimal} = \frac{Q_{vaporize,current}}{2} = \frac{5282}{2} = 2641 \text{ W}
-\end{equation}
+\textbf{Phương pháp xác định duty cycle tối ưu:}
 
-Công suất reboiler tối ưu:
-\begin{equation}
-    Q_{reboiler,optimal} = Q_{feed} + Q_{vaporize,optimal} = 118 + 2641 = 2759 \text{ W}
-\end{equation}
+Duty cycle tối ưu được xác định bằng thực nghiệm theo quy trình sau:
 
-\textbf{Tính toán duty cycle PWM:}
+\begin{enumerate}
+    \item \textbf{Bắt đầu ở 100\%:} Hệ thống hoạt động ổn định, sản phẩm đạt chất lượng yêu cầu (90\% vol).
+    
+    \item \textbf{Giảm dần duty cycle:} Giảm từng bước 10\% (90\% $\rightarrow$ 80\% $\rightarrow$ 70\%...), chờ hệ thống ổn định sau mỗi bước (khoảng 10--15 phút).
+    
+    \item \textbf{Giám sát các thông số:}
+    \begin{itemize}
+        \item Nồng độ sản phẩm đỉnh (quan trọng nhất)
+        \item Nhiệt độ đỉnh tháp (tăng khi phân tách kém)
+        \item Áp suất đỉnh tháp (cần ổn định)
+    \end{itemize}
+    
+    \item \textbf{Xác định điểm giới hạn:} Duty cycle tại đó chất lượng sản phẩm bắt đầu giảm dưới 90\% vol hoặc vận hành trở nên không ổn định.
+    
+    \item \textbf{Thêm biên độ an toàn:} Tăng duty cycle lên 10\% so với điểm giới hạn để đảm bảo vận hành ổn định.
+\end{enumerate}
 
-Với hiệu suất reboiler 90\%, công suất điện cần thiết:
-\begin{equation}
-    P_{electrical,optimal} = \frac{Q_{reboiler,optimal}}{0.90} = \frac{2759}{0.90} = 3066 \text{ W}
-\end{equation}
+\textbf{Ước tính sơ bộ:}
 
-Duty cycle PWM:
-\begin{equation}
-    \text{Duty cycle} = \frac{P_{electrical,optimal}}{P_{electrical,max}} = \frac{3066}{6000} = 51\%
-\end{equation}
-
-\textbf{Tiềm năng tiết kiệm năng lượng:}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Chế độ} & \textbf{Công suất điện} & \textbf{PWM} & \textbf{Tiết kiệm} \\
-\hline
-Baseline (100\%) & 6000 W & 100\% & -- \\
-\hline
-Tối ưu (PWM) & 3066 W & 51\% & 49\% \\
-\hline
-\end{tabular}
-\caption{So sánh công suất reboiler giữa các chế độ vận hành}
-\label{tab:reboiler_pwm}
-\end{table}
-
-\textbf{Lưu ý quan trọng:} Giá trị 51\% là ước tính dựa trên giả thiết giảm 50\% lượng hơi. Giá trị thực tế cần được xác định qua thực nghiệm, phụ thuộc vào:
+Dựa trên kinh nghiệm vận hành các hệ thống tương tự, duty cycle tối ưu thường nằm trong khoảng 50--70\% cho hệ thống chưng cất quy mô phòng thí nghiệm. Giá trị chính xác phụ thuộc vào:
 \begin{itemize}
     \item Năng suất sản phẩm mong muốn
-    \item Chất lượng sản phẩm (nồng độ ethanol)
-    \item Điều kiện vận hành thực tế
+    \item Nồng độ nhập liệu thực tế
+    \item Hiệu suất cách nhiệt của tháp
+    \item Nhiệt độ nước làm mát
 \end{itemize}
 
 \textbf{Kết hợp điều khiển van làm mát và PWM reboiler:}
 
-Khi giảm công suất reboiler bằng PWM, lượng hơi tạo ra giảm, dẫn đến:
-\begin{itemize}
-    \item Công suất ngưng tụ cần thiết giảm tương ứng
-    \item Van làm mát có thể giảm thêm, tiết kiệm thêm nước làm mát
-\end{itemize}
+Khi giảm công suất reboiler bằng PWM, lượng hơi tạo ra giảm, dẫn đến công suất ngưng tụ cần thiết giảm tương ứng. Bộ điều khiển áp suất PC-01 sẽ tự động giảm độ mở van làm mát để cân bằng.
 
-Với $Q_{vaporize} = 2641$ W và van làm mát điều chỉnh để cân bằng:
-\begin{equation}
-    Q_{condenser,optimal} = Q_{vaporize,optimal} = 2641 \text{ W}
-\end{equation}
-
-Ước tính độ mở van tương ứng: khoảng 30--35\% (giảm thêm so với 53\% khi reboiler chạy 100\%).
+Ví dụ: Nếu duty cycle tối ưu là 60\%, công suất reboiler giảm từ 6000 W xuống 3600 W, van làm mát có thể giảm xuống khoảng 35--40\% (so với 53\% khi reboiler chạy 100\%).
 
 % ------------------------------------------------------------
 \subsection{Kết quả tính toán trạng thái xác lập}
