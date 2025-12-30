@@ -51,32 +51,14 @@ Lưu lượng nhập liệu & 4.8 & L/h \\
 
 Tính toán cân bằng năng lượng để xác định công suất ngưng tụ tối ưu và lưu lượng nước làm mát tương ứng.
 
-\subsubsection{Phương pháp McCabe-Thiele}
+\subsubsection{Thông số vận hành}
 
-Từ phương pháp McCabe-Thiele [4] (xem Chương 2), với các thông số đầu vào:
+Thông số vận hành của hệ thống:
 \begin{itemize}
-    \item Nhập liệu: 4.8 L/h, 10\% vol ethanol, 70$^\circ$C (subcooled)
+    \item Nhập liệu: 4.8 L/h, 10\% vol ethanol, 70$^\circ$C
     \item Sản phẩm đỉnh: 90\% vol ethanol
-    \item Sản phẩm đáy: 1\% vol ethanol (giả thiết)
-    \item Số mâm thực tế: 6
-    \item Hiệu suất mâm giả định: 80\% (giá trị điển hình cho mâm xuyên lỗ)
-    \item Số mâm lý thuyết tương đương: $6 \times 0.80 = 4.8$
+    \item Công suất reboiler điện: 6000 W (2 $\times$ 3000 W)
 \end{itemize}
-
-Kết quả tính toán:
-\begin{itemize}
-    \item Hệ số q (feed quality): $q = 1.042$ (nhập liệu subcooled)
-    \item Tỷ số hồi lưu tối thiểu: $R_{min} = 1.68$
-    \item Tỷ số hồi lưu vận hành: $R = 10.4$ ($6.2 \times R_{min}$, xem mục 2.2)
-\end{itemize}
-
-Từ cân bằng vật chất:
-\begin{align}
-    D &= F \cdot \frac{x_F - x_W}{x_D - x_W} = 0.197 \text{ L/h} \\
-    W &= F - D = 4.603 \text{ L/h} \\
-    L &= R \cdot D = 2.05 \text{ L/h} \\
-    V &= (R+1) \cdot D = 2.25 \text{ L/h}
-\end{align}
 
 \subsubsection{Cân bằng năng lượng tại reboiler}
 
