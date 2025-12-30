@@ -140,14 +140,14 @@ Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chi
 \hline
 Vận hành tối ưu & 5282 W & 53\% & 3.8 L/min \\
 \hline
-Baseline (100\% valve) & 9113 W & 100\% & 7.2 L/min \\
+Chế độ cơ sở (100\% van) & 9113 W & 100\% & 7.2 L/min \\
 \hline
 \end{tabular}
 \caption{Công suất ngưng tụ và lưu lượng nước làm mát theo các chế độ}
 \label{tab:condenser_modes}
 \end{table}
 
-\textbf{Nhận xét:} Với công suất reboiler hiệu dụng 5400 W, lưu lượng nước làm mát tối ưu là khoảng 53\% (3.8 L/min), tiết kiệm 47\% so với mở van 100\%. Chế độ baseline (van mở 100\%) cung cấp công suất ngưng tụ 9113 W, vượt quá nhu cầu thực tế gần gấp đôi.
+\textbf{Nhận xét:} Với công suất reboiler hiệu dụng 5400 W, lưu lượng nước làm mát tối ưu là khoảng 53\% (3.8 L/min), tiết kiệm 47\% so với mở van 100\%. Chế độ cơ sở (van mở 100\%) cung cấp công suất ngưng tụ 9113 W, vượt quá nhu cầu thực tế gần gấp đôi.
 
 \subsubsection{Điều khiển công suất reboiler bằng PWM}
 
@@ -199,15 +199,15 @@ Ví dụ: Nếu duty cycle tối ưu là 60\%, công suất reboiler giảm từ
 \subsection{Kết quả tính toán trạng thái xác lập}
 % ------------------------------------------------------------
 
-Dựa trên các phương trình cân bằng năng lượng và truyền nhiệt, tính toán trạng thái xác lập cho hai chế độ vận hành: baseline (van mở 100\%) và vận hành tối ưu với điều khiển.
+Dựa trên các phương trình cân bằng năng lượng và truyền nhiệt, tính toán trạng thái xác lập cho hai chế độ vận hành: cơ sở (van mở 100\%) và vận hành tối ưu với điều khiển.
 
-\subsubsection{Chế độ baseline (van mở 100\%)}
+\subsubsection{Chế độ cơ sở (van mở 100\%)}
 
-Trong chế độ vận hành baseline, van nước làm mát được mở hoàn toàn (100\%) -- đây là cách vận hành truyền thống không có điều khiển tự động.
+Trong chế độ vận hành cơ sở, van nước làm mát được mở hoàn toàn (100\%) -- đây là cách vận hành truyền thống không có điều khiển tự động.
 
 Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
-    \item Áp suất đỉnh tháp: 1.0 bar (setpoint)
+    \item Áp suất đỉnh tháp: 1.0 bar (giá trị đặt)
     \item Van nước làm mát: 100\%
     \item Lưu lượng nước làm mát: 7.2 L/min
     \item Công suất ngưng tụ: 9113 W (vượt quá nhu cầu thực tế 5282 W)
@@ -241,7 +241,7 @@ Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán gi
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} & \textbf{Đơn vị} \\
+\textbf{Thông số} & \textbf{Cơ sở} & \textbf{Điều khiển van} & \textbf{Đơn vị} \\
 \hline
 Công suất reboiler & 6000 & 6000 & W \\
 \hline
@@ -258,7 +258,7 @@ Lưu lượng nước & 7.2 & 3.8 & L/min \\
 
 \textbf{Kết quả chính:}
 \begin{itemize}
-    \item \textbf{Điều khiển van (so với baseline):} Giảm 47\% lưu lượng nước làm mát trong khi duy trì áp suất đỉnh tháp ổn định.
+    \item \textbf{Điều khiển van (so với cơ sở):} Giảm 47\% lưu lượng nước làm mát trong khi duy trì áp suất đỉnh tháp ổn định.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -273,7 +273,7 @@ Kết quả tính toán cho thấy:
     
     \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 53\%, tiết kiệm 47\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
     
-    \item \textbf{Áp suất ổn định}: Bộ điều khiển duy trì áp suất đỉnh tháp ổn định tại setpoint 1.0 bar bằng cách điều chỉnh độ mở van nước làm mát.
+    \item \textbf{Áp suất ổn định}: Bộ điều khiển duy trì áp suất đỉnh tháp ổn định tại giá trị đặt 1.0 bar bằng cách điều chỉnh độ mở van nước làm mát.
 \end{enumerate}
 
 \subsubsection{Giải thích cơ chế hoạt động}
@@ -342,7 +342,7 @@ Kết quả dự kiến:
 \hline
 \textbf{Chế độ} & \textbf{Độ mở van} & \textbf{$\Delta T_{subcool}$ dự kiến} & \textbf{Đánh giá} \\
 \hline
-Baseline & 100\% & $>$ 10°C & Lãng phí \\
+Cơ sở & 100\% & $>$ 10°C & Lãng phí \\
 \hline
 Tối ưu & 53\% & $\approx$ 0°C & Hiệu quả \\
 \hline

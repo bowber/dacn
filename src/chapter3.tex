@@ -311,7 +311,7 @@ Hệ thống chưng cất được thiết kế với các vòng điều khiển
 \subsection{Chiến lược điều khiển}
 % ------------------------------------------------------------
 
-\subsubsection{Phương án vận hành hiện tại (Baseline)}
+\subsubsection{Phương án vận hành hiện tại (Chế độ cơ sở)}
 
 Trong phương án vận hành hiện tại, van nước làm mát được mở cố định ở mức 100\% để đảm bảo áp suất đỉnh tháp luôn ổn định. Phương án này có ưu điểm là đơn giản, không cần hệ thống điều khiển phức tạp, nhưng gây ngưng tụ quá mức và hạn chế năng suất sản phẩm.
 
@@ -385,8 +385,8 @@ Phương án đề xuất sử dụng bộ điều khiển PID để điều ch�
 
 \textbf{Nguyên lý hoạt động:}
 \begin{itemize}
-    \item Khi áp suất đỉnh tháp tăng cao hơn setpoint: Bộ điều khiển tăng độ mở van làm mát $\rightarrow$ tăng công suất ngưng tụ $\rightarrow$ áp suất giảm.
-    \item Khi áp suất đỉnh tháp giảm thấp hơn setpoint: Bộ điều khiển giảm độ mở van làm mát $\rightarrow$ giảm công suất ngưng tụ $\rightarrow$ áp suất tăng.
+    \item Khi áp suất đỉnh tháp tăng cao hơn giá trị đặt: Bộ điều khiển tăng độ mở van làm mát $\rightarrow$ tăng công suất ngưng tụ $\rightarrow$ áp suất giảm.
+    \item Khi áp suất đỉnh tháp giảm thấp hơn giá trị đặt: Bộ điều khiển giảm độ mở van làm mát $\rightarrow$ giảm công suất ngưng tụ $\rightarrow$ áp suất tăng.
 \end{itemize}
 
 \subsubsection{Điều khiển nhiệt độ đỉnh tháp}
