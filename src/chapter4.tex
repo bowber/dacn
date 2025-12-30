@@ -85,7 +85,14 @@ Công suất reboiler bao gồm hai thành phần:
     Q_{reboiler} = Q_{feed} + Q_{vaporize}
 \end{equation}
 
-\textbf{1. Nhiệt gia nhiệt nhập liệu ($Q_{feed}$):}
+\textbf{Công suất reboiler hiệu dụng:}
+
+Công suất điện đầu vào không hoàn toàn chuyển thành nhiệt hữu ích do sụt áp trên dây dẫn, tiếp điểm và tổn hao nhiệt ra môi trường. Ước tính tổn hao: 10\%.
+\begin{equation}
+    Q_{reboiler} = Q_{electrical} \times (1 - 0.10) = 6000 \times 0.90 = 5400 \text{ W}
+\end{equation}
+
+\textbf{Nhiệt gia nhiệt nhập liệu ($Q_{feed}$):}
 
 Nhiệt cần thiết để nâng nhiệt độ nhập liệu từ 70$^\circ$C đến điểm sôi (92.5$^\circ$C):
 \begin{equation}
@@ -100,31 +107,25 @@ với:
 
 Kết quả: $Q_{feed} = 118$ W
 
-\textbf{2. Nhiệt hóa hơi ($Q_{vaporize}$):}
+\textbf{Nhiệt hóa hơi ($Q_{vaporize}$):}
 
-Nhiệt cần thiết để tạo ra lưu lượng hơi V trong phần cất:
+Từ cân bằng năng lượng tại reboiler:
 \begin{equation}
-    Q_{vaporize} = \dot{n}_V \cdot \lambda_{mix}
+    Q_{vaporize} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282 \text{ W}
 \end{equation}
-với:
-\begin{itemize}
-    \item $V = 3.51$ L/h $\rightarrow$ $\dot{n}_V = 73.6$ mol/h
-    \item $\lambda_{mix} = 39.1$ kJ/mol (tại 90\% vol ethanol)
-\end{itemize}
 
-Kết quả: $Q_{vaporize} = 799$ W
-
-\textbf{Tổng công suất reboiler lý thuyết:}
-\begin{equation}
-    Q_{reboiler,theory} = 118 + 799 = 917 \text{ W}
-\end{equation}
+Đây là công suất nhiệt thực tế dùng để hóa hơi hỗn hợp tại đáy tháp.
 
 \subsubsection{Công suất ngưng tụ tối ưu}
 
-Để vận hành tối ưu (không subcooling), công suất ngưng tụ bằng nhiệt hóa hơi:
+Để vận hành tối ưu, công suất ngưng tụ cần bằng với nhiệt hóa hơi:
 \begin{equation}
-    Q_{condenser,optimal} = Q_{vaporize} = 799 \text{ W}
+    Q_{condenser,optimal} = Q_{vaporize} = 5282 \text{ W}
 \end{equation}
+
+Nếu $Q_{condenser} < Q_{vaporize}$: hơi không ngưng tụ hết, áp suất tháp tăng.
+
+Nếu $Q_{condenser} > Q_{vaporize}$: dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
 
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
@@ -140,22 +141,9 @@ Với condenser coil (A = 0.28 m$^2$), hệ số truyền nhiệt U phụ thuộ
 
 Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chiếu $F_{ref} = 7.2$ L/min (van mở 100\%). Số mũ 0.8 xuất phát từ tương quan Dittus-Boelter cho dòng chảy rối trong ống ($Nu \propto Re^{0.8}$) [5].
 
-\textbf{Lựa chọn giá trị $U_{ref}$:} Theo Engineering ToolBox (2003), hệ số truyền nhiệt tổng cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát nằm trong khoảng 300--1200 W/(m²·K). Giá trị thấp (300--500) áp dụng cho thiết bị bám bẩn, cáu cặn; giá trị cao (1000--1200) cho thiết bị sạch. Hệ thống ethanol--nước là hệ sạch (không gây cáu cặn, không ăn mòn với SS304), do đó có thể sử dụng giá trị cao. Tuy nhiên, để đảm bảo tính bảo thủ trong tính toán, chọn $U_{ref} = 800$ W/(m²·K) -- giá trị trung bình của khoảng điển hình. Kết quả thực tế có thể tốt hơn giá trị tính toán.
+\textbf{Lựa chọn giá trị $U_{ref}$:} Theo Engineering ToolBox (2003), hệ số truyền nhiệt tổng cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát nằm trong khoảng 300--1200 W/(m²·K). Giá trị thấp (300--500) áp dụng cho thiết bị bám bẩn, cáu cặn; giá trị cao (1000--1200) cho thiết bị sạch. Hệ thống ethanol--nước là hệ sạch (không gây cáu cặn, không ăn mòn với SS304), do đó có thể sử dụng giá trị cao. Tuy nhiên, để đảm bảo tính bảo thủ trong tính toán, chọn $U_{ref} = 800$ W/(m²·K) -- giá trị trung bình của khoảng điển hình.
 
-\textbf{Tổn hao công suất reboiler:}
-
-Công suất điện đầu vào không hoàn toàn chuyển thành nhiệt hữu ích do:
-\begin{itemize}
-    \item Sụt áp trên dây dẫn và tiếp điểm
-    \item Tổn hao nhiệt ra môi trường
-\end{itemize}
-
-Ước tính tổn hao: 10\%. Công suất nhiệt hiệu dụng:
-\begin{equation}
-    Q_{effective} = Q_{electrical} \times (1 - 0.10) = 6000 \times 0.90 = 5400 \text{ W}
-\end{equation}
-
-\textbf{Kết quả với các mức công suất khác nhau:}
+\textbf{Kết quả tính toán:}
 
 \begin{table}[H]
 \centering
@@ -163,18 +151,16 @@ Công suất điện đầu vào không hoàn toàn chuyển thành nhiệt hữ
 \hline
 \textbf{Chế độ} & \textbf{$Q_{condenser}$} & \textbf{Valve} & \textbf{Lưu lượng} \\
 \hline
-Lý thuyết tối ưu & 799 W & 7\% & 0.5 L/min \\
+Vận hành tối ưu & 5282 W & 53\% & 3.8 L/min \\
 \hline
-Vận hành thực tế (5400 W hiệu dụng) & 5400 W & 54\% & 3.9 L/min \\
-\hline
-Baseline (100\% valve) & 9084 W & 100\% & 7.2 L/min \\
+Baseline (100\% valve) & 9113 W & 100\% & 7.2 L/min \\
 \hline
 \end{tabular}
 \caption{Công suất ngưng tụ và lưu lượng nước làm mát theo các chế độ}
 \label{tab:condenser_modes}
 \end{table}
 
-\textbf{Nhận xét quan trọng:} Hệ thống thiết bị phòng thí nghiệm thường được thiết kế với hệ số an toàn cao. Công suất reboiler điện (6000 W = 2 $\times$ 3000 W, điều khiển ON/OFF bằng SSR), sau khi trừ 10\% tổn hao, cho công suất hiệu dụng 5400 W. Với công suất này, lưu lượng nước làm mát tối ưu là khoảng 54\% (3.9 L/min), tiết kiệm 46\% so với mở van 100\%.
+\textbf{Nhận xét:} Với công suất reboiler hiệu dụng 5400 W, lưu lượng nước làm mát tối ưu là khoảng 53\% (3.8 L/min), tiết kiệm 47\% so với mở van 100\%. Chế độ baseline (van mở 100\%) cung cấp công suất ngưng tụ 9113 W, vượt quá nhu cầu thực tế gần gấp đôi.
 
 % ------------------------------------------------------------
 \subsection{Kết quả tính toán trạng thái xác lập}
@@ -188,23 +174,23 @@ Trong chế độ vận hành baseline, van nước làm mát được mở hoà
 
 Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
-    \item Áp suất đỉnh tháp: 1.0 bar (tháp hở khí quyển)
+    \item Áp suất đỉnh tháp: 1.0 bar (setpoint)
     \item Van nước làm mát: 100\%
     \item Lưu lượng nước làm mát: 7.2 L/min
-    \item Công suất ngưng tụ: 9084 W (vượt quá nhu cầu thực tế 5400 W hiệu dụng từ reboiler)
+    \item Công suất ngưng tụ: 9113 W (vượt quá nhu cầu thực tế 5282 W)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
 \subsubsection{Chế độ vận hành tối ưu với điều khiển}
 
-Với bộ điều khiển áp suất, van nước làm mát được điều chỉnh tự động để cân bằng công suất ngưng tụ với công suất reboiler hiệu dụng.
+Với bộ điều khiển áp suất, van nước làm mát được điều chỉnh tự động để cân bằng công suất ngưng tụ với nhiệt hóa hơi.
 
 Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
     \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
-    \item Van nước làm mát: 54\% (tiết kiệm 46\%)
-    \item Lưu lượng nước làm mát: 3.9 L/min
-    \item Công suất ngưng tụ: 5400 W (phù hợp với reboiler 5400 W hiệu dụng)
+    \item Van nước làm mát: 53\% (tiết kiệm 47\%)
+    \item Lưu lượng nước làm mát: 3.8 L/min
+    \item Công suất ngưng tụ: 5282 W (cân bằng với $Q_{vaporize}$)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
@@ -222,11 +208,11 @@ Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán gi
 \hline
 Áp suất xác lập & 1.00 & 1.00 & bar \\
 \hline
-Độ mở van xác lập & 100 & 54 & \% \\
+Độ mở van xác lập & 100 & 53 & \% \\
 \hline
-Công suất ngưng tụ & 9084 & 5400 & W \\
+Công suất ngưng tụ & 9113 & 5282 & W \\
 \hline
-Lưu lượng nước làm mát & 7.2 & 3.9 & L/min \\
+Lưu lượng nước làm mát & 7.2 & 3.8 & L/min \\
 \hline
 Nhiệt độ đỉnh tháp & 78.3 & 78.3 & °C \\
 \hline
@@ -237,9 +223,9 @@ Nhiệt độ đỉnh tháp & 78.3 & 78.3 & °C \\
 
 \textbf{Các chỉ số cải thiện chính:}
 \begin{itemize}
-    \item Giảm độ mở van: từ 100\% xuống 54\% (giảm 46\%)
-    \item Giảm lưu lượng nước làm mát: từ 7.2 L/min xuống 3.9 L/min (tiết kiệm 46\%)
-    \item Công suất ngưng tụ phù hợp với reboiler: 5400 W (hiệu dụng)
+    \item Giảm độ mở van: từ 100\% xuống 53\% (giảm 47\%)
+    \item Giảm lưu lượng nước làm mát: từ 7.2 L/min xuống 3.8 L/min (tiết kiệm 47\%)
+    \item Công suất ngưng tụ cân bằng với nhiệt hóa hơi: $Q_{condenser} = Q_{vaporize} = 5282$ W
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -250,11 +236,11 @@ Nhiệt độ đỉnh tháp & 78.3 & 78.3 & °C \\
 
 Kết quả tính toán cho thấy:
 \begin{enumerate}
-    \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5400 W) phù hợp với công suất reboiler hiệu dụng (5400 W = 6000 W $\times$ 0.9). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
+    \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5282 W) cân bằng với nhiệt hóa hơi ($Q_{vaporize} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282$ W). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
     
-    \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 54\%, tiết kiệm 46\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
+    \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 53\%, tiết kiệm 47\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
     
-    \item \textbf{Áp suất ổn định}: Do tháp hở với khí quyển, áp suất đỉnh luôn xấp xỉ 1.0 bar. Điều này là đặc điểm cố hữu của tháp chưng cất quy mô phòng thí nghiệm.
+    \item \textbf{Áp suất ổn định}: Bộ điều khiển duy trì áp suất đỉnh tháp ổn định tại setpoint 1.0 bar bằng cách điều chỉnh độ mở van nước làm mát.
 \end{enumerate}
 
 \subsubsection{Giải thích cơ chế hoạt động}
@@ -272,15 +258,15 @@ trong đó $U$ phụ thuộc vào số Reynolds ($Re$) và số Nusselt ($Nu$):
 Khi van mở 100\%:
 \begin{itemize}
     \item Lưu lượng nước: 7.2 L/min $\rightarrow$ $U = 800$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 9084$ W $>$ $Q_{eff} = 5400$ W
-    \item Dư thừa ~3700 W công suất làm mát -- lãng phí nước.
+    \item Công suất ngưng tụ: $Q_c = 9113$ W $>$ $Q_{vaporize} = 5282$ W
+    \item Dư thừa ~3800 W công suất ngưng tụ -- lãng phí 47\% lưu lượng nước.
 \end{itemize}
 
-Với điều khiển (van 54\%):
+Với điều khiển (van 53\%):
 \begin{itemize}
-    \item Lưu lượng nước: 3.9 L/min $\rightarrow$ $U = 459$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 5400$ W $=$ $Q_{eff} = 5400$ W
-    \item Cân bằng năng lượng tối ưu -- tiết kiệm 46\% nước làm mát.
+    \item Lưu lượng nước: 3.8 L/min $\rightarrow$ $U = 489$ W/(m²·K)
+    \item Công suất ngưng tụ: $Q_c = 5282$ W $=$ $Q_{vaporize}$
+    \item Cân bằng năng lượng tối ưu -- tiết kiệm 47\% nước làm mát.
 \end{itemize}
 
 \subsubsection{Tính toán năng suất từ lưu lượng hồi lưu}
@@ -296,6 +282,43 @@ Trong đó:
     \item $L$: Lưu lượng hồi lưu (L/h) -- đo trực tiếp
     \item $R$: Tỷ số hồi lưu -- xác định từ thiết kế
 \end{itemize}
+
+\subsubsection{Phương pháp kiểm chứng thực nghiệm}
+
+Để kiểm chứng hiệu quả của chiến lược điều khiển, sử dụng độ chênh nhiệt độ giữa đỉnh tháp và dịch ngưng:
+\begin{equation}
+    \Delta T_{subcool} = T_{đỉnh} - T_{dịch ngưng}
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $T_{đỉnh}$: Nhiệt độ hơi tại đỉnh tháp (đo bằng cảm biến nhiệt độ đỉnh) $\approx$ 78.4°C
+    \item $T_{dịch ngưng}$: Nhiệt độ dịch ngưng sau condenser (đo bằng cảm biến nhiệt độ dịch ngưng)
+\end{itemize}
+
+Ý nghĩa của $\Delta T_{subcool}$:
+\begin{itemize}
+    \item $\Delta T_{subcool} \approx 0$°C: Dịch ngưng ở nhiệt độ sôi, không bị làm lạnh quá mức -- vận hành tối ưu.
+    \item $\Delta T_{subcool} > 0$°C: Dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling) -- lãng phí nước làm mát.
+\end{itemize}
+
+Kết quả dự kiến:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Chế độ} & \textbf{Độ mở van} & \textbf{$\Delta T_{subcool}$ dự kiến} & \textbf{Đánh giá} \\
+\hline
+Baseline & 100\% & $>$ 10°C & Lãng phí \\
+\hline
+Tối ưu & 53\% & $\approx$ 0°C & Hiệu quả \\
+\hline
+\end{tabular}
+\caption{Dự kiến độ subcooling theo chế độ vận hành}
+\label{tab:subcool_prediction}
+\end{table}
+
+Phương pháp này cho phép kiểm chứng trực tiếp hiệu quả tiết kiệm năng lượng làm mát thông qua phép đo nhiệt độ đơn giản.
 
 \subsubsection{Hạn chế của phương pháp tính toán}
 
