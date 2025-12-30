@@ -76,7 +76,7 @@ Công suất điện đầu vào không hoàn toàn chuyển thành nhiệt hữ
 
 \textbf{Nhiệt gia nhiệt nhập liệu ($Q_{feed}$):}
 
-Nhiệt cần thiết để nâng nhiệt độ nhập liệu từ 70$^\circ$C đến điểm sôi. Điểm sôi của hỗn hợp 10\% vol ethanol (3.32\% mol) tại 1 bar được tính từ phương trình Antoine kết hợp hệ số hoạt độ Van Laar [3]:
+Nhiệt cần thiết để nâng nhiệt độ nhập liệu từ 70$^\circ$C đến điểm sôi. Điểm sôi của hỗn hợp 10\% vol ethanol (3.32\% mol) tại 1 bar được tính từ phương trình Antoine kết hợp hệ số hoạt độ Van Laar \cite{gmehling1991}:
 \begin{equation}
     T_{bubble} = 92.5 ^\circ\text{C}
 \end{equation}
@@ -116,7 +116,7 @@ Nếu $Q_{condenser} > Q_{vaporize}$: dịch ngưng bị làm lạnh dưới nhi
 
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
-Từ phương trình truyền nhiệt [4]:
+Từ phương trình truyền nhiệt \cite{perry2019}:
 \begin{equation}
     Q = U \cdot A \cdot \Delta T_{LMTD}
 \end{equation}
@@ -126,7 +126,7 @@ Với condenser coil (A = 0.28 m$^2$), hệ số truyền nhiệt U phụ thuộ
     U = U_{ref} \cdot \left(\frac{F}{F_{ref}}\right)^{0.8}
 \end{equation}
 
-Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chiếu $F_{ref} = 7.2$ L/min (van mở 100\%). Số mũ 0.8 xuất phát từ tương quan Dittus-Boelter cho dòng chảy rối trong ống ($Nu \propto Re^{0.8}$) [5].
+Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chiếu $F_{ref} = 7.2$ L/min (van mở 100\%). Số mũ 0.8 xuất phát từ tương quan Dittus-Boelter cho dòng chảy rối trong ống ($Nu \propto Re^{0.8}$) \cite{incropera2011}.
 
 \textbf{Lựa chọn giá trị $U_{ref}$:} Theo Engineering ToolBox (2003), hệ số truyền nhiệt tổng cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát nằm trong khoảng 300--1200 W/(m²·K). Giá trị thấp (300--500) áp dụng cho thiết bị bám bẩn, cáu cặn; giá trị cao (1000--1200) cho thiết bị sạch. Hệ thống ethanol--nước là hệ sạch (không gây cáu cặn, không ăn mòn với SS304), do đó có thể sử dụng giá trị cao. Tuy nhiên, để đảm bảo tính bảo thủ trong tính toán, chọn $U_{ref} = 800$ W/(m²·K) -- giá trị trung bình của khoảng điển hình.
 
