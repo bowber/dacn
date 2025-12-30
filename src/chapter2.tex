@@ -67,13 +67,13 @@ Hệ thống chưng cất hoàn chỉnh bao gồm các thành phần chính:
 \subsection{Phương pháp McCabe-Thiele}
 % ------------------------------------------------------------
 
-Phương pháp McCabe-Thiele (Green \& Southard, 2019) là phương pháp đồ thị để xác định số mâm lý thuyết cần thiết cho quá trình chưng cất. Phương pháp này dựa trên hai giả thiết đơn giản hóa:
+Phương pháp McCabe-Thiele [4] là phương pháp đồ thị để xác định số mâm lý thuyết cần thiết cho quá trình chưng cất. Phương pháp này dựa trên hai giả thiết đơn giản hóa:
 \begin{itemize}
     \item Dòng mol không đổi trong mỗi phần của tháp (constant molar overflow)
     \item Nhiệt hóa hơi của các cấu tử xấp xỉ bằng nhau
 \end{itemize}
 
-Với hệ ethanol--nước, nhiệt hóa hơi của ethanol (38.56 kJ/mol) và nước (40.66 kJ/mol) chênh lệch khoảng 5\%, nằm trong phạm vi chấp nhận được cho phương pháp McCabe-Thiele (thường $<$10\%) (Green \& Southard, 2019).
+Với hệ ethanol--nước, nhiệt hóa hơi của ethanol (38.56 kJ/mol) và nước (40.66 kJ/mol) chênh lệch khoảng 5\%, nằm trong phạm vi chấp nhận được cho phương pháp McCabe-Thiele (thường $<$10\%) [4].
 
 \subsubsection{Đường vận hành phần cất}
 
@@ -272,7 +272,7 @@ Trong đó:
     \item $y_n^*$: Nồng độ hơi cân bằng với pha lỏng trên mâm $n$
 \end{itemize}
 
-Với mâm xuyên lỗ trong công nghiệp, $E_{MV}$ thường nằm trong khoảng 70--80\% (Green \& Southard, 2019). Số mâm thực tế cần thiết:
+Với mâm xuyên lỗ trong công nghiệp, $E_{MV}$ thường nằm trong khoảng 70--80\% [4]. Số mâm thực tế cần thiết:
 \begin{equation}
     N_{\text{thực tế}} = \frac{N_{\text{lý thuyết}}}{E_{MV}}
 \end{equation}
@@ -336,11 +336,11 @@ Nhiệt hóa hơi (kJ/mol) & 38.56 & 40.66 \\
 
 \end{axis}
 \end{tikzpicture}
-\caption{Đồ thị cân bằng T-xy của hệ ethanol -- nước tại 1 atm (Gmehling et al., 1991)}
+\caption{Đồ thị cân bằng T-xy của hệ ethanol -- nước tại 1 atm [3]}
 \label{fig:txy_ethanol_water}
 \end{figure}
 
-Do có điểm đẳng phí, chưng cất thông thường không thể thu được ethanol tinh khiết 100\%. Nồng độ tối đa đạt được bằng chưng cất thông thường là khoảng 95.5\% khối lượng (tương đương khoảng 97\% vol hay 97$^\circ$) tại nhiệt độ sôi 78.1$^\circ$C (Rumble, 2020). Mục tiêu sản phẩm đỉnh 90\% vol (90$^\circ$) của đồ án hoàn toàn khả thi vì nằm dưới giới hạn đẳng phí.
+Do có điểm đẳng phí, chưng cất thông thường không thể thu được ethanol tinh khiết 100\%. Nồng độ tối đa đạt được bằng chưng cất thông thường là khoảng 95.5\% khối lượng (tương đương khoảng 97\% vol hay 97$^\circ$) tại nhiệt độ sôi 78.1$^\circ$C [9]. Mục tiêu sản phẩm đỉnh 90\% vol (90$^\circ$) của đồ án hoàn toàn khả thi vì nằm dưới giới hạn đẳng phí.
 
 \textbf{Giải thích mục tiêu nồng độ 90$^\circ$:}
 
@@ -521,7 +521,7 @@ Trong đó:
 \begin{itemize}
     \item $D_{baseline}$: Năng suất sản phẩm khi van làm mát mở 100\%
     \item $D_{optimal}$: Năng suất sản phẩm khi vận hành tối ưu
-    \item $L$: Lưu lượng hồi lưu (đo qua lưu lượng kế)
+    \item $L$: Lưu lượng hồi lưu (đo qua cảm biến lưu lượng)
     \item $R$: Tỷ số hồi lưu
 \end{itemize}
 
