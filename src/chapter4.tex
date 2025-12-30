@@ -227,53 +227,40 @@ Kết quả tính toán trạng thái xác lập:
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
-\subsubsection{Chế độ tối ưu toàn diện (PWM reboiler + điều khiển van)}
+\subsubsection{Đề xuất: Điều khiển PWM reboiler (công việc tương lai)}
 
-Kết hợp điều khiển PWM công suất reboiler với điều khiển van nước làm mát để tối ưu hóa cả điện năng và nước làm mát.
-
-Kết quả tính toán trạng thái xác lập (ước tính):
-\begin{itemize}
-    \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
-    \item Công suất reboiler: 3066 W (PWM 51\%)
-    \item Van nước làm mát: ~33\%
-    \item Lưu lượng nước làm mát: ~2.4 L/min
-    \item Công suất ngưng tụ: 2641 W
-    \item Nhiệt độ đỉnh: 78.3°C
-\end{itemize}
+Ngoài điều khiển van làm mát, có thể kết hợp thêm điều khiển PWM công suất reboiler để tối ưu hóa cả điện năng. Phương pháp xác định duty cycle tối ưu được đề xuất trong mục 4.1.5. Đây là nội dung sẽ được triển khai trong Khóa luận Tốt nghiệp.
 
 % ------------------------------------------------------------
 \subsection{So sánh hiệu quả vận hành}
 % ------------------------------------------------------------
 
-Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán giữa ba phương án vận hành.
+Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán giữa hai phương án vận hành.
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|c|c|c|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} & \textbf{PWM + Van} & \textbf{Đơn vị} \\
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} & \textbf{Đơn vị} \\
 \hline
-Công suất reboiler & 6000 & 6000 & 3066 & W \\
+Công suất reboiler & 6000 & 6000 & W \\
 \hline
-Độ mở van & 100 & 53 & ~33 & \% \\
+Độ mở van & 100 & 53 & \% \\
 \hline
-Công suất ngưng tụ & 9113 & 5282 & 2641 & W \\
+Công suất ngưng tụ & 9113 & 5282 & W \\
 \hline
-Lưu lượng nước & 7.2 & 3.8 & ~2.4 & L/min \\
+Lưu lượng nước & 7.2 & 3.8 & L/min \\
 \hline
-Tiết kiệm điện & -- & 0\% & 49\% & \\
-\hline
-Tiết kiệm nước & -- & 47\% & ~67\% & \\
+Tiết kiệm nước & -- & 47\% & \\
 \hline
 \end{tabular}
 \caption{So sánh kết quả tính toán giữa các chế độ vận hành}
 \label{tab:sim_productivity_comparison}
 \end{table}
 
-\textbf{Các chỉ số cải thiện chính:}
+\textbf{Kết quả chính:}
 \begin{itemize}
-    \item \textbf{Điều khiển van (so với baseline):} Giảm 47\% lưu lượng nước làm mát, không tiết kiệm điện.
-    \item \textbf{PWM + Van (so với baseline):} Giảm 49\% điện năng reboiler và ~67\% lưu lượng nước làm mát.
+    \item \textbf{Điều khiển van (so với baseline):} Giảm 47\% lưu lượng nước làm mát trong khi duy trì áp suất đỉnh tháp ổn định.
 \end{itemize}
 
 % ------------------------------------------------------------

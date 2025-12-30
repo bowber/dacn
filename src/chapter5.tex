@@ -35,8 +35,7 @@ Báo cáo đã thực hiện các nội dung sau:
     \begin{itemize}
         \item Xây dựng chương trình tính toán cân bằng năng lượng và vật chất.
         \item Tính toán công suất reboiler hiệu dụng: $Q_{reboiler} = 5400$ W.
-        \item Đề xuất phương pháp xác định duty cycle PWM tối ưu cho reboiler bằng thực nghiệm.
-        \item So sánh các phương án vận hành: baseline, điều khiển van, và PWM + van.
+        \item Tính toán độ mở van tối ưu: 53\% (tiết kiệm 47\% nước làm mát).
     \end{itemize}
 \end{enumerate}
 
@@ -44,19 +43,17 @@ Báo cáo đã thực hiện các nội dung sau:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} & \textbf{PWM + Van} \\
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} \\
 \hline
-Công suất reboiler & 6000 W & 6000 W & TBD (thực nghiệm) \\
+Công suất reboiler & 6000 W & 6000 W \\
 \hline
-Độ mở van & 100\% & 53\% & TBD \\
+Độ mở van & 100\% & 53\% \\
 \hline
-Lưu lượng nước & 7.2 L/min & 3.8 L/min & TBD \\
+Lưu lượng nước & 7.2 L/min & 3.8 L/min \\
 \hline
-Tiết kiệm điện & -- & 0\% & ước tính 30--50\% \\
-\hline
-Tiết kiệm nước & -- & 47\% & $>$47\% \\
+Tiết kiệm nước & -- & 47\% \\
 \hline
 \end{tabular}
 \caption{Tổng hợp kết quả tính toán}
@@ -66,8 +63,6 @@ Tiết kiệm nước & -- & 47\% & $>$47\% \\
 \textbf{Kết luận tổng quát:}
 \begin{itemize}
     \item \textbf{Điều khiển van làm mát:} Tiết kiệm 47\% lưu lượng nước làm mát bằng cách điều khiển van theo áp suất đỉnh tháp.
-    \item \textbf{Điều khiển PWM reboiler:} Tiềm năng tiết kiệm 30--50\% điện năng reboiler, duty cycle tối ưu sẽ được xác định qua thực nghiệm.
-    \item \textbf{Kết hợp cả hai:} Khi giảm công suất reboiler, lượng hơi giảm, bộ điều khiển PC-01 tự động giảm thêm độ mở van, tiết kiệm thêm nước làm mát.
     \item Giải pháp không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động.
     \item Kết quả cần được kiểm chứng thực nghiệm để xác nhận hiệu quả trong điều kiện vận hành thực tế.
 \end{itemize}
