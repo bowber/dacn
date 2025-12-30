@@ -89,7 +89,7 @@ Chỉ thị mức & \multicolumn{2}{c|}{Có} \\
 \hline
 \multicolumn{3}{|l|}{\textit{Hệ thống nhập liệu}} \\
 \hline
-Bộ gia nhiệt nhập liệu & \multicolumn{2}{c|}{Có (thông số ---)} \\
+Bộ gia nhiệt nhập liệu & \multicolumn{2}{c|}{Có} \\
 \hline
 Lưu lượng nhập liệu & $\sim$4.8 (80 ml/min) & L/h \\
 \hline
@@ -242,24 +242,24 @@ Hệ thống sử dụng PLC Siemens S7-1200 CPU 1214C làm bộ điều khiển
 \hline
 \textbf{Địa chỉ} & \textbf{Tên tín hiệu} \\
 \hline
-\%I0.0 & Auto Mode Switch \\
-\%IW96 & Distillate Tank Level \\
-\%IW98 & Top Column Pressure \\
-\%IW100 & Reflux Flow Rate \\
-\%IW102 & Feed Flow Rate \\
-\%IW104 & Top Column Temperature \\
-\%IW106 & Tray 1 Temperature \\
-\%IW108 & Tray 2 Temperature \\
-\%IW110 & Tray 3 Temperature \\
-\%IW112 & Tray 4 Temperature \\
-\%IW114 & Tray 5 Temperature \\
-\%IW116 & Tray 6 Temperature \\
-\%IW118 & Feed Temperature \\
-\%IW120 & Distillate Temperature \\
-\%IW122 & Reboiler Temperature \\
-\%IW124 & Cooling Water Inlet Temp \\
-\%IW126 & Cooling Water Outlet Temp \\
-\%IW756 & Reboiler Level \\
+\%I0.0 & Công tắc chế độ tự động \\
+\%IW96 & Mức bình chứa sản phẩm đỉnh \\
+\%IW98 & Áp suất đỉnh tháp \\
+\%IW100 & Lưu lượng hồi lưu \\
+\%IW102 & Lưu lượng nhập liệu \\
+\%IW104 & Nhiệt độ đỉnh tháp \\
+\%IW106 & Nhiệt độ mâm 1 \\
+\%IW108 & Nhiệt độ mâm 2 \\
+\%IW110 & Nhiệt độ mâm 3 \\
+\%IW112 & Nhiệt độ mâm 4 \\
+\%IW114 & Nhiệt độ mâm 5 \\
+\%IW116 & Nhiệt độ mâm 6 \\
+\%IW118 & Nhiệt độ nhập liệu \\
+\%IW120 & Nhiệt độ sản phẩm đỉnh \\
+\%IW122 & Nhiệt độ nồi đun \\
+\%IW124 & Nhiệt độ nước làm mát vào \\
+\%IW126 & Nhiệt độ nước làm mát ra \\
+\%IW756 & Mức nồi đun \\
 \hline
 \end{tabular}
 \caption{Bảng tín hiệu đầu vào (Input)}
@@ -272,27 +272,26 @@ Hệ thống sử dụng PLC Siemens S7-1200 CPU 1214C làm bộ điều khiển
 \hline
 \textbf{Địa chỉ} & \textbf{Tên tín hiệu} \\
 \hline
-\%Q0.0 & Distillate Valve Relay \\
-\%Q0.1 & Feed Pump Relay \\
-\%Q0.2 & Reflux Pump Relay \\
-\%Q0.3 & Reboiler Heater Relay 1 \\
-\%Q0.4 & Feed Heater Relay \\
-\%Q0.5 & Tank Heater Relay \\
-\%Q0.6 & Feed Valve Relay \\
-\%Q0.7 & Reboiler Heater Relay 2 \\
-\%Q1.0 & Cooling Water Valve (On/Off) \\
-\%Q1.1 & Reflux Solenoid \\
-\%QW128 & Feed Pump Speed Setpoint \\
-\%QW130 & Tank Heater Control Signal \\
-\%QW132 & Reflux Valve Position \\
-\%QW134 & Cooling Valve Position \\
-\%QW290 & Reboiler Valve Position \\
-\%QW752 & Reflux Pump Speed Setpoint \\
+\%Q0.0 & Relay van sản phẩm đỉnh \\
+\%Q0.1 & Relay bơm nhập liệu \\
+\%Q0.2 & Relay bơm hồi lưu \\
+\%Q0.3 & Relay điện trở nồi đun 1 \\
+\%Q0.4 & Relay điện trở gia nhiệt nhập liệu \\
+\%Q0.5 & Relay điện trở bồn chứa \\
+\%Q0.6 & Relay van nhập liệu \\
+\%Q0.7 & Relay điện trở nồi đun 2 \\
+\%Q1.0 & Van nước làm mát (On/Off) \\
+\%Q1.1 & Van hồi lưu (On/Off) \\
+\%QW128 & Tín hiệu điều khiển tốc độ bơm nhập liệu \\
+\%QW130 & Tín hiệu điều khiển điện trở bồn chứa \\
+\%QW132 & Độ mở van hồi lưu \\
+\%QW134 & Độ mở van nước làm mát \\
+\%QW290 & Độ mở van nồi đun \\
+\%QW752 & Tín hiệu điều khiển tốc độ bơm hồi lưu \\
 \hline
 \end{tabular}
 \caption{Bảng tín hiệu đầu ra (Output)}
 \label{tab:io_output}
-\end{table}
 \end{table}
 
 % ------------------------------------------------------------
