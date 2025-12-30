@@ -238,27 +238,61 @@ Hệ thống sử dụng PLC Siemens S7-1200 CPU 1214C làm bộ điều khiển
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|}
 \hline
-\textbf{Tín hiệu} & \textbf{Địa chỉ} & \textbf{Mô tả} \\
+\textbf{Địa chỉ} & \textbf{Tên tín hiệu} \\
 \hline
-AI0 & IW64 & Nhiệt độ đỉnh tháp \\
-\hline
-AI1 & IW66 & Nhiệt độ nhập liệu \\
-\hline
-AI2 & IW68 & Áp suất đỉnh tháp \\
-\hline
-AI3 & IW70 & Lưu lượng nhập liệu \\
-\hline
-AO0 & QW64 & Công suất reboiler \\
-\hline
-AO1 & QW66 & Độ mở van làm mát \\
-\hline
-AO2 & QW68 & Tốc độ bơm nhập liệu \\
+\%I0.0 & Auto Mode Switch \\
+\%IW96 & Distillate Tank Level \\
+\%IW98 & Top Column Pressure \\
+\%IW100 & Reflux Flow Rate \\
+\%IW102 & Feed Flow Rate \\
+\%IW104 & Top Column Temperature \\
+\%IW106 & Tray 1 Temperature \\
+\%IW108 & Tray 2 Temperature \\
+\%IW110 & Tray 3 Temperature \\
+\%IW112 & Tray 4 Temperature \\
+\%IW114 & Tray 5 Temperature \\
+\%IW116 & Tray 6 Temperature \\
+\%IW118 & Feed Temperature \\
+\%IW120 & Distillate Temperature \\
+\%IW122 & Reboiler Temperature \\
+\%IW124 & Cooling Water Inlet Temp \\
+\%IW126 & Cooling Water Outlet Temp \\
+\%IW756 & Reboiler Level \\
 \hline
 \end{tabular}
-\caption{Cấu hình I/O của PLC}
-\label{tab:io_config}
+\caption{Bảng tín hiệu đầu vào (Input)}
+\label{tab:io_input}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Địa chỉ} & \textbf{Tên tín hiệu} \\
+\hline
+\%Q0.0 & Distillate Valve Relay \\
+\%Q0.1 & Feed Pump Relay \\
+\%Q0.2 & Reflux Pump Relay \\
+\%Q0.3 & Reboiler Heater Relay 1 \\
+\%Q0.4 & Feed Heater Relay \\
+\%Q0.5 & Tank Heater Relay \\
+\%Q0.6 & Feed Valve Relay \\
+\%Q0.7 & Reboiler Heater Relay 2 \\
+\%Q1.0 & Cooling Water Valve (On/Off) \\
+\%Q1.1 & Reflux Solenoid \\
+\%QW128 & Feed Pump Speed Setpoint \\
+\%QW130 & Tank Heater Control Signal \\
+\%QW132 & Reflux Valve Position \\
+\%QW134 & Cooling Valve Position \\
+\%QW290 & Reboiler Valve Position \\
+\%QW752 & Reflux Pump Speed Setpoint \\
+\hline
+\end{tabular}
+\caption{Bảng tín hiệu đầu ra (Output)}
+\label{tab:io_output}
+\end{table}
 \end{table}
 
 % ------------------------------------------------------------
