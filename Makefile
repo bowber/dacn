@@ -27,10 +27,10 @@ distclean: clean
 shell:
 	docker run --rm -it -v $(PWD):/workspace $(IMAGE_NAME) /bin/bash
 
-# Local build (if xelatex is installed)
+# Local build (if xelatex is installed) - silent mode
 local:
-	cd src && xelatex -interaction=nonstopmode -output-directory=../output main.tex
-	cd src && xelatex -interaction=nonstopmode -output-directory=../output main.tex
+	@cd src && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../output main.tex > /dev/null
+	@cd src && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../output main.tex | grep -E '^(!|.*:[0-9]+:|Warning|Error|Overfull|Underfull)' || true
 
 # Get latest tag or default to v0.0.0
 LATEST_TAG := $(shell git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")

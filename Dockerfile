@@ -7,4 +7,4 @@ RUN tlmgr install babel-vietnamese tocloft titlesec enumitem multirow tex-gyre p
 RUN apt-get update && apt-get install -y fonts-noto-core && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /workspace
-CMD ["sh", "-c", "cd src && xelatex -interaction=nonstopmode -output-directory=../output main.tex && xelatex -interaction=nonstopmode -output-directory=../output main.tex"]
+CMD ["sh", "-c", "cd src && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../output main.tex > /dev/null && xelatex -interaction=nonstopmode -halt-on-error -output-directory=../output main.tex | grep -E '^(!|.*:[0-9]+:|Warning|Error|Overfull|Underfull)' || true"]
