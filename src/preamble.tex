@@ -69,6 +69,11 @@
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 
+% Add dot after section numbers in ToC
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
+
 % Babel (vietnamese) defines these names; override in its caption hook so
 % they don't get reset at \begin{document}.
 \addto\captionsvietnamese{%
