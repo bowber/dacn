@@ -34,8 +34,9 @@ Báo cáo đã thực hiện các nội dung sau:
     \item \textbf{Tính toán:}
     \begin{itemize}
         \item Xây dựng chương trình tính toán cân bằng năng lượng và vật chất.
-        \item Tính toán: $Q_{reboiler} = 5400$ W (hiệu dụng), $Q_{vaporize} = 5282$ W.
-        \item So sánh hai phương án vận hành: baseline (van 100\%) và điều khiển tối ưu.
+        \item Tính toán công suất reboiler hiệu dụng: $Q_{reboiler} = 5400$ W.
+        \item Tính toán công suất reboiler tối ưu với PWM: 3066 W (duty cycle 51\%).
+        \item So sánh ba phương án vận hành: baseline, điều khiển van, và PWM + van.
     \end{itemize}
 \end{enumerate}
 
@@ -45,15 +46,17 @@ Báo cáo đã thực hiện các nội dung sau:
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Thông số} & \textbf{Baseline} & \textbf{Có điều khiển} & \textbf{Cải thiện} \\
+\textbf{Thông số} & \textbf{Baseline} & \textbf{Điều khiển van} & \textbf{PWM + Van} \\
 \hline
-Độ mở van nước làm mát & 100\% & 53\% & --47\% \\
+Công suất reboiler & 6000 W & 6000 W & 3066 W \\
 \hline
-Lưu lượng nước làm mát & 7.2 L/min & 3.8 L/min & --47\% \\
+Độ mở van & 100\% & 53\% & ~33\% \\
 \hline
-Công suất ngưng tụ & 9113 W & 5282 W & Cân bằng \\
+Lưu lượng nước & 7.2 L/min & 3.8 L/min & ~2.4 L/min \\
 \hline
-Áp suất đỉnh tháp & 1.0 bar & 1.0 bar & Ổn định \\
+Tiết kiệm điện & -- & 0\% & 49\% \\
+\hline
+Tiết kiệm nước & -- & 47\% & ~67\% \\
 \hline
 \end{tabular}
 \caption{Tổng hợp kết quả tính toán}
@@ -62,8 +65,9 @@ Công suất ngưng tụ & 9113 W & 5282 W & Cân bằng \\
 
 \textbf{Kết luận tổng quát:}
 \begin{itemize}
-    \item Phương pháp điều khiển áp suất đỉnh tháp thông qua van nước làm mát cho phép tiết kiệm 47\% lưu lượng nước làm mát.
-    \item Van chỉ cần mở 53\% thay vì 100\% để đạt cân bằng năng lượng ($Q_{condenser} = Q_{vaporize} = 5282$ W).
+    \item \textbf{Điều khiển van làm mát:} Tiết kiệm 47\% lưu lượng nước làm mát bằng cách điều khiển van theo áp suất đỉnh tháp.
+    \item \textbf{Điều khiển PWM reboiler:} Tiết kiệm thêm 49\% điện năng reboiler bằng cách giảm công suất xuống mức cần thiết.
+    \item \textbf{Kết hợp cả hai:} Tiết kiệm ~67\% nước làm mát và 49\% điện năng so với vận hành baseline.
     \item Giải pháp không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động.
     \item Kết quả cần được kiểm chứng thực nghiệm để xác nhận hiệu quả trong điều kiện vận hành thực tế.
 \end{itemize}
