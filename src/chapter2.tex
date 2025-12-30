@@ -241,6 +241,41 @@ Tăng $T_d$ & Ít thay đổi & Giảm & Không đổi & Tốt hơn \\
 \label{tab:pid_effects}
 \end{table}
 
+\subsubsection{Điều khiển công suất bằng PWM}
+
+Điều chế độ rộng xung (PWM -- Pulse Width Modulation) là phương pháp điều khiển công suất bằng cách thay đổi tỷ lệ thời gian đóng/ngắt của tín hiệu điều khiển trong một chu kỳ cố định.
+
+\begin{equation}
+    \text{Duty cycle} = \frac{t_{ON}}{T} \times 100\%
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $t_{ON}$: Thời gian tín hiệu ở mức cao (ON)
+    \item $T$: Chu kỳ PWM ($T = t_{ON} + t_{OFF}$)
+\end{itemize}
+
+Công suất trung bình đầu ra tỷ lệ với duty cycle:
+\begin{equation}
+    P_{avg} = P_{max} \times \frac{t_{ON}}{T}
+\end{equation}
+
+\textbf{Ưu điểm của PWM so với điều khiển liên tục:}
+\begin{itemize}
+    \item \textbf{Hiệu suất cao:} Phần tử đóng ngắt (relay, SSR) hoạt động ở chế độ bão hòa, tổn hao công suất thấp.
+    \item \textbf{Đơn giản:} Chỉ cần tín hiệu ON/OFF, không cần bộ biến đổi công suất phức tạp.
+    \item \textbf{Tương thích PLC:} Dễ dàng triển khai trên PLC với ngõ ra số (digital output).
+\end{itemize}
+
+\textbf{Ứng dụng trong điều khiển reboiler:}
+
+Reboiler điện sử dụng điện trở gia nhiệt, là tải thuần trở phù hợp với điều khiển PWM. Với chu kỳ PWM đủ lớn (vài giây đến vài chục giây), quán tính nhiệt của hệ thống sẽ lọc dao động, cho công suất nhiệt ổn định.
+
+Ví dụ: Với reboiler 6000 W và duty cycle 50\%:
+\begin{equation}
+    P_{avg} = 6000 \times 0.5 = 3000 \text{ W}
+\end{equation}
+
 % ------------------------------------------------------------
 \subsection{Cơ sở tối ưu hóa năng lượng}
 % ------------------------------------------------------------
