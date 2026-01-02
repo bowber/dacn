@@ -1,6 +1,16 @@
-# Báo cáo Thí nghiệm Thiết bị Đo lường và Điều khiển
+# Đồ án Chuyên ngành - Tối ưu hóa năng suất sản phẩm đỉnh tháp chưng cất ethanol-nước
 
-Báo cáo thí nghiệm môn học "Thiết bị Đo lường và Điều khiển" (CH4132) - Khoa Kỹ thuật Hóa học, Trường Đại học Bách Khoa, ĐHQG-HCM.
+Đồ án Chuyên ngành ngành Kỹ thuật Hóa học - Khoa Kỹ thuật Hóa học, Trường Đại học Bách Khoa, ĐHQG-HCM.
+
+**Đề tài:** Tối ưu hóa năng suất sản phẩm đỉnh của tháp chưng cất ethanol-nước thông qua điều khiển tự động áp suất đỉnh tháp.
+
+## Tóm tắt
+
+Đồ án nghiên cứu và triển khai hệ thống điều khiển áp suất đỉnh tháp chưng cất ethanol-nước quy mô phòng thí nghiệm. Thông qua việc điều khiển lưu lượng nước làm mát bằng bộ điều khiển PID, hệ thống có thể:
+
+- Giảm lượng nước làm mát từ 7.2 L/min xuống 3.8 L/min (tiết kiệm 47%)
+- Tăng năng suất sản phẩm đỉnh nhờ giảm ngưng tụ quá mức
+- Duy trì chất lượng sản phẩm (90% vol ethanol)
 
 ## Build
 
@@ -16,59 +26,43 @@ make shell    # Open interactive shell in Docker for debugging
 
 ```
 src/
-├── main.tex       # Entry point
-├── preamble.tex   # LaTeX preamble và styles
-├── cover_page.tex # Trang bìa
-├── lab1.tex       # Bài TN 1: Khảo sát cảm biến nhiệt độ
-├── lab2.tex       # Bài TN 2: Điều khiển ON/OFF
-├── lab3.tex       # Bài TN 3: Điều khiển PID
-└── lab4.tex       # Bài TN 4: Factory I/O
+├── main.tex          # Entry point
+├── preamble.tex      # LaTeX preamble và styles
+├── cover_page.tex    # Trang bìa
+├── assignment.tex    # Nhiệm vụ đồ án
+├── acknowledgements.tex # Lời cảm ơn
+├── abstract.tex      # Tóm tắt
+├── chapter1.tex      # Chương 1: Tổng quan
+├── chapter2.tex      # Chương 2: Cơ sở lý thuyết
+├── chapter3.tex      # Chương 3: Mô hình thí nghiệm
+├── chapter4.tex      # Chương 4: Tính toán và thiết kế
+├── chapter5.tex      # Chương 5: Kết luận và kế hoạch
+└── references.tex    # Tài liệu tham khảo
 
-data/              # Dữ liệu thí nghiệm
-assets/            # Hình ảnh, logo
-docs/              # Tài liệu tham khảo
-output/            # PDF output
+assets/               # Hình ảnh thiết bị
+docs/                 # Tài liệu tham khảo
+simulation/           # Mô phỏng Python
+output/               # PDF output
 ```
 
-## Thiết bị và phần mềm
+## Thiết bị chính
 
-- **PLC:** Siemens S7-1200
-- **Phần mềm lập trình:** TIA Portal V16
-- **Mô phỏng:** Factory I/O
+| Thiết bị | Model | Chức năng |
+|----------|-------|-----------|
+| PLC | Siemens S7-1200 | Điều khiển trung tâm |
+| Cảm biến áp suất | SITRANS P200 | Đo áp suất đỉnh tháp |
+| Cảm biến lưu lượng | Kobold DPM | Đo lưu lượng hồi lưu |
+| Cảm biến mức | Kobold NMC | Đo mức bình hồi lưu |
+| Van điều khiển | Bürkert Type 2873 + 8605 | Điều khiển nước làm mát |
+| Reboiler | Điện trở 2×3kW | Gia nhiệt đáy tháp |
 
-## Nội dung các bài thí nghiệm
+## Thông số hệ thống
 
-### Bài thí nghiệm 1: Khảo sát cảm biến nhiệt độ
-
-Khảo sát đặc tính và hiệu chuẩn cảm biến nhiệt độ.
-
-- Cảm biến nhiệt điện trở (RTD, Pt100)
-- Cặp nhiệt điện (Thermocouple)
-- Đường cong hiệu chuẩn
-
-### Bài thí nghiệm 2: Điều khiển ON/OFF
-
-Thiết kế và khảo sát hệ thống điều khiển nhiệt độ ON/OFF sử dụng PLC S7-1200.
-
-- Lập trình PLC với TIA Portal
-- Điều khiển bang-bang
-- Phân tích dao động và hysteresis
-
-### Bài thí nghiệm 3: Điều khiển PID
-
-Thiết kế và chỉnh định bộ điều khiển PID cho hệ thống điều khiển nhiệt độ.
-
-- Cấu hình khối PID trong TIA Portal
-- Chỉnh định thông số Kp, Ki, Kd
-- Đánh giá chất lượng điều khiển
-
-### Bài thí nghiệm 4: Factory I/O
-
-Mô phỏng và điều khiển hệ thống công nghiệp với Factory I/O.
-
-- Kết nối PLC S7-1200 với Factory I/O
-- Lập trình điều khiển quy trình tự động
-- Giám sát và vận hành hệ thống ảo
+- Tháp chưng cất: 6 mâm xuyên lỗ, đường kính 150mm
+- Công suất reboiler: 6000W (2×3000W)
+- Condenser: Ống xoắn ruột gà, diện tích 0.28 m²
+- Nồng độ nhập liệu: 10% vol
+- Nồng độ sản phẩm đỉnh: 90% vol
 
 ## Versioning
 
