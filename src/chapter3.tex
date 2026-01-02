@@ -95,9 +95,17 @@ Lưu lượng nhập liệu & $\sim$4.8 (80 ml/min) & L/h \\
 \hline
 \multicolumn{3}{|l|}{\textit{Van điều khiển nước làm mát}} \\
 \hline
-Loại van & \multicolumn{2}{c|}{---} \\
+Loại van & \multicolumn{2}{c|}{Bürkert Type 2873 -- Van solenoid tỷ lệ} \\
 \hline
-Điều khiển & \multicolumn{2}{c|}{Tự động} \\
+Bộ điều khiển & \multicolumn{2}{c|}{Bürkert Type 8605 -- PWM controller} \\
+\hline
+Điện áp hoạt động & 24 & V DC \\
+\hline
+Dòng điện cuộn coil tối đa & 420 & mA \\
+\hline
+Tín hiệu điều khiển & 4-20 & mA \\
+\hline
+Kích thước lỗ (orifice) & --- & mm \\
 \hline
 \multicolumn{3}{|l|}{\textit{Điều kiện vận hành}} \\
 \hline
@@ -220,6 +228,68 @@ Cảm biến nhiệt độ RTD Pt100 theo tiêu chuẩn IEC 60751 được sử 
 \caption{Cảm biến áp suất đỉnh tháp SITRANS P200}
 \label{fig:pressure_sensor}
 \end{figure}
+
+\subsubsection{Van điều khiển nước làm mát}
+
+Van điều khiển nước làm mát sử dụng van solenoid tỷ lệ Bürkert Type 2873 kết hợp với bộ điều khiển PWM Type 8605 để điều chỉnh lưu lượng nước làm mát vào bộ ngưng tụ.
+
+\textbf{Van solenoid tỷ lệ Bürkert Type 2873:}
+
+Van solenoid điều khiển tỷ lệ Type 2873 là van tác động trực tiếp 2/2, thường đóng (NC), được sử dụng làm cơ cấu chấp hành trong các vòng điều khiển. Với gioăng đàn hồi, van đóng kín hoàn toàn ở áp suất danh định. Piston của van được lắp đặt không ma sát, cho phép đặc tính điều chỉnh chính xác.
+
+\begin{itemize}
+    \item Loại van: Van solenoid tỷ lệ tác động trực tiếp, 2/2, thường đóng (NC)
+    \item Điện áp hoạt động: 24 V DC
+    \item Công suất tiêu thụ tối đa: 9 W
+    \item Dòng điện cuộn coil tối đa: 420 mA (tại 9 W và 24 V)
+    \item Tần số PWM: 1200 Hz
+    \item Kích thước lỗ (orifice): 0.8 -- 6 mm (tùy model)
+    \item Dải áp suất: 0 -- 16 bar (tùy kích thước lỗ)
+    \item Vật liệu thân van: Đồng thau hoặc thép không gỉ
+    \item Vật liệu gioăng: FKM, EPDM
+    \item Nhiệt độ môi chất: -10$^\circ$C đến +90$^\circ$C (FKM)
+    \item Cấp bảo vệ: IP65
+\end{itemize}
+
+Đặc tính điều khiển của van Type 2873:
+\begin{itemize}
+    \item Độ trễ (Hysteresis): < 5\%
+    \item Độ lặp lại: < 0.5\% giá trị cuối
+    \item Độ nhạy đáp ứng: < 0.25\% giá trị cuối
+    \item Dải điều chỉnh: 1:200
+    \item Thời gian tác động (10--90\%): < 20 ms
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\textwidth]{../assets/burkert_2873.jpg}
+\caption{Van solenoid tỷ lệ Bürkert Type 2873}
+\label{fig:burkert_2873}
+\end{figure}
+
+\textbf{Bộ điều khiển PWM Bürkert Type 8605:}
+
+Bộ điều khiển điện tử Type 8605 được sử dụng để vận hành van solenoid tỷ lệ trong dải công suất 40 -- 2000 mA. Thiết bị chuyển đổi tín hiệu chuẩn đầu vào (4-20 mA hoặc 0-10 V) thành tín hiệu PWM (Pulse Width Modulation) để điều khiển vô cấp độ mở van.
+
+\begin{itemize}
+    \item Tín hiệu đầu vào: 0-20 mA, 4-20 mA hoặc 0-5 V, 0-10 V (có thể cấu hình)
+    \item Tín hiệu đầu ra: PWM, tần số điều chỉnh được 80 Hz -- 6 kHz
+    \item Dải dòng điện đầu ra: 200 -- 1000 mA (phù hợp với Type 2873)
+    \item Điện áp hoạt động: 12 -- 24 V DC
+    \item Công suất tiêu thụ: $\sim$1 W (không tính van)
+    \item Chức năng Ramp: Điều chỉnh được 0 -- 10 giây
+    \item Màn hình hiển thị và phím bấm để cài đặt thông số
+    \item Cấp bảo vệ: IP65 (dạng cable plug)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.35\textwidth]{../assets/burkert_8605.jpg}
+\caption{Bộ điều khiển PWM Bürkert Type 8605}
+\label{fig:burkert_8605}
+\end{figure}
+
+Khi kết hợp van Type 2873 với bộ điều khiển Type 8605 (dải 200-1000 mA), tín hiệu điều khiển 4-20 mA từ PLC được chuyển đổi thành dòng điện cuộn coil tương ứng để điều chỉnh độ mở van. Tại tín hiệu 20 mA (100\% độ mở), dòng điện cuộn coil đạt khoảng 390 mA.
 
 \subsubsection{Bộ điều khiển PLC S7-1200}
 
