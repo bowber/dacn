@@ -64,7 +64,7 @@ Thông số vận hành của hệ thống:
 
 Công suất reboiler bao gồm hai thành phần:
 \begin{equation}
-    Q_{reboiler} = Q_{feed} + Q_{vaporize}
+    Q_{reboiler} = Q_{feed} + Q_{vaporization}
 \end{equation}
 
 \textbf{Công suất reboiler hiệu dụng:}
@@ -94,11 +94,11 @@ với:
 
 Kết quả: $Q_{feed} = 118$ W
 
-\textbf{Nhiệt hóa hơi ($Q_{vaporize}$):}
+\textbf{Nhiệt hóa hơi ($Q_{vaporization}$):}
 
 Từ cân bằng năng lượng tại reboiler:
 \begin{equation}
-    Q_{vaporize} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282 \text{ W}
+    Q_{vaporization} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282 \text{ W}
 \end{equation}
 
 Đây là công suất nhiệt thực tế dùng để hóa hơi hỗn hợp tại đáy tháp.
@@ -107,18 +107,18 @@ Từ cân bằng năng lượng tại reboiler:
 
 Để vận hành tối ưu, công suất ngưng tụ cần bằng với nhiệt hóa hơi:
 \begin{equation}
-    Q_{condenser,optimal} = Q_{vaporize} = 5282 \text{ W}
+    Q_{condensation,optimal} = Q_{vaporization} = 5282 \text{ W}
 \end{equation}
 
-Nếu $Q_{condenser} < Q_{vaporize}$: hơi không ngưng tụ hết, áp suất tháp tăng.
+Nếu $Q_{condensation} < Q_{vaporization}$: hơi không ngưng tụ hết, áp suất tháp tăng.
 
-Nếu $Q_{condenser} > Q_{vaporize}$: dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
+Nếu $Q_{condensation} > Q_{vaporization}$: dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
 
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
 Công suất ngưng tụ được tính từ cân bằng năng lượng phía nước làm mát:
 \begin{equation}
-    Q_{condenser} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
+    Q_{condensation} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
 
 Trong đó:
@@ -131,18 +131,18 @@ Trong đó:
 
 \textbf{Phân tích chế độ baseline (van mở 100\%):}
 
-Với lưu lượng tối đa $F = 7.2$ L/min = 0.12 kg/s, nếu condenser chỉ cần hấp thụ $Q_{vaporize} = 5282$ W:
+Với lưu lượng tối đa $F = 7.2$ L/min = 0.12 kg/s, nếu condenser chỉ cần hấp thụ $Q_{vaporization} = 5282$ W:
 \begin{equation}
-    T_{out} = T_{in} + \frac{Q_{vaporize}}{\dot{m}_{water} \cdot C_p} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ\text{C}
+    T_{out} = T_{in} + \frac{Q_{vaporization}}{\dot{m}_{water} \cdot C_p} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ\text{C}
 \end{equation}
 
 Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng tụ (78$^\circ$C) cho thấy lưu lượng nước đang dư thừa đáng kể. Phần công suất làm mát dư thừa sẽ làm lạnh dịch ngưng xuống dưới nhiệt độ sôi (subcooling).
 
 \textbf{Tính toán lưu lượng tối ưu:}
 
-Để vận hành tối ưu với $Q_{condenser} = Q_{vaporize} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra:
+Để vận hành tối ưu với $Q_{condensation} = Q_{vaporization} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra:
 \begin{equation}
-    \dot{m}_{optimal} = \frac{Q_{vaporize}}{C_p \cdot (T_{out} - T_{in})}
+    \dot{m}_{optimal} = \frac{Q_{vaporization}}{C_p \cdot (T_{out} - T_{in})}
 \end{equation}
 
 Trong thiết kế thiết bị trao đổi nhiệt, chênh lệch nhiệt độ tiếp cận (approach temperature) thường được chọn khoảng 10$^\circ$C để đảm bảo động lực truyền nhiệt đủ lớn. Với $T_{condensation} = 78^\circ$C:
@@ -228,7 +228,7 @@ Kết quả tính toán trạng thái xác lập:
     \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
     \item Van nước làm mát: 28\% (tiết kiệm 72\%)
     \item Lưu lượng nước làm mát: 2.0 L/min
-    \item Công suất ngưng tụ: 5282 W (cân bằng với $Q_{vaporize}$)
+    \item Công suất ngưng tụ: 5282 W (cân bằng với $Q_{vaporization}$)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
@@ -270,7 +270,7 @@ Lưu lượng nước & 7.2 & 2.0 & L/min \\
 
 Kết quả tính toán cho thấy:
 \begin{enumerate}
-    \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5282 W) cân bằng với nhiệt hóa hơi ($Q_{vaporize} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282$ W). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
+    \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5282 W) cân bằng với nhiệt hóa hơi ($Q_{vaporization} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282$ W). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
     
     \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 28\%, tiết kiệm 72\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
     
@@ -281,13 +281,13 @@ Kết quả tính toán cho thấy:
 
 \textbf{Nguyên lý cân bằng năng lượng:} Công suất ngưng tụ được xác định bởi cân bằng năng lượng phía nước làm mát:
 \begin{equation}
-    Q_{condenser} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
+    Q_{condensation} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
 
 Khi van mở 100\%:
 \begin{itemize}
     \item Lưu lượng nước: 7.2 L/min
-    \item Nước chỉ cần hấp thụ $Q_{vaporize} = 5282$ W
+    \item Nước chỉ cần hấp thụ $Q_{vaporization} = 5282$ W
     \item Nhiệt độ nước ra: $T_{out} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ$C
     \item Chênh lệch với nhiệt độ ngưng tụ (78°C) rất lớn -- lãng phí 72\% lưu lượng nước.
 \end{itemize}
