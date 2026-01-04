@@ -116,38 +116,64 @@ Nếu $Q_{condenser} > Q_{vaporize}$: dịch ngưng bị làm lạnh dưới nhi
 
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
-Từ phương trình truyền nhiệt \cite{perry2019}:
+Công suất ngưng tụ được tính từ cân bằng năng lượng phía nước làm mát:
 \begin{equation}
-    Q = U \cdot A \cdot \Delta T_{LMTD}
+    Q_{condenser} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
 
-Với condenser dạng ống xoắn (A = 0.28 m$^2$), hệ số truyền nhiệt U phụ thuộc vào lưu lượng:
+Trong đó:
+\begin{itemize}
+    \item $\dot{m}_{water}$: lưu lượng khối lượng nước làm mát (kg/s)
+    \item $C_p = 4186$ J/(kg·K): nhiệt dung riêng của nước
+    \item $T_{in} = 30^\circ$C: nhiệt độ nước vào (nhiệt độ nước máy)
+    \item $T_{out}$: nhiệt độ nước ra
+\end{itemize}
+
+\textbf{Phân tích chế độ baseline (van mở 100\%):}
+
+Với lưu lượng tối đa $F = 7.2$ L/min = 0.12 kg/s, nếu condenser chỉ cần hấp thụ $Q_{vaporize} = 5282$ W:
 \begin{equation}
-    U = U_{ref} \cdot \left(\frac{F}{F_{ref}}\right)^{0.8}
+    T_{out} = T_{in} + \frac{Q_{vaporize}}{\dot{m}_{water} \cdot C_p} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ\text{C}
 \end{equation}
 
-Trong đó $U_{ref}$ là hệ số truyền nhiệt tại lưu lượng tham chiếu $F_{ref} = 7.2$ L/min (van mở 100\%). Số mũ 0.8 xuất phát từ tương quan Dittus-Boelter cho dòng chảy rối trong ống ($Nu \propto Re^{0.8}$) \cite{incropera2011}.
+Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng tụ (78$^\circ$C) cho thấy lưu lượng nước đang dư thừa đáng kể. Phần công suất làm mát dư thừa sẽ làm lạnh dịch ngưng xuống dưới nhiệt độ sôi (subcooling).
 
-\textbf{Lựa chọn giá trị $U_{ref}$:} Theo \cite{engineering_toolbox_2003}, hệ số truyền nhiệt tổng cho hệ thống ngưng tụ hơi hữu cơ với nước làm mát nằm trong khoảng 300--1200 W/(m²·K). Giá trị thấp (300--500) áp dụng cho thiết bị bám bẩn, cáu cặn; giá trị cao (1000--1200) cho thiết bị sạch. Hệ thống ethanol--nước là hệ sạch (không gây cáu cặn, không ăn mòn với SS304), do đó có thể sử dụng giá trị cao. Tuy nhiên, để đảm bảo tính bảo thủ trong tính toán, chọn $U_{ref} = 800$ W/(m²·K) -- giá trị trung bình của khoảng điển hình.
+\textbf{Tính toán lưu lượng tối ưu:}
 
-\textbf{Kết quả tính toán:}
+Để vận hành tối ưu với $Q_{condenser} = Q_{vaporize} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra mong muốn:
+\begin{equation}
+    \dot{m}_{optimal} = \frac{Q_{vaporize}}{C_p \cdot (T_{out} - T_{in})}
+\end{equation}
+
+Giới hạn nhiệt độ nước ra là nhiệt độ ngưng tụ ($T_{condensation} = 78^\circ$C). Lưu lượng tối thiểu lý thuyết:
+\begin{equation}
+    \dot{m}_{min} = \frac{5282}{4186 \times (78 - 30)} = 0.026 \text{ kg/s} = 1.6 \text{ L/min} \quad (\text{van } 22\%)
+\end{equation}
+
+Thực tế cần biên độ an toàn để đảm bảo truyền nhiệt hiệu quả. Bảng \ref{tab:condenser_modes} trình bày các phương án với các mức biên độ khác nhau:
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|}
 \hline
-\textbf{Chế độ} & \textbf{$Q_{condenser}$} & \textbf{Valve} & \textbf{Lưu lượng} \\
+\textbf{Chế độ} & \textbf{$T_{out}$} & \textbf{Biên độ} & \textbf{Lưu lượng} & \textbf{Valve} \\
 \hline
-Vận hành tối ưu & 5282 W & 53\% & 3.8 L/min \\
+Baseline (van 100\%) & 40.5$^\circ$C & 37.5$^\circ$C & 7.2 L/min & 100\% \\
 \hline
-Baseline (van 100\%) & 9113 W & 100\% & 7.2 L/min \\
+Tối ưu (khuyến nghị) & 50$^\circ$C & 28$^\circ$C & 3.8 L/min & 53\% \\
+\hline
+Tối ưu (tiết kiệm hơn) & 60$^\circ$C & 18$^\circ$C & 2.5 L/min & 35\% \\
+\hline
+Giới hạn lý thuyết & 78$^\circ$C & 0$^\circ$C & 1.6 L/min & 22\% \\
 \hline
 \end{tabular}
-\caption{Công suất ngưng tụ và lưu lượng nước làm mát theo các chế độ}
+\caption{Lưu lượng nước làm mát theo nhiệt độ nước ra (với $Q = 5282$ W)}
 \label{tab:condenser_modes}
 \end{table}
 
-\textbf{Nhận xét:} Với công suất reboiler hiệu dụng 5400 W, lưu lượng nước làm mát tối ưu là khoảng 53\% (3.8 L/min), tiết kiệm 47\% so với mở van 100\%. Chế độ baseline (van mở 100\%) cung cấp công suất ngưng tụ 9113 W, vượt quá nhu cầu thực tế gần gấp đôi.
+\textbf{Khuyến nghị:} Chọn $T_{out} = 50^\circ$C (biên độ 28$^\circ$C) để đảm bảo an toàn và ổn định. Lưu lượng tương ứng là 3.8 L/min (van 53\%), tiết kiệm 47\% so với baseline.
+
+\textbf{Lưu ý:} Giá trị thực tế cần được xác nhận qua thí nghiệm trong LVTN bằng cách đo nhiệt độ nước vào/ra ở các mức độ mở van khác nhau.
 
 \subsubsection{Điều khiển công suất reboiler bằng PWM}
 
