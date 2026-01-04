@@ -112,7 +112,7 @@ Từ cân bằng năng lượng tại reboiler:
 
 Nếu $Q_{\text{ngưng tụ}} < Q_{\text{hóa hơi}}$: hơi không ngưng tụ hết, áp suất tháp tăng.
 
-Nếu $Q_{\text{ngưng tụ}} > Q_{\text{hóa hơi}}$: dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
+Nếu $Q_{\text{ngưng tụ}} > Q_{\text{hóa hơi}}$: dung dịch ngưng tụ bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
 
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
@@ -136,7 +136,7 @@ Với lưu lượng tối đa $F = 7.2$ L/min = 0.12 kg/s, nếu condenser chỉ
     T_{out} = T_{in} + \frac{Q_{\text{hóa hơi}}}{\dot{m}_{water} \cdot C_p} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ\text{C}
 \end{equation}
 
-Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng tụ (78$^\circ$C) cho thấy lưu lượng nước đang dư thừa đáng kể. Phần công suất làm mát dư thừa sẽ làm lạnh dịch ngưng xuống dưới nhiệt độ sôi (subcooling).
+Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng tụ (78$^\circ$C) cho thấy lưu lượng nước đang dư thừa đáng kể. Phần công suất làm mát dư thừa sẽ làm lạnh dung dịch ngưng tụ xuống dưới nhiệt độ sôi (subcooling).
 
 \textbf{Tính toán lưu lượng tối ưu:}
 
@@ -301,21 +301,21 @@ Với điều khiển (van 28\%):
 
 \subsubsection{Phương pháp kiểm chứng thực nghiệm}
 
-Để kiểm chứng hiệu quả của chiến lược điều khiển van làm mát, sử dụng độ chênh nhiệt độ giữa đỉnh tháp và dịch ngưng:
+Để kiểm chứng hiệu quả của chiến lược điều khiển van làm mát, sử dụng độ chênh nhiệt độ giữa đỉnh tháp và dung dịch ngưng tụ:
 \begin{equation}
-    \Delta T_{subcool} = T_{\text{đỉnh}} - T_{\text{dịch ngưng}}
+    \Delta T_{subcool} = T_{\text{đỉnh}} - T_{\text{ngưng tụ}}
 \end{equation}
 
 Trong đó:
 \begin{itemize}
     \item $T_{\text{đỉnh}}$: Nhiệt độ hơi tại đỉnh tháp (đo bằng cảm biến nhiệt độ đỉnh) $\approx$ 78.4°C
-    \item $T_{\text{dịch ngưng}}$: Nhiệt độ dịch ngưng sau condenser (đo bằng cảm biến nhiệt độ dịch ngưng)
+    \item $T_{\text{ngưng tụ}}$: Nhiệt độ dung dịch ngưng tụ sau condenser (đo bằng cảm biến nhiệt độ dung dịch ngưng tụ)
 \end{itemize}
 
 Ý nghĩa của $\Delta T_{subcool}$:
 \begin{itemize}
-    \item $\Delta T_{subcool} \approx 0$°C: Dịch ngưng ở nhiệt độ sôi, không bị làm lạnh quá mức -- vận hành tối ưu.
-    \item $\Delta T_{subcool} > 0$°C: Dịch ngưng bị làm lạnh dưới nhiệt độ sôi (subcooling) -- lãng phí nước làm mát.
+    \item $\Delta T_{subcool} \approx 0$°C: Dung dịch ngưng tụ ở nhiệt độ sôi, không bị làm lạnh quá mức -- vận hành tối ưu.
+    \item $\Delta T_{subcool} > 0$°C: Dung dịch ngưng tụ bị làm lạnh dưới nhiệt độ sôi (subcooling) -- lãng phí nước làm mát.
 \end{itemize}
 
 Kết quả dự kiến:
