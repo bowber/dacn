@@ -1,0 +1,285 @@
+Hướng dẫn thực hiện môn học
+ĐỒ ÁN CHUYÊN NGÀNH (IM4033)
+(còn gọi là ĐỀ CƯƠNG KHÓA LUẬN TỐT NGHIỆP)
+Theo Chương trình đào tạo bắt đầu từ Khóa 2019, Sinh viên ngành Quản Lý Công
+Nghiệp phải hoàn thành môn “Đồ án chuyên ngành” ở học kỳ 7 của lộ trình đào tạo
+chuẩn, và đó là môn tiên quyết của môn Khóa luận tốt nghiệp ở học kỳ 8.
+Theo Điều 7 Quy định học vụ và đào tạo (Quyết định số 2933, ký ngày 10/9/2021), để
+hoàn thành môn Đồ án chuyên ngành, sinh viên phải có số điểm từ 5.5 trở lên theo thang
+điểm 10 thì mới gọi là ĐẠT và đủ điều kiện đăng ký môn Khóa Luận Tốt Nghiệp ở học
+kỳ sau. Do vậy, sinh viên phải đầu tư nghiêm túc cho môn học này.
+1. Yêu cầu của môn Đồ án Chuyên ngành (ĐACN):
+• ĐACN là một bản đề cương với nội dung chi tiết nhất có thể, và khả thi để sau đó
+triển khai tiếp tục để hoàn thành Khóa luận Tốt nghiệp ở học kỳ tiếp theo;
+• ĐACN trình bày sự lập luận và áp dụng những lý thuyết, kiến thức phù hợp để giải
+quyết những vấn đề nêu ra trong đồ án;
+• Mỗi sinh viên sẽ làm việc với 01 GVHD (giáo viên hướng dẫn), trao đổi và tham
+khảo ý kiến từ GVHD, báo cáo tiến độ thực hiện theo yêu cầu của GVHD;
+• GVHD này cũng sẽ là GVHD cho môn Khóa luận Tốt nghiệp ở học kỳ tiếp theo,
+trừ một số trường hợp thật đặc biệt có thể thay đổi GVHD nhưng phải thông qua
+bộ môn và văn phòng Khoa.
+• Mỗi sinh viên tự (học) thực hiện toàn bộ đồ án chuyên ngành trong 15 tuần (ít nhất
+120 giờ) đến khi xong đồ án hoàn chỉnh (sau đây sẽ gọi là đề cương) và được
+GVHD đồng ý và ký tên vào bản đề cương trước khi sinh viên nộp cho Bộ môn;
+• Sinh viên sẽ trình bày trước hội đồng nội dung của đề cương. Môn học được đánh
+giá theo các chuẩn đầu ra như bên dưới.
+- Xác định và xây dựng những vấn đề cần nghiên cứu trong đề cương
+- Phát triển những lập luận minh chứng từ sự tổng hợp lý thuyết liên quan,
+- Nắm rõ và vận dụng các phương pháp và các công cụ thu thập và phân tích dữ
+liệu thứ cấp và sơ cấp. Diễn giải được những kết quả phân tích.
+- Thể hiện kỹ năng trình bày và bảo vệ việc thực hiện đề cương.
+2. Nội dung chi tiết của Đề cương sẽ gồm các phần chính sau:
+Tên của đề cương: trình bày ở trang bìa, thường thể hiện nội dung sẽ được triển khai sau
+khi đề cương được hoàn thành và thông qua, tên của đề cương sẽ trở thành tên của Khóa
+luận tốt nghiệp sau này (trừ trường hợp thật đặc biệt, có thể thay đổi tên nhưng phải
+thông qua GVHD, bộ môn và văn phòng Khoa). Sinh viên có thể tham khảo tên của
+1
+
+những luận văn đã được thực hiện, hoặc phụ lục 1 kèm theo, hay tham khảo ý kiến từ
+GVHD để đặt tên phù hợp và sát với nội dung sẽ thực hiện sau này.
+Phần 1: Giới thiệu (5 – 7 trang)
+1. Giới thiệu về đề tài (background, statement, rationale of the study): phần này sinh
+viên giới thiệu về đề tài, đưa những lập luận (có thể minh chứng qua số liệu thực tế từ
+doanh nghiệp sau đợt thực tập ngoài trường hoặc số liệu thực tế được công bố qua báo
+chí, bài báo khoa học,…), từ đó sinh viên đưa ra những lý do thuyết phục vì sao cần hình
+thành đề tài, nêu được những vấn đề mà đề tài cần giải quyết. Sinh viên phải đưa ra
+những luận cứ thuyết phục người đọc là đề tài này thực sự cần thiết/có ý nghĩa để thực
+hiện. Vấn đề mà đề cương giải quyết là có ý nghĩa cho đối tượng nghiên cứu (doanh
+nghiệp, tổ chức, các bên liên quan đến vấn đề nghiên cứu,...).
+2. Mục tiêu trong đề cương luận văn (objectives of the study): mục tiêu trong đề cương
+khóa luận là những mục tiêu sẽ đạt được khi đề cương được triển khai và hoàn thành, hay
+nói một cách khác mục tiêu trong đề cương là mục tiêu đạt được của khóa luận tốt
+nghiệp.
+Như vậy, sinh viên phải thực hiện đề cương luận văn của mình có tính khả thi và có thể
+triển khai thành khóa luận ở học kỳ tiếp theo, kết quả cần đạt của khóa luận là mục tiêu
+mà đề cương hướng đến. Sinh viên phải hướng đề cương luận văn của mình giải quyết
+được những vấn đề cụ thể từ doanh nghiệp mà sinh viên đã có dịp thực tập ở đó, hoặc
+những vấn đề trong ngành/thị trường mà sinh viên nhận định được.
+Mục tiêu trong đề cương phải rõ ràng, cụ thể và khả thi để kết quả khóa luận có thể đạt
+được những mục tiêu này. Mục tiêu sẽ liên quan đến những điều mà sinh viên muốn
+khám phá hay phát hiện ra, liên quan đến câu hỏi mà sinh viên muốn trả lời.
+Sinh viên nên tránh phát biểu những mục tiêu quá chung chung, hoặc những mục tiêu
+không thực tế, hoặc đưa ra quá nhiều mục tiêu mà khóa luận không thể đạt được trong
+thời gian thực hiện làm khóa luận trong học kỳ tiếp theo;
+3. Phạm vi đề tài (scope of the study): giới hạn phạm vi hay đối tượng nghiên cứu
+(không gian và thời gian tương ứng), nói cách khác sinh viên phải chỉ ra đối tượng cần
+thiết mà nghiên cứu hướng đến (nhóm khách hàng, nhà cung cấp, dây chuyền, phân
+xưởng hay loại sản phẩm cụ thể,…). Kết quả của luận văn có ý nghĩa đối với nhóm đối
+tượng này, việc mở rộng đối tượng nghiên cứu có thể thảo luận sau trong khóa luận để
+mở ra những hướng nghiên cứu tiếp theo;
+4. Bố cục dự kiến (tentative structure of the study): phần này thể hiện mục lục dự kiến
+bao gồm các chương và phần chính của Khóa luận được phát triển hoàn chỉnh từ đề
+cương này.
+2
+
+5. Tiến độ thực hiện (tentative schedule): nêu rõ tiến độ thực hiện khi đề cương bắt đầu
+được phát triển thành khóa luận. Đây không phải là tiến độ viết đề cương, mà là tiến độ
+thực hiện các khối lượng của khóa luận sau khi đề cương đã được phê duyệt, kế hoạch
+thực hiện theo các mốc thời gian cụ thể (tính từ thời điểm bắt đầu) cho từng phần việc
+tương ứng đến khi khóa luận được hoàn thành.
+Phần 2: Cơ sở lý thuyết (8 – 12 trang)
+Phần này sinh viên giới thiệu tóm lược về những lý thuyết và kiến thức có liên quan đến
+đề tài hay vấn đề nghiên cứu, giới thiệu những mô hình nghiên cứu tương ứng, những
+mảng kiến thức liên quan, giới thiệu những công cụ phù hợp và cách thức triển khai
+những công cụ này trong thực tế để giải quyết những vấn đề nêu ra.
+Phần 3: Phương pháp thực hiện (methodologies/approaches) (6 – 10 trang)
+Tương ứng với vấn đề nghiên cứu được nêu rõ trong mục 2 của Phần 1 Giới thiệu về đề
+tài, cùng với cơ sở lý thuyết xây dựng trong Phần 2, sinh viên phải xây dựng phương
+pháp thực hiện để có thể đạt được những mục tiêu và những vấn đề nêu ra trong đề
+cương.
+Sinh viên xây dựng quy trình thực hiện luận văn để có thể đạt được những mục tiêu đã
+nêu ra.
+Sinh viên phải lập luận và khẳng định việc áp dụng lý thuyết/công cụ để giải quyết vấn đề
+mà đề cương nêu ra là khả thi và phù hợp nhất. Với lý thuyết/phương pháp lựa chọn, sinh
+viên nêu rõ quy trình/cách thức thu thập số liệu cần thiết (dự kiến số liệu/dữ liệu nào, tại
+sao cần dữ liệu đó, nguồn dữ liệu, cách thức thu thập, đánh giá độ tin cậy của nguồn dữ
+liệu…). Sinh viên phải thể hiện được tính khả thi trong việc thu thập số liệu này.
+Sau khi trình bày sự cần thiết của dữ liệu và phương pháp thu thập dữ liệu, sinh viên trình
+bày cách thức/phương pháp xử lý số liệu, trình bày (dự kiến) sự liên hệ giữa kết quả sau
+khi xử lý và phân tích số liệu với kết quả hay mục tiêu mà luận văn mong muốn.
+Tài liệu tham khảo: trình bày ở phần cuối cùng của đề cương, theo định dạng APA (xem
+phụ lục 2 kèm theo), là danh sách các tài liệu sẽ sử dụng để tham khảo cho khóa luận.
+Trong khi viết đề cương, sinh viên sẽ cần trích dẫn các nguồn số liệu, các bài nghiên cứu
+trước đây để ủng hộ các lập luận của mình. Tài liệu tham khảo có thể là sách tham khảo,
+những luận văn đã thực hiện trước đó, những bài báo khoa học có liên quan, nguồn trên
+website phù hợp (ví dụ URL có dạng edu, org…)
+
+3
+
+Phụ lục 1 – Một số hướng đề tài gợi ý để thực hiện đề cương/ khóa luận
+1) Tiếp thị
+1.1 Khách hàng/ người tiêu dùng:
+- Sự hài lòng
+- Sự trung thành
+- Hành vi mua/ý định mua/ quyết định mua/ hành vi sau mua
+- Tìm hiểu nhu cầu
+- Xu hướng/ nhận thức/ thái độ
+- Đồng tạo sinh tạo giá trị
+1.2 Công ty, doanh nghiệp
+- Lập kế hoạch/ chiến lược tiếp thị, truyền thông, phân phối
+- Xây dựng thương hiệu
+- Quản lý bán hàng/ lực lượng bán hàng
+- Nâng cao hiệu quả bán hàng/truyền thông/ phân phối
+- Xây dựng và phát triển mối quan hệ khách hàng
+- Phân khúc thị trường
+- Phân tích nguyên nhân thành công/ thất bại của hoạt động tiếp thị/ bán hàng/công tác quản lý mối
+quan hệ với khách hàng
+2) Nhân sự
+2.1 Khảo sát hiện trạng/ đánh giá hiệu quả các chức năng của HRM
+- Thu hút nhân lực
+- Quy trình/công tác tuyển dụng
+- Đào tạo
+- Hệ thống đánh giá, lương bổng và đãi ngộ
+2.2 Thực hiện các chức năng của HRM
+- Phân tích công việc
+- Xây dựng quy trình tuyển chọn
+- Phân tích nhu cầu đào tạo
+- Xây dựng chương trình đào tạo
+- Xây dựng tự điển năng lực và đánh giá năng lực cho nhân viên
+- Đánh giá kết quả thực hiện công việc
+- Khảo sát sự hài lòng/ gắn kết công việc
+- Đội ảo/ làm việc nhóm/ thành quả công việc
+3) Chiến lược và các khía cạnh liên quan
+- Hoạch định và xây dựng chiến lược giai đoạn 3-5 năm (cấp công ty, cấp đơn vị kinh doanh chiến
+lược SBU)
+- Xây dựng năng lực cạnh tranh
+- Xây dựng/ đổi mới cơ cấu tổ chức
+- Xây dựng/ đổi mới văn hóa tổ chức
+- Đạo đức và trách nhiệm xã hội của doanh nghiệp
+- Sự lãnh đạo và hiệu quả kinh doanh
+
+4
+
+4) Hệ thống thông tin/ kinh doanh
+- Phân tích và thiết kế hệ thống thông tin cho một tổ chức
+- Cải tiến các quy trình làm việc, quản lý thông tin
+- Nâng cao năng lực quản lý thông qua việc thiết lập hệ thống thông tin
+- Xây dựng mô hình kinh doanh điện tử cho một tổ chức
+- Các giải pháp nâng cao chất lượng dịch vụ điện tử
+- Lập và phân tích/quản lý dự án hệ thống thông tin
+- Các yếu tố ảnh hưởng đến sự chấp nhận/sự hài lòng/sự thỏa mãn của người dùng hệ thống thông
+tin
+- Các nghiên cứu về quản lý tri thức trong tổ chức
+- Các nghiên cứu về tinh thần doanh nghiệp, sáng tạo và cải tiến trong doanh nghiệp
+- Đánh giá chất lượng website
+- KPI cho doanh nghiệp
+- Mô hình kinh doanh (VD: Telemedicine, định hướng KD…)
+5) Quản lý sản xuất, vận hành
+- Công cụ chất lượng (TQM, ngôi nhà CL,..)
+- Công cụ thống kê để kiểm soát chất lượng
+- Các công cụ/ mô hình (LEAN, DMAIC, VSM, ISO, FMEA, MFCA, SMED, TPM/KANO/IPA/QFD) để cải
+tiến năng suất/ hiệu quả… hệ thống sản xuất
+- Nâng cao hiệu quả hệ thống CL
+- Đánh giá năng lực công nghệ/ nhà cung ứng
+- Dự báo, hoạch định nhu cầu
+- Cân bằng chuyền
+- Thiết kế mặt bằng SX/ Thiết kế chuyền
+- SCM (tích hợp, green, linh hoạt…)
+- Mô hình kinh tế tuần hoàn (rào cản của ngành…)/ Xác định ngành CN phụ trợ
+- Quản lý rủi ro dự án
+- Thiết kế dịch vụ
+6) Tài chính
+- Dự báo giá, index, định giá
+- Vốn lưu động-khả năng sinh lời
+- Cấu trúc sở hữu và biểu hiện
+- Yếu tố ảnh hưởng Giá trị cổ phiếu
+- Vai trò /đặc điểm thành viên HĐQT và hiệu quả kinh doanh
+- Rủi ro tài chính
+- Quyết định đầu tư
+- Tỷ suất sinh lợi ngành
+- Tính thanh khoản
+
+5
+
+Phụ lục 2 – hướng dẫn trình bày tài liệu tham khảo và cách trích dẫn theo APA
+APA (American Psychological Association) là hình thức được sử dụng phổ biến để trích dẫn
+nguồn tài liệu trong các bài viết của ngành khoa học xã hội và quản lý. Sinh viên tham khảo
+thêm tại https://en.wikipedia.org/wiki/APA_style và https://www.apastyle.org/learn/index
+Khi sinh viên viết đề cương hay bài khóa luận, thường có trích dẫn trong bài viết (in-text
+citation). Sự trích dẫn thường được dùng với các câu trích dẫn trực tiếp hoặc tóm tắt lại ý của tác
+giả trong tác phẩm gốc để lập luận hay củng cố cho luận điểm của người viết. Với mỗi trích dẫn
+trong bài viết, bắt buộc phải tương ứng khớp với một tài liệu liệt kê trong danh sách tài liệu tham
+khảo. Danh sách trích dẫn trong phần tài liệu tham khảo phải được xếp thứ tự a, b, c…
+A) Cách trình bài nguồn dẫn trong danh sách tài liệu tham khảo
+APA qui định định dạng như sau:
+Sách:
+Tên tác giả (Năm). Tên sách. Nơi xuất bản, Nhà xuất bản
+Ví dụ::
+Fowler, F. J. (2002). Survey research methods (Applied social research methods) (3rd ed.).
+Thousand Oaks, CA: SAGE Publications.
+Roos, J., Roos, G., Dragonetti, N. C., & Edvinsson, L. (1997). Intellectual capital: Navigating in
+the new business landscape. London, United Kingdom: Palgrave Macmillan
+Sơn, N.T (1999). Lý thuyết tập hợp. Tp.HCM, Nhà Xuất Bản Khoa Học và Kỹ Thuật.
+Sách điện tử E-book:
+Tên tác giả (date). Tên sách. Truy cập từ: http://www.xyz.abc
+Bài báo trên tạp chí khoa học:
+Author Surname, First Initial. Second Initial. (Year). Article title: Subtitle. Journal Title, Volume
+(issue), page range.
+Ví dụ:
+Grant, R. M. (1996). Toward a knowledge-based theory of the firm. Strategic Management
+Journal, 17(S2), 109-122.
+Hair, J. F., Ringle, C. M., & Sarstedt, M. (2012). Partial least squares: the better approach to
+structural equation modeling? Long Range Planning, 45(5-6), 312-319.
+
+6
+
+Wagner, S. M., Rau, C., & Lindemann, E. (2010). Multiple informant methodology: A critical
+review and recommendations. Sociological Methods & Research, 38(4), 582-618.
+Bài viết trong hội thảo
+Last name, First Initial. (Year published). Title of Paper or Proceedings, Title of Conference,
+Location, Date. Place of publication: Publisher.
+Ví dụ:
+Bickman, L., & Ellis, H. (Eds.). (1990). Preparing psychologists for the 21st century:
+Proceedings of the National Conference on Graduate Education in Psychology, University of
+Utah, 1988. Hillsdale, NJ: L. Erlbaum.
+F. H. V. Rappard (Eds.), Theoretical issues in psychology: Proceedings of the International
+Society for Theoretical Psychology 1999 Conference (pp. 3-12). Sydney: Springer.
+Russell, S.J. & Wefald, E.H. (1989). On optimal game-tree search using rational meta-reasoning.
+In Proceedings of the 11th International Joint Conference on Artificial Intelligence, pp. 334-340
+Tùng, N.T. (2001). Phân tích sự phụ thuộc dữ liệu. Trong kỷ yếu hội nghị Nghiên cứu Khoa Học
+Trẻ lần 3, Tp.HCM, pp. 18-22.
+Luận văn hoặc luận án:
+Last name, First Initial. (Year published). Title (level of thesis), University, City, Country.
+Ví dụ:
+Minsky, M.L., (1954). Neural Nets and the Brain-Model Problem (Doctoral dissertation),
+Princeton University.
+Barua, S. (2010). Drought assessment and forecasting using a nonlinear aggregated drought
+index (Doctoral dissertation), Victoria University, Melbourne, Australia. Retrieved from
+http://vuir.vu.edu.au/1598
+Binder, G. (2009). Corporate governance in Arab countries: Development of corporate
+governance in Arab and MENA countries. Vienna, Austria: University of Vienna
+Vinh, N.P.T & Tùng, N.T, (2001). Xây dựng Transducer (Luận văn đại học), Đại Học Bách
+Khoa Tp.HCM.
+Trang web nếu có tác giả:
+Author, A. (Date). Title of document. Retrieved date from http://www.xyz.abc
+
+7
+
+Trang web không rõ tác giả:
+Title of document. (Date). Retrieved from http://www.xyz.abc
+Ví dụ:
+VECOM. (2013, May 20). Vietnam e-business index 2013 report. Retrieved from
+http://www.vecom.vn/wp-content/uploads/2013/12/bao-cao-chi-so-thuong-mai-dien-tu-viet-nam2013.pdf
+Doctorow, C. (2009, August 13). Photos of science fiction writers' nests. Retrieved from
+http://www.boingboing.net/2009/08/13/photos-of-science-fi.html
+B) Trình bày cách trích dẫn trong nội dung bài viết (in-text citation):
+Sau khi có danh sách nguồn dẫn trong tài liệu tham khảo, khi viết bài và sử dụng các ý của tác
+giả gốc/ nguồn gốc thì sinh viên phải dẫn nguồn kèm theo.
+Các ví dụ:
+{…} Một công ty được xem là một thực thể tạo ra tri thức và áp dụng chúng (Grant, 1996;
+Nonaka, Toyama, & Nagata, 2000) {….} Lý do công ty gặp khó khăn trong việc nhận diện giá
+trị của việc đầu tư công nghệ thông tin là do công nghệ thông tin tạo ra giá trị cho công ty qua rất
+nhiều cách (Davern & Wilkin, 2010). {…}
+Neuman (2011) chỉ ra các đặc điểm của phương pháp khảo sát như bảng sau …..
+Tại Việt Nam, các vùng miền có chỉ số thương mại điện tử cao là ….. (VECOM, 2013, p. 13)
+Hair et al. (2014, p. 97) đưa ra bốn tiêu chí để đánh giá các thang đo dạng kết quả (reflective)
+như trình bày trong Bảng 5.1 ….
+Sinh viên tham khảo thêm tại https://en.wikipedia.org/wiki/APA_style và
+https://www.apastyle.org/learn/index
+Trong phần mềm soạn thảo văn bản MS Word, sinh viên có thể dùng menu References>Style để
+chọn kiểu APA; menu References>Insert Citation để chèn trích dẫn trong bài viết; và menu
+References>Bibliography>Insert để tạo danh mục tài liệu tham khảo.
+
+8
+
+
