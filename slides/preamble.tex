@@ -1,0 +1,269 @@
+% ============================================================
+% Preamble - Neubrutalism Beamer Theme
+% Đồ án Chuyên ngành - Slideshow
+% ============================================================
+
+\documentclass[aspectratio=169, 12pt]{beamer}
+
+% ============================================================
+% FONTS & LANGUAGE
+% ============================================================
+\usepackage{fontspec}
+\setsansfont{Noto Sans}[
+    BoldFont = {Noto Sans Bold},
+    ItalicFont = {Noto Sans Italic},
+    BoldItalicFont = {Noto Sans Bold Italic}
+]
+\setmainfont{Noto Sans}
+\usepackage[vietnamese]{babel}
+
+% ============================================================
+% COLORS - Neubrutalism Palette
+% ============================================================
+\usepackage{xcolor}
+\definecolor{bglight}{HTML}{D6E6F2}     % Light blue background
+\definecolor{darkblue}{HTML}{1E3A5F}    % Borders, shadows
+\definecolor{bkblue}{HTML}{005293}      % BK accent, highlights
+\definecolor{accent}{HTML}{F5A623}      % Orange accent
+\definecolor{shadowblue}{HTML}{4A90D9}  % Lighter shadow color
+
+% ============================================================
+% BEAMER SETTINGS
+% ============================================================
+\usetheme{default}
+\usecolortheme{default}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Set background color
+\setbeamercolor{background canvas}{bg=bglight}
+
+% ============================================================
+% TIKZ & GRAPHICS
+% ============================================================
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, shadows, backgrounds}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ============================================================
+% MATH
+% ============================================================
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% ============================================================
+% NEUBRUTALISM STYLES
+% ============================================================
+
+% Shadow offset
+\newlength{\shadowoffset}
+\setlength{\shadowoffset}{4pt}
+
+% Neubrutalist box style
+\tikzset{
+    neubrutalist box/.style={
+        rectangle,
+        fill=white,
+        draw=darkblue,
+        line width=2.5pt,
+        minimum width=#1,
+        inner sep=12pt,
+    },
+    neubrutalist box/.default=0.9\textwidth,
+    % Shadow layer
+    neubrutal shadow/.style={
+        rectangle,
+        fill=darkblue,
+        minimum width=#1,
+        inner sep=12pt,
+    },
+    neubrutal shadow/.default=0.9\textwidth,
+}
+
+% Command to create neubrutalist box with shadow
+\newcommand{\neubox}[2][0.9\textwidth]{%
+    \begin{tikzpicture}
+        % Shadow (offset)
+        \node[neubrutal shadow=#1, anchor=north west] at (\shadowoffset, -\shadowoffset) {};
+        % Main box
+        \node[neubrutalist box=#1, anchor=north west] at (0,0) {#2};
+    \end{tikzpicture}%
+}
+
+% Neubrutalist button style
+\newcommand{\neubutton}[1]{%
+    \begin{tikzpicture}[baseline=(text.base)]
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {\phantom{#1}};
+        % Button
+        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=8pt, text=white, font=\bfseries, anchor=north west] (text) at (0,0) {#1};
+    \end{tikzpicture}%
+}
+
+% Neubrutalist accent box (for highlights)
+\newcommand{\neuaccent}[1]{%
+    \begin{tikzpicture}[baseline=(text.base)]
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=6pt, anchor=north west] at (2pt, -2pt) {\phantom{#1}};
+        % Box
+        \node[rectangle, fill=accent, draw=darkblue, line width=1.5pt, inner sep=6pt, font=\bfseries, anchor=north west] (text) at (0,0) {#1};
+    \end{tikzpicture}%
+}
+
+% ============================================================
+% FRAME TITLE - Neubrutalism Style
+% ============================================================
+\setbeamertemplate{frametitle}{
+    \vspace{0.5cm}
+    \begin{tikzpicture}[remember picture, overlay]
+        % Shadow
+        \fill[darkblue] ([xshift=5pt, yshift=-5pt]current page.north west) rectangle ++(0.92\paperwidth, -1.2cm);
+        % Main title box
+        \fill[white] ([xshift=0.04\paperwidth, yshift=-0.08\paperheight]current page.north west) rectangle ++(0.92\paperwidth, -1.2cm);
+        \draw[darkblue, line width=2.5pt] ([xshift=0.04\paperwidth, yshift=-0.08\paperheight]current page.north west) rectangle ++(0.92\paperwidth, -1.2cm);
+        % Title text
+        \node[anchor=west, text=darkblue, font=\Large\bfseries] at ([xshift=0.06\paperwidth, yshift=-0.08\paperheight-0.6cm]current page.north west) {\insertframetitle};
+    \end{tikzpicture}
+    \vspace{0.8cm}
+}
+
+% ============================================================
+% FOOTER - Logo + Slide Number
+% ============================================================
+\setbeamertemplate{footline}{
+    \begin{tikzpicture}[remember picture, overlay]
+        % BK Logo (left)
+        \node[anchor=south west, inner sep=0] at ([xshift=0.5cm, yshift=0.3cm]current page.south west) {
+            \includegraphics[height=0.8cm]{../assets/bk_logo_trimmed.png}
+        };
+        % Slide number (right) - Neubrutalist style
+        \node[anchor=south east, inner sep=0] at ([xshift=-0.5cm, yshift=0.3cm]current page.south east) {
+            \begin{tikzpicture}[baseline=(num.base)]
+                % Shadow
+                \node[rectangle, fill=darkblue, inner sep=5pt, anchor=north west] at (2pt, -2pt) {\phantom{\small\insertframenumber/\inserttotalframenumber}};
+                % Box
+                \node[rectangle, fill=white, draw=darkblue, line width=1.5pt, inner sep=5pt, anchor=north west] (num) at (0,0) {\small\textbf{\insertframenumber/\inserttotalframenumber}};
+            \end{tikzpicture}
+        };
+    \end{tikzpicture}
+    \vspace{0.5cm}
+}
+
+% ============================================================
+% ITEMIZE STYLE
+% ============================================================
+\setbeamertemplate{itemize item}{\textcolor{bkblue}{\rule{6pt}{6pt}}}
+\setbeamertemplate{itemize subitem}{\textcolor{darkblue}{\rule{4pt}{4pt}}}
+\setbeamercolor{item}{fg=darkblue}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+
+% ============================================================
+% BLOCK STYLE - Neubrutalism
+% ============================================================
+\setbeamertemplate{block begin}{
+    \vspace{0.5em}
+    \begin{tikzpicture}
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {\phantom{\insertblockcontent}};
+        % Block
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+            \textbf{\insertblockcontent}
+        };
+    \end{tikzpicture}
+}
+
+% ============================================================
+% TITLE PAGE STYLE
+% ============================================================
+\defbeamertemplate*{title page}{neubrutalism}[1][]{
+    \begin{tikzpicture}[remember picture, overlay]
+        % Large shadow box
+        \fill[darkblue] ([xshift=0.1\paperwidth+6pt, yshift=-0.15\paperheight-6pt]current page.north west) rectangle ++(0.8\paperwidth, -0.7\paperheight);
+        % Main content box
+        \fill[white] ([xshift=0.1\paperwidth, yshift=-0.15\paperheight]current page.north west) rectangle ++(0.8\paperwidth, -0.7\paperheight);
+        \draw[darkblue, line width=3pt] ([xshift=0.1\paperwidth, yshift=-0.15\paperheight]current page.north west) rectangle ++(0.8\paperwidth, -0.7\paperheight);
+        
+        % BK Logo
+        \node[anchor=north] at ([yshift=-0.18\paperheight]current page.north) {
+            \includegraphics[height=1.8cm]{../assets/bk_logo_trimmed.png}
+        };
+        
+        % University name
+        \node[anchor=north, text=darkblue, font=\small\bfseries] at ([yshift=-0.32\paperheight]current page.north) {
+            ĐẠI HỌC BÁCH KHOA TP. HỒ CHÍ MINH
+        };
+        
+        % Title
+        \node[anchor=north, text width=0.7\paperwidth, align=center, text=darkblue, font=\Large\bfseries] at ([yshift=-0.40\paperheight]current page.north) {
+            \inserttitle
+        };
+        
+        % Subtitle (if any)
+        \node[anchor=north, text=bkblue, font=\normalsize] at ([yshift=-0.55\paperheight]current page.north) {
+            \insertsubtitle
+        };
+        
+        % Author info - use minipage for line breaks
+        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.65\paperheight]current page.north) {
+            \begin{minipage}{0.6\paperwidth}
+                \centering
+                \insertauthor
+            \end{minipage}
+        };
+        
+        % Date
+        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.75\paperheight]current page.north) {
+            \insertdate
+        };
+    \end{tikzpicture}
+}
+
+% ============================================================
+% TABLE STYLE
+% ============================================================
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+% ============================================================
+% CUSTOM COMMANDS
+% ============================================================
+% Highlight number
+\newcommand{\highlight}[1]{\textcolor{bkblue}{\textbf{#1}}}
+
+% Key result box
+\newcommand{\keyresult}[2]{%
+    \begin{tikzpicture}
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=8pt, minimum width=3cm, anchor=north west] at (3pt, -3pt) {};
+        % Box
+        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=8pt, minimum width=3cm, text=white, align=center, anchor=north west] at (0,0) {
+            {\Large\bfseries #1}\\[2pt]
+            {\small #2}
+        };
+    \end{tikzpicture}%
+}
+
+% TikZ styles for control diagrams (reuse from thesis)
+\tikzset{
+    block/.style={
+        rectangle, draw=darkblue, thick, fill=white,
+        minimum height=2.5em, minimum width=3em,
+        text centered, font=\normalsize, line width=1.5pt
+    },
+    sum/.style={
+        circle, draw=darkblue, thick, fill=white,
+        minimum size=1.5em, inner sep=0pt, line width=1.5pt,
+        path picture={
+            \draw[thick] 
+                (path picture bounding box.north west) -- (path picture bounding box.south east)
+                (path picture bounding box.south west) -- (path picture bounding box.north east);
+        }
+    },
+    arrow/.style={-Stealth, thick, darkblue},
+    line/.style={thick, darkblue}
+}

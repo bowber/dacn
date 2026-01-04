@@ -1,0 +1,522 @@
+% ============================================================
+% Main Slideshow - Đồ án Chuyên ngành
+% Neubrutalism Style
+% ============================================================
+
+\input{preamble}
+
+% ============================================================
+% DOCUMENT INFO
+% ============================================================
+\title{Tối ưu hoá năng lượng cung cấp\\cho quá trình chưng cất hệ ethanol -- nước}
+\subtitle{Đồ án Chuyên ngành -- CH4053}
+\author{SVTH: Nguyễn Phúc Bảo Lâm -- MSSV: 2111630\\GVHD: TS. Bùi Ngọc Pha}
+\date{Tháng 1/2025}
+
+\begin{document}
+
+% ============================================================
+% SLIDE 1: Title
+% ============================================================
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% ============================================================
+% SLIDE 2: Outline
+% ============================================================
+\begin{frame}{Nội dung trình bày}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{tikzpicture}
+                % Shadow
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {};
+                % Box
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+                    \begin{enumerate}
+                        \item Vấn đề đặt ra
+                        \item Mục tiêu đồ án
+                        \item Tổng quan hệ thống
+                        \item Cơ sở lý thuyết
+                        \item Thiết bị đo lường
+                    \end{enumerate}
+                };
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{tikzpicture}
+                % Shadow
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {};
+                % Box
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+                    \begin{enumerate}
+                        \setcounter{enumi}{5}
+                        \item Chiến lược điều khiển
+                        \item Tính toán năng lượng
+                        \item Kết quả
+                        \item Kết luận
+                        \item Hướng phát triển
+                    \end{enumerate}
+                };
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+% SLIDE 3: Problem
+% ============================================================
+\begin{frame}{Vấn đề đặt ra}
+    \begin{tikzpicture}
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        % Box
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+            \textbf{\textcolor{bkblue}{Vận hành hiện tại:}}
+            \begin{itemize}
+                \item Van nước làm mát mở cố định \highlight{100\%}
+                \item Reboiler hoạt động công suất tối đa \highlight{6000 W}
+                \item Không có điều khiển tự động
+            \end{itemize}
+            
+            \vspace{0.5em}
+            \textbf{\textcolor{accent}{Hậu quả:}}
+            \begin{itemize}
+                \item Lãng phí nước làm mát (công suất ngưng tụ dư thừa)
+                \item Lãng phí điện năng reboiler
+                \item Chi phí vận hành cao
+            \end{itemize}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 4: Objectives
+% ============================================================
+\begin{frame}{Mục tiêu đồ án}
+    \vspace{-0.5em}
+    \begin{tikzpicture}
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        % Box
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+            \begin{enumerate}
+                \item \textbf{Phân tích hệ thống} chưng cất ethanol -- nước quy mô phòng thí nghiệm
+                
+                \vspace{0.3em}
+                \item \textbf{Thiết kế vòng điều khiển áp suất} đỉnh tháp (PC-01) với bộ điều khiển PID
+                
+                \vspace{0.3em}
+                \item \textbf{Đề xuất phương án điều khiển PWM} công suất reboiler để tiết kiệm điện năng
+                
+                \vspace{0.3em}
+                \item \textbf{Tính toán và đánh giá} hiệu quả tiết kiệm năng lượng
+            \end{enumerate}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 5: System Overview (PFD)
+% ============================================================
+\begin{frame}{Tổng quan hệ thống}
+    \centering
+    \begin{tikzpicture}
+        % Shadow
+        \node[rectangle, fill=darkblue, inner sep=4pt, anchor=north west] at (4pt, -4pt) {
+            \phantom{\includegraphics[width=0.75\textwidth]{../assets/PFD.jpg}}
+        };
+        % Image with border
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=4pt, anchor=north west] at (0,0) {
+            \includegraphics[width=0.75\textwidth]{../assets/PFD.jpg}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 6: Theory - VLE (T-xy diagram)
+% ============================================================
+\begin{frame}{Cơ sở lý thuyết -- Cân bằng lỏng-hơi}
+    \centering
+    \begin{tikzpicture}
+        % Shadow for chart
+        \fill[darkblue] (4pt, -4pt) rectangle ++(10cm, -6.5cm);
+        % Chart background
+        \fill[white] (0, 0) rectangle ++(10cm, -6.5cm);
+        \draw[darkblue, line width=2pt] (0, 0) rectangle ++(10cm, -6.5cm);
+        
+        % Actual plot
+        \begin{axis}[
+            at={(0.5cm, -6cm)},
+            width=9cm,
+            height=5.5cm,
+            xlabel={Nồng độ mol ethanol ($x$, $y$)},
+            ylabel={Nhiệt độ ($^\circ$C)},
+            xlabel style={font=\small},
+            ylabel style={font=\small},
+            tick label style={font=\footnotesize},
+            grid=both,
+            grid style={line width=.1pt, draw=gray!30},
+            xmin=0, xmax=1,
+            ymin=75, ymax=105,
+            legend pos=north east,
+            legend style={font=\footnotesize},
+        ]
+        % Đường lỏng (bubble point)
+        \addplot[blue, thick, smooth] coordinates {
+            (0, 100) (0.1, 95.5) (0.2, 91.3) (0.3, 87.7) (0.4, 85.0)
+            (0.5, 82.7) (0.6, 81.0) (0.7, 79.8) (0.8, 79.0) (0.89, 78.2) (0.956, 78.15) (1, 78.35)
+        };
+        \addlegendentry{Đường lỏng}
+        
+        % Đường hơi (dew point)
+        \addplot[red, thick, smooth] coordinates {
+            (0, 100) (0.35, 95.5) (0.48, 91.3) (0.57, 87.7) (0.64, 85.0)
+            (0.70, 82.7) (0.76, 81.0) (0.82, 79.8) (0.87, 79.0) (0.92, 78.2) (0.956, 78.15) (1, 78.35)
+        };
+        \addlegendentry{Đường hơi}
+        
+        % Điểm đẳng phí
+        \addplot[dashed, gray] coordinates {(0.956, 75) (0.956, 78.15)};
+        \end{axis}
+    \end{tikzpicture}
+    
+    \vspace{0.3em}
+    {\small Điểm đẳng phí: 95.6\% mol ethanol (78.15$^\circ$C)}
+\end{frame}
+
+% ============================================================
+% SLIDE 7: Instrumentation
+% ============================================================
+\begin{frame}{Thiết bị đo lường và điều khiển}
+    \begin{columns}[T]
+        \begin{column}{0.32\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=2pt, anchor=north west] at (2pt, -2pt) {
+                    \phantom{\includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/sitrans.jpg}}
+                };
+                \node[rectangle, fill=white, draw=darkblue, line width=1.5pt, inner sep=2pt, anchor=north west] at (0,0) {
+                    \includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/sitrans.jpg}
+                };
+            \end{tikzpicture}
+            
+            \vspace{0.3em}
+            {\footnotesize\textbf{SITRANS P200}\\Cảm biến áp suất}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=2pt, anchor=north west] at (2pt, -2pt) {
+                    \phantom{\includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/burkert_2873.jpg}}
+                };
+                \node[rectangle, fill=white, draw=darkblue, line width=1.5pt, inner sep=2pt, anchor=north west] at (0,0) {
+                    \includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/burkert_2873.jpg}
+                };
+            \end{tikzpicture}
+            
+            \vspace{0.3em}
+            {\footnotesize\textbf{Bürkert 2873}\\Van tỷ lệ}
+        \end{column}
+        \begin{column}{0.32\textwidth}
+            \centering
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=2pt, anchor=north west] at (2pt, -2pt) {
+                    \phantom{\includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/plc.jpg}}
+                };
+                \node[rectangle, fill=white, draw=darkblue, line width=1.5pt, inner sep=2pt, anchor=north west] at (0,0) {
+                    \includegraphics[width=0.9\textwidth, height=2.8cm, keepaspectratio]{../assets/plc.jpg}
+                };
+            \end{tikzpicture}
+            
+            \vspace{0.3em}
+            {\footnotesize\textbf{S7-1200}\\PLC điều khiển}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.8em}
+    \centering
+    \begin{tikzpicture}
+        \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=8pt, anchor=north west] at (0,0) {
+            Tín hiệu: \textbf{4-20 mA} \quad|\quad Truyền thông: \textbf{PROFINET}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 8: Control Strategy - PC-01
+% ============================================================
+\begin{frame}{Chiến lược điều khiển -- Vòng PC-01}
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm]
+        % Background shadow
+        \fill[darkblue, rounded corners=0] (-0.5+4pt, 1.5-4pt) rectangle (12+4pt, -2.5-4pt);
+        \fill[white] (-0.5, 1.5) rectangle (12, -2.5);
+        \draw[darkblue, line width=2pt] (-0.5, 1.5) rectangle (12, -2.5);
+        
+        % Nodes
+        \node (sp) at (0.5, 0) {\textbf{SP}};
+        \node[sum] (sum) at (2, 0) {};
+        \node[block] (pid) at (4, 0) {PID};
+        \node[block] (valve) at (6.5, 0) {Van};
+        \node[block] (condenser) at (9, 0) {Condenser};
+        \node (pv) at (11, 0) {\textbf{P}};
+        
+        % Sensor
+        \node[block] (sensor) at (6.5, -1.8) {PT};
+        
+        % Arrows
+        \draw[arrow] (sp) -- (sum);
+        \draw[arrow] (sum) -- (pid) node[midway, above] {\small$e$};
+        \draw[arrow] (pid) -- (valve) node[midway, above] {\small$u$};
+        \draw[arrow] (valve) -- (condenser);
+        \draw[arrow] (condenser) -- (pv);
+        
+        % Feedback
+        \draw[line] (10, 0) -- (10, -1.8);
+        \draw[arrow] (10, -1.8) -- (sensor);
+        \draw[line] (sensor) -- (2, -1.8);
+        \draw[arrow] (2, -1.8) -- (sum);
+        
+        % Labels
+        \node[above] at (sum.north) {\tiny $+$};
+        \node[below left] at (sum.south west) {\tiny $-$};
+    \end{tikzpicture}
+    
+    \vspace{0.8em}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text=white, anchor=north west] at (0,0) {
+                    \textbf{SP:} 1.0 bar (áp suất đỉnh)
+                };
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text=white, anchor=north west] at (0,0) {
+                    \textbf{MV:} Độ mở van làm mát
+                };
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+% SLIDE 9: PWM Reboiler Control
+% ============================================================
+\begin{frame}{Điều khiển PWM công suất Reboiler}
+    \begin{columns}[T]
+        \begin{column}{0.55\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.95\textwidth, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                    \textbf{\textcolor{bkblue}{Nguyên lý:}}
+                    \begin{itemize}
+                        \item Điều chế độ rộng xung (PWM)
+                        \item Thay đổi duty cycle theo nhu cầu
+                        \item Công suất trung bình:
+                    \end{itemize}
+                    \vspace{0.3em}
+                    \centering
+                    $P_{avg} = P_{max} \times D$
+                    
+                    \vspace{0.5em}
+                    \textbf{\textcolor{accent}{Ví dụ:}} $D = 50\%$
+                    
+                    $P_{avg} = 6000 \times 0.5 = 3000$ W
+                };
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                    \textbf{\textcolor{bkblue}{Ưu điểm:}}
+                    \begin{itemize}
+                        \item Tiết kiệm điện năng
+                        \item Hiệu suất cao (relay bão hòa)
+                        \item Tương thích PLC
+                        \item Đơn giản triển khai
+                    \end{itemize}
+                };
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+% SLIDE 10: Energy Calculations
+% ============================================================
+\begin{frame}{Tính toán cân bằng năng lượng}
+    \begin{tikzpicture}
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+            \begin{columns}[T]
+                \begin{column}{0.48\textwidth}
+                    \textbf{\textcolor{bkblue}{Công suất reboiler:}}
+                    \begin{itemize}
+                        \item $Q_{reboiler} = 6000$ W (điện)
+                        \item Hiệu suất: 90\%
+                        \item $Q_{eff} = 5400$ W
+                    \end{itemize}
+                    
+                    \vspace{0.5em}
+                    \textbf{\textcolor{bkblue}{Nhiệt hóa hơi:}}
+                    \begin{itemize}
+                        \item $Q_{\text{nhập liệu}} = 118$ W
+                        \item $Q_{\text{hóa hơi}} = 5400 - 118$
+                        \item $= \mathbf{5282}$ \textbf{W}
+                    \end{itemize}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \textbf{\textcolor{bkblue}{Lưu lượng nước tối ưu:}}
+                    
+                    \vspace{0.3em}
+                    $\dot{m} = \dfrac{Q_{\text{hóa hơi}}}{C_p \cdot \Delta T}$
+                    
+                    \vspace{0.5em}
+                    $= \dfrac{5282}{4186 \times 38}$
+                    
+                    \vspace{0.5em}
+                    $= 0.033$ kg/s
+                    
+                    \vspace{0.5em}
+                    $= \mathbf{2.0}$ \textbf{L/min}
+                \end{column}
+            \end{columns}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 11: Results
+% ============================================================
+\begin{frame}{Kết quả so sánh}
+    \centering
+    \begin{tikzpicture}
+        % Table shadow
+        \node[rectangle, fill=darkblue, inner sep=0pt, anchor=north west] at (4pt, -4pt) {
+            \phantom{
+                \begin{tabular}{|l|c|c|}
+                \hline
+                \textbf{Thông số} & \textbf{Hiện tại} & \textbf{Tối ưu} \\
+                \hline
+                Độ mở van & 100\% & 28\% \\
+                Lưu lượng nước & 7.2 L/min & 2.0 L/min \\
+                Công suất ngưng tụ & 9113 W & 5282 W \\
+                Công suất reboiler & 6000 W & 6000 W \\
+                \hline
+                \end{tabular}
+            }
+        };
+        % Table
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=0pt, anchor=north west] at (0,0) {
+            \begin{tabular}{|l|c|c|}
+            \hline
+            \rowcolor{bkblue}\textcolor{white}{\textbf{Thông số}} & \textcolor{white}{\textbf{Hiện tại}} & \textcolor{white}{\textbf{Tối ưu}} \\
+            \hline
+            Độ mở van & 100\% & \textbf{28\%} \\
+            \hline
+            Lưu lượng nước & 7.2 L/min & \textbf{2.0 L/min} \\
+            \hline
+            Công suất ngưng tụ & 9113 W & \textbf{5282 W} \\
+            \hline
+            Công suất reboiler & 6000 W & 6000 W \\
+            \hline
+            \end{tabular}
+        };
+    \end{tikzpicture}
+    
+    \vspace{1em}
+    \begin{columns}[c]
+        \begin{column}{0.45\textwidth}
+            \centering
+            \keyresult{72\%}{Tiết kiệm nước làm mát}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering
+            \keyresult{28\%}{Độ mở van tối ưu}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+% SLIDE 12: Conclusion
+% ============================================================
+\begin{frame}{Kết luận}
+    \begin{tikzpicture}
+        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+            \textbf{\textcolor{bkblue}{Đã thực hiện:}}
+            \begin{itemize}
+                \item Phân tích hệ thống chưng cất ethanol -- nước quy mô PTN
+                \item Thiết kế vòng điều khiển áp suất PC-01 với PID
+                \item Tính toán cân bằng năng lượng condenser
+                \item Đề xuất phương án điều khiển PWM reboiler
+            \end{itemize}
+            
+            \vspace{0.5em}
+            \textbf{\textcolor{bkblue}{Kết quả chính:}}
+            \begin{itemize}
+                \item Tiết kiệm \highlight{72\%} lưu lượng nước làm mát
+                \item Độ mở van tối ưu: \highlight{28\%} (thay vì 100\%)
+                \item Lưu lượng nước cần thiết: \highlight{2.0 L/min} (thay vì 7.2 L/min)
+            \end{itemize}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 13: Future Work
+% ============================================================
+\begin{frame}{Hướng phát triển -- Luận văn Tốt nghiệp}
+    \begin{tikzpicture}
+        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+            \textbf{\textcolor{bkblue}{Nội dung triển khai:}}
+            \begin{enumerate}
+                \item Lập trình PLC S7-1200 trên TIA Portal
+                \item Thiết kế giao diện HMI giám sát
+                \item Xác định thông số PID (Ziegler-Nichols)
+                \item Triển khai điều khiển PWM reboiler
+                \item Thí nghiệm và đánh giá hiệu quả thực tế
+            \end{enumerate}
+            
+            \vspace{0.5em}
+            \textbf{\textcolor{accent}{Mục tiêu:}} Xác định mức tiết kiệm điện năng thực tế khi kết hợp điều khiển van làm mát và PWM reboiler.
+        };
+    \end{tikzpicture}
+\end{frame}
+
+% ============================================================
+% SLIDE 14: Q&A
+% ============================================================
+\begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+        % Large shadow box
+        \fill[darkblue] ([xshift=0.15\paperwidth+6pt, yshift=-0.25\paperheight-6pt]current page.north west) rectangle ++(0.7\paperwidth, -0.5\paperheight);
+        % Main box
+        \fill[white] ([xshift=0.15\paperwidth, yshift=-0.25\paperheight]current page.north west) rectangle ++(0.7\paperwidth, -0.5\paperheight);
+        \draw[darkblue, line width=3pt] ([xshift=0.15\paperwidth, yshift=-0.25\paperheight]current page.north west) rectangle ++(0.7\paperwidth, -0.5\paperheight);
+        
+        % Text
+        \node[text=darkblue, font=\Huge\bfseries] at ([yshift=-0.4\paperheight]current page.north) {
+            Cảm ơn đã lắng nghe!
+        };
+        
+        \node[text=bkblue, font=\Large] at ([yshift=-0.55\paperheight]current page.north) {
+            Hỏi \& Đáp
+        };
+        
+        % BK Logo
+        \node[anchor=south] at ([yshift=0.1\paperheight]current page.south) {
+            \includegraphics[height=1.5cm]{../assets/bk_logo_trimmed.png}
+        };
+    \end{tikzpicture}
+\end{frame}
+
+\end{document}

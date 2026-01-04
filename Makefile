@@ -1,7 +1,7 @@
 IMAGE_NAME = btl-csdk-latex
 OUTPUT_PDF = output/main.pdf
 
-.PHONY: pdf build clean shell rebuild release bump-patch bump-minor bump-major
+.PHONY: pdf build clean shell rebuild release bump-patch bump-minor bump-major slides slides-clean
 
 # Build PDF using Docker
 pdf: build
@@ -61,6 +61,15 @@ bump-major:
 # Release (build + bump patch)
 release: pdf bump-patch
 
+# Build slides
+slides: build
+	docker run --rm -v $(PWD):/workspace -w /workspace/slides $(IMAGE_NAME) xelatex -interaction=nonstopmode main.tex
+	docker run --rm -v $(PWD):/workspace -w /workspace/slides $(IMAGE_NAME) xelatex -interaction=nonstopmode main.tex
+
+# Clean slides
+slides-clean:
+	rm -f slides/*.aux slides/*.log slides/*.nav slides/*.out slides/*.snm slides/*.toc slides/*.vrb slides/*.pdf
+
 # Help
 help:
 	@echo "Usage: make [target]"
@@ -77,4 +86,6 @@ help:
 	@echo "  bump-minor - Bump minor version (v1.0.0 -> v1.1.0) and push tag"
 	@echo "  bump-major - Bump major version (v1.0.0 -> v2.0.0) and push tag"
 	@echo "  release    - Build PDF and bump patch version"
+	@echo "  slides     - Build presentation slides"
+	@echo "  slides-clean - Clean slides auxiliary files"
 	@echo "  help       - Show this help"

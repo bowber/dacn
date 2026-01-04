@@ -16,22 +16,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build PDF
+      - name: Build Docker image
+        run: docker build -t btl-csdk-latex .
+
+      - name: Build thesis PDF
         run: |
           mkdir -p output
-          docker build -t btl-csdk-latex .
           docker run --rm -v ${{ github.workspace }}:/workspace btl-csdk-latex
 
-      - name: Rename PDF with version
+      - name: Build slides PDF
         run: |
-          if [ ! -f output/main.pdf ]; then
-            echo "Error: PDF was not generated"
-            exit 1
-          fi
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace/slides btl-csdk-latex xelatex -interaction=nonstopmode main.tex
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace/slides btl-csdk-latex xelatex -interaction=nonstopmode main.tex
+
+      - name: Rename PDFs with version
+        run: |
           TAG=${GITHUB_REF#refs/tags/}
           REPO=${GITHUB_REPOSITORY#*/}
           BRANCH=${{ github.event.repository.default_branch }}
+          
+          # Check and rename thesis PDF
+          if [ ! -f output/main.pdf ]; then
+            echo "Error: Thesis PDF was not generated"
+            exit 1
+          fi
           mv output/main.pdf "output/${REPO}-${BRANCH}-${TAG}.pdf"
+          
+          # Check and rename slides PDF
+          if [ ! -f slides/main.pdf ]; then
+            echo "Error: Slides PDF was not generated"
+            exit 1
+          fi
+          mv slides/main.pdf "output/${REPO}-slides-${TAG}.pdf"
+          
           ls -la output/
 
       - name: Create Release
