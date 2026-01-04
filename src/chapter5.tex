@@ -14,26 +14,25 @@ Báo cáo đã thực hiện các nội dung sau:
 \begin{enumerate}
     \item \textbf{Phân tích hiện trạng vận hành:}
     \begin{itemize}
-        \item Xác định nguyên nhân hạn chế năng suất khi vận hành với van làm mát mở 100\%.
-        \item Phân tích mối quan hệ giữa công suất làm mát, tỷ số hồi lưu và năng suất sản phẩm.
+        \item Xác định các nguồn lãng phí năng lượng khi vận hành với van làm mát mở 100\% và reboiler chạy 100\%.
         \item Phát hiện hệ thống có công suất ngưng tụ dư thừa ~3800 W, gây lãng phí 47\% lưu lượng nước làm mát.
     \end{itemize}
     
     \item \textbf{Xây dựng cơ sở lý thuyết:}
     \begin{itemize}
-        \item Trình bày cơ sở lý thuyết quá trình chưng cất và tỷ số hồi lưu.
+        \item Trình bày cơ sở lý thuyết quá trình chưng cất và cân bằng năng lượng.
         \item Thiết lập các phương trình cân bằng năng lượng cho hệ thống chưng cất.
     \end{itemize}
     
-    \item \textbf{Đề xuất giải pháp điều khiển:}
+    \item \textbf{Đề xuất giải pháp tối ưu năng lượng:}
     \begin{itemize}
-        \item Đề xuất vòng điều khiển áp suất đỉnh tháp PC-01 với bộ điều khiển PID.
-        \item Xây dựng mô hình toán học của hệ thống: hàm truyền condenser, van, cảm biến.
+        \item Thiết kế vòng điều khiển áp suất đỉnh tháp PC-01 với bộ điều khiển PID để tiết kiệm nước làm mát.
+        \item Đề xuất phương án điều khiển PWM công suất reboiler để tiết kiệm điện năng (triển khai trong LVTN).
     \end{itemize}
     
     \item \textbf{Tính toán:}
     \begin{itemize}
-        \item Xây dựng chương trình tính toán cân bằng năng lượng và vật chất.
+        \item Xây dựng chương trình tính toán cân bằng năng lượng.
         \item Tính toán công suất reboiler hiệu dụng: $Q_{reboiler} = 5400$ W.
         \item Tính toán độ mở van tối ưu: 53\% (tiết kiệm 47\% nước làm mát).
     \end{itemize}
@@ -60,9 +59,9 @@ Lưu lượng nước & 7.2 L/min & 3.8 L/min \\
 
 \textbf{Kết luận tổng quát:}
 \begin{itemize}
-    \item \textbf{Điều khiển van làm mát:} Tiết kiệm 47\% lưu lượng nước làm mát bằng cách điều khiển van theo áp suất đỉnh tháp.
+    \item \textbf{Vòng điều khiển áp suất PC-01:} Tiết kiệm 47\% lưu lượng nước làm mát bằng cách điều khiển van theo áp suất đỉnh tháp.
+    \item \textbf{Điều khiển PWM reboiler:} Đã đề xuất phương án, việc triển khai và đánh giá hiệu quả tiết kiệm điện năng sẽ được thực hiện trong Khóa luận Tốt nghiệp.
     \item Giải pháp không đòi hỏi thay đổi cấu hình thiết bị, chỉ cần bổ sung hệ thống điều khiển tự động.
-    \item Kết quả cần được kiểm chứng thực nghiệm để xác nhận hiệu quả trong điều kiện vận hành thực tế.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -79,33 +78,26 @@ Lưu lượng nước & 7.2 L/min & 3.8 L/min \\
         \item Thiết kế giao diện HMI để giám sát và điều khiển.
     \end{itemize}
     
-    \item \textbf{Thí nghiệm thực tế:}
+    \item \textbf{Thí nghiệm vòng điều khiển áp suất PC-01:}
     \begin{itemize}
         \item Triển khai thử nghiệm trên hệ thống chưng cất tại phòng thí nghiệm.
         \item Thu thập dữ liệu vận hành: áp suất, lưu lượng, nhiệt độ.
         \item So sánh kết quả thực nghiệm với kết quả tính toán.
+        \item Kiểm chứng hiệu quả bằng độ subcooling ($\Delta T_{subcool}$).
     \end{itemize}
     
-    \item \textbf{Kiểm chứng hiệu quả bằng độ subcooling:}
+    \item \textbf{Triển khai điều khiển PWM công suất reboiler:}
     \begin{itemize}
-        \item Đo $\Delta T_{subcool} = T_{đỉnh} - T_{dịch ngưng}$ ở các chế độ vận hành.
-        \item So sánh: Baseline (van 100\%) vs Tối ưu (van 53\%).
-        \item Xác nhận giả thuyết: $\Delta T_{subcool} \approx 0$°C khi vận hành tối ưu.
-    \end{itemize}
-    
-    \item \textbf{Tinh chỉnh và đánh giá:}
-    \begin{itemize}
-        \item Tinh chỉnh thông số PID dựa trên đáp ứng thực tế.
-        \item Xác định hệ số truyền nhiệt thực tế của thiết bị ngưng tụ.
-        \item Đánh giá hiệu quả tiết kiệm nước làm mát và tăng năng suất.
-    \end{itemize}
-    
-    \item \textbf{Điều khiển công suất reboiler:}
-    \begin{itemize}
-        \item Hiện tại reboiler chạy 100\% công suất (6000 W), tạo ra lượng hơi dư thừa.
-        \item Triển khai điều khiển PWM để điều chỉnh công suất reboiler theo nhu cầu thực tế.
+        \item Lập trình điều khiển PWM trên PLC S7-1200.
         \item Xác định duty cycle tối ưu bằng thực nghiệm.
-        \item Nghiên cứu ảnh hưởng đến động học tháp và chất lượng sản phẩm.
+        \item Đánh giá hiệu quả tiết kiệm điện năng.
+        \item Nghiên cứu ảnh hưởng đến chất lượng sản phẩm.
+    \end{itemize}
+    
+    \item \textbf{Đánh giá tổng thể:}
+    \begin{itemize}
+        \item Tổng hợp kết quả tiết kiệm năng lượng (nước làm mát + điện năng reboiler).
+        \item Phân tích độ nhạy và giới hạn của phương pháp.
     \end{itemize}
 \end{enumerate}
 
@@ -125,7 +117,7 @@ Lưu lượng nước & 7.2 L/min & 3.8 L/min \\
 \hline
 5--6 & 03/03 -- 16/03/2025 & Thí nghiệm vòng điều khiển áp suất PC-01, thu thập dữ liệu, tinh chỉnh PID \\
 \hline
-7--8 & 17/03 -- 30/03/2025 & Kiểm chứng $\Delta T_{subcool}$, thí nghiệm điều khiển PWM reboiler \\
+7--8 & 17/03 -- 30/03/2025 & Triển khai điều khiển PWM reboiler, đánh giá hiệu quả tiết kiệm năng lượng \\
 \hline
 9 & 31/03 -- 06/04/2025 & Hoàn thiện báo cáo, chuẩn bị bảo vệ đồ án \\
 \hline

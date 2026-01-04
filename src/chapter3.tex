@@ -403,7 +403,7 @@ Hệ thống chưng cất được thiết kế với các vòng điều khiển
 
 \subsubsection{Phương án vận hành hiện tại (Baseline)}
 
-Trong phương án vận hành hiện tại, van nước làm mát được mở cố định ở mức 100\% để đảm bảo áp suất đỉnh tháp luôn ổn định. Phương án này có ưu điểm là đơn giản, không cần hệ thống điều khiển phức tạp, nhưng gây ngưng tụ quá mức và hạn chế năng suất sản phẩm.
+Trong phương án vận hành hiện tại, van nước làm mát được mở cố định ở mức 100\% để đảm bảo áp suất đỉnh tháp luôn ổn định, đồng thời reboiler hoạt động ở công suất tối đa (6000 W). Phương án này có ưu điểm là đơn giản, không cần hệ thống điều khiển phức tạp, nhưng gây lãng phí năng lượng đáng kể.
 
 \begin{figure}[H]
 \centering
@@ -428,9 +428,9 @@ Trong phương án vận hành hiện tại, van nước làm mát được mở
 \label{fig:baseline_control}
 \end{figure}
 
-\subsubsection{Phương án điều khiển tối ưu năng suất (Đề xuất)}
+\subsubsection{Phương án điều khiển tối ưu năng lượng (Đề xuất)}
 
-Phương án đề xuất sử dụng bộ điều khiển PID để điều chỉnh độ mở van nước làm mát dựa trên áp suất đỉnh tháp. Van chỉ mở đủ để duy trì áp suất ở giá trị đặt, giảm lượng ngưng tụ không cần thiết, từ đó tăng năng suất sản phẩm đỉnh trong khi giữ nguyên năng lượng và chất lượng.
+Phương án đề xuất sử dụng bộ điều khiển PID để điều chỉnh độ mở van nước làm mát dựa trên áp suất đỉnh tháp. Van chỉ mở đủ để duy trì áp suất ở giá trị đặt, tiết kiệm nước làm mát không cần thiết.
 
 \begin{figure}[H]
 \centering
@@ -479,9 +479,9 @@ Phương án đề xuất sử dụng bộ điều khiển PID để điều ch�
     \item Khi áp suất đỉnh tháp giảm thấp hơn giá trị đặt: Bộ điều khiển giảm độ mở van làm mát $\rightarrow$ giảm công suất ngưng tụ $\rightarrow$ áp suất tăng.
 \end{itemize}
 
-\subsubsection{Điều khiển nhiệt độ đỉnh tháp}
+\subsubsection{Điều khiển công suất reboiler bằng PWM}
 
-Song song với vòng điều khiển áp suất, vòng điều khiển nhiệt độ đỉnh tháp (TC-02) duy trì nhiệt độ ổn định để đảm bảo chất lượng sản phẩm:
+Song song với vòng điều khiển áp suất, phương án điều khiển PWM công suất reboiler được đề xuất để tiết kiệm điện năng. Thay vì chạy reboiler ở 100\% công suất liên tục, duty cycle được điều chỉnh theo nhu cầu thực tế:
 
 \begin{figure}[H]
 \centering
@@ -496,7 +496,7 @@ Song song với vòng điều khiển áp suất, vòng điều khiển nhiệt 
     \node[block, right=1.2cm of sum] (controller) {PID};
     
     % Reboiler
-    \node[block, right=1.2cm of controller] (reboiler) {Reboiler};
+    \node[block, right=1.2cm of controller] (reboiler) {Reboiler (PWM)};
     
     % Column
     \node[block, right=1.2cm of reboiler, minimum width=2cm] (column) {Tháp chưng cất};
@@ -520,6 +520,21 @@ Song song với vòng điều khiển áp suất, vòng điều khiển nhiệt 
     \draw[arrow] (sensor) -| node[pos=0.95, left, font=\normalsize] {$-$} (sum);
     
 \end{tikzpicture}
-\caption{Sơ đồ khối vòng điều khiển nhiệt độ đỉnh tháp (TC-02)}
+\caption{Sơ đồ khối vòng điều khiển công suất reboiler bằng PWM}
 \label{fig:temp_control_loop}
 \end{figure}
+
+\textbf{Nguyên lý hoạt động:}
+\begin{itemize}
+    \item Bộ điều khiển PID điều chỉnh duty cycle của tín hiệu PWM dựa trên nhiệt độ đỉnh tháp.
+    \item Khi nhiệt độ thấp hơn giá trị đặt: Tăng duty cycle $\rightarrow$ tăng công suất reboiler.
+    \item Khi nhiệt độ cao hơn giá trị đặt: Giảm duty cycle $\rightarrow$ giảm công suất reboiler.
+    \item Công suất trung bình: $P_{avg} = P_{max} \times \text{duty cycle}$
+\end{itemize}
+
+\textbf{Ưu điểm của điều khiển PWM reboiler:}
+\begin{itemize}
+    \item Tiết kiệm điện năng khi nhu cầu nhiệt thấp hơn công suất tối đa.
+    \item Duy trì chất lượng sản phẩm ổn định thông qua điều khiển nhiệt độ.
+    \item Tương thích với hệ thống PLC hiện có (sử dụng relay đóng ngắt điện trở).
+\end{itemize}

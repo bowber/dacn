@@ -331,22 +331,22 @@ Thay vì mở van làm mát ở mức tối đa (100\%), phương pháp tối ư
     \item Van chỉ mở đủ để duy trì áp suất ổn định
 \end{enumerate}
 
-\textbf{Tiềm năng tăng năng suất:}
+\textbf{Tiềm năng tiết kiệm năng lượng:}
 
-Khi giảm công suất làm mát, lượng hồi lưu giảm, dẫn đến tăng năng suất sản phẩm:
+Khi điều khiển van làm mát theo áp suất, lưu lượng nước làm mát được giảm xuống mức vừa đủ:
 \begin{equation}
-    \Delta D = D_{optimal} - D_{baseline} = \frac{L_{baseline} - L_{optimal}}{R}
+    \eta_{savings} = \frac{F_{baseline} - F_{optimal}}{F_{baseline}} \times 100\%
 \end{equation}
 
 Trong đó:
 \begin{itemize}
-    \item $D_{baseline}$: Năng suất sản phẩm khi van làm mát mở 100\%
-    \item $D_{optimal}$: Năng suất sản phẩm khi vận hành tối ưu
-    \item $L$: Lưu lượng hồi lưu (đo qua cảm biến lưu lượng)
-    \item $R$: Tỷ số hồi lưu
+    \item $F_{baseline}$: Lưu lượng nước làm mát khi van mở 100\%
+    \item $F_{optimal}$: Lưu lượng nước làm mát khi vận hành tối ưu
 \end{itemize}
 
-Hiệu suất tăng năng suất:
+Ngoài ra, việc điều khiển PWM công suất reboiler cho phép giảm điện năng tiêu thụ:
 \begin{equation}
-    \eta_{productivity} = \frac{\Delta D}{D_{baseline}} \times 100\%
+    P_{avg} = P_{max} \times \text{duty cycle}
 \end{equation}
+
+Duty cycle tối ưu được xác định bằng thực nghiệm, đảm bảo duy trì chất lượng sản phẩm trong khi tiết kiệm điện năng.
