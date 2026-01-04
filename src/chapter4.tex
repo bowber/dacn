@@ -140,38 +140,22 @@ Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng t�
 
 \textbf{Tính toán lưu lượng tối ưu:}
 
-Để vận hành tối ưu với $Q_{condenser} = Q_{vaporize} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra mong muốn:
+Để vận hành tối ưu với $Q_{condenser} = Q_{vaporize} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra:
 \begin{equation}
     \dot{m}_{optimal} = \frac{Q_{vaporize}}{C_p \cdot (T_{out} - T_{in})}
 \end{equation}
 
-Giới hạn nhiệt độ nước ra là nhiệt độ ngưng tụ ($T_{condensation} = 78^\circ$C). Lưu lượng tối thiểu lý thuyết:
+Trong thiết kế thiết bị trao đổi nhiệt, chênh lệch nhiệt độ tiếp cận (approach temperature) thường được chọn khoảng 10$^\circ$C để đảm bảo động lực truyền nhiệt đủ lớn. Với $T_{condensation} = 78^\circ$C:
 \begin{equation}
-    \dot{m}_{min} = \frac{5282}{4186 \times (78 - 30)} = 0.026 \text{ kg/s} = 1.6 \text{ L/min} \quad (\text{van } 22\%)
+    T_{out} = T_{condensation} - \Delta T_{approach} = 78 - 10 = 68^\circ\text{C}
 \end{equation}
 
-Thực tế cần biên độ an toàn để đảm bảo truyền nhiệt hiệu quả. Bảng \ref{tab:condenser_modes} trình bày các phương án với các mức biên độ khác nhau:
+Lưu lượng nước làm mát tối ưu:
+\begin{equation}
+    \dot{m}_{optimal} = \frac{5282}{4186 \times (68 - 30)} = 0.033 \text{ kg/s} = 2.0 \text{ L/min}
+\end{equation}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-\textbf{Chế độ} & \textbf{$T_{out}$} & \textbf{$\Delta T$} & \textbf{Lưu lượng} & \textbf{Valve} \\
-\hline
-Baseline (van 100\%) & 40.5$^\circ$C & 37.5$^\circ$C & 7.2 L/min & 100\% \\
-\hline
-Tối ưu (khuyến nghị) & 50$^\circ$C & 28$^\circ$C & 3.8 L/min & 53\% \\
-\hline
-Tối ưu (tiết kiệm hơn) & 60$^\circ$C & 18$^\circ$C & 2.5 L/min & 35\% \\
-\hline
-Giới hạn lý thuyết & 78$^\circ$C & 0$^\circ$C & 1.6 L/min & 22\% \\
-\hline
-\end{tabular}
-\caption{Lưu lượng nước làm mát theo nhiệt độ nước ra (với $Q = 5282$ W)}
-\label{tab:condenser_modes}
-\end{table}
-
-\textbf{Khuyến nghị:} Chọn $T_{out} = 50^\circ$C ($\Delta T = 28^\circ$C so với nhiệt độ ngưng tụ) để đảm bảo an toàn và ổn định. Lưu lượng tương ứng là 3.8 L/min (van 53\%), tiết kiệm 47\% so với baseline.
+Tương ứng với độ mở van 28\% (so với 7.2 L/min ở 100\%), tiết kiệm 72\% lưu lượng nước làm mát.
 
 \textbf{Lưu ý:} Giá trị thực tế cần được xác nhận qua thí nghiệm trong LVTN bằng cách đo nhiệt độ nước vào/ra ở các mức độ mở van khác nhau.
 
@@ -242,8 +226,8 @@ Với bộ điều khiển áp suất, van nước làm mát được điều ch
 Kết quả tính toán trạng thái xác lập:
 \begin{itemize}
     \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
-    \item Van nước làm mát: 53\% (tiết kiệm 47\%)
-    \item Lưu lượng nước làm mát: 3.8 L/min
+    \item Van nước làm mát: 28\% (tiết kiệm 72\%)
+    \item Lưu lượng nước làm mát: 2.0 L/min
     \item Công suất ngưng tụ: 5282 W (cân bằng với $Q_{vaporize}$)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
@@ -262,11 +246,11 @@ Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán gi
 \hline
 Công suất reboiler & 6000 & 6000 & W \\
 \hline
-Độ mở van & 100 & 53 & \% \\
+Độ mở van & 100 & 28 & \% \\
 \hline
 Công suất ngưng tụ & 9113 & 5282 & W \\
 \hline
-Lưu lượng nước & 7.2 & 3.8 & L/min \\
+Lưu lượng nước & 7.2 & 2.0 & L/min \\
 \hline
 \end{tabular}
 \caption{So sánh kết quả tính toán giữa các chế độ vận hành}
@@ -275,7 +259,7 @@ Lưu lượng nước & 7.2 & 3.8 & L/min \\
 
 \textbf{Kết quả chính:}
 \begin{itemize}
-    \item \textbf{Điều khiển van (so với baseline):} Giảm 47\% lưu lượng nước làm mát trong khi duy trì áp suất đỉnh tháp ổn định.
+    \item \textbf{Điều khiển van (so với baseline):} Giảm 72\% lưu lượng nước làm mát trong khi duy trì áp suất đỉnh tháp ổn định.
 \end{itemize}
 
 % ------------------------------------------------------------
@@ -288,35 +272,31 @@ Kết quả tính toán cho thấy:
 \begin{enumerate}
     \item \textbf{Cân bằng năng lượng}: Bộ điều khiển tự động điều chỉnh độ mở van để công suất ngưng tụ (5282 W) cân bằng với nhiệt hóa hơi ($Q_{vaporize} = Q_{reboiler} - Q_{feed} = 5400 - 118 = 5282$ W). Điều này đảm bảo quá trình ngưng tụ hiệu quả mà không lãng phí nước làm mát.
     
-    \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 53\%, tiết kiệm 47\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
+    \item \textbf{Tiết kiệm nước làm mát}: Van làm mát giảm từ 100\% xuống 28\%, tiết kiệm 72\% lưu lượng nước làm mát. Đây là kết quả của việc sử dụng đúng lượng nước cần thiết thay vì mở van tối đa.
     
     \item \textbf{Áp suất ổn định}: Bộ điều khiển duy trì áp suất đỉnh tháp ổn định tại giá trị đặt 1.0 bar bằng cách điều chỉnh độ mở van nước làm mát.
 \end{enumerate}
 
 \subsubsection{Giải thích cơ chế hoạt động}
 
-\textbf{Nguyên lý vật lý quan trọng:} Hệ số truyền nhiệt $U$ phụ thuộc vào lưu lượng nước làm mát:
+\textbf{Nguyên lý cân bằng năng lượng:} Công suất ngưng tụ được xác định bởi cân bằng năng lượng phía nước làm mát:
 \begin{equation}
-    Q = U \cdot A \cdot \Delta T_{LMTD}
+    Q_{condenser} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
-trong đó $U$ phụ thuộc vào số Reynolds ($Re$) và số Nusselt ($Nu$):
-\begin{itemize}
-    \item Lưu lượng cao $\rightarrow$ $Re$ cao $\rightarrow$ $Nu$ cao $\rightarrow$ $U$ cao
-    \item Với dòng chảy rối: $U \propto (\text{lưu lượng})^{0.8}$
-\end{itemize}
 
 Khi van mở 100\%:
 \begin{itemize}
-    \item Lưu lượng nước: 7.2 L/min $\rightarrow$ $U = 800$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 9113$ W $>$ $Q_{vaporize} = 5282$ W
-    \item Dư thừa ~3800 W công suất ngưng tụ -- lãng phí 47\% lưu lượng nước.
+    \item Lưu lượng nước: 7.2 L/min
+    \item Nước chỉ cần hấp thụ $Q_{vaporize} = 5282$ W
+    \item Nhiệt độ nước ra: $T_{out} = 30 + \frac{5282}{0.12 \times 4186} = 40.5^\circ$C
+    \item Chênh lệch với nhiệt độ ngưng tụ (78°C) rất lớn -- lãng phí 72\% lưu lượng nước.
 \end{itemize}
 
-Với điều khiển (van 53\%):
+Với điều khiển (van 28\%):
 \begin{itemize}
-    \item Lưu lượng nước: 3.8 L/min $\rightarrow$ $U = 489$ W/(m²·K)
-    \item Công suất ngưng tụ: $Q_c = 5282$ W $=$ $Q_{vaporize}$
-    \item Cân bằng năng lượng tối ưu -- tiết kiệm 47\% nước làm mát.
+    \item Lưu lượng nước: 2.0 L/min
+    \item Nhiệt độ nước ra: $T_{out} = 68^\circ$C (chênh lệch 10°C với nhiệt độ ngưng tụ)
+    \item Cân bằng năng lượng tối ưu -- tiết kiệm 72\% nước làm mát.
 \end{itemize}
 
 \subsubsection{Phương pháp kiểm chứng thực nghiệm}
@@ -347,7 +327,7 @@ Kết quả dự kiến:
 \hline
 Baseline & 100\% & $>$ 10°C & Lãng phí \\
 \hline
-Tối ưu & 53\% & $\approx$ 0°C & Hiệu quả \\
+Tối ưu & 28\% & $\approx$ 0°C & Hiệu quả \\
 \hline
 \end{tabular}
 \caption{Dự kiến độ subcooling theo chế độ vận hành}
