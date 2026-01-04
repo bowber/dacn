@@ -192,22 +192,22 @@
         };
         
         % University name
-        \node[anchor=north, text=darkblue, font=\small\bfseries] at ([yshift=-0.32\paperheight]current page.north) {
+        \node[anchor=north, text=darkblue, font=\small\bfseries] at ([yshift=-0.30\paperheight]current page.north) {
             ĐẠI HỌC BÁCH KHOA TP. HỒ CHÍ MINH
         };
         
         % Title
-        \node[anchor=north, text width=0.7\paperwidth, align=center, text=darkblue, font=\Large\bfseries] at ([yshift=-0.40\paperheight]current page.north) {
+        \node[anchor=north, text width=0.7\paperwidth, align=center, text=darkblue, font=\large\bfseries] at ([yshift=-0.38\paperheight]current page.north) {
             \inserttitle
         };
         
         % Subtitle (if any)
-        \node[anchor=north, text=bkblue, font=\normalsize] at ([yshift=-0.55\paperheight]current page.north) {
+        \node[anchor=north, text=bkblue, font=\normalsize] at ([yshift=-0.56\paperheight]current page.north) {
             \insertsubtitle
         };
         
         % Author info - use minipage for line breaks
-        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.65\paperheight]current page.north) {
+        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.63\paperheight]current page.north) {
             \begin{minipage}{0.6\paperwidth}
                 \centering
                 \insertauthor
@@ -215,7 +215,7 @@
         };
         
         % Date
-        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.75\paperheight]current page.north) {
+        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.73\paperheight]current page.north) {
             \insertdate
         };
     \end{tikzpicture}

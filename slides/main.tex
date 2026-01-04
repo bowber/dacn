@@ -124,11 +124,11 @@
     \begin{tikzpicture}
         % Shadow
         \node[rectangle, fill=darkblue, inner sep=4pt, anchor=north west] at (4pt, -4pt) {
-            \phantom{\includegraphics[width=0.75\textwidth]{../assets/PFD.jpg}}
+            \phantom{\includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{../assets/PFD.jpg}}
         };
         % Image with border
         \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=4pt, anchor=north west] at (0,0) {
-            \includegraphics[width=0.75\textwidth]{../assets/PFD.jpg}
+            \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{../assets/PFD.jpg}
         };
     \end{tikzpicture}
 \end{frame}
@@ -138,18 +138,19 @@
 % ============================================================
 \begin{frame}{Cơ sở lý thuyết -- Cân bằng lỏng-hơi}
     \centering
+    \vspace{-0.3em}
     \begin{tikzpicture}
         % Shadow for chart
-        \fill[darkblue] (4pt, -4pt) rectangle ++(10cm, -6.5cm);
+        \fill[darkblue] (4pt, -4pt) rectangle ++(9cm, -5.5cm);
         % Chart background
-        \fill[white] (0, 0) rectangle ++(10cm, -6.5cm);
-        \draw[darkblue, line width=2pt] (0, 0) rectangle ++(10cm, -6.5cm);
+        \fill[white] (0, 0) rectangle ++(9cm, -5.5cm);
+        \draw[darkblue, line width=2pt] (0, 0) rectangle ++(9cm, -5.5cm);
         
         % Actual plot
         \begin{axis}[
-            at={(0.5cm, -6cm)},
-            width=9cm,
-            height=5.5cm,
+            at={(0.5cm, -5cm)},
+            width=8cm,
+            height=4.5cm,
             xlabel={Nồng độ mol ethanol ($x$, $y$)},
             ylabel={Nhiệt độ ($^\circ$C)},
             xlabel style={font=\small},
@@ -181,7 +182,7 @@
         \end{axis}
     \end{tikzpicture}
     
-    \vspace{0.3em}
+    \vspace{0.5em}
     {\small Điểm đẳng phí: 95.6\% mol ethanol (78.15$^\circ$C)}
 \end{frame}
 
@@ -448,23 +449,26 @@
 % SLIDE 12: Conclusion
 % ============================================================
 \begin{frame}{Kết luận}
+    \vspace{-0.3em}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Đã thực hiện:}}
             \begin{itemize}
+                \setlength{\itemsep}{0pt}
                 \item Phân tích hệ thống chưng cất ethanol -- nước quy mô PTN
                 \item Thiết kế vòng điều khiển áp suất PC-01 với PID
                 \item Tính toán cân bằng năng lượng condenser
                 \item Đề xuất phương án điều khiển PWM reboiler
             \end{itemize}
             
-            \vspace{0.5em}
+            \vspace{0.3em}
             \textbf{\textcolor{bkblue}{Kết quả chính:}}
             \begin{itemize}
+                \setlength{\itemsep}{0pt}
                 \item Tiết kiệm \highlight{72\%} lưu lượng nước làm mát
                 \item Độ mở van tối ưu: \highlight{28\%} (thay vì 100\%)
-                \item Lưu lượng nước cần thiết: \highlight{2.0 L/min} (thay vì 7.2 L/min)
+                \item Lưu lượng nước: \highlight{2.0 L/min} (thay vì 7.2 L/min)
             \end{itemize}
         };
     \end{tikzpicture}
