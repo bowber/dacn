@@ -289,7 +289,7 @@ Bộ điều khiển điện tử Type 8605 được sử dụng để vận hà
 \begin{itemize}
     \item Tín hiệu đầu vào: 0-20 mA, 4-20 mA hoặc 0-5 V, 0-10 V (có thể cấu hình)
     \item Tín hiệu đầu ra: PWM, tần số điều chỉnh được 80 Hz -- 6 kHz
-    \item Dải dòng điện đầu ra: 200 -- 1000 mA (phù hợp với Type 2873)
+    \item Dải dòng điện đầu ra: 40 -- 2000 mA (cấu hình được, Type 2873 cần tối đa 420 mA)
     \item Điện áp hoạt động: 12 -- 24 V DC
     \item Công suất tiêu thụ: $\sim$1 W (không tính van)
     \item Chức năng Ramp: Điều chỉnh được 0 -- 10 giây
@@ -304,7 +304,7 @@ Bộ điều khiển điện tử Type 8605 được sử dụng để vận hà
 \label{fig:burkert_8605}
 \end{figure}
 
-Khi kết hợp van Type 2873 với bộ điều khiển Type 8605 (dải 200-1000 mA), tín hiệu điều khiển 4-20 mA từ PLC được chuyển đổi thành dòng điện cuộn coil tương ứng để điều chỉnh độ mở van. Tại tín hiệu 20 mA (100\% độ mở), dòng điện cuộn coil đạt khoảng 390 mA.
+Khi kết hợp van Type 2873 với bộ điều khiển Type 8605, tín hiệu điều khiển 4-20 mA từ PLC được chuyển đổi thành dòng điện cuộn coil tương ứng để điều chỉnh độ mở van. Type 8605 được cấu hình dải đầu ra phù hợp với Type 2873 (tối đa 420 mA). Tại tín hiệu 20 mA (100\% độ mở), dòng điện cuộn coil đạt khoảng 390 mA.
 
 \subsubsection{Bộ điều khiển PLC S7-1200}
 
