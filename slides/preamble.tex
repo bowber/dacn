@@ -15,7 +15,15 @@
     BoldItalicFont = {Noto Sans Bold Italic}
 ]
 \setmainfont{Noto Sans}
+\newfontfamily\symbolfont{Noto Sans Symbols}
+\newfontfamily\mathsymbolfont{Noto Sans Math}
 \usepackage[vietnamese]{babel}
+
+% Custom commands for symbols
+\newcommand{\arrowright}{{\mathsymbolfont →}}
+\newcommand{\Deltasym}{{\mathsymbolfont Δ}}
+\newcommand{\timessym}{{\mathsymbolfont ×}}
+\newcommand{\mdot}{{\mathsymbolfont ṁ}}
 
 % ============================================================
 % COLORS - Neubrutalism Palette
@@ -131,14 +139,10 @@
 }
 
 % ============================================================
-% FOOTER - Logo + Slide Number
+% FOOTER - Slide Number Only
 % ============================================================
 \setbeamertemplate{footline}{
     \begin{tikzpicture}[remember picture, overlay]
-        % BK Logo (left)
-        \node[anchor=south west, inner sep=0] at ([xshift=0.5cm, yshift=0.3cm]current page.south west) {
-            \includegraphics[height=0.8cm]{../assets/bk_logo_transparent.png}
-        };
         % Slide number (right) - Neubrutalist style
         \node[anchor=south east, inner sep=0] at ([xshift=-0.5cm, yshift=0.3cm]current page.south east) {
             \begin{tikzpicture}[baseline=(num.base)]

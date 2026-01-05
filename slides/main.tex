@@ -52,10 +52,10 @@
                     \color{white}
                     \textbf{Khóa luận Tốt nghiệp}
                     \begin{itemize}
-                        \item[\textcolor{white}{5.}] Kế hoạch triển khai
-                        \item[\textcolor{white}{6.}] Thí nghiệm PC-01
-                        \item[\textcolor{white}{7.}] PWM Reboiler
-                        \item[\textcolor{white}{8.}] Kế hoạch 12 tuần
+                        \item[\textcolor{white}{5.}] \textcolor{white}{Kế hoạch triển khai}
+                        \item[\textcolor{white}{6.}] \textcolor{white}{Thí nghiệm PC-01}
+                        \item[\textcolor{white}{7.}] \textcolor{white}{PWM Reboiler}
+                        \item[\textcolor{white}{8.}] \textcolor{white}{Kế hoạch chi tiết}
                     \end{itemize}
                 };
             \end{tikzpicture}
@@ -75,7 +75,7 @@
             \textbf{\textcolor{bkblue}{Vận hành hiện tại:}}
             \begin{itemize}
                 \item Van nước làm mát mở cố định \highlight{100\%}
-                \item Reboiler hoạt động công suất tối đa \highlight{$\sim$6000 W} (ước tính)
+                \item Reboiler hoạt động công suất tối đa \highlight{~6000 W} (ước tính)
                 \item Không có điều khiển tự động
             \end{itemize}
             
@@ -120,80 +120,22 @@
 % SLIDE 5: System Overview (PFD)
 % ============================================================
 \begin{frame}{Tổng quan hệ thống}
+    \vspace{0.5em}
     \centering
     \begin{tikzpicture}
         % Shadow
         \node[rectangle, fill=darkblue, inner sep=4pt, anchor=north west] at (4pt, -4pt) {
-            \phantom{\includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{../assets/PFD.jpg}}
+            \phantom{\includegraphics[width=0.85\textwidth, height=0.72\textheight, keepaspectratio]{../assets/PFD.jpg}}
         };
         % Image with border
         \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=4pt, anchor=north west] at (0,0) {
-            \includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{../assets/PFD.jpg}
+            \includegraphics[width=0.85\textwidth, height=0.72\textheight, keepaspectratio]{../assets/PFD.jpg}
         };
     \end{tikzpicture}
 \end{frame}
 
 % ============================================================
-% SLIDE 6: Why 72% Savings?
-% ============================================================
-\begin{frame}{Tại sao tiết kiệm được 72\%?}
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (0,0) {
-                    \textbf{\textcolor{accent}{Hiện tại (100\% van):}}
-                    
-                    \vspace{0.3em}
-                    Nước vào: 30°C
-                    
-                    Nước ra: \textbf{40.5°C}
-                    
-                    \vspace{0.3em}
-                    {\small $\Delta T_{approach} = 78 - 40.5$}
-                    
-                    {\small $= \mathbf{37.5}$°C (quá lớn!)}
-                    
-                    \vspace{0.3em}
-                    \textcolor{accent}{$\rightarrow$ Lãng phí công suất làm mát}
-                };
-            \end{tikzpicture}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, text=white, anchor=north west] at (0,0) {
-                    \textbf{Tối ưu (28\% van):}
-                    
-                    \vspace{0.3em}
-                    Nước vào: 30°C
-                    
-                    Nước ra: \textbf{68°C}
-                    
-                    \vspace{0.3em}
-                    {\small $\Delta T_{approach} = 78 - 68$}
-                    
-                    {\small $= \mathbf{10}$°C (thiết kế chuẩn)}
-                    
-                    \vspace{0.3em}
-                    $\rightarrow$ Hiệu quả trao đổi nhiệt cao
-                };
-            \end{tikzpicture}
-        \end{column}
-    \end{columns}
-    
-    \vspace{0.6em}
-    \centering
-    \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, minimum width=10cm, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, minimum width=10cm, anchor=north west] at (0,0) {
-            $\Delta T_{approach} = T_{ngưng tụ} - T_{nước ra} = 10$°C \quad (tiêu chuẩn thiết kế HEX)
-        };
-    \end{tikzpicture}
-\end{frame}
-
-% ============================================================
-% SLIDE 7: Control Strategy - PC-01
+% SLIDE 6: Control Strategy - PC-01
 % ============================================================
 \begin{frame}{Chiến lược điều khiển -- Vòng PC-01}
     \centering
@@ -254,7 +196,7 @@
 \end{frame}
 
 % ============================================================
-% SLIDE 9: PWM Reboiler Control
+% SLIDE 7: PWM Reboiler Control
 % ============================================================
 \begin{frame}{Điều khiển PWM công suất Reboiler}
     \begin{columns}[T]
@@ -297,43 +239,46 @@
 \end{frame}
 
 % ============================================================
-% SLIDE 10: Energy Calculations
+% SLIDE 8: Calculation Results
 % ============================================================
-\begin{frame}{Tính toán cân bằng năng lượng}
+\begin{frame}{Kết quả tính toán}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.92\textwidth, minimum height=6cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.92\textwidth, minimum height=6cm, anchor=north west] at (0,0) {
             \begin{columns}[T]
                 \begin{column}{0.48\textwidth}
-                    \textbf{\textcolor{bkblue}{Công suất reboiler:}}
-                    \begin{itemize}
-                        \item $Q_{reboiler} = 6000$ W (điện)
-                        \item Hiệu suất: 90\%
-                        \item $Q_{eff} = 5400$ W
-                    \end{itemize}
+                    \textbf{\textcolor{bkblue}{Cân bằng năng lượng:}}
+                    
+                    \vspace{0.3em}
+                    $Q_{\text{hóa hơi}} = \dot{m} \cdot C_p \cdot \Delta T$
                     
                     \vspace{0.5em}
-                    \textbf{\textcolor{bkblue}{Nhiệt hóa hơi:}}
-                    \begin{itemize}
-                        \item $Q_{\text{nhập liệu}} = 118$ W
-                        \item $Q_{\text{hóa hơi}} = 5400 - 118$
-                        \item $= \mathbf{5282}$ \textbf{W}
-                    \end{itemize}
-                \end{column}
-                \begin{column}{0.48\textwidth}
                     \textbf{\textcolor{bkblue}{Lưu lượng nước tối ưu:}}
                     
                     \vspace{0.3em}
-                    $\dot{m} = \dfrac{Q_{\text{hóa hơi}}}{C_p \cdot \Delta T}$
+                    $\dot{m} = \dfrac{Q_{\text{hóa hơi}}}{C_p \cdot (T_{out} - T_{in})}$
                     
                     \vspace{0.5em}
-                    $= \dfrac{5282}{4186 \times 38}$
+                    $= \dfrac{5282}{4186 \times (68 - 30)}$
                     
                     \vspace{0.5em}
-                    $= 0.033$ kg/s
+                    $= 0.033$ kg/s = \textbf{2.0 L/min}
+                \end{column}
+                \begin{column}{0.48\textwidth}
+                    \textbf{\textcolor{bkblue}{Thông số đầu vào:}}
+                    \begin{itemize}
+                        \item $Q_{\text{hóa hơi}} = 5282$ W
+                        \item $C_p = 4186$ J/(kg·K)
+                        \item $T_{in} = 30$°C
+                        \item $T_{out} = 68$°C
+                    \end{itemize}
                     
-                    \vspace{0.5em}
-                    $= \mathbf{2.0}$ \textbf{L/min}
+                    \vspace{0.3em}
+                    \textbf{\textcolor{bkblue}{Kết quả:}}
+                    \begin{itemize}
+                        \item Độ mở van: \textbf{28\%}
+                        \item Tiết kiệm: \highlight{72\%} lưu lượng
+                    \end{itemize}
                 \end{column}
             \end{columns}
         };
@@ -341,56 +286,7 @@
 \end{frame}
 
 % ============================================================
-% SLIDE 11: Results
-% ============================================================
-\begin{frame}{Kết quả so sánh}
-    \centering
-    \begin{tikzpicture}
-        % Table shadow
-        \node[rectangle, fill=darkblue, inner sep=0pt, anchor=north west] at (4pt, -4pt) {
-            \phantom{
-                \begin{tabular}{|l|c|c|}
-                \hline
-                \textbf{Thông số} & \textbf{Hiện tại} & \textbf{Tối ưu} \\
-                \hline
-                Độ mở van & 100\% & 28\% \\
-                Lưu lượng nước & 7.2 L/min & 2.0 L/min \\
-                Công suất reboiler & 6000 W & 6000 W \\
-                \hline
-                \end{tabular}
-            }
-        };
-        % Table
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=0pt, anchor=north west] at (0,0) {
-            \begin{tabular}{|l|c|c|}
-            \hline
-            \rowcolor{bkblue}\textcolor{white}{\textbf{Thông số}} & \textcolor{white}{\textbf{Hiện tại}} & \textcolor{white}{\textbf{Tối ưu}} \\
-            \hline
-            Độ mở van & 100\% & \textbf{28\%} \\
-            \hline
-            Lưu lượng nước & 7.2 L/min & \textbf{2.0 L/min} \\
-            \hline
-            Công suất reboiler & 6000 W & 6000 W \\
-            \hline
-            \end{tabular}
-        };
-    \end{tikzpicture}
-    
-    \vspace{1em}
-    \begin{columns}[c]
-        \begin{column}{0.45\textwidth}
-            \centering
-            \keyresult{72\%}{Tiết kiệm nước làm mát}
-        \end{column}
-        \begin{column}{0.45\textwidth}
-            \centering
-            \keyresult{28\%}{Độ mở van tối ưu}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% ============================================================
-% SLIDE 12: Conclusion
+% SLIDE 8: Conclusion
 % ============================================================
 \begin{frame}{Kết luận}
     \vspace{-0.3em}
@@ -450,9 +346,9 @@
 \end{frame}
 
 % ============================================================
-% SLIDE 14: KLTN Phase 1 - Setup
+% SLIDE 11: KLTN Phase 1 - Setup
 % ============================================================
-\begin{frame}{KLTN -- Giai đoạn 1: Chuẩn bị hệ thống}
+\begin{frame}{KLTN -- Giai đoạn 1: Chuẩn bị}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
@@ -467,10 +363,10 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
-                        \setlength{\itemsep}{2pt}
+                        \setlength{\itemsep}{4pt}
                         \item Thay thế cảm biến nhiệt độ hỏng
                         \item Hiệu chuẩn thiết bị đo
                         \item Kiểm tra van điều khiển
@@ -491,10 +387,10 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
-                        \setlength{\itemsep}{2pt}
+                        \setlength{\itemsep}{4pt}
                         \item Thiết kế bộ điều khiển PID
                         \item Lập trình S7-1200 (TIA Portal)
                         \item Cấu hình I/O analog
@@ -503,22 +399,37 @@
             \end{tikzpicture}
         \end{column}
     \end{columns}
-    
-    \vspace{0.5em}
-    \centering
-    \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, text=white, anchor=north west] at (0,0) {
-            \textbf{Tuần 5--6:} Thiết kế giao diện HMI, tích hợp hệ thống
-        };
-    \end{tikzpicture}
 \end{frame}
 
 % ============================================================
-% SLIDE 15: KLTN Phase 2 - Experiments
+% SLIDE 12: KLTN Phase 2 - Integration & PC-01
 % ============================================================
-\begin{frame}{KLTN -- Giai đoạn 2: Thí nghiệm}
+\begin{frame}{KLTN -- Giai đoạn 2: Tích hợp \& Thí nghiệm PC-01}
     \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                    \textbf{Tuần 5--6}
+                    
+                    \vspace{0.3em}
+                    Tích hợp hệ thống
+                };
+            \end{tikzpicture}
+            
+            \vspace{0.5em}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \begin{itemize}
+                        \setlength{\itemsep}{4pt}
+                        \item Thiết kế giao diện HMI
+                        \item Kết nối PLC với thiết bị
+                        \item Chạy thử nghiệm hệ thống
+                    \end{itemize}
+                };
+            \end{tikzpicture}
+        \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
@@ -532,18 +443,25 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
-                        \setlength{\itemsep}{2pt}
+                        \setlength{\itemsep}{4pt}
                         \item Thu thập dữ liệu vận hành
                         \item Tinh chỉnh thông số PID
-                        \item Kiểm chứng bằng $\Delta T_{subcool}$
-                        \item So sánh với tính toán
+                        \item Kiểm chứng tiết kiệm 72\%
                     \end{itemize}
                 };
             \end{tikzpicture}
         \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+% SLIDE 13: KLTN Phase 3 - PWM & Report
+% ============================================================
+\begin{frame}{KLTN -- Giai đoạn 3: PWM \& Hoàn thiện}
+    \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
@@ -557,82 +475,42 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
-                        \setlength{\itemsep}{2pt}
+                        \setlength{\itemsep}{4pt}
                         \item Lập trình điều khiển PWM
                         \item Xác định duty cycle tối ưu
-                        \item Đánh giá tiết kiệm điện
-                        \item Kiểm tra chất lượng sản phẩm
+                        \item Đánh giá tiết kiệm điện năng
+                    \end{itemize}
+                };
+            \end{tikzpicture}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                    \textbf{Tuần 11--12}
+                    
+                    \vspace{0.3em}
+                    Hoàn thiện báo cáo
+                };
+            \end{tikzpicture}
+            
+            \vspace{0.5em}
+            \begin{tikzpicture}
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \begin{itemize}
+                        \setlength{\itemsep}{4pt}
+                        \item Tổng hợp kết quả thí nghiệm
+                        \item Viết báo cáo KLTN
+                        \item Chuẩn bị bảo vệ
                     \end{itemize}
                 };
             \end{tikzpicture}
         \end{column}
     \end{columns}
-    
-    \vspace{0.5em}
-    \centering
-    \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, text=white, anchor=north west] at (0,0) {
-            \textbf{Tuần 11--12:} Hoàn thiện báo cáo, chuẩn bị bảo vệ
-        };
-    \end{tikzpicture}
-\end{frame}
-
-% ============================================================
-% SLIDE 16: KLTN Timeline Summary
-% ============================================================
-\begin{frame}{KLTN -- Kế hoạch 12 tuần}
-    \centering
-    \begin{tikzpicture}
-        % Table shadow
-        \node[rectangle, fill=darkblue, inner sep=0pt, anchor=north west] at (4pt, -4pt) {
-            \phantom{
-                \begin{tabular}{|c|p{8cm}|}
-                \hline
-                \textbf{Tuần} & \textbf{Nội dung công việc} \\
-                \hline
-                1--2 & Sửa chữa cảm biến, hiệu chuẩn thiết bị \\
-                3--4 & Thiết kế PID, lập trình PLC S7-1200 \\
-                5--6 & Thiết kế HMI, tích hợp hệ thống \\
-                7--8 & Thí nghiệm PC-01, tinh chỉnh PID \\
-                9--10 & Triển khai PWM reboiler \\
-                11--12 & Hoàn thiện báo cáo \\
-                \hline
-                \end{tabular}
-            }
-        };
-        % Table
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=0pt, anchor=north west] at (0,0) {
-            \begin{tabular}{|c|p{8cm}|}
-            \hline
-            \rowcolor{bkblue}\textcolor{white}{\textbf{Tuần}} & \textcolor{white}{\textbf{Nội dung công việc}} \\
-            \hline
-            1--2 & Sửa chữa cảm biến hỏng, hiệu chuẩn thiết bị đo \\
-            \hline
-            3--4 & Thiết kế bộ điều khiển PID, lập trình S7-1200 \\
-            \hline
-            5--6 & Thiết kế giao diện HMI, tích hợp hệ thống \\
-            \hline
-            7--8 & Thí nghiệm vòng PC-01, thu thập dữ liệu, tinh chỉnh PID \\
-            \hline
-            9--10 & Triển khai PWM reboiler, đánh giá tiết kiệm điện năng \\
-            \hline
-            11--12 & Hoàn thiện báo cáo, chuẩn bị bảo vệ \\
-            \hline
-            \end{tabular}
-        };
-    \end{tikzpicture}
-    
-    \vspace{0.8em}
-    \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, minimum width=12cm, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=accent, draw=darkblue, line width=2pt, inner sep=10pt, minimum width=12cm, text=white, anchor=north west] at (0,0) {
-            \textbf{Mục tiêu:} Xác định mức tiết kiệm năng lượng thực tế (nước + điện)
-        };
-    \end{tikzpicture}
 \end{frame}
 
 % ============================================================
