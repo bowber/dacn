@@ -137,7 +137,7 @@
     \begin{tikzpicture}[remember picture, overlay]
         % BK Logo (left)
         \node[anchor=south west, inner sep=0] at ([xshift=0.5cm, yshift=0.3cm]current page.south west) {
-            \includegraphics[height=0.8cm]{../assets/bk_logo_trimmed.png}
+            \includegraphics[height=0.8cm]{../assets/bk_logo_transparent.png}
         };
         % Slide number (right) - Neubrutalist style
         \node[anchor=south east, inner sep=0] at ([xshift=-0.5cm, yshift=0.3cm]current page.south east) {
@@ -188,35 +188,22 @@
         
         % BK Logo
         \node[anchor=north] at ([yshift=-0.18\paperheight]current page.north) {
-            \includegraphics[height=1.8cm]{../assets/bk_logo_trimmed.png}
+            \includegraphics[height=1.4cm]{../assets/bk_logo_transparent.png}
         };
         
-        % University name
-        \node[anchor=north, text=darkblue, font=\small\bfseries] at ([yshift=-0.30\paperheight]current page.north) {
-            ĐẠI HỌC BÁCH KHOA TP. HỒ CHÍ MINH
-        };
-        
-        % Title
-        \node[anchor=north, text width=0.7\paperwidth, align=center, text=darkblue, font=\large\bfseries] at ([yshift=-0.38\paperheight]current page.north) {
-            \inserttitle
-        };
-        
-        % Subtitle (if any)
-        \node[anchor=north, text=bkblue, font=\normalsize] at ([yshift=-0.56\paperheight]current page.north) {
+        % Subtitle (on top)
+        \node[anchor=north, text=bkblue, font=\normalsize] at ([yshift=-0.35\paperheight]current page.north) {
             \insertsubtitle
         };
         
-        % Author info - use minipage for line breaks
-        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.63\paperheight]current page.north) {
-            \begin{minipage}{0.6\paperwidth}
-                \centering
-                \insertauthor
-            \end{minipage}
+        % Title (2 lines, below subtitle)
+        \node[anchor=north, align=center, text=darkblue, font=\large\bfseries] at ([yshift=-0.44\paperheight]current page.north) {
+            Điều khiển tối ưu hoá năng lượng cung cấp\\cho quá trình chưng cất hệ ethanol -- nước
         };
         
-        % Date
-        \node[anchor=north, text=darkblue, font=\small] at ([yshift=-0.73\paperheight]current page.north) {
-            \insertdate
+        % Author info
+        \node[anchor=north, text=darkblue, font=\small, align=center] at ([yshift=-0.62\paperheight]current page.north) {
+            SVTH: Nguyễn Phúc Bảo Lâm -- MSSV: 2111630\\GVHD: TS. Bùi Ngọc Pha
         };
     \end{tikzpicture}
 }
