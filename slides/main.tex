@@ -67,11 +67,12 @@
 % SLIDE 3: Problem
 % ============================================================
 \begin{frame}{Vấn đề đặt ra}
+    \vspace{0.3em}
     \begin{tikzpicture}
         % Shadow
-        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (4pt, -4pt) {};
         % Box
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Vận hành hiện tại:}}
             \begin{itemize}
                 \item Van nước làm mát mở cố định \highlight{100\%}
@@ -94,12 +95,12 @@
 % SLIDE 4: Objectives
 % ============================================================
 \begin{frame}{Mục tiêu đồ án}
-    \vspace{-0.5em}
+    \vspace{0.3em}
     \begin{tikzpicture}
         % Shadow
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=6cm, anchor=north west] at (4pt, -4pt) {};
         % Box
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=6cm, anchor=north west] at (0,0) {
             \begin{enumerate}
                 \item \textbf{Phân tích hệ thống} chưng cất ethanol -- nước quy mô phòng thí nghiệm
                 
@@ -138,12 +139,13 @@
 % SLIDE 6: Control Strategy - PC-01
 % ============================================================
 \begin{frame}{Chiến lược điều khiển -- Vòng PC-01}
+    \vspace{0.3em}
     \centering
     \begin{tikzpicture}[node distance=1.5cm]
         % Background shadow
-        \fill[darkblue, rounded corners=0] (-0.5+4pt, 1.5-4pt) rectangle (12+4pt, -2.5-4pt);
-        \fill[white] (-0.5, 1.5) rectangle (12, -2.5);
-        \draw[darkblue, line width=2pt] (-0.5, 1.5) rectangle (12, -2.5);
+        \fill[darkblue, rounded corners=0] (-0.5+4pt, 1.5-4pt) rectangle (12+4pt, -3.2-4pt);
+        \fill[white] (-0.5, 1.5) rectangle (12, -3.2);
+        \draw[darkblue, line width=2pt] (-0.5, 1.5) rectangle (12, -3.2);
         
         % Nodes
         \node (sp) at (0.5, 0) {\textbf{SP}};
@@ -174,20 +176,22 @@
         \node[below left] at (sum.south west) {\tiny $-$};
     \end{tikzpicture}
     
-    \vspace{0.8em}
+    \vspace{0.4em}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
+            \centering
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=8pt, minimum width=4.5cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, minimum width=4.5cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=8pt, text width=0.9\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text width=0.9\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{SP:} 1.0 bar (áp suất đỉnh)
                 };
             \end{tikzpicture}
         \end{column}
         \begin{column}{0.45\textwidth}
+            \centering
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=8pt, minimum width=4.5cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, minimum width=4.5cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=8pt, text width=0.9\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text width=0.9\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{MV:} Độ mở van làm mát
                 };
             \end{tikzpicture}
