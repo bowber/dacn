@@ -52,10 +52,8 @@
                     \color{white}
                     \textbf{Khóa luận Tốt nghiệp}
                     \begin{itemize}
-                        \item[\textcolor{white}{5.}] \textcolor{white}{Kế hoạch triển khai}
-                        \item[\textcolor{white}{6.}] \textcolor{white}{Thí nghiệm PC-01}
-                        \item[\textcolor{white}{7.}] \textcolor{white}{PWM Reboiler}
-                        \item[\textcolor{white}{8.}] \textcolor{white}{Kế hoạch chi tiết}
+                        \item[\textcolor{white}{5.}] \textcolor{white}{Tổng quát kế hoạch}
+                        \item[\textcolor{white}{6.}] \textcolor{white}{Kế hoạch chi tiết}
                     \end{itemize}
                 };
             \end{tikzpicture}
@@ -77,11 +75,10 @@
             \begin{itemize}
                 \item Van nước làm mát mở cố định \highlight{100\%}
                 \item Reboiler hoạt động công suất tối đa \highlight{~6000 W} (ước tính)
-                \item Không có điều khiển tự động
             \end{itemize}
             
             \vspace{0.5em}
-            \textbf{\textcolor{accent}{Hậu quả:}}
+            \textbf{\textcolor{accent}{Hạn chế:}}
             \begin{itemize}
                 \item Lãng phí nước làm mát (công suất ngưng tụ dư thừa)
                 \item Lãng phí điện năng reboiler
@@ -142,41 +139,46 @@
     \vspace{0.3em}
     \centering
     \begin{tikzpicture}[node distance=1.5cm]
-        % Background shadow
-        \fill[darkblue, rounded corners=0] (-0.5+4pt, 1.5-4pt) rectangle (12+4pt, -3.2-4pt);
-        \fill[white] (-0.5, 1.5) rectangle (12, -3.2);
-        \draw[darkblue, line width=2pt] (-0.5, 1.5) rectangle (12, -3.2);
+        % Shadow
+        \node[rectangle, fill=darkblue, text width=0.88\textwidth, minimum height=4cm, anchor=north west] at (4pt, -4pt) {};
+        % Box
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, text width=0.88\textwidth, minimum height=4cm, anchor=north west] (whitebox) at (0,0) {};
         
-        % Nodes
-        \node (sp) at (0.5, 0) {\textbf{SP}};
-        \node[sum] (sum) at (2, 0) {};
-        \node[block] (pid) at (4, 0) {PID};
-        \node[block] (valve) at (6.5, 0) {Van};
-        \node[block] (condenser) at (9, 0) {Condenser};
-        \node (pv) at (11, 0) {\textbf{P}};
-        
-        % Sensor
-        \node[block] (sensor) at (6.5, -1.8) {PT};
-        
-        % Arrows
-        \draw[arrow] (sp) -- (sum);
-        \draw[arrow] (sum) -- (pid) node[midway, above] {\small$e$};
-        \draw[arrow] (pid) -- (valve) node[midway, above] {\small$u$};
-        \draw[arrow] (valve) -- (condenser);
-        \draw[arrow] (condenser) -- (pv);
-        
-        % Feedback
-        \draw[line] (10, 0) -- (10, -1.8);
-        \draw[arrow] (10, -1.8) -- (sensor);
-        \draw[line] (sensor) -- (2, -1.8);
-        \draw[arrow] (2, -1.8) -- (sum);
-        
-        % Labels
-        \node[above] at (sum.north) {\tiny $+$};
-        \node[below left] at (sum.south west) {\tiny $-$};
+        % Block diagram inside
+        \begin{scope}[shift={(0.3,-1.2)}]
+            % Nodes (draw first so arrows connect properly)
+            \node (sp) at (0.5, 0) {\textbf{SP}};
+            \node[sum] (sum) at (2, 0) {};
+            \node[block] (pid) at (4, 0) {PID};
+            \node[block] (valve) at (6.5, 0) {Van};
+            \node[block] (condenser) at (9, 0) {Condenser};
+            \node (pv) at (12, 0) {\textbf{P}};
+            
+            % Sensor
+            \node[block] (sensor) at (6.5, -1.8) {PT};
+            
+            % Arrows (use node anchors to connect properly)
+            \draw[arrow] (sp) -- (sum);
+            \draw[arrow] (sum.east) -- (pid.west) node[midway, above] {\small$e$};
+            \draw[arrow] (pid.east) -- (valve.west) node[midway, above] {\small$u$};
+            \draw[arrow] (valve.east) -- (condenser.west);
+            
+            % Output line to P (straight through)
+            \draw[arrow] (condenser.east) -- (pv);
+            
+            % Feedback branch - use fixed coordinate between Condenser and P
+            \draw[line] (10.8, 0) -- (10.8, -1.8);
+            \draw[arrow] (10.8, -1.8) -- (sensor.east);
+            \draw[line] (sensor.west) -- (sum.south |- sensor.west);
+            \draw[arrow] (sum.south |- sensor.west) -- (sum.south);
+            
+            % Labels
+            \node[above] at (sum.north) {\tiny $+$};
+            \node[below left] at (sum.south west) {\tiny $-$};
+        \end{scope}
     \end{tikzpicture}
     
-    \vspace{0.4em}
+    \vspace{0.1em}
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \centering
@@ -204,10 +206,10 @@
 % ============================================================
 \begin{frame}{Điều khiển PWM công suất Reboiler}
     \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
+        \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=6.5cm, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=6.5cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{bkblue}{Nguyên lý:}}
                     \begin{itemize}
                         \item Điều chế độ rộng xung (PWM)
@@ -225,10 +227,10 @@
                 };
             \end{tikzpicture}
         \end{column}
-        \begin{column}{0.42\textwidth}
+        \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=6.5cm, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=6.5cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{bkblue}{Ưu điểm:}}
                     \begin{itemize}
                         \item Tiết kiệm điện năng
@@ -293,10 +295,10 @@
 % SLIDE 8: Conclusion
 % ============================================================
 \begin{frame}{Kết luận}
-    \vspace{-0.3em}
+    \vspace{0.3em}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Đã thực hiện:}}
             \begin{itemize}
                 \setlength{\itemsep}{0pt}
@@ -322,9 +324,10 @@
 % SLIDE 13: KLTN Overview
 % ============================================================
 \begin{frame}{Khóa luận Tốt nghiệp -- Tổng quan}
+    \vspace{0.3em}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=6.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Mục tiêu KLTN:}} Kiểm chứng kết quả tính toán và triển khai thực tế
             
             \vspace{0.5em}
@@ -352,12 +355,12 @@
 % ============================================================
 % SLIDE 11: KLTN Phase 1 - Setup
 % ============================================================
-\begin{frame}{KLTN -- Giai đoạn 1: Chuẩn bị}
+\begin{frame}{Kế hoạch Khóa luận Tốt nghiệp}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 1--2}
                     
                     \vspace{0.3em}
@@ -369,6 +372,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Thay thế cảm biến nhiệt độ hỏng
@@ -380,8 +384,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 3--4}
                     
                     \vspace{0.3em}
@@ -393,6 +397,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Thiết kế bộ điều khiển PID
@@ -408,12 +413,12 @@
 % ============================================================
 % SLIDE 12: KLTN Phase 2 - Integration & PC-01
 % ============================================================
-\begin{frame}{KLTN -- Giai đoạn 2: Tích hợp \& Thí nghiệm PC-01}
+\begin{frame}{Kế hoạch Khóa luận Tốt nghiệp}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 5--6}
                     
                     \vspace{0.3em}
@@ -425,6 +430,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Thiết kế giao diện HMI
@@ -436,8 +442,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 7--8}
                     
                     \vspace{0.3em}
@@ -449,6 +455,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Thu thập dữ liệu vận hành
@@ -464,12 +471,12 @@
 % ============================================================
 % SLIDE 13: KLTN Phase 3 - PWM & Report
 % ============================================================
-\begin{frame}{KLTN -- Giai đoạn 3: PWM \& Hoàn thiện}
+\begin{frame}{Kế hoạch Khóa luận Tốt nghiệp}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 9--10}
                     
                     \vspace{0.3em}
@@ -481,6 +488,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Lập trình điều khiển PWM
@@ -492,8 +500,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.8cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 11--12}
                     
                     \vspace{0.3em}
@@ -505,6 +513,7 @@
             \begin{tikzpicture}
                 \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (3pt, -3pt) {};
                 \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=3.5cm, anchor=north west] at (0,0) {
+                    \vspace{-0.5em}
                     \begin{itemize}
                         \setlength{\itemsep}{4pt}
                         \item Tổng hợp kết quả thí nghiệm
@@ -529,17 +538,8 @@
         \draw[darkblue, line width=3pt] ([xshift=0.15\paperwidth, yshift=-0.25\paperheight]current page.north west) rectangle ++(0.7\paperwidth, -0.5\paperheight);
         
         % Text
-        \node[text=darkblue, font=\Huge\bfseries] at ([yshift=-0.4\paperheight]current page.north) {
-            Cảm ơn đã lắng nghe!
-        };
-        
-        \node[text=bkblue, font=\Large] at ([yshift=-0.55\paperheight]current page.north) {
-            Hỏi \& Đáp
-        };
-        
-        % BK Logo
-        \node[anchor=south] at ([yshift=0.1\paperheight]current page.south) {
-            \includegraphics[height=1.5cm]{../assets/bk_logo_transparent.png}
+        \node[text=darkblue, font=\Huge\bfseries, align=center] at ([yshift=-0.5\paperheight]current page.north) {
+            Cảm ơn thầy cô\\đã lắng nghe!
         };
     \end{tikzpicture}
 \end{frame}
