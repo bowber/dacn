@@ -30,33 +30,25 @@
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
                 % Shadow
-                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=3.8cm, anchor=north west] at (4pt, -4pt) {};
                 % Box
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=3.8cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{bkblue}{Đồ án Chuyên ngành}}
-                    \begin{enumerate}
-                        \item Vấn đề \& Mục tiêu
-                        \item Tổng quan hệ thống
-                        \item Chiến lược điều khiển
-                        \item Tính toán \& Kết quả
-                    \end{enumerate}
+                    \begin{itemize}
+                        \item[1.] Vấn đề \& Mục tiêu
+                        \item[2.] Tổng quan hệ thống
+                        \item[3.] Chiến lược điều khiển
+                        \item[4.] Tính toán \& Kết quả
+                    \end{itemize}
                 };
             \end{tikzpicture}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                % Shadow first
-                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {
-                    \phantom{\textbf{Khóa luận Tốt nghiệp}}
-                    \begin{itemize}
-                        \item[\phantom{5.}] \phantom{Kế hoạch triển khai}
-                        \item[\phantom{6.}] \phantom{Thí nghiệm PC-01}
-                        \item[\phantom{7.}] \phantom{PWM Reboiler}
-                        \item[\phantom{8.}] \phantom{Kế hoạch 12 tuần}
-                    \end{itemize}
-                };
+                % Shadow
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=3.8cm, anchor=north west] at (4pt, -4pt) {};
                 % Box
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=3.8cm, anchor=north west] at (0,0) {
                     \color{white}
                     \textbf{Khóa luận Tốt nghiệp}
                     \begin{itemize}
@@ -77,9 +69,9 @@
 \begin{frame}{Vấn đề đặt ra}
     \begin{tikzpicture}
         % Shadow
-        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=darkblue, inner sep=15pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
         % Box
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=15pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Vận hành hiện tại:}}
             \begin{itemize}
                 \item Van nước làm mát mở cố định \highlight{100\%}
@@ -105,9 +97,9 @@
     \vspace{-0.5em}
     \begin{tikzpicture}
         % Shadow
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
         % Box
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
             \begin{enumerate}
                 \item \textbf{Phân tích hệ thống} chưng cất ethanol -- nước quy mô phòng thí nghiệm
                 
@@ -148,8 +140,8 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{accent}{Hiện tại (100\% van):}}
                     
                     \vspace{0.3em}
@@ -169,8 +161,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=4.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tối ưu (28\% van):}
                     
                     \vspace{0.3em}
@@ -193,8 +185,8 @@
     \vspace{0.6em}
     \centering
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=10pt, minimum width=10cm, anchor=north west] at (3pt, -3pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, minimum width=10cm, anchor=north west] at (0,0) {
             $\Delta T_{approach} = T_{ngưng tụ} - T_{nước ra} = 10$°C \quad (tiêu chuẩn thiết kế HEX)
         };
     \end{tikzpicture}
@@ -244,16 +236,16 @@
     \begin{columns}[T]
         \begin{column}{0.45\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=8pt, minimum width=4.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, minimum width=4.5cm, text=white, anchor=north west] at (0,0) {
                     \textbf{SP:} 1.0 bar (áp suất đỉnh)
                 };
             \end{tikzpicture}
         \end{column}
         \begin{column}{0.45\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=8pt, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=8pt, minimum width=4.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=1.5pt, inner sep=8pt, minimum width=4.5cm, text=white, anchor=north west] at (0,0) {
                     \textbf{MV:} Độ mở van làm mát
                 };
             \end{tikzpicture}
@@ -268,8 +260,8 @@
     \begin{columns}[T]
         \begin{column}{0.55\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.95\textwidth, anchor=north west] at (4pt, -4pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{bkblue}{Nguyên lý:}}
                     \begin{itemize}
                         \item Điều chế độ rộng xung (PWM)
@@ -289,8 +281,8 @@
         \end{column}
         \begin{column}{0.42\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (4pt, -4pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (4pt, -4pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=5cm, anchor=north west] at (0,0) {
                     \textbf{\textcolor{bkblue}{Ưu điểm:}}
                     \begin{itemize}
                         \item Tiết kiệm điện năng
@@ -309,8 +301,8 @@
 % ============================================================
 \begin{frame}{Tính toán cân bằng năng lượng}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
             \begin{columns}[T]
                 \begin{column}{0.48\textwidth}
                     \textbf{\textcolor{bkblue}{Công suất reboiler:}}
@@ -403,8 +395,8 @@
 \begin{frame}{Kết luận}
     \vspace{-0.3em}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Đã thực hiện:}}
             \begin{itemize}
                 \setlength{\itemsep}{0pt}
@@ -431,8 +423,8 @@
 % ============================================================
 \begin{frame}{Khóa luận Tốt nghiệp -- Tổng quan}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (4pt, -4pt) {};
-        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (4pt, -4pt) {};
+        \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.88\textwidth, minimum height=5.5cm, anchor=north west] at (0,0) {
             \textbf{\textcolor{bkblue}{Mục tiêu KLTN:}} Kiểm chứng kết quả tính toán và triển khai thực tế
             
             \vspace{0.5em}
@@ -464,8 +456,8 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 1--2}
                     
                     \vspace{0.3em}
@@ -475,8 +467,8 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
                         \setlength{\itemsep}{2pt}
                         \item Thay thế cảm biến nhiệt độ hỏng
@@ -488,8 +480,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 3--4}
                     
                     \vspace{0.3em}
@@ -499,8 +491,8 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.5cm, anchor=north west] at (0,0) {
                     \begin{itemize}
                         \setlength{\itemsep}{2pt}
                         \item Thiết kế bộ điều khiển PID
@@ -515,8 +507,8 @@
     \vspace{0.5em}
     \centering
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, anchor=north west] at (3pt, -3pt) {};
+        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, text=white, anchor=north west] at (0,0) {
             \textbf{Tuần 5--6:} Thiết kế giao diện HMI, tích hợp hệ thống
         };
     \end{tikzpicture}
@@ -529,8 +521,8 @@
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 7--8}
                     
                     \vspace{0.3em}
@@ -540,8 +532,8 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (0,0) {
                     \begin{itemize}
                         \setlength{\itemsep}{2pt}
                         \item Thu thập dữ liệu vận hành
@@ -554,8 +546,8 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=1.2cm, text=white, anchor=north west] at (0,0) {
                     \textbf{Tuần 9--10}
                     
                     \vspace{0.3em}
@@ -565,8 +557,8 @@
             
             \vspace{0.5em}
             \begin{tikzpicture}
-                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (0,0) {
+                \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (3pt, -3pt) {};
+                \node[rectangle, fill=white, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=2.8cm, anchor=north west] at (0,0) {
                     \begin{itemize}
                         \setlength{\itemsep}{2pt}
                         \item Lập trình điều khiển PWM
@@ -582,8 +574,8 @@
     \vspace{0.5em}
     \centering
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, text=white, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, anchor=north west] at (3pt, -3pt) {};
+        \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=10pt, text width=0.95\textwidth, minimum height=0.8cm, text=white, anchor=north west] at (0,0) {
             \textbf{Tuần 11--12:} Hoàn thiện báo cáo, chuẩn bị bảo vệ
         };
     \end{tikzpicture}
@@ -636,8 +628,8 @@
     
     \vspace{0.8em}
     \begin{tikzpicture}
-        \node[rectangle, fill=darkblue, inner sep=10pt, anchor=north west] at (3pt, -3pt) {};
-        \node[rectangle, fill=accent, draw=darkblue, line width=2pt, inner sep=10pt, text=white, anchor=north west] at (0,0) {
+        \node[rectangle, fill=darkblue, inner sep=10pt, minimum width=12cm, anchor=north west] at (3pt, -3pt) {};
+        \node[rectangle, fill=accent, draw=darkblue, line width=2pt, inner sep=10pt, minimum width=12cm, text=white, anchor=north west] at (0,0) {
             \textbf{Mục tiêu:} Xác định mức tiết kiệm năng lượng thực tế (nước + điện)
         };
     \end{tikzpicture}
