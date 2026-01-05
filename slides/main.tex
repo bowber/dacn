@@ -8,7 +8,7 @@
 % ============================================================
 % DOCUMENT INFO
 % ============================================================
-\title{Tối ưu hoá năng lượng cung cấp\\cho quá trình chưng cất hệ ethanol -- nước}
+\title{Điều khiển tối ưu hoá năng lượng cung cấp\\cho quá trình chưng cất hệ ethanol -- nước}
 \subtitle{Đồ án Chuyên ngành -- CH4053}
 \author{SVTH: Nguyễn Phúc Bảo Lâm -- MSSV: 2111630\\GVHD: TS. Bùi Ngọc Pha}
 \date{Tháng 1/2025}
@@ -138,19 +138,19 @@
 % ============================================================
 \begin{frame}{Cơ sở lý thuyết -- Cân bằng lỏng-hơi}
     \centering
-    \vspace{-0.3em}
+    \vspace{-0.5em}
     \begin{tikzpicture}
         % Shadow for chart
-        \fill[darkblue] (4pt, -4pt) rectangle ++(9cm, -5.5cm);
+        \fill[darkblue] (4pt, -4pt) rectangle ++(0.75\textwidth, -5.8cm);
         % Chart background
-        \fill[white] (0, 0) rectangle ++(9cm, -5.5cm);
-        \draw[darkblue, line width=2pt] (0, 0) rectangle ++(9cm, -5.5cm);
+        \fill[white] (0, 0) rectangle ++(0.75\textwidth, -5.8cm);
+        \draw[darkblue, line width=2pt] (0, 0) rectangle ++(0.75\textwidth, -5.8cm);
         
         % Actual plot
         \begin{axis}[
-            at={(0.5cm, -5cm)},
-            width=8cm,
-            height=4.5cm,
+            at={(0.5cm, -5.3cm)},
+            width=0.7\textwidth,
+            height=5cm,
             xlabel={Nồng độ mol ethanol ($x$, $y$)},
             ylabel={Nhiệt độ ($^\circ$C)},
             xlabel style={font=\small},
@@ -182,7 +182,7 @@
         \end{axis}
     \end{tikzpicture}
     
-    \vspace{0.5em}
+    \vspace{0.3em}
     {\small Điểm đẳng phí: 95.6\% mol ethanol (78.15$^\circ$C)}
 \end{frame}
 
