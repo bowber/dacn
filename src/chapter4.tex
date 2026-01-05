@@ -103,22 +103,11 @@ Từ cân bằng năng lượng tại reboiler:
 
 Đây là công suất nhiệt thực tế dùng để hóa hơi hỗn hợp tại đáy tháp.
 
-\subsubsection{Công suất ngưng tụ tối ưu}
-
-Để vận hành tối ưu, công suất ngưng tụ cần bằng với nhiệt hóa hơi:
-\begin{equation}
-    Q_{\text{ngưng tụ, tối ưu}} = Q_{\text{hóa hơi}} = 5282 \text{ W}
-\end{equation}
-
-Nếu $Q_{\text{ngưng tụ}} < Q_{\text{hóa hơi}}$: hơi không ngưng tụ hết, áp suất tháp tăng.
-
-Nếu $Q_{\text{ngưng tụ}} > Q_{\text{hóa hơi}}$: dung dịch ngưng tụ bị làm lạnh dưới nhiệt độ sôi (subcooling), lãng phí nước làm mát.
-
 \subsubsection{Tính toán lưu lượng nước làm mát}
 
-Công suất ngưng tụ được tính từ cân bằng năng lượng phía nước làm mát:
+Lưu lượng nước làm mát cần thiết được tính từ cân bằng năng lượng:
 \begin{equation}
-    Q_{\text{ngưng tụ}} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
+    Q_{\text{hóa hơi}} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
 
 Trong đó:
@@ -140,7 +129,7 @@ Nhiệt độ nước ra thấp (40.5$^\circ$C) so với nhiệt độ ngưng t�
 
 \textbf{Tính toán lưu lượng tối ưu:}
 
-Để vận hành tối ưu với $Q_{\text{ngưng tụ}} = Q_{\text{hóa hơi}} = 5282$ W, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra:
+Để vận hành tối ưu, lưu lượng nước cần thiết phụ thuộc vào nhiệt độ nước ra:
 \begin{equation}
     \dot{m}_{optimal} = \frac{Q_{\text{hóa hơi}}}{C_p \cdot (T_{out} - T_{in})}
 \end{equation}
@@ -215,7 +204,6 @@ Kết quả tính toán trạng thái xác lập:
     \item Áp suất đỉnh tháp: 1.0 bar (giá trị đặt)
     \item Van nước làm mát: 100\%
     \item Lưu lượng nước làm mát: 7.2 L/min
-    \item Công suất ngưng tụ: 9113 W (vượt quá nhu cầu thực tế 5282 W)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
@@ -228,7 +216,6 @@ Kết quả tính toán trạng thái xác lập:
     \item Áp suất đỉnh tháp: 1.0 bar (duy trì ổn định)
     \item Van nước làm mát: 28\% (tiết kiệm 72\%)
     \item Lưu lượng nước làm mát: 2.0 L/min
-    \item Công suất ngưng tụ: 5282 W (cân bằng với $Q_{\text{hóa hơi}}$)
     \item Nhiệt độ đỉnh: 78.3°C
 \end{itemize}
 
@@ -247,8 +234,6 @@ Bảng \ref{tab:sim_productivity_comparison} so sánh kết quả tính toán gi
 Công suất reboiler & 6000 & 6000 & W \\
 \hline
 Độ mở van & 100 & 28 & \% \\
-\hline
-Công suất ngưng tụ & 9113 & 5282 & W \\
 \hline
 Lưu lượng nước & 7.2 & 2.0 & L/min \\
 \hline
@@ -279,7 +264,7 @@ Kết quả tính toán cho thấy:
 
 \subsubsection{Giải thích cơ chế hoạt động}
 
-\textbf{Nguyên lý cân bằng năng lượng:} Công suất ngưng tụ được xác định bởi cân bằng năng lượng phía nước làm mát:
+\textbf{Nguyên lý cân bằng năng lượng:} Lưu lượng nước làm mát được xác định bởi cân bằng năng lượng:
 \begin{equation}
     Q_{\text{ngưng tụ}} = \dot{m}_{water} \cdot C_p \cdot (T_{out} - T_{in})
 \end{equation}
