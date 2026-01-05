@@ -45,23 +45,27 @@
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{tikzpicture}
-                % Box first to get dimensions
-                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] (kltn) at (0,0) {
+                % Shadow first
+                \node[rectangle, fill=darkblue, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (4pt, -4pt) {
+                    \phantom{\textbf{Khóa luận Tốt nghiệp}}
+                    \begin{itemize}
+                        \item[\phantom{5.}] \phantom{Kế hoạch triển khai}
+                        \item[\phantom{6.}] \phantom{Thí nghiệm PC-01}
+                        \item[\phantom{7.}] \phantom{PWM Reboiler}
+                        \item[\phantom{8.}] \phantom{Kế hoạch 12 tuần}
+                    \end{itemize}
+                };
+                % Box
+                \node[rectangle, fill=bkblue, draw=darkblue, line width=2pt, inner sep=12pt, text width=0.9\textwidth, anchor=north west] at (0,0) {
                     \color{white}
                     \textbf{Khóa luận Tốt nghiệp}
-                    \begin{enumerate}
-                        \setcounter{enumi}{4}
-                        \color{white}
-                        \item Kế hoạch triển khai
-                        \item Thí nghiệm PC-01
-                        \item PWM Reboiler
-                        \item Kế hoạch 12 tuần
-                    \end{enumerate}
+                    \begin{itemize}
+                        \item[\textcolor{white}{5.}] Kế hoạch triển khai
+                        \item[\textcolor{white}{6.}] Thí nghiệm PC-01
+                        \item[\textcolor{white}{7.}] PWM Reboiler
+                        \item[\textcolor{white}{8.}] Kế hoạch 12 tuần
+                    \end{itemize}
                 };
-                % Shadow behind (draw after but with background layer)
-                \begin{scope}[on background layer]
-                    \fill[black] ([xshift=4pt,yshift=-4pt]kltn.north west) rectangle ([xshift=4pt,yshift=-4pt]kltn.south east);
-                \end{scope}
             \end{tikzpicture}
         \end{column}
     \end{columns}
